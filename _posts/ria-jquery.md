@@ -292,6 +292,13 @@ $(selector).fadeTo(speed,opacity,callback);
 # ajax
 <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 
+## head
+
+	beforeSend: function (xhr) {
+		xhr.setRequestHeader('Accept', 'application/json');
+		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+	},
+
 ## load
 
 	$(selector).load(URL,data,callback);
@@ -336,6 +343,7 @@ otherwise, the boundary string will be missing from it.
 	  contentType: false,
 	  beforeSend: function (xhr) {
 			xhr.setRequestHeader('Accept', 'application/json');
+			xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 	  },
 	  type: 'POST',
 	  success: function(data){

@@ -90,6 +90,8 @@ shows *what operations were done* to the files too
 	>D
 
 ### diff specify file
+> use `git remote update` first
+
 To view the differences going from the remote file to the local file:
 
 	git diff remotename/branchname:remote/path/file1.txt local/path/file1.txt

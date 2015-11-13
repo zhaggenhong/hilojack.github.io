@@ -472,7 +472,7 @@ color:
 
 git:
 	
-	$(git_prompt_info)%{$fg_bold[blue]%}
+	%{$fg_bold[blue]%}$(git_prompt_info)
 
 vm:
 

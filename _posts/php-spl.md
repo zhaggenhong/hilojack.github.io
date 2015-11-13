@@ -337,6 +337,7 @@ via shell
 	$i=0;
 	while($i++< $end - $start){
 		$str .= $file->current();
+		$file->next();
 	}
 
 	foreach($file as $i=>$line){

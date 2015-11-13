@@ -27,8 +27,10 @@ carriage return:
 # style
 
 	:set tw=80
-	:set cuc cursorcolumn "光标对齐
-	:set cul cursorline
+	:setlocal cuc cursorcolumn "光标对齐
+	:setlocal cul cursorline
+	:hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+	:hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
 
 ## wrap
 

@@ -21,8 +21,14 @@ http://www.2fz1.com/post/javascript-yi-bu-bian-cheng/
 	}
 	xhr.open("POST","http://hilo.sinaapp.com/header.php?demo",true);
 	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	xhr.setRequestHeader("Accept", "application/json");
+	xhr.setRequestHeader('Accept', 'application/json');
+	xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 	xhr.send("xuehui1=1&xuehui2=2");
+
+Detect Ajax：
+
+	$_SERVER['HTTP_X_REQUESTED_WITH']
+	$_SERVER['HTTP_ACCEPT'] === 'application/json';
 
 默认的`Content-Type:text/plain + POST `只会传`RAW_POST_DATA` , `application/x-www-form-urlencode` 才会传`$_POST`, `enctype="multipart/form-data"` 则包括`POST+FILES`
 
