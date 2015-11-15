@@ -126,6 +126,8 @@ refer: http://stackoverflow.com/questions/7853467/uploading-a-file-in-chunks-usi
 ## Ajax upload progress bar
 http://www.sitepoint.com/html5-javascript-file-upload-progress-bar/
 
+	<progress max="100" value="0"></progress>
+
 # AJAX FormData
 > 上传文件时，不能用 xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 > 而必须使用默认的: Content-Type:multipart/form-data; boundary=----WebKitFormBoundaryfyRdj8roosVVWIsH

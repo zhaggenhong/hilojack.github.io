@@ -62,6 +62,13 @@ use strict参考：阮一峰 http://www.ruanyifeng.com/blog/2013/01/javascript_s
 	fun=function(){console.log(a);}
 	func(fun);//1
 
+普通函数中的var
+
+	function a(v){b(v);}
+	function b(){console.log(v);}
+	v='global';
+	a('var_a');//global
+
 # this scope
 
 ## 被传递的函数

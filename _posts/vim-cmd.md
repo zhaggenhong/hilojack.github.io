@@ -193,11 +193,11 @@ eg:
 
 ## define command
 
-	:com[mand][!] [{attr}...] {cmd} {rep}
+	:com [{attr}...] {cmd} {rep}
 			Define a user command.  The name of the command is
 			{cmd} and its replacement text is {rep}.  The command's
 			attributes (see below) are {attr}.  
-
+### args
 Argument:
 
 	-nargs=0    No arguments are allowed (the default)
@@ -208,24 +208,34 @@ Argument:
 	-nargs=+    Arguments must be supplied, but any number are allowed
 
 Specifically, "s:var" will use the script-local variable in the script where the command was
-defined, not where it is invoked!  Example:
+defined, not where it is invoked!  
+
+single args`<args>`:
 
     " script1.vim: >
-	:let s:error = "None"
-	:command -nargs=1 Error echoerr <args>
+	command -nargs=1 Error echoerr <args>
 
 	" script2.vim: >
-	:source script1.vim
-	:let s:error = "Wrong!"
-	:Error s:error
+	source script1.vim
+	Error "E215"
+        E215
 
-Output: "NONE", Calling a function may be an alternative
-	
+Multi args`<f-args>`:
+
+    " Mycmd arg1 arg2
+    " function Myfunc(myarg1, myarg2)
+    com -nargs=* Mycmd call Myfunc(<f-args>)
+
+quote args `<q-args>`(raw)
+
+    com -nargs=1 E1 echo <q-args>
+    E1 "E215"a b
+        "E215"a b
 
 ## list
 list all user commmand
 
-	:com 
+	:com
 	:com {cmd}
 	:verbose command {cmd}
 

@@ -312,6 +312,7 @@ On Mac OSX:
 ## set dns server
 On Mac OSX
 
+	networksetup -listallnetworkservices
 	sudo networksetup -setdnsservers Wi-Fi 223.5.5.5 223.6.6.6
 
 On Linux

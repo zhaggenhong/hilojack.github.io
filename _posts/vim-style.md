@@ -45,8 +45,9 @@ Refresh Screen Render
 
 ## style indent 
 
-    "auto indent
-    :set ai
+	set ai " autoindent 
+	set si " smartindent " set smartcase
+	
 	" Format motion with internal function or external given with `equalprg`
 	={motion}
 	" 作用visual 选择format 的范围

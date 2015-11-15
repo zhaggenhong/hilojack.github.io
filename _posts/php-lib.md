@@ -515,15 +515,18 @@ https://code.google.com/p/phpquery/
 ### Create ini
 
 	$arr = ['country'=> [1=>'北京\'"']];
-	array2ini($arr);
+	echo array2ini($arr);
 	function array2ini($arr, $key_prefix = ''){
+		$key_prefix = $key_prefix === '' ? '' : $key_prefix . '.';
+		$ini = '';
 		foreach($arr as $k=>$v){
 			if(is_array($v)){
-				array2ini($v, $key_prefix.".$k");
+				$ini .= array2ini($v, "$key_prefix$k");
 			}else{
-				echo "$key_prefix.$k = \"" . str_replace('"', '\"', $v) . "\"\n";
+				$ini .= "$key_prefix$k = \"" . str_replace('"', '\"', $v) . "\"\n";
 			}
 		}
+		return $ini;
 	}
 
 ## Double Quote

@@ -101,6 +101,13 @@ no matter what user set:
 
 	echo getline(a:lnum) =~? '\v^\s*$'
 
+# try catch
+
+    try
+      nnoremap <unique> <silent> <leader>h1 :EasyhlWord 1<CR>
+    catch /E227/
+    endtry
+
 # Function
 
 ## Define Function
@@ -116,12 +123,12 @@ Function must start with a capital letter or `:`,
 	  return "Meow String!"
 	endfunction
 
-### namespace function
+### local script function
 > :h <SID>
 > http://learnvimscriptthehardway.stevelosh.com/chapters/34.html
 
 	nnoremap <leader>g :set operatorfunc=<SID>echo<cr>g@
-	function! my:echo(type)
+	function! s:echo(type)
 		echo 'abc'
 	endfunction
 

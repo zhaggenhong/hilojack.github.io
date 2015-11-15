@@ -6,7 +6,7 @@ description:
 ---
 # Preface
 map命令手册位于：
-	
+
 	:h map.txt
 
 map 命令语法：
@@ -120,6 +120,27 @@ Use visual block as object via `:normal`
 
 # special key
 特殊字符 `:h keycodes`
+
+	<C-I>==<TAB>
+	<C-M>==carriage-return
+	<C-H>==Backspace
+	:h keycodes 或者 :h key-notation
+
+应该对这些键引起重视，比如以下两个映射是完全等价的.
+
+	map <TAB> >
+	map <C-I> >
+
+## 关于mac的特殊键
+
+mac 会拦截 Alt+字符, 并替换成特殊字符. 比如:<A-p>会被mac 默认的keyboard layout 替换成 π(# map 中我会总结更多的细节)
+
+	# 默认的mac keyboard layout下， 该映射无法捕获到<A-p>
+	:map <A-p> <ESC>
+	# 在mac下应该用π 代替<A-p>
+	:map π <ESC>
+
+另外, mac下的左右shift键盘信号是一致的, 你永远都不能判断左右shift(反正我也不用)
 
 ## leader
 
