@@ -1,8 +1,8 @@
 ---
 layout: page
-title:	
+title:
 category: blog
-description: 
+description:
 ---
 # Preface
 

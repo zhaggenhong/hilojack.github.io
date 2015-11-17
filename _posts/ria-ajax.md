@@ -180,6 +180,8 @@ https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=http://m.weibo.c
 	
 
 ## CORS
+> ajax 可以跨域发请求(不能带跨域的Cookie)，不过不能收响应
+
 正统的方法是CORS(Cross-origin resource sharing), 服务端返回:
 
 	header('Access-Control-Allow-Origin:*');

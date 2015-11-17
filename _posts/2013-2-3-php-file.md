@@ -261,8 +261,32 @@ fgets
      fseek($fp,$offset[,SEEK_CUR OR SEEK_END OR SEEK_SET),SEEK_SET是默认值，SEEK_END时offset应该为负值
      可选。可能的值：
      SEEK_SET - 设定位置等于 offset 字节。默认。
-     SEEK_CUR - 设定位置为当前位置加上 offset。
+     SEEK_CUR - 设定位置为当前位置加上 offset。(append 下SEEK_CUR 初始值也是0)
      SEEK_END - 设定位置为文件末尾加上 offset （要移动到文件尾之前的位置，offset 必须是一个负值）。
+
+1. `a, a+` 在每次fwrite/init 后会将: `SEEK_CUR` 初始化为0
+2. fseek() 在超出边界后会返回-1(但是指针变了)， 再次调用fseek 不会成功(指针也不会变). 建议使用前先用`ftell` 获取当前位置
+
+	$file = 'a.txt';
+	var_dump($pos = startPos($file));
+	startPos($file, ++$pos);
+
+	function startPos($fn, $pos = null){
+		static $fp;
+		$posFile = "$fn.pos";
+		if($fp === null){
+			$fp = fopen($posFile, 'a+');
+		}
+		if($pos !== null){
+			fwrite($fp, $pos."\n");
+		}else{
+			$p = 10;
+			fseek($fp, -$p, SEEK_END);
+			$str = trim(fread($fp, $p));
+			$arr = explode("\n", $str);
+			return (int)end($arr);
+		}
+	}
 
 # 并发访问中的文件锁
 

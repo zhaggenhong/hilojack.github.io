@@ -2,7 +2,7 @@
 layout: page
 title:	edit
 category: blog
-description: 
+description:
 ---
 # Preface
 
@@ -26,7 +26,7 @@ diff dir
 	zip -e test [file ...]
 		-e encrypt prompt to input password
 	zip -e -P <password> test [file ...]
-	unzip -x test.zip -d dir 
+	unzip -x test.zip -d dir
 
 ## stat
 stat：文件信息
@@ -85,7 +85,7 @@ od -- octal, decimal, hex, ASCII dump
 
 	cut -d: -f 1,3
 	cut -d: -f 1
-	cut -d: -f 2- 
+	cut -d: -f 2-
 	cut -d: -f -3
 	-d "delim"
 	-f list
@@ -104,7 +104,7 @@ shell 中很多命令都是支持read from stdin的。 对于不支持stdin 的l
      -E eofstr
              Use eofstr as a logical EOF marker.
 	 -p      Echo each command to be executed
-	 -n number 
+	 -n number
 		 use number of parameter in each exec command
 	 -J replstr
 		 Replacing one or more occurrences of replstr in up to replacements arguments
@@ -152,7 +152,7 @@ Example:
 	-h, --no-filename
 	-H, --with-filename
 	-E, --extended-regexp
-	
+
 	-P perl patterns
 	-m max-count 匹配次数
 
@@ -170,7 +170,7 @@ other grep:
 ## grep binary
 ignore binary
 
-	-I 
+	-I
 
 ## grep context
 
@@ -251,13 +251,13 @@ However, you can achieve simpler code with extra work.
 	-c  ：进行计数(sort后)
 	-d      Only output lines that are repeated in the input.
     -u      Only output lines that are not repeated in the input.
-	-f num  Ignore the first num fields in each input line when doing comparisons.  
-    -s chars Ignore the first chars characters in each input line when doing comparisons.  
+	-f num  Ignore the first num fields in each input line when doing comparisons.
+    -s chars Ignore the first chars characters in each input line when doing comparisons.
 
 Example:
 
-	cat a b | sort | uniq > c # c 是 a 和 b 的并集 
-	cat a b | sort | uniq -d > c # c 是 a 和 b 的交集 
+	cat a b | sort | uniq > c # c 是 a 和 b 的并集
+	cat a b | sort | uniq -d > c # c 是 a 和 b 的交集
 	cat a b | sort | uniq -u > c # c 是 a 和 b 的差集
 
 统计重复日志文件中url 的访问pv 次数(同一ip 算一次)，并按从高到低排序`sort|uniq -c|sort -r -d`:
@@ -282,7 +282,7 @@ Usage:
 	-d wildcard
 	   posix_regex
 		删除
-	-c wilcard_pattern wildcard_replace 
+	-c wilcard_pattern wildcard_replace
 		对wildcard_pattern 取反
 	-s, --squeeze-repeats
 		replace each input sequence of a repeated character that is listed in SET1 with a single occurrence of that character
@@ -330,7 +330,7 @@ posix:
 将tab替换成空格(-t 指定空格数, 默认是8个)
 
 	expand [-t] file
-	expand -t 8 file  #与 col -x 相同 
+	expand -t 8 file  #与 col -x 相同
 	expand - #从stdinput 读取
 
 expand 和 unexpand：在制表符和空格间转换
@@ -368,11 +368,12 @@ join multiple line:
 	选项与参数：
 	-b  ：后面可接欲分割成的文件大小，可加单位，例如 b, k, m 等；
 	-l  ：以行数来进行分割。
-	-a <suffix_num>
-	-d 
+	-a <suffix_num_length>
+	-d
 		use numeric suffixes instead of alphabetic(for linux)
 
 	PREFIX ：代表前导符的意思，可作为分割文件名的前导文字。
+		default x00 x01 ....
 
 	split -b 100k file pre_hilo
 	cat pre_hilo* > file

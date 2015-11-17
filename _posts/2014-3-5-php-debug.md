@@ -460,6 +460,8 @@ git co https://github.com/jokkedk/webgrind
 > 如果想每次运行自动触发中断，请点击Run &gt; Break Point at first line in PHP scripts
 > https://confluence.jetbrains.com/display/PhpStorm/Zero-configuration+Web+Application+Debugging+with+Xdebug+and+PhpStorm#Zero-configurationWebApplicationDebuggingwithXdebugandPhpStorm-2.PreparePhpStorm
 
+注意，使用代理跨网是不行的！
+
 以phpstorm 为例子：
 
 本机(local)：10.208.12.215:9000

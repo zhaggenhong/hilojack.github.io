@@ -55,6 +55,7 @@ Curl command has following syntax:
 
 	$ curl --proxy-user user:password http://url.com/
 	$ curl --proxy-user user:password -x proxy:port http://url.com/
+	$ curl -U user:password -x proxy:port http://url.com/
 
 ab command
 

@@ -100,6 +100,11 @@ like list
 	'hilo' in 'hilojack'
 	str.replace(needle, word, 1); //replace the first needle with word
 
+## pad
+zfill
+
+	print '1'.zfill(2);
+
 ## trim
 
 	'a\n  '.strip()+',end'
@@ -166,6 +171,7 @@ with no space and new line:
 	dic = {'x': 1, 'y': 2}
 	del dict['x']
 	dict[1]=123
+	dict.setdefault(1, 123)
 
 ## access dict
 

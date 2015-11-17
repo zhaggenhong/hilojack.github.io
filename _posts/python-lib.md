@@ -29,3 +29,26 @@ assert False, "Error!"
 	>>> x =base64.b64decode(open('a.txt').read())
 	>>> pickle.loads(x)
 	{'count': 5, 'ip': u'127.0.0.1', 'session_id': 'df7cd559362a9d170ecb1a4e7752c5ab999fb0eb'}
+
+# Math
+
+	import random
+	i=random.randint(1, 20)
+
+# Http
+
+## proxy
+
+	import urllib
+	import urllib2
+	url = 'http://weibo.cn'
+	data = urllib.urlencode({'k':'v'})
+	opener = urllib2.build_opener(urllib2.ProxyHandler({'http':'http://ip:port'}))
+	urllib2.install_opener(opener)
+	req = urllib2.Request(url, data)
+	try:
+		response = urllib2.urlopen(req,timeout=2)
+		the_page = response.read()
+		print the_page.decode('utf-8')
+	except:
+		pass

@@ -43,7 +43,7 @@ https://github.com/AnewG/Modern-php?files=1
 	FILTER_SANITIZE_NUMBER_INT 去掉和INT 无关的字符
 	FILTER_SANITIZE_SPECIAL_CHARS 去HTML 特殊字符 `<>&'"` 编码
 
-# const 
+# Const 
 
 	const N = 1
 	get_defined_constants(true)['user']
