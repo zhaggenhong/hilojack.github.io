@@ -1,10 +1,10 @@
 ---
 layout: page
-title:	
+title:
 category: blog
-description: 
+description:
 ---
-# IP 
+# IP
 webrtc会暴露自己的真实ips
 https://diafygi.github.io/webrtc-ips/ 通过js webrtc 获取ip
 
@@ -14,9 +14,9 @@ https://chrome.google.com/webstore/detail/webrtc-block/nphkkbaidamjmhfanlpblblca
 # 下载goagent-git
 archlinux 下使用:
 
-	yaourt -S goagent-git 
+	yaourt -S goagent-git
 
-## 安装 crt 在 firefox/chrome 
+## 安装 crt 在 firefox/chrome
 
 ## 下载  Proxy SwitchySharp in chrome
 	并设置代理为goagent代理
@@ -34,13 +34,13 @@ archlinux 下使用:
 ## upload
 
 ### 打开app.yaml指定自己的appid
-	sudo vim /opt/goagent/server/python/app.yaml 
+	sudo vim /opt/goagent/server/python/app.yaml
 
 ### 上传server
-	python google_appengine/appcfg.py update goagent/server/python/	
+	python google_appengine/appcfg.py update goagent/server/python/
 
 > 撤消证书认证 如果你绑定过hosts，那么你无法通过证书验证
-	
+
 	fancy_urllib.InvalidCertificateException: Host appengine.google.com returned an invalid certificate (hostname mismatch):
 
 > 那么就过滤掉认证代码： vim /home/hilo/test/google_appengine/lib/fancy_urllib/fancy_urllib/__init__.py
@@ -55,7 +55,7 @@ archlinux 下使用:
 # 运行
 
 ## 运行goagent代理
-	sudo /opt/goagent/local/proxy.py 
+	sudo /opt/goagent/local/proxy.py
 
 ## 打开你的chrome访问这个代理
 	利用proxy swith插件可以很方便的在代理和直连间切换
@@ -72,7 +72,7 @@ archlinux 下使用:
 	http://www.glgoo.com
 	http://www.clonegoogle.com
 	http://www.gusou.co
-	http://g.ttlsa.com 
+	http://g.ttlsa.com
 	https://g.ttlsa.com
 	http://duckduckgo.com (综合搜索，完全没有隐私问题)
 	http://173.194.14.53
@@ -155,17 +155,17 @@ archlinux 下使用:
 用 bandwagonhost /digital ocean/linode 等搭建
 
 购买见：
-http://www.v2ex.com/t/97626
+https://www.v2ex.com/t/97626
 
-Install: 
-http://www.jianshu.com/p/65c9aa35b26e
+Install:
+http://www.jianshu.com/p/08ba65d1f91a
 or
-http://github.com/hilojack/php-lib/app/ss.sh
+https://github.com/hilojack/php-lib/blob/master/app/ss.sh
 
 Client:
 https://github.com/shadowsocks/shadowsocks-gui
 
-更多工具见: 
+更多工具见:
 http://www.jianshu.com/collection/b6b16295fc83
 
 ### config
@@ -173,7 +173,7 @@ http://www.jianshu.com/collection/b6b16295fc83
 
 ### debug
 大量的 Error: read ECONNRESET，如何解决？
-可能是公司的网关限制了socks5: 
+可能是公司的网关限制了socks5:
 http://www.v2ex.com/t/117994
 
 
@@ -193,7 +193,7 @@ Query site's ip:
 
 2. 双击刚下载到的安装包完成tunnelblick软件安装
 
-3. 从vpn.xxx.com下载VPN配置文件（client.ovpn），放在桌面。新建一个文件夹，将client.ovpn放入新建文件夹中，并将文件夹重命名为deshi.tblk(后缀必须是tblk)  
+3. 从vpn.xxx.com下载VPN配置文件（client.ovpn），放在桌面。新建一个文件夹，将client.ovpn放入新建文件夹中，并将文件夹重命名为deshi.tblk(后缀必须是tblk)
 重命名后，文件夹的图标会发生变化，再双击deshi.tblk根据指引完成后续操作
 
 4. 再就可以在应用程序中找到tunnelblick，运行并选择deshi配置来连接VPN了
@@ -222,72 +222,72 @@ Query site's ip:
 203.208.46.*
 
 
-/*Bulgaria*/ 
+/*Bulgaria*/
 93.123.23.1/59
 
-/*Egypt*/ 
+/*Egypt*/
 197.199.253.1/59
 
-/*Egypt*/ 
+/*Egypt*/
 197.199.254.1/59
 
-/*Hong Kong*/ 
+/*Hong Kong*/
 218.189.25.129/187
 218.253.0.76/92
 218.253.0.140/187
 
-/*Iceland*/ 
+/*Iceland*/
 149.126.86.1/59
 
-/*Indonesia*/ 
+/*Indonesia*/
 111.92.162.4/6
 111.92.162.12/59
 
-/*Iraq*/ 
+/*Iraq*/
 62.201.216.196/251
 
-/*Japan*/ 
+/*Japan*/
 218.176.242.4/251
 
-/*Kenya*/ 
+/*Kenya*/
 41.84.159.12/30
 
-/*Korea*/ 
+/*Korea*/
 121.78.74.68/123
 
-/*Mauritius*/ 
+/*Mauritius*/
 41.206.96.1/251
 
-/*Netherlands*/ 
+/*Netherlands*/
 88.159.13.196/251
 
-/*Norway*/ 
+/*Norway*/
 193.90.147.0/7
 193.90.147.12/59
 193.90.147.76/123
 
-/*Philippines*/ 
+/*Philippines*/
 103.25.178.4/6
 103.25.178.12/59
 
-/*Russia*/ 
+/*Russia*/
 178.45.251.4/123
 
-/*Saudi Arabia*/ 
+/*Saudi Arabia*/
 84.235.77.1/251
 
-/*Serbia*/ 
+/*Serbia*/
 213.240.44.5/27
 
-/*Singapore*/ 
+/*Singapore*/
 203.116.165.129/255
 203.117.34.132/187
 
-/*Slovakia*/ 
+/*Slovakia*/
 62.197.198.193/251
 87.244.198.161/187
 
-/*Taiwan*/ 
+/*Taiwan*/
 123.205.250.68/190
 123.205.251.68/123
 163.28.116.1/59
@@ -299,7 +299,7 @@ Query site's ip:
 60.199.175.1/187
 61.219.131.65/251
 
-/*China*/ 
+/*China*/
 203.208.41.1/199
 /*Beijing*/
 203.208.32.0 - 203.208.63.255

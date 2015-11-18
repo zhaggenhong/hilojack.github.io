@@ -5,7 +5,7 @@ category: blog
 description: 
 ---
 # Preface
-形象的说，tcpdump就好比是国家海关，驻扎在出入境的咽喉要道，凡是要入境和出境的集装箱，海关人员总要打开箱子，看看里面都装了点啥。
+http://www.cnblogs.com/ggjucheng/archive/2012/01/14/2322659.html
 学术的说，tcpdump是一种嗅探器（sniffer），利用以太网的特性，通过将网卡适配器（NIC）置于混杂模式（promiscuous）来获取传输在网络中的信息包。
 
 tcpdump可以分为三大部分内容，第一是“选项”，第二是“过滤表达式”，第三是“输出信息”。

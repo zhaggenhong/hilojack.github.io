@@ -132,7 +132,7 @@ iptables 包含 5 张表（tables）(`-t` 指定):
 大部分情况仅需要使用 filter 和 nat。其他表用于更复杂的情况——包括多路由和路由判定——已经超出了本文介绍的范围。
 
 ## 链 （Chains）
-表由链组成，链是一些按顺序排列的规则的列表(`-P FORWARD`)。
+表由链组成，链是一些按顺序排列的规则的列表。
 
 1. 默认的 filter 表包含 INPUT， OUTPUT 和 FORWARD 3条内建的链，这3条链作用于数据包过滤过程中的不同时间点，如该流程图所示。
 2. nat 表包含PREROUTING， POSTROUTING 和 OUTPUT 链。
@@ -176,6 +176,22 @@ iptables 包含 5 张表（tables）(`-t` 指定):
 
 ## 模块 （Modules）
 有许多模块可以用来扩展 iptables，例如 connlimit, conntrack, limit 和 recent。这些模块增添了功能，可以进行更复杂的过滤。
+
+# 日志
+LOG 目标可以用来记录匹配某个规则的数据包。和 ACCEPT 或 DROP 规则不同，进入 LOG 目标之后数据包会继续沿着链向下走。
+
+创建 logdrop 链：
+
+	 iptables -N logdrop
+
+定义规则：
+
+	 iptables -A logdrop -m limit --limit 5/m --limit-burst 10 -j LOG
+	 iptables -A logdrop -j DROP
+
+现在任何时候想要丢弃数据包并且记录该事件，只要跳转到 logdrop 链，例如：
+
+	# iptables -A INPUT -m conntrack --ctstate INVALID -j logdrop
 
 # 规则
 参考：http://os.51cto.com/art/201103/249074_all.htm
@@ -306,6 +322,14 @@ matchname 跟数个选项对
 比如:
 
 	-A INPUT -s 192.168.1.0/24 -p tcp -m tcp --dport 80 -j ACCEPT
+
+#### -m limit
+使用 -m limit，可以使用 --limit 来设置平均速率或者使用 --limit-burst 来设置起始触发速率。在上述 logdrop 例子中：
+
+	iptables -A logdrop -m limit --limit 5/m --limit-burst 10 -j LOG
+
+Appends a rule which will log all packets that pass through it. The first 10 consecutive packets will be logged, and from then on only 5 packets per minute will be logged.
+添加一条记录所有通过其的数据包的规则。开始的连续10个数据包将会被记录，之后每分钟只会记录5个数据包。
 
 ## ftp
 ftp 默认有两个端口，先用21端口做认证，再用20端口做文件传输
