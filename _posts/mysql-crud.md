@@ -2,7 +2,7 @@
 layout: page
 title:	mysql 查询
 category: blog
-description: 
+description:
 ---
 # Preface
 
@@ -26,7 +26,7 @@ Insert update delete select
 
 ### subquery 子查询
 subquery 是嵌入另一条语句的select 语句
-	
+
 	select * from tb where id>(select id from t limit 1)
 
 	//in
@@ -73,7 +73,7 @@ Example:
 	insert into sc(sid,cid) values(2,1);
 
 	# 选修了Math 的学生
-	select * from student  where exists ( 
+	select * from student  where exists (
 		select * from sc,course where sc.cid=course.id and sc.sid=student.id and exists(
 			select * from course where cname='Math' and id=sc.cid
 	))
@@ -129,7 +129,7 @@ Example:
 		open cursor_t;
 		BEGIN_t: LOOP
 			FETCH cursor_t into var;
-			IF done THEN 
+			IF done THEN
 				LEAVE BEGIN_t;
 			END IF;
 			select var;
@@ -147,7 +147,7 @@ Example:
 	INSERT INTO ed_names (com_id) VALUES (1),(2),(3);
 	INSERT INTO ed_names VALUES (columns1),(columns2);
 
-import 
+import
 
 	insert into table1 (select 1,'zz', 'ab','2015-06-20 14:43:44',0,0,0,2);
 	insert into table1 (select * from table2);
@@ -162,17 +162,17 @@ insert_id:
 ### insert when not exists
 Not exists 保证
 
-	INSERT INTO clients (client_id, client_name, client_type) 
-		SELECT supplier_id, supplier_name, 'advertising' 
-	FROM suppliers 
+	INSERT INTO clients (client_id, client_name, client_type)
+		SELECT supplier_id, supplier_name, 'advertising'
+	FROM suppliers
 	WHERE not exists (
 		select * from clients,suppliers where clients.client_id = suppliers.supplier_id
-		); 
+		);
 
 ### update when DUPLICATE key
 插入行后会导致在`一个UNIQUE索引或PRIMARY KEY`中出现重复值，则执行UPDATE
 
-	INSERT INTO table (a,b,c) VALUES (1,2,3)  ON DUPLICATE KEY UPDATE c=c+1; 
+	INSERT INTO table (a,b,c) VALUES (1,2,3)  ON DUPLICATE KEY UPDATE c=c+1;
 
 ON DUPLICATE KEY 不支持where
 
@@ -180,28 +180,28 @@ ON DUPLICATE KEY 不支持where
 	INSERT INTO table (a,b,c) VALUES (1,2,3)  ON DUPLICATE KEY UPDATE c=c+1 where c<5;
 
 但可以使用if 代替:
-	
+
 	IF(condition, exp1, exp2)
 	INSERT INTO table (a,b,c) VALUES (1,2,3)  ON DUPLICATE KEY UPDATE c=IF(c<5, c=c+1, c)
 
 ### replace when DUPLICATE key
 REPLACE 可以将`DELETE和INSERT`合二为一，形成一个原子操作(它也是基本唯一键的)
 
-	REPLACE INTO users (phone) VALUES(18210111011); 
-　 
-插入多条记录： 
+	REPLACE INTO users (phone) VALUES(18210111011);
+　
+插入多条记录：
 
-	REPLACE INTO users(phone) VALUES(18210111011), (18210111012); 
+	REPLACE INTO users(phone) VALUES(18210111011), (18210111012);
 
 >
 
-REPLACE也可以使用SET语句 
+REPLACE也可以使用SET语句
 
 	REPLACE INTO users SET phone=1000,name='hilojack'
 
 *Note:* 如果insert 时, 有两条记录都满足删除要求，则会删除两条（on DUPLICATE 则只删除最前面的一条）
 
-	REPLACE INTO users(phone,id) VALUES(18210111011, 134); 
+	REPLACE INTO users(phone,id) VALUES(18210111011, 134);
 
 ## Update
 
@@ -309,12 +309,12 @@ Left Join 的结果集包括所有的Left, Right Join 则包括了所有的Right
 
 Right Join 则相反
 
-# UNION 
+# UNION
 它与Join 不一样, UNION 查询就是合并查询，
 
 	select_statement1 UNION select_statement2 [UNION select_statement3 [...]]
 
-UNION 要求select 的colume 数一致！
+UNION 要求select 的colume 数一致(用于分表合并)！
 
 	MariaDB [test]> select * from country union select * from city;
 	+---------+----------+
@@ -328,6 +328,21 @@ UNION 要求select 的colume 数一致！
 	+---------+----------+
 
 `UNION [ALL | DISTINCT]` 默认是distinct
+
+	MariaDB [test]> select 1,2,3 union select 1,2,3;
+	+---+---+---+
+	| 1 | 2 | 3 |
+	+---+---+---+
+	| 1 | 2 | 3 |
+	+---+---+---+
+
+	MariaDB [test]> select 1,2,3 union select 1,2,4;
+	+---+---+---+
+	| 1 | 2 | 3 |
+	+---+---+---+
+	| 1 | 2 | 3 |
+	| 1 | 2 | 4 |
+	+---+---+---+
 
 	MariaDB [test]> select 1 union all select 1;
 	+---+
@@ -372,7 +387,7 @@ UNION 要求select 的colume 数一致！
 ## sum for distinct
 
 	select sum(distinct score),count(*),score from stu; count(distinct) 与 count(*) 相互独立. score 取第一个
-	select sum(distinct score),count(distinct score),score from stu; 
+	select sum(distinct score),count(distinct score),score from stu;
 	select sum(distinct score),count(*) from stu group by class;//按班分
 
 ## Group with where
@@ -397,7 +412,7 @@ order 也必须放在最后：
 	| 33 | haha  |
 
 ## Group filter(having)
-分组之后的过滤需要使用`HAVING`, 且限定只能是聚合函数(组为最小单位). 
+分组之后的过滤需要使用`HAVING`, 且限定只能是聚合函数(组为最小单位).
 
 比如过滤出员工数大于2，且平均大于3200 的部门
 

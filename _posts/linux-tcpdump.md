@@ -15,6 +15,7 @@ tcpdump可以分为三大部分内容，第一是“选项”，第二是“过�
 # exmaple
 
 	sudo tcpdump -i lo0 -nn -X  -c 1 port 8000
+	sudo tcpdump -i en0 -nn -X  -c 1 port 8000
 
 	-i interface
 		lo0 监听lo0
@@ -144,4 +145,5 @@ tcpdump还支持如下的类型：
 # Reference
 - [tcpdump by roclinux]
 
-[tcpdump by roclinux]: http://roclinux.cn/?p=2474
+[tcpdump by roclinux]: 
+http://roclinux.cn/?p=2474

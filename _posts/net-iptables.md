@@ -72,11 +72,12 @@ On [mac](/p/net-iptables-mac.md)
 iptables 可以检测、修改、转发、重定向和丢弃 IPv4 数据包。
 
 1. 过滤 IPv4 数据包的代码已经内置于内核中，并且按照不同的目的被组织成 `表` 的集合。
-2. 表 由一组预先定义的 `链` 组成，链 包含遍历`顺序规则`。
+2. 表 由一组预先定义的 `链` 组成，链 包含遍历`顺序规则`。表与链之间不是包含关系，而是不同的维度
 3. 每一条规则包含一个谓词的潜在匹配和相应的`动作（称为 目标）`，如果谓词为真，该动作会被执行。也就是说条件匹配。
 
-理解 iptables 如何工作的关键是这张图。
+理解 iptables 如何工作的关键是这张图:
 	![](/img/iptables_traverse.jpg)
+
 图中在上面的小写字母代表 表，在下面的大写字母代表 链。从任何网络端口 进来的每一个 IP 数据包都要从上到下的穿过这张图。
 
 在大多数使用情况下都不会用到 raw，mangle 和 security 表。下图简要描述了网络数据包通过 iptables 的过程：
@@ -122,17 +123,29 @@ http://blog.chinaunix.net/uid-26212859-id-3483495.html
 
 ## 表（Tables）
 iptables 包含 5 张表（tables）(`-t` 指定):
+4个表:filter,nat,mangle,raw，默认表是filter（没有指定表的时候就是filter表）。
 
-1. raw 用于配置数据包，raw 中的数据包不会被系统跟踪。
-1. filter 是用于存放所有与防火墙相关操作的默认表。
-1. nat 用于 网络地址转换（例如：端口转发）。
-1. mangle 用于对特定数据包的修改（参考 损坏数据包）。
-1. security 用于 强制访问控制 网络规则（例如： SELinux -- 详细信息参考 该文章）。
+表的处理优先级：raw>mangle>nat>filter; 表与链之间不是包含关系，而是两个不同的维度
+
+	1.filter表——三个链：INPUT、FORWARD、OUTPUT
+		作用：过滤数据包  内核模块：iptables_filter.
+	2.Nat表——三个链：PREROUTING、POSTROUTING、OUTPUT
+		作用：用于网络地址转换（IP、端口） 内核模块：iptable_nat
+	3.Mangle表——五个链：PREROUTING、POSTROUTING、INPUT、OUTPUT、FORWARD
+		作用：修改数据包的服务类型、TTL、并且可以配置路由实现QOS内核模块：iptable_mangle(别看这个表这么麻烦，咱们设置策略时几乎都不会用到它)
+	4.Raw表——两个链：OUTPUT、PREROUTING
+		作用：决定数据包是否被状态跟踪机制处理,raw 中的数据包不会被系统跟踪  内核模块：iptable_raw
+	5. security 用于 强制访问控制 网络规则（例如： SELinux -- 详细信息参考 该文章）。
 
 大部分情况仅需要使用 filter 和 nat。其他表用于更复杂的情况——包括多路由和路由判定——已经超出了本文介绍的范围。
 
+表与表之间的关系:
+
+	![](/img/iptables_table.jpg)
+
 ## 链 （Chains）
 表由链组成，链是一些按顺序排列的规则的列表。
+链（chains）是数据包传播的路径，每一条链其实就是众多规则中的一个检查清单，每一条链中可以有一条或数条规则。当一个数据包到达一个链时，iptables就会从链中第一条规则开始检查，看该数据包是否满足规则所定义的条件。如果满足，系统就会根据该条规则所定义的方法处理该数据包；否则iptables将继续检查下一条规则，如果该数据包不符合链中任一条规则，iptables就会根据该链预先定义的默认策略来处理数据包。
 
 1. 默认的 filter 表包含 INPUT， OUTPUT 和 FORWARD 3条内建的链，这3条链作用于数据包过滤过程中的不同时间点，如该流程图所示。
 2. nat 表包含PREROUTING， POSTROUTING 和 OUTPUT 链。

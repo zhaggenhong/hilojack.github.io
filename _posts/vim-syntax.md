@@ -1,8 +1,8 @@
 ---
 layout: page
-title:	
+title:
 category: blog
-description: 
+description:
 ---
 # Preface
 > http://learnvimscriptthehardway.stevelosh.com/chapters/45.html
@@ -12,7 +12,7 @@ description:
 ## Syntax loading
 > :h syn-loading
 
-	:syntax enable 
+	:syntax enable
 
 	#让vim知道xterm终端颜色（shell下）
 	setenv TERM xterm-color 或者 TERM=xterm-color;export TERM
@@ -39,14 +39,14 @@ description:
     |..........
 
 	$VIMRUNTIME/syntax/
-	$VIMRUNTIME/color/ 
+	$VIMRUNTIME/color/
 
 
-## syntax keyword 
+## syntax keyword
 Grammar:
 
 	:help syn-keyword
-	syntax keyword <group> <word1> <word2> .... 
+	syntax keyword <group> <word1> <word2> ....
 
 Example:
 
@@ -90,7 +90,7 @@ groups defined later have priority over groups defined earlier:`help syn-priorit
 
 	:hi MyQuestions gui=bold term=bold cterm=bold
 	:hi MyQuestions guifg=red guibg=green
-	:hi Comment	ctermfg=Cyan guifg=#80a0ff 
+	:hi Comment	ctermfg=Cyan guifg=#80a0ff
 
 For gui:
 
@@ -131,6 +131,11 @@ colorscheme is a vim file which include hilight commands
 	:colo {name}
 		load color {name} from `colors/{name}.vim`
 
+### get current color
+
+	echo g:colors_name
+	:colo
+
 ## highlight link
 
 	:help :hi-link
@@ -152,14 +157,14 @@ Example:
 
 	:help iskeyword
 	:help group-name
-		to get an idea of some common highlighting groups that color scheme 
+		to get an idea of some common highlighting groups that color scheme
 
 # Syntax files
 > :h syn-files
 
 ## autoload syntax file
 
-The .vim files are normally loaded with an autocommand(filetype name).  For example: 
+The .vim files are normally loaded with an autocommand(filetype name).  For example:
 
 	:au Syntax c	    runtime! syntax/c.vim
 	:au Syntax cpp   runtime! syntax/cpp.vim
@@ -170,7 +175,7 @@ These commands are normally in the file $VIMRUNTIME/syntax/synload.vim.
 
 ## Make Syntax file
 
-2. Create a directory in there called "syntax".  For Unix: 
+2. Create a directory in there called "syntax".  For Unix:
 
 	mkdir ~/.vim/syntax
 
@@ -179,7 +184,7 @@ These commands are normally in the file $VIMRUNTIME/syntax/synload.vim.
 
 	:w ~/.vim/syntax/mine.vim
 
-Now you can start using your syntax file manually: 
+Now you can start using your syntax file manually:
 
 	:set syntax=mine
 
