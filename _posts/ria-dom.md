@@ -2,7 +2,7 @@
 layout: page
 title:	js notes
 category: blog
-description: 
+description:
 ---
 # Bom
 
@@ -28,8 +28,8 @@ description:
 	screenX = screenLeft, screenY = screenTop (窗口左上角点在整个屏幕的位置)
 
 	//窗口内外宽/高
-	window.innerWidth, window.innerHeight; 
-	//Same to 
+	window.innerWidth, window.innerHeight;
+	//Same to
 	document.documentElement.clientWidth, document.documentElement.clientHeight
 
 	897,731
@@ -44,7 +44,7 @@ description:
 	document.body.clientWidth .clientHeight body本身的宽/高
 
 	//不含margin.
-	ele.offsetWidth, ele.offsetHeight; 
+	ele.offsetWidth, ele.offsetHeight;
 	document.body.offsetWidth .offsetHeight 同上
 
 	//全部
@@ -79,18 +79,18 @@ description:
 	function GetObjPos(ATarget) {
 		var target = ATarget;
 		var pos = {x:target.offsetLeft, y:target.offsetTop};
-		
+
 		var target = target.offsetParent;
 		while (target)
 		{
 			pos.x += target.offsetLeft;
 			pos.y += target.offsetTop;
-			
+
 			target = target.offsetParent
 		}
 		return pos;
 	}
-	
+
 
 ## location
 
@@ -142,7 +142,7 @@ redirect:
 	oForm = document.getElementById('oForm');
 	oForm = document.forms('oForm');
 	oForm = document.forms(index);
-	oForm;//global 
+	oForm;//global
 
 #### FormData
 
@@ -184,7 +184,7 @@ foreach elements
 	});
 	//jquery 3
 	$("form#formID input[type=text]").each
-	
+
 
 submit form elements:
 
@@ -195,7 +195,7 @@ submit form elements:
 	//with Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryQHefs2ABc2lw02em
 	// and u should not set x-www-form-urlencoded
 
-# Dom Node 
+# Dom Node
 
 ## Search Node
 
@@ -311,7 +311,7 @@ Example 浮层:
 	$("#Ultra").val()
 
 	e = document.getElementById("Ultra");
-	e.options(e.selectedIndex).value; 
+	e.options(e.selectedIndex).value;
 
 # Dom Attribute
 
@@ -319,11 +319,11 @@ Example 浮层:
 
 	node.getAttribute('name')
 	//jq node.attr('name', 'val')
-	
+
 ## Set Attribute
 
 	node.setAttribute('name', value);
-	
+
 # Dom Class(css)
 
 ## Class
@@ -350,7 +350,7 @@ Example 浮层:
 	//or
 　　element.style.color = 'red';
 
-### Get 
+### Get
 
 	//查看隐式的
 	style = window.getComputedStyle(element),
@@ -377,40 +377,50 @@ Example 浮层:
 	onmousedown、onmouseup
 	onfocus
 
+### input
+
+	input.addEventListener('input', function(){})
+
+starting with jQuery 1.7, replace bind with on:
+
+	$('#someInput').on('input', function() {
+		$(this).val() // get the current value of the input field.
+	});
+
 ### change
 
 	document.getElementById("file").addEventListener("change", function() {})
 
 ## dom event
 
-	document.addEventListener("DOMContentLoaded", function(event) { 
-	  //do sth. 
+	document.addEventListener("DOMContentLoaded", function(event) {
+	  //do sth.
 	});
 
 ## unload/state event
 unload/beforeunload event 不能用addEventListener (这点特殊)
 unload 有不兼容问题
 
-	window.onbeforeunload = onbeforeunload_handler;     
-	function onbeforeunload_handler(){     
-		var warning="确认退出?";             
-		return warning;     
+	window.onbeforeunload = onbeforeunload_handler;
+	function onbeforeunload_handler(){
+		var warning="确认退出?";
+		return warning;
 	}
 
-	window.onunload = onunload_handler;     
-	function onunload_handler(){     
-		var warning="谢谢光临";     
-		alert(warning);     
+	window.onunload = onunload_handler;
+	function onunload_handler(){
+		var warning="谢谢光临";
+		alert(warning);
 	}
 
-onpushstate, 
+onpushstate,
 onpopstate(when or popstate):
 
 	window.onpopstate = function(){
-		alert('1');	
+		alert('1');
 	}
 	window.addEventListener('popstate', function(event){
-		alert('1');	
+		alert('1');
 	});
 
 
@@ -439,9 +449,9 @@ Refer to : http://segmentfault.com/blog/jslite/1190000002465197
     先捕获: div1->div2
     冒泡: div2 -> div1
 
-	//不捕获 
+	//不捕获
 	div1.addEventListener("click",method,true);//捕获时触发  event.stopPropagation()
-	div1.addEventListener("click",method,false);//冒泡时触发 
+	div1.addEventListener("click",method,false);//冒泡时触发
 
     Note: window.setCapture/window.captureEvents 这种全局控制不能用了, 有风险.
 
@@ -530,7 +540,7 @@ Refer to : http://segmentfault.com/blog/jslite/1190000002465197
 ### iframe 间的referer
 A -> B -> C ,C的refer 是B
 
-### contentDocument 
+### contentDocument
 同域下:
 
 	//获取子iframe 的document
@@ -563,4 +573,4 @@ hack 的方法：类型jsonp，通过script 标签请求外域的服务器，让
 html5 的dataset 对象
 
 　　element.dataset.key = string_only;
-	
+
