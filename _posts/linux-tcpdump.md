@@ -254,6 +254,9 @@ offset用来指定数据报偏移量，表示从某个协议的数据报的第�
 
 	tcpdump -i eth0 -nn 'portrange 52-55' -c 1  -XX
 
+# unpack packet info
+http://roclinux.cn/?p=2820
+
 # Reference
 - [tcpdump by roclinux]
 

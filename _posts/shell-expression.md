@@ -86,6 +86,19 @@ Example:
 		echo $a;
 	done
 
+## ignore function and alias
+Runs COMMAND with ARGS ignoring shell functions. you can type:
+
+	command ls
+
+If the -p option is given, a default value is used for PATH :
+
+	command -p ls
+
+The -V or -v option is given, a string is printed describing COMMAND. The -V option produces a more verbose description:
+
+	command -v ls
+
 # condition expression
 
 ## if

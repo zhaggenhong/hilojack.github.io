@@ -185,11 +185,6 @@ http://www.bo56.com/php%E5%86%85%E6%A0%B8%E6%8E%A2%E7%B4%A2%E4%B9%8Bzend_execute
 ## strace
 用strace 查看系统调用
 	
-	-tt 打印系统调用发生时间
-	-T　打印调用耗时
-	-e <name> 特定的系统调用:read write close 等...
-	-s <size> 打印长度
-
 ## 抓包与代理
 
 ### tcpdump & wireshark

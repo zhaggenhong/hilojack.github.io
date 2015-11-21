@@ -39,6 +39,13 @@ od -- octal, decimal, hex, ASCII dump
 
 	od -t xCc a.txt #16进制显示
 	od -t oCc a.txt #8进制显示
+		x hex
+			x4 4bytes long
+			x1 1bytes long
+			xC  1bytes long
+		o octal
+
+		c list character iterate
 
 ## strings
 用于二进制文件，strings（加上 grep 等）可以让你找出一点文本。
@@ -355,7 +362,7 @@ join multiple line:
 	 tr '\n' ','
 
 ## paste
-直接将两个文件按行以tab连一起
+直接将两个文件按行以tab连一行
 
 	paste [-d] file1 file2
 	选项与参数：

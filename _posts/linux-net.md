@@ -2,7 +2,7 @@
 layout: page
 title:	Linux Network
 category: blog
-description: 
+description:
 ---
 # Preface
 
@@ -23,7 +23,7 @@ description:
 
 # todo
 网络监控工具:
-http://mp.weixin.qq.com/s?__biz=MzA3MzYwNjQ3NA==&mid=205572993&idx=1&sn=9c05c68f6209ff990dd0da8e8a77e334&scene=1&from=groupmessage&isappinstalled=0#rd 
+http://mp.weixin.qq.com/s?__biz=MzA3MzYwNjQ3NA==&mid=205572993&idx=1&sn=9c05c68f6209ff990dd0da8e8a77e334&scene=1&from=groupmessage&isappinstalled=0#rd
 
 # centos网络配置(手动设置，自动获取)的2种方法
 作者:海底苍鹰
@@ -58,7 +58,7 @@ http://mp.weixin.qq.com/s?__biz=MzA3MzYwNjQ3NA==&mid=205572993&idx=1&sn=9c05c68f
 	NETWORKING=yes                                 //网络是否可用
 	NETWORKING_IPV6=yes
 	HOSTNAME=localhost.localdomain //主机名，主机名在/etc/hosts里面配置
-	
+
 
 	$ cat /etc/hosts
 	127.0.0.1               localhost.localdomain localhost     //根/etc/resolv.conf中search要对应，localhost.localdomain
@@ -82,154 +82,20 @@ or via `dhclient`:
 	sudo dhclient -r [interface]
 	# 2. obtain ip
 	sudo dhclient [interface]
-		-r 
+		-r
 			release ip
-		interface 
+		interface
 			eth0 | wlan1 | ...
-		-v 
+		-v
 			verbose
 
 Refer to : http://www.cyberciti.biz/faq/howto-linux-renew-dhcp-client-ip-address/
 
 # netstat
-> 
-http://billie66.github.io/TLCL/book/zh/chap17.html
-
-netstat的输出结果可以分为两个部分：
-
-一个是Active Internet connections，称为有源TCP连接，其中"Recv-Q"和"Send-Q"指%0A的是接收队列和发送队列。这些数字一般都应该是0。如果不是则表示软件包正在队列中堆积。这种情况只能在非常少的情况见到。
-
-另一个是Active UNIX domain sockets，称为有源Unix域套接口(和网络套接字一样，但是只能用于本机通信，性能可以提高一倍)。
-Proto显示连接使用的协议,RefCnt表示连接到本套接口上的进程号,Types显示套接口的类型,State显示套接口当前的状态,Path表示连接到套接口的其它进程使用的路径名。
-
-	-a (all)
-		Show both listening and non-listening sockets.
-	-o, --timers
-       Include information related to networking timers
-	-t (tcp)仅显示tcp相关选项
-	-u (udp)仅显示udp相关选项
-	-x 仅显示UNIX相关选项
-	-p 显示进程信息(PID/PNAME)
-	-e, --extend
-       Display additional information.  Use this option twice for maximum detail.
-	-n 以数学显示地址，而非地址符号(比如用127.0.0.1 代替localhost)
-	-l 仅列出有在 Listen (监听) 的服務状态
-
-	-r 显示路由信息，路由表
-	-e 显示扩展信息，例如uid等(mac 没有)
-	-s 按各个协议进行统计
-	-c 每隔一个固定时间，执行该netstat命令。
-	-r 显示路由信息
-	-i 显示网络接口
-	-b    With the interface display (option -i, as described below), show the number of bytes in and out.
-	-v
-	   Tell the user what is going on by being verbose. Especially print some useful information about unconfigured address families.
-
-Mac 下的netstat 有些特殊的参数为：
-
-	 -a    With the default display, show the state of all sockets(include tcp/udp);
-	 -p protocol
-	 -l    Print full IPv6 address.
-	 -W    In certain displays, avoid truncating addresses even if this causes some fields to overflow.
-	
-Example(MAC OSX):
-
-	netstat -ap tcp | grep ridmi (8000端口)
-	netstat -anp tcp | grep 8000
-	lsof -i :8000 
-
-[维基TCP/UDP 端口](http://zh.wikipedia.org/zh-cn/TCP/UDP%E7%AB%AF%E5%8F%A3%E5%88%97%E8%A1%A8)
-
-## port and process
-find which process occupy specified port:
-http://www.cyberciti.biz/faq/what-process-has-open-linux-port/
-
-1. netstat - a command-line tool that displays network connections, routing tables, and a number of network interface statistics.
-
-	$ sudo netstat -tulpn |grep 8888
-	tcp        0      0 10.13.130.47:8000           0.0.0.0:*                   LISTEN      10557/php
-	$ ls -l /proc/10557/exe
-	lrwxrwxrwx 1 hilojack hilojack 0 Jun  8 17:09 /proc/10557/exe -> /usr/bin/php
-
-2. fuser - a command line tool to identify processes using files or sockets.
-
-	# sudo fuser port/protocol
-	# sudo fuser 8888/tcp
-	8888/tcp:             3813
-	# ls -l /proc/3813/exe
-	lrwxrwxrwx 1 vivek vivek 0 2010-10-29 11:00 /proc/3813/exe -> /usr/bin/transmission
-
-Task: Find Out Current Working Directory Of a Process
-	
-	$ ls -l /proc/3813/cwd
-	lrwxrwxrwx 1 vivek vivek 0 2010-10-29 12:04 /proc/3813/cwd -> /home/vivek
-	$ pwdx 3813
-	lrwxrwxrwx 1 vivek vivek 0 2010-10-29 12:04 /proc/3813/cwd -> /home/vivek
-
-3. lsof - a command line tool to list open files under Linux / UNIX to report a list of all open files and the processes that opened them.
-4. /proc/$pid/ file system - Under Linux /proc includes a directory for each running process (including kernel processes) at /proc/PID, containing information about that process, notably including the processes name that opened port.
-
-## 路由表
-
-	netstat -nr # 以数字显示ip, -r 显示路由表 
-	route (mac不支持用route 显示路由表)
-	
-## 进程
-使用netstat -lntp来看看有侦听在网络某端口的进程(-l 监听,-t tcp, -p pid/pname)。
-
-	netstat -antl|grep 8000
-	On Linux/Unix run
-	$>  netstat -plant | grep 8000
-	$> # or
-	$> sudo lsof -i:8000
-
-	On Windows run
-	$>  netstat -ano 
-
-	On Mac OS X / FreeBSD run
-	$> netstat -Wan |grep 8000
-	$> # or, to get the pid
-	$> sudo lsof -i:80
+/p/linux-net-netstat
 
 # lsof
-List Open File
-Listen 
-
-	lsof -c program 查看里程打开了多少文件
-	lsof file 查看文件被哪些进程使用
-	lsof -p 1,2,3 列出进程号打开的文件
-	lsof -p 1,2,3 列出进程号打开的文件
-
-	-i [i]   
-	-i [46][protocol][@hostname|hostaddr][:service|port]
-		selects  the  listing  of  files any of whose Internet address matches the address specified in i.  If no address is specified, this option selects the listing of all Internet and x.25 (HP-UX) network files. 显示网络地址符合条件的进程
-		lsof -i :80 80端口
-		46	ipv4 or ipv6
-
-	-P  inhibits  the  conversion  of port numbers to port names for network files.  Inhibiting the conversion may make lsof run a little faster.  It is also useful when port name lookup is not working properly.
-	-n       inhibits  the conversion of network numbers to host names for network files.  Inhibiting conversion may make lsof run faster.  It is also useful when host name lookup
-	-U selects the listing of UNIX domain socket files.
-	-a	and logic. Eg. `-U -a -ufoo`, selects -U(socket) that belong to processes owned by user‘‘foo’’.
-	
-## via socket
-Find original owning process of a Linux socket
-
-	sudo lsof /dev/shm/mc.sock
-	sudo lsof -Ua #all socket
-
-## via port and protocol
-
-	lsof -i :portNumber
-	lsof -i tcp:portNumber
-	lsof -i udp:portNumber
-	lsof -i :80
-	lsof -i :80 | grep LISTEN
-
-### via protocol
-
-	lsof -n -i4TCP:$PORT | grep LISTEN
-	
-	
+[/p/linux-process-lsof](/p/linux-process-lsof)
 
 # ifconfig
 ifconfig 是用于查看网卡接口的。
@@ -241,13 +107,13 @@ ifconfig 是用于查看网卡接口的。
  route -- manually manipulate the routing tables
 
 ## check route
-Example:
+check route tables
 
-	//check route tables
 	$ netstat -nr
 	$ route (for linux only)
 
-	//check gateway(route)
+check gateway(route)
+
 	$ netstat -nr | grep default |grep -o -E '\d{1,3}(\.\d{1,3}){3}'
 	$ route get default | grep gateway (for mac only)
 	$ route get baidu.com | grep gateway (for mac only)
@@ -306,7 +172,7 @@ Example:
 ## list current dns
 On Mac OSX:
 
-	networksetup -getdnsservers Wi-Fi 
+	networksetup -getdnsservers Wi-Fi
 	networksetup -getsearchdomains Wi-Fi
 
 ## set dns server
@@ -319,6 +185,11 @@ On Linux
 
 	vi /etc/resolv.conf
 	nameserver 8.8.8.8
+
+## get ip
+DNS查询，寻找域名domain对应的IP:
+
+	$host domain
 
 ## get own ip
 find ip
@@ -334,11 +205,13 @@ Refer to [linux-iptables](/p/linux-iptables)
 # vpn route
 打开 http://ip.chinaz.com 显示的是国内 IP，说明智能加速安装成功
 
-## install 
+## install
+
 	sudo cp ip-up ip-down /etc/ppp/
 	cd /etc/ppp; sudo chmod a+x ip-up ip-down
 
 ## uninstall
+
 	sudo rm /etc/ppp/{ip-up,ip-down}
 
 cat ip-up
@@ -362,7 +235,7 @@ http://igfvv.com/local-routing-table-for-mac-os-x
 https://www.ytvpn.com/admin/speed_up
 
 
-sina 内网
+内网
 ip-down 里增加：
 
 	route delete 172.16.0.0/12 ${OLDGW}

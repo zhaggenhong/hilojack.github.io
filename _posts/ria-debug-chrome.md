@@ -13,6 +13,11 @@ http://web.jobbole.com/82558/
 
 http://web.jobbole.com/84148/
 
+# 远程调试协议
+http://taobaofed.org/blog/2015/11/20/webkit-remote-debug-test/
+
+	open -a Google\ Chrome.app --args -remote-debugging-port=9222
+
 # Network
 chrome://chrome-urls
 - Dns Cache

@@ -25,6 +25,34 @@ case insensitive
 	find . -perm -4000 # (4000 & 0754) == 4000 false
 	find . \(! -perm -0754 -o -perm 766 \)
 
+# date
+
+## atime
+最近第7天被访问过的所有文件:
+
+	find . -atime 7 -type f -print
+
+最近7天内被访问过的所有文件:
+
+	find . -atime -7 -type f -print
+
+查询7天前被访问过的所有文件:
+
+	find . -atime +7 type f -print
+
+# size
+按大小搜索： w字 k M G 寻找大于2k的文件:
+
+	find . -type f -size +2k
+
+# after action
+找到后的后续动作
+
+删除当前目录下所有的swp文件:
+
+	find . -type f -name "*.swp" -delete
+	find . type f -name "*.swp" | xargs rm
+
 # Logic Operators
 The primaries may be combined using the following operators.  The operators are listed in order of decreasing precedence.
 
@@ -94,5 +122,5 @@ Just specifying `-not -path` cannot stop find from descending into the skipped d
 # match file
 Match dirname and file via `-name`
 
-	# wildcard
+	# wildcard only
 	find dir1 dir2 -name "*.py"
