@@ -9,7 +9,7 @@ description:
 - sar, iostat, top
 
 # sar
-了解CPU、内存和硬盘的使用情况
+sar 用地找出系统瓶颈: 了解CPU、内存和硬盘的使用情况
 
 ## cpu
 表示每秒采样一次，总共采样2次

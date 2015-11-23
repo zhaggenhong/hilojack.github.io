@@ -1,8 +1,8 @@
 ---
 layout: page
-title:	
+title:
 category: blog
-description: 
+description:
 ---
 # Preface
 
@@ -10,7 +10,7 @@ description:
 # Data Type(数据类型)
 
 	NULL means you do not have to provide a value for the field... default to null
-	NOT NULL means you must provide a value for the fields. 但很多情况下，插入数据时默认会给一个空值(0, 或者空字符串). 
+	NOT NULL means you must provide a value for the fields. 但很多情况下，插入数据时默认会给一个空值(0, 或者空字符串).
 
 ## time
 time format:
@@ -36,10 +36,10 @@ Compare time
 	TIMESTAMP [DEFAULT] [ON UPDATE]; // 2015-10-12 21:52:41
 
 ### TIMESTAMP
-TIMESTAMP 比较特殊，默认的INSERT 或者UPDATE 会触发时间更新为当前的时间(它其实不是时间戳，而是DATA+TIME 字符串):
+TIMESTAMP 比较特殊，`默认`的INSERT 或者UPDATE 会触发时间更新为当前的时间(它其实不是时间戳，而是DATA+TIME 字符串):
 
-	TIMESTAMP; 
-	TIMESTAMP not null; 
+	TIMESTAMP;
+	TIMESTAMP not null;
 
 设置了default 后，仅当insert 是才更新时间:
 
@@ -71,17 +71,17 @@ TIMESTAMP 比较特殊，默认的INSERT 或者UPDATE 会触发时间更新为�
 		1901~2155
 
 ## Number
-	
+
 	2e30
 	2+3*3
 	10%3
 
-What the exactly number if value over range? 
+What the exactly number if value over range?
 
 > If number is above the range, the value mysql store will be the max value.
 > If number is below the range, the value mysql store will be the min value.
 
-What does the number in parenthesis mean? 
+What does the number in parenthesis mean?
 
 > int(2) will generate an INT with minimum display width of 2. It's up to mysql client.
 In most clients, if a colume specified with `INT(2) ZEROFILL`, the number 6 will be displayed as '06'.
@@ -90,19 +90,19 @@ In most clients, if a colume specified with `INT(2) ZEROFILL`, the number 6 will
 
 	### TINYINT
 	Their signed value range is (-128,127) , and unsigned range (0,255)。
-	
+
 	#### BOOL & BOOLEAN
-	They are TINYINT(1) alias 
-	
+	They are TINYINT(1) alias
+
 	### SMALLINT [(M)] [UNSIGNED] [ZEROFILL]
 	Their unsigned range is (0,2^16-1)。
-	
+
 	### MEDIUMINT [(M)] [UNSIGNED] [ZEROFILL]
 	Their unsigned range is (0,2^24-1)。
-	
+
 	### INT [(M)] [UNSIGNED] [ZEROFILL]
 	Their unsigned range is (0,2^32-1)。
-	
+
 	### BIGINT [(M)] [UNSIGNED] [ZEROFILL]
 	Their unsigned range is (0,2^64-1)。
 
@@ -154,7 +154,7 @@ Length 不是字节数，而是字符数
 			使用Latin1 这种万能字符集(默认?)
 		UNICODE
 			使用ucs2 字符集(又字节?)
-	
+
 ### VARCHAR
 
 	VARCHAR(Length) [BINARY ]
@@ -179,7 +179,7 @@ Length 不是字节数，而是字符数
 		2^8-1 = 255
 
 ### Limit string set
-String set 
+String set
 
 #### ENUM
 
@@ -189,7 +189,7 @@ String set
 #### SET
 SET 可以指定预定值中的一个或者多个值
 
-	
+
 	set("str1","str2", ....)
 	insert table values('str1,str2,..')
 

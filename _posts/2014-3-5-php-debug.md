@@ -454,6 +454,7 @@ git co https://github.com/jokkedk/webgrind
 ### Remote Xdebug
 > 如果想每次运行自动触发中断，请点击Run &gt; Break Point at first line in PHP scripts
 > https://confluence.jetbrains.com/display/PhpStorm/Zero-configuration+Web+Application+Debugging+with+Xdebug+and+PhpStorm#Zero-configurationWebApplicationDebuggingwithXdebugandPhpStorm-2.PreparePhpStorm
+> https://www.jetbrains.com/phpstorm/marklets/
 
 注意，使用代理跨网是不行的！
 

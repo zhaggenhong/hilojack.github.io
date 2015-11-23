@@ -104,6 +104,15 @@ strace常用来跟踪进程执行时的系统调用和所接收的信号。 在L
 
 	dtruss ./a.out
 
+	strace cat /dev/null
+	dtruss cat /dev/null
+
 # pstack
+与strace(系统调用跟踪不同), pstack 是跟踪的调用栈
 
 	pstack <pid>
+
+# Reference
+- [c-debug-tool]
+
+[c-debug-tool]: http://linuxtools-rst.readthedocs.org/zh_CN/latest/advance/02_program_debug.html#nm

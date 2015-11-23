@@ -80,6 +80,12 @@ example
 
 	lsof file 查看文件被哪些进程使用
 	fuser -m -u file
+		-m 显示pid
+		-u 显示owner
+		-k kill 占用的进程
 
 
 # Reference
+- [c-debug-tool]
+
+[c-debug-tool]: http://linuxtools-rst.readthedocs.org/zh_CN/latest/advance/02_program_debug.html#nm

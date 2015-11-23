@@ -115,7 +115,7 @@ Example
 
 
 ## ArrayAccess
-在使用对象属性时，php 支持`__set`, `__get` 方法。为了让对象支持数组下标操作符，也就是操作 `$obj['key']`, php 提供了类似的魔术方法
+在使用对象属性时，类似 `__set`, `__get` 方法。为了让对象支持数组下标操作符，也就是操作 `$obj['key']`, php 提供了类似的魔术方法
 
 	interface ArrayAccess {
 		abstract public boolean offsetExists ( mixed $offset ); //isset($obj['key'])
