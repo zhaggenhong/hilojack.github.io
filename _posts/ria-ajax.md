@@ -1,8 +1,8 @@
 ---
 layout: page
-title:	
+title:
 category: blog
-description: 
+description:
 ---
 # Preface
 
@@ -32,7 +32,7 @@ Detect Ajax：
 
 默认的`Content-Type:text/plain + POST `只会传`RAW_POST_DATA` , `application/x-www-form-urlencode` 才会传`$_POST`, `enctype="multipart/form-data"` 则包括`POST+FILES`
 
-	$GLOBALS['HTTP_RAW_POST_DATA'] 
+	$GLOBALS['HTTP_RAW_POST_DATA']
 
 ## ajax jquery
 For html5, emulate jquery ajax
@@ -142,13 +142,6 @@ Via FormData and file:
 	var formData = new FormData();
 	for (var i = 0; i < files.length; i++) {
 	  var file = files[i];
-
-	  // Check the file type.
-	  if (!file.type.match('image\\.\\w+')) {
-		continue;
-	  }
-
-	  // Add the file to the request.
 	  formData.append('photos[]', file, file.name);
 	}
 
@@ -164,8 +157,18 @@ Add form listener:
 		ajax....uploading code
     });
 
-> here is an demo: 
+> here is an demo:
 http://stackoverflow.com/questions/166221/how-can-i-upload-files-asynchronously
+
+## Ajax FormData Jquery
+
+	$.ajax({
+		url: '/admin/banlance/sendbanlance?act=addTask',
+		data: fd,
+		contentType: false,//这两行必须加
+		processData: false,//
+		method: 'POST'
+	}).done(function(data){})
 
 ## JSON AJAX
 https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=http://m.weibo.cn
@@ -174,10 +177,10 @@ https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=http://m.weibo.c
 	x.open('GET', searchUrl);
 	x.responseType = 'json';
 	x.onload = function(){
-		res = x.response;	
+		res = x.response;
 		console.log(res);//json
 	}
-	
+
 
 ## CORS
 > ajax 可以跨域发请求(不能带跨域的Cookie)，不过不能收响应
@@ -195,7 +198,7 @@ Hack 方法有jsonp, 原理是通过script 标签, 发一个get 请求，请求�
 不支持子域名`*.hilojack.com`
 
 	# apache
-	Header set Access-Control-Allow-Origin *  
+	Header set Access-Control-Allow-Origin *
 	Header set Access-Control-Allow-Headers Authorization
 
 	# nginx

@@ -168,28 +168,6 @@ iptables中数据包和4种被跟踪连接的4种不同状态：
 
 	service iptables status
 
-# 日志
-LOG 目标可以用来记录匹配某个规则的数据包。和 ACCEPT 或 DROP 规则不同，进入 LOG 目标之后数据包会继续沿着链向下走。
-
-创建 logdrop 链：
-
-	 iptables -N logdrop
-
-定义规则：
-
-	 iptables -A logdrop -m limit --limit 5/m --limit-burst 10 -j LOG
-	 iptables -A logdrop -j DROP
-
-现在任何时候想要丢弃数据包并且记录该事件，只要跳转到 logdrop 链，例如：
-
-	# iptables -A INPUT -m conntrack --ctstate INVALID -j logdrop
-
-使用 -m limit，可以使用 --limit 来设置平均速率或者使用 --limit-burst 来设置起始触发速率。在上述 logdrop 例子中：
-
-	iptables -A logdrop -m limit --limit 5/m --limit-burst 10 -j LOG
-
-添加一条记录所有通过其的数据包的规则。开始的连续10个数据包将会被记录，之后每分钟只会记录5个数据包。
-
 # 命令
 ![cli](/img/iptables-cli.png)
 
@@ -210,14 +188,26 @@ LOG 目标可以用来记录匹配某个规则的数据包。和 ACCEPT 或 DROP
 	-P：设置某条规则链的默认动作
 		iptables -P INPUT DROP
 		设置 filter 表 INPUT 链的默认规则是 DROP
-	-nL：-L、-n，查看当前运行的防火墙规则列表
+	-nL：-L、查看当前运行的防火墙规则列表, -n 数字显示
 	-F 清空规则
 		iptables -F
 		清空 filter 表中的所有规则
 
-	-T 指定要操作的表，默认是filter (cat /proc/net/ip_tables_names)
 	-N 新建用户自定义的规则链
 	-X 删除用户自定义的规则链
+
+### 默认动作
+查看默认:
+
+	iptables -nL -v |grep policy
+		Chain INPUT(policy ACCEPT)
+		...
+
+设置默认
+
+	iptables --policy INPUT ACCEPT
+	iptables -P INPUT DROP
+
 
 ## chain
 - chain名：指定规则表的哪个链，如INPUT、OUPUT、FORWARD、PREROUTING等
@@ -327,19 +317,6 @@ port
 	# iptables -R INPUT 2 -p tcp --dport 17500 -j REJECT --reject-with icmp-port-unreachable
 
 
-## 默认动作
-查看默认:
-
-	iptables -nL -v |grep policy
-		Chain INPUT(policy ACCEPT)
-		...
-
-设置默认
-
-	iptables --policy INPUT ACCEPT
-	iptables --policy OUTPUT ACCEPT
-	iptables --policy FORWARD ACCEPT
-
 # example
 
 ## ftp
@@ -365,4 +342,26 @@ ftp 默认有两个端口，先用21端口做认证，再用20端口做文件传
 ## http
 
 	-A INPUT -p tcp -m tcp --dport 80 -m state --state NEW,ESTABLISHED -j ACCEPT
+
+## 日志(Add Chain)
+LOG 目标可以用来记录匹配某个规则的数据包。和 ACCEPT 或 DROP 规则不同，进入 LOG 目标之后数据包会继续沿着链向下走。
+
+创建 logdrop 链：
+
+	 iptables -N logdrop
+
+定义规则：
+
+	 iptables -A logdrop -m limit --limit 5/m --limit-burst 10 -j LOG
+	 iptables -A logdrop -j DROP
+
+现在任何时候想要丢弃数据包并且记录该事件，只要跳转到 logdrop 链，例如：
+
+	# iptables -A INPUT -m conntrack --ctstate INVALID -j logdrop
+
+使用 -m limit，可以使用 --limit 来设置平均速率或者使用 --limit-burst 来设置起始触发速率。在上述 logdrop 例子中：
+
+	iptables -A logdrop -m limit --limit 5/m --limit-burst 10 -j LOG
+
+添加一条记录所有通过其的数据包的规则。开始的连续10个数据包将会被记录，之后每分钟只会记录5个数据包。
 

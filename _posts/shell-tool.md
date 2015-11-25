@@ -161,9 +161,12 @@ Example:
 	-E, --extended-regexp
 
 	-P perl patterns
+
+## max-count
+
 	-m max-count 匹配次数
 
-other grep:
+## other grep:
 
 	fgrep
 		grep -F

@@ -660,6 +660,7 @@ Example:
 	判断给定的属性是否可以用 for...in 语句进行枚举。
 
 ## value
+
 	Object.prototype.hasOwnValue = function(val) {
 		for(var prop in this) {
 			if(this.hasOwnProperty(prop) && this[prop] === val) {
@@ -770,7 +771,7 @@ Example1，在ES5 中Prototype 可以用来将定义魔法属性，可以实现�
 		//private
 		this.color=color;
 
-		//public
+		//public(prototype)
 		//if (typeof Car._initialized === "undefined") {
 		if (Car._initialized === undefined) {
 			var self = Car;

@@ -623,6 +623,8 @@ strtr — Translate characters or replace substrings
 ## split
 
 	count_chars('ab',1 ); //array(97=>1, 98=>1)
+	| php -r 'var_dump(array_filter(count_chars(file_get_contents("php://stdin"))));'
+	| php -r 'var_dump(count_chars(file_get_contents("php://stdin"))[9]);'
 
 ## repeat
 

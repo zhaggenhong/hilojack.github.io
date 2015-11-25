@@ -331,6 +331,7 @@ Refer to `man mysqladmin`
 	mysqladmin flush-privilege #(alias to reload) 重新加载权限表，当使用了GRANT 或 REVOKE 命令就不需要
 
 #### kill
+
 	mysqladmin start-master #启动主服务器
 	mysqladmin start-slave #启动从服务器
 

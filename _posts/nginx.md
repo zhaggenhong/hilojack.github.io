@@ -2,7 +2,7 @@
 layout: page
 title:	linux nginx 配置
 category: blog
-description: 
+description:
 ---
 # Preface
 nginx是比apache 更先进的web server. 以BSD许可证发布. 内核简洁, 模块强大(与apache不同, 其所有的模块都是静态编译的, 更快). 简单的是nginx接收到http请求后. 当分析到请求是js/css/img等静态资源, 就交给静态资源模块去处理. 如果是php/python等动态资源, 就交给FastCGI去处理.
@@ -10,9 +10,9 @@ nginx是比apache 更先进的web server. 以BSD许可证发布. 内核简洁, �
 > FastCGI = web server 和 动态脚本语言的接口
 
 ## I/O消息通知机制
-Nginx支持epoll(linux系) 和 qkqueue(bsd) 系两种事件通知机制. epoll是linux2.6引入的提高I/O的处理方法, 优点: 单一进程打开的文件描述符(fd)仅受操作系统限制; 采用内存共享以避免内存copy; fd打开的数量的增加, 不会使I/O性能线性下降. 
+Nginx支持epoll(linux系) 和 qkqueue(bsd) 系两种事件通知机制. epoll是linux2.6引入的提高I/O的处理方法, 优点: 单一进程打开的文件描述符(fd)仅受操作系统限制; 采用内存共享以避免内存copy; fd打开的数量的增加, 不会使I/O性能线性下降.
 
-	
+
 ## 多进程
 niginx启动后会有一个master进程(负责接收外界信号并向worker发送信号, 监控worker) 和多个worker进程(一般对应cpu数量)
 
@@ -68,7 +68,7 @@ The [ngx_http_fastcgi_module](http://nginx.org/en/docs/http/ngx_http_fastcgi_mod
 		fastcgi_index index.php;
 
 		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-		
+
 		fastcgi_param QUERY_STRING    $query_string;
 		fastcgi_param REQUEST_METHOD  $request_method;
 		fastcgi_param CONTENT_TYPE    $content_type;
@@ -84,12 +84,12 @@ The [ngx_http_fastcgi_module](http://nginx.org/en/docs/http/ngx_http_fastcgi_mod
 	Default:	—
 	Context:	http, server, location
 
-Makes outgoing connections to a FastCGI server originate from specified ip 
+Makes outgoing connections to a FastCGI server originate from specified ip
 
 #### fastcgi_read_timeout
 
 	Syntax:	fastcgi_read_timeout time;
-	Default:	
+	Default:
 	fastcgi_read_timeout 60s;
 	Context:	http, server, location
 
@@ -97,7 +97,7 @@ Defines a timeout for reading a response from the FastCGI server. The timeout is
 
 #### fastcgi_send_timeout
 	Syntax:	fastcgi_send_timeout time;
-	Default:	
+	Default:
 	fastcgi_send_timeout 60s;
 	Context:	http, server, location
 
@@ -146,16 +146,16 @@ If a directive is specified with if_not_empty (1.1.11) then such a parameter wil
 
 #### fastcgi_buffer_size
 	Syntax:	fastcgi_buffer_size size;
-	Default:	
+	Default:
 	fastcgi_buffer_size 4k|8k;
 	Context:	http, server, location
 
-Sets the size of buffer used for reading the first part of the response received from the FastCGI server. This part usually contains a small response headers. 
+Sets the size of buffer used for reading the first part of the response received from the FastCGI server. This part usually contains a small response headers.
 By default, the size is equal to the size of one buffer set by fastcgi_buffers diretive. It can be made smaller, however.
 
 #### fastcgi_buffering
 	Syntax:	fastcgi_buffering on | off;
-	Default:	
+	Default:
 	fastcgi_buffering on;
 	Context:	http, server, location
 	This directive appeared in version 1.5.6.
@@ -168,7 +168,7 @@ When buffering is disabled, the respones is passed to a client synchronously, im
 
 #### fastcgi_buffers
 	Syntax:	fastcgi_buffers number size;
-	Default:	
+	Default:
 	fastcgi_buffers 8 4k|8k;
 	Context:	http, server, location
 
@@ -176,7 +176,7 @@ Sets the number and size of the buffers used for reading a response from the Fas
 
 #### fastcgi_busy_buffers_size
 	Syntax:	fastcgi_busy_buffers_size size;
-	Default:	
+	Default:
 	fastcgi_busy_buffers_size 8k|16k;
 	Context:	http, server, location
 
@@ -184,7 +184,7 @@ When buffering of responses from the FastCGI server is enabled, limits the total
 
 #### fastcgi_connect_timeout
 	Syntax:	fastcgi_connect_timeout time;
-	Default:	
+	Default:
 	fastcgi_connect_timeout 60s;
 	Context:	http, server, location
 
@@ -200,7 +200,7 @@ By default, nginx does not pass the header fields “Status” and “X-Accel-..
 #### fastcgi_ignore_client_abort
 
 	Syntax:	fastcgi_ignore_client_abort on | off;
-	Default:	
+	Default:
 	fastcgi_ignore_client_abort off;
 	Context:	http, server, location
 
@@ -220,7 +220,7 @@ and the “/page.php” request, the SCRIPT_FILENAME parameter will be equal to 
 
 #### fastcgi_keep_conn
 	Syntax:	fastcgi_keep_conn on | off;
-	Default:	
+	Default:
 	fastcgi_keep_conn off;
 	Context:	http, server, location
 
@@ -228,7 +228,7 @@ By default, a FastCGI server will close a connection right after sending the res
 
 #### fastcgi_max_temp_file_size
 	Syntax:	fastcgi_max_temp_file_size size;
-	Default:	
+	Default:
 	fastcgi_max_temp_file_size 1024m;
 	Context:	http, server, location
 
@@ -237,7 +237,7 @@ When buffering of responses from the FastCGI server is enabled, and the whole re
 #### fastcgi_next_upstream
 
 	Syntax:	fastcgi_next_upstream error | timeout | invalid_header | http_500 | http_503 | http_403 | http_404 | off ...;
-	Default:	
+	Default:
 	fastcgi_next_upstream error timeout;
 	Context:	http, server, location
 
@@ -268,7 +268,7 @@ Passing a request to the next server can be limited by the number of tries and b
 
 #### fastcgi_next_upstream_timeout
 	Syntax:	fastcgi_next_upstream_timeout time;
-	Default:	
+	Default:
 	fastcgi_next_upstream_timeout 0;
 	Context:	http, server, location
 
@@ -277,7 +277,7 @@ Limits the time allowed to pass a request to the next server. The 0 value turns 
 
 #### fastcgi_next_upstream_tries
 	Syntax:	fastcgi_next_upstream_tries number;
-	Default:	
+	Default:
 	fastcgi_next_upstream_tries 0;
 	Context:	http, server, location
 
@@ -297,7 +297,7 @@ Can be used along with the fastcgi_cache_bypass directive.
 
 #### fastcgi_cache
 	Syntax:	fastcgi_cache zone | off;
-	Default:	
+	Default:
 	fastcgi_cache off;
 	Context:	http, server, location
 
@@ -325,7 +325,7 @@ Defines a key for caching.
 
 #### fastcgi_cache_method
 	Syntax:	fastcgi_cache_methods GET | HEAD | POST ...;
-	Default:	
+	Default:
 	fastcgi_cache_methods GET HEAD;
 	Context:	http, server, location
 
@@ -374,14 +374,14 @@ Parameters of caching can also be set directly in the response header. This has 
 
 ### ngx_http_rewrite_module
 The rewrite moude contain these directives: break, if, return, rewrite, rewrite_log, set and so on.
-[rewrite](http://nginx.org/en/docs/http/ngx_http_rewrite_module.html)	
+[rewrite](http://nginx.org/en/docs/http/ngx_http_rewrite_module.html)
 
 #### break
 	Syntax:	break;
 	Default:	—
 	Context:	server, location, if
 
-*Stops* processing the current set of *ngx_http_rewrite_module directives*, 	
+*Stops* processing the current set of *ngx_http_rewrite_module directives*,
 
 If a directive is specified *inside the location*, further processing of the request *continues* in this location.
 Eg:
@@ -396,7 +396,7 @@ Eg:
 			break;#break No.2
 		}
 	}
-	
+
 #### if
 
 	Syntax:	if (condition) { ... }
@@ -405,8 +405,8 @@ Eg:
 	Note: There is a space between if and (
 
 If condition is evaluated as true, the *moudle directives* specified *inside the braces* are executed.
-	
-Configurations inside the if directives are inherited from the previous configuration level.	
+
+Configurations inside the if directives are inherited from the previous configuration level.
 
 A condition may be any of the following:
 
@@ -458,15 +458,15 @@ Static Example:
 Refer: https://gist.github.com/Coopeh/4637216
 
 	set $posting 0; # Make sure to declare it first to stop any warnings
-	 
+
 	if ($request_method = POST) { # Check if request method is POST
 	  set $posting N; # Initially set the $posting variable as N
 	}
-	 
+
 	if ($geoip_country_code ~ (BR|CN|KR|RU|UA) ) { # Here we're using the Nginx GeoIP module to block some spammy countries
 	  set $posting "${posting}O"; # Set the $posting variable to itself plus the letter O
 	}
-	 
+
 	if ($posting = NO) { # We're looking if both of the above rules are set to spell NO
 	  return 403; # If it is then let's block them!
 	}
@@ -481,7 +481,7 @@ Refer: https://gist.github.com/Coopeh/4637216
 
 Stops processing and returns the specified code to a client. The non-standard code 444 closes a connection without sending a response header.
 
-#### rewrite 
+#### rewrite
 Matches a `request URI`
 如果rewrite 与location 同级，无论rewrite 是否在location 前后，rewrite 都优先执行. location 会对rewrite 后的地址做路由
 
@@ -489,7 +489,7 @@ Matches a `request URI`
 	Default:	—
 	Context:	server, location, if
 
-`rewrite` is used to modify `request URI` which is matched against specified Regular Expression(only the PATH part), it is changed as specified in `replacement` string. 
+`rewrite` is used to modify `request URI` which is matched against specified Regular Expression(only the PATH part), it is changed as specified in `replacement` string.
 
 - Old `QUERY_STRING` will be appended with new query in new `request URI`.
 - The ` $request_uri REQUEST_URI` self will be keeped unchanged. We generally coustom `SCRIPT_URL` to store old `request_uri`
@@ -574,10 +574,10 @@ Example 6: the last will cause rematch all locations, so you get `final.php` to 
 
 	rewrite "^/(.*)" /index.php/$1 break;
 	fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;# 不能少!!!! 否则是空的200 OK. 不会执行Php
-	
+
 
 ##### 500 Internal Server Error
-其中一个原因是location 中的rewrite 路径一样， 在以下配置下，如查访问'/same_path', 就会报500. 
+其中一个原因是location 中的rewrite 路径一样， 在以下配置下，如查访问'/same_path', 就会报500.
 
 因为rewrite last 会重新匹配所有的location，这就导致了`cycle location matching`:
 
@@ -596,7 +596,7 @@ If a regular expression includes the “}” or “;” characters, the whole ex
 #### rewrite_log
 
 	Syntax:	rewrite_log on | off;
-	Default:	
+	Default:
 	rewrite_log off;
 	Context:	http, server, location, if
 
@@ -620,7 +620,7 @@ Refer to [ngx_core_module](http://nginx.org/en/docs/ngx_core_module.html)
 ### error_log
 
 	Syntax:	error_log file | stderr | syslog:server=address[,parameter=value] [debug | info | notice | warn | error | crit | alert | emerg];
-	Default:	
+	Default:
 	error_log logs/error.log error;
 	Context:	main, http, server, location
 
@@ -633,7 +633,7 @@ Example:
     #                  '"$http_user_agent" "$http_x_forwarded_for"';
 
 > 默认目录： /usr/share/nginx/logs/error.log
-	
+
 ### access_log
 
 	access_log  logs/access.log  log_format;
@@ -655,7 +655,7 @@ For log format, [refer to](http://nginx.org/en/docs/http/ngx_http_log_module.htm
 ### env
 
 	Syntax:	env variable[=value];
-	Default:	
+	Default:
 		env TZ;
 	Context:	main
 
@@ -678,10 +678,15 @@ nginx 与apache 机制不一样：
 
 	# php-cgi
 	location / {
-	    fastcgi_param APP_ENV production; 
+	    fastcgi_param APP_ENV production;
 	}
 
+如果想在命令行下传SERVER 变量:
+
+	DEBUG=debug var1=var php -r 'echo $_SERVER["DEBUG"],$_SERVER["var1"]; '
+
 ### include
+
 	include mime.types;
 	include vhosts/*.conf;
 
@@ -695,7 +700,7 @@ Specifies the [connection processing method](http://nginx.org/en/docs/events.htm
 
 ### user
 	Syntax:	user user [group];
-	Default:	
+	Default:
 	user nobody nobody;
 	Context:	main
 
@@ -704,7 +709,7 @@ If group is not existed, it would create an error `nginx: [emerg] getgrnam(group
 
 ### worker_aio_requests
 	Syntax:	worker_aio_requests number;
-	Default:	
+	Default:
 	worker_aio_requests 32;
 	Context:	events
 
@@ -712,7 +717,7 @@ When using aio with the epoll connection processing method, sets the maximum num
 
 ### worker_connection
 	Syntax:	worker_connections number;
-	Default:	
+	Default:
 	worker_connections 512;
 	Context:	events
 
@@ -722,7 +727,7 @@ Another consideration is that the actual number of simultaneous connections cann
 
 ### worker_process
 	Syntax:	worker_processes number | auto;
-	Default:	
+	Default:
 	worker_processes 1;
 	Context:	main
 
@@ -745,7 +750,7 @@ Example:
 ### worker_priority
 
 	Syntax:	worker_priority number;
-	Default:	
+	Default:
 	worker_priority 0;
 	Context:	main
 
@@ -760,8 +765,8 @@ The ngx_http_proxy_module module allows passing requests to another server.
 	Default:	—
 	Context:	location, if in location, limit_except
 
-Sets the protocol and address of a proxied server and an `optional URI` to which a location should be mapped. 
-As a protocol, “http” or “https” can be specified. 
+Sets the protocol and address of a proxied server and an `optional URI` to which a location should be mapped.
+As a protocol, “http” or “https” can be specified.
 The address can be specified as a domain name or IP address, and an optional port:
 
 	proxy_pass http://localhost:8000/uri/;
@@ -797,8 +802,8 @@ For proxy `proxy_set_header X-Forwarded-For $remote_addr;`
 	set $allow false;
 	if ($remote_addr ~ " ?127\.0\.0\.1$") {
 	if ($http_x_forwarded_for ~ " ?127\.0\.0\.1$") {
-		set $allow true; 
-	} 
+		set $allow true;
+	}
 	if ($allow = false) {
 		return 403;
 	}
@@ -812,7 +817,7 @@ A request URI is passed to the server as follows:
 		proxy_pass http://127.0.0.1/remote/;//access "http://host/name/act" will be replaced with "http://host/remote/act"
 	}
 
-- If proxy_pass is specified without a URI, 
+- If proxy_pass is specified without a URI,
 the request URI is passed to the server in the *same form* as sent by a client when the original request is processed
 
     proxy_pass http://127.0.0.1;
@@ -828,7 +833,7 @@ You should specify `resolver` instead (in case of proxy loop).
 	#proxy_pass $scheme://$http_host/$request_uri;
 	proxy_pass $scheme://$http_host;
 
-`resolver` will not use `hosts` file.  You can get around this by installing `dnsmasq` and setting your resolver to 127.0.0.1. 
+`resolver` will not use `hosts` file.  You can get around this by installing `dnsmasq` and setting your resolver to 127.0.0.1.
 Basically this uses your local DNS as a resolver, but it only resolves what it knows about (among those things is your /etc/hosts) and forwards the rest to your default DNS.
 > But sadly dnsmasq does not automatically detect changes in hosts file. You have to send HUP
 
@@ -859,7 +864,7 @@ curl -x '127.0.0.1:8888' 'http://hilojack.com/test.php'
 ### keepalive_timeout
 
 	Syntax:	keepalive_timeout timeout [header_timeout];
-	Default:	
+	Default:
 	keepalive_timeout 75s;
 	Context:	http, server, location
 
@@ -877,7 +882,7 @@ The server_name will be matched in following order of precedence:
 1. exact name
 2. *longest wildcard name* starting/ending with an asterisk, e.g. `"*.org", "mail.*"`. These name are invalid `"www.*.hilojack.com"`, `"hilo*.com"`
 2. *a special wildcard name* ".hilojack.com" imply both `"hilojack.com"` and `"*.hilojack.com"` .
-3. *Regular expression names* must start with the tilde character, e.g. `"~^(?<name>\d{1,3}+)\.hilo\.net$"`. 
+3. *Regular expression names* must start with the tilde character, e.g. `"~^(?<name>\d{1,3}+)\.hilo\.net$"`.
 
 Note: A expressioin name contains character "{}" should be quoted.
 
@@ -901,19 +906,19 @@ http://nginx.org/en/docs/http/server_names.html
 	默认值:	—
 	上下文:	http
 
-upstream目前支持 5 种方式的分配 
+upstream目前支持 5 种方式的分配
 
-	1)、轮询（默认） 
-	每个请求按时间顺序逐一分配到不同的后端服务器，如果后端服务器down掉，能自动剔除。 
-	2)、weight 
-	指定轮询几率，weight和访问比率成正比，用于后端服务器性能不均的情况。 
-	3)、ip_hash 
-	每个请求按访问ip的hash结果分配，这样每个访客固定访问一个后端服务器，可以解决session的问题。 
-	4)、fair（第三方） 
-	按后端服务器的响应时间来分配请求，响应时间短的优先分配。 
+	1)、轮询（默认）
+	每个请求按时间顺序逐一分配到不同的后端服务器，如果后端服务器down掉，能自动剔除。
+	2)、weight
+	指定轮询几率，weight和访问比率成正比，用于后端服务器性能不均的情况。
+	3)、ip_hash
+	每个请求按访问ip的hash结果分配，这样每个访客固定访问一个后端服务器，可以解决session的问题。
+	4)、fair（第三方）
+	按后端服务器的响应时间来分配请求，响应时间短的优先分配。
 	5)、url_hash（第三方）
 	按访问的url的hash结果分配，使每个url定向到同一个后端服务器，后端为缓存服务器比较有效。
-	
+
 
 Example:
 
@@ -940,10 +945,10 @@ Example:
 
 upstream 每个设备的状态:
 
-	down 表示单前的server暂时不参与负载 
-	weight 默认为1.weight越大，负载的权重就越大。 
-	max_fails ：允许请求失败的次数默认为1.当超过最大次数时，返回proxy_next_upstream 模块定义的错误 
-	fail_timeout:max_fails 次失败后，暂停的时间。 
+	down 表示单前的server暂时不参与负载
+	weight 默认为1.weight越大，负载的权重就越大。
+	max_fails ：允许请求失败的次数默认为1.当超过最大次数时，返回proxy_next_upstream 模块定义的错误
+	fail_timeout:max_fails 次失败后，暂停的时间。
 	backup： 其它所有的非backup机器down或者忙的时候，请求backup机器。所以这台机器压力会最轻。
 
 #### memcache upstream
@@ -953,7 +958,7 @@ upstream 每个设备的状态:
 		server 10.0.0.2:11211;
 		 keepalive 32;
 	}
-	 
+
 	server {
 		location /memcached/ {
 			set $memcached_key $uri;
@@ -968,7 +973,7 @@ upstream 每个设备的状态:
 		server 127.0.0.1:9000;
 		 keepalive 8;
 	}
-	 
+
 	server {
 		location /fastcgi/ {
 			fastcgi_pass fastcgi_backend;
@@ -985,7 +990,7 @@ upstream 每个设备的状态:
 		server 127.0.0.1:8080;
 		keepalive 16;
 	}
-	 
+
 	server {
 		...
 		location /http/ {
@@ -1043,7 +1048,7 @@ In order to use regular expressions, you must always use a prefix:
 
 Example:
 
-	location ~ "\.png$" { 
+	location ~ "\.png$" {
 		#mathes any query ending with png.
 	}
 
@@ -1074,7 +1079,7 @@ With temporary literal strings(`^~` 可忽略)
 	gzip on;
 	context: http, server
 
-# fastcgi_pass 
+# fastcgi_pass
 
 	Context:	location, if in location
 
@@ -1150,10 +1155,10 @@ Enables or disables the use of asynchronous file I/O (AIO) on FreeBSD and Linux:
 Refer: http://blog.csdn.net/zmj_88888888/article/details/9169227
 
 ## tcp_nopush
-*tcp_nopush* 
+*tcp_nopush*
 	option will make nginx to send all header files in a single packet rather than seperate packets.(when sendfile on)
 
-Enables or disables the use of the `TCP_NOPUSH socket` option on FreeBSD or the `TCP_CORK socket` option on Linux. 	
+Enables or disables the use of the `TCP_NOPUSH socket` option on FreeBSD or the `TCP_CORK socket` option on Linux.
 The options are enabled only when sendfile is used. Enabling the option allows
 
 1. sending the response header and the beginning of a file in one packet, on Linux and FreeBSD 4.*;

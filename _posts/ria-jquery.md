@@ -431,3 +431,6 @@ dom原生的click
 	  console.log( jqxhr.status ); // 200
 	  console.log( "Load was performed." );
 	});
+
+# array
+$.each(data['list'], function(i, item) {
