@@ -46,7 +46,7 @@ description:
 	INDEX indexName(A,B,C)
 		where A;
 		where A and B;
-		where A and B and C;//多列索引基于最左前缀: leftmost prefixing
+		where A and B and C;//多列索引基于最左前缀: leftmost prefixing(注意左索引：一定要匹配类型)
 
 KEY is a synonym for INDEX.
 `PRIMARY KEY` creates a primary key(for real unique?) and an index, `KEY`(column_list) creates an index only.

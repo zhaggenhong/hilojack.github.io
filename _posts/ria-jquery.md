@@ -1,8 +1,8 @@
 ---
 layout: page
-title:	
+title:
 category: blog
-description: 
+description:
 ---
 
 # selector
@@ -11,7 +11,7 @@ description:
 		$('div span')
 		$('#mydiv')
 	$(selector, this)
-		var optionSelected = $("option:selected", this); //you are finding all selector elements inside this's context. 		
+		var optionSelected = $("option:selected", this); //you are finding all selector elements inside this's context.
 	    var valueSelected = this.value;
 
 	//匹配多个元素
@@ -19,7 +19,7 @@ description:
 
 	$('#id')[0];//原生的dom, 非jquery 对象
 
-## find 
+## find
 
 ## find sub node
 
@@ -28,13 +28,13 @@ description:
 
 ### find node via relation
 祖先:
-	父		
+	父
 		.parent();//父节点
 	祖父\曾神父\曾曾祖父...
 		.prents(); //所有父节点
 		.parents('ul'); //所有标签为ul的父节点
 		$('span').parentsUntil('div'); //父节点以div为止, 不含div
-后代: 
+后代:
 	子、
 		$('div').children(); //所有div之下的所有子节点
 		$('parent > child');
@@ -57,6 +57,7 @@ description:
 	$('label ~ input');//匹配位于label 后的所有input
 
 ## filter
+与find 不一样, 它是过滤自己
 
 	$("p").filter(".intro");//类名为intro的p
 	$("p").has(".intro");//类名为intro的p
@@ -65,26 +66,29 @@ description:
 	$('div:has(".intro")')
 	$('div:not(".intro")')
 
+	$('.tr-sms').find('input[name=channel]').filter('[value=1]')
+
 ### via position
 
 	.first() .last()
 	:first :last
 
 	//odd even
-	:odd  :even 
+	:odd  :even
 
 	//eq
 	.eq(index) :eq(index)
 	$("p").eq(0);//第一个p 注意 $('p')[0]拿到的是dom节点, 而不是jquery节点对象数组
 
 	//gt
-	:gt(index) .has('*:gt(0)') 
-	:lt(index) .has('*:lt(0)') 
+	:gt(index) .has('*:gt(0)')
+	:lt(index) .has('*:lt(0)')
 
 ### via attribute
 
 	$('p[attribute]');//select all `<p>` tags that have attribute
 	$('p[attribute="value"]');//equal value
+		$('[name=format]').show();
 	$('p[attribute!="value"]');//not equal value
 	$('p[attribute^="prefix"]');//start with value-prefix
 	$('p[attribute$="subfix"]');//end with value-subfix
@@ -123,7 +127,7 @@ for class:
 	:enabled
 	:image
 
-## create jq node 
+## create jq node
 
 	$('<span></span>')
 
@@ -137,7 +141,7 @@ for class:
 
 # 效果
 
-其中： callback 是当动画100% 完成后，才执行	
+其中： callback 是当动画100% 完成后，才执行
 
 ## hide
 
@@ -223,7 +227,7 @@ $(selector).fadeTo(speed,opacity,callback);
 
 	 $(select).append('hello world!');
 	 $("p").prepend("Some prepended text.");
-	 
+
 	 $("p").prepend(node1, node2, ...);
 
 ## after & before
@@ -250,6 +254,7 @@ $(selector).fadeTo(speed,opacity,callback);
 
 ## Table
 
+### create table 
 	// convert string to JSON
 	response = $.parseJSON(response);
 
@@ -263,6 +268,10 @@ $(selector).fadeTo(speed,opacity,callback);
 			console.log($tr.wrap('<p>').html());
 		});
 	});
+
+### checked
+
+	$("#x" ).prop( "checked", true );
 
 
 # Css
@@ -317,24 +326,24 @@ $(selector).fadeTo(speed,opacity,callback);
 
 	$.ajax(url, {'data':{'post':1}, 'type':"POST", header:{'Origin':'http://wiki.cn'}}
 	).done(function(res){
-			console.log(res);	
+			console.log(res);
 		}
 	)
 	res = $.ajax({
 		url:url,
-		data:data,	
+		data:data,
 		async:false
 	});
 	res = $.ajax({
 		url:url,
-		data:new FormData(document.forms[0]),	
-		type:'POST',	
+		data:new FormData(document.forms[0]),
+		type:'POST',
 		success:function(data, string textStatus, jqXHR jqXHR){}
 	});
 
-1. Setting `processData` to `false` lets you prevent jQuery from automatically transforming the data into a query string. 
-2. It’s imperative that you set the `contentType` option to false, forcing jQuery not to add a `Content-Type` header for you, 
-otherwise, the boundary string will be missing from it. 
+1. Setting `processData` to `false` lets you prevent jQuery from automatically transforming the data into a query string.
+2. It’s imperative that you set the `contentType` option to false, forcing jQuery not to add a `Content-Type` header for you,
+otherwise, the boundary string will be missing from it.
 
 	$.ajax({
 	  url: 'http://example.com/script.php',
@@ -409,7 +418,7 @@ read 只能用于文档, (func 不能为空, 它不能触发ready)
 
 相当于
 
-	document.addEventListener("DOMContentLoaded", function(event) { 
+	document.addEventListener("DOMContentLoaded", function(event) {
 	  //do work
 	});
 

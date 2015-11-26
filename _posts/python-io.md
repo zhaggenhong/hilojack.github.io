@@ -90,3 +90,11 @@ Example:
 			If the file is opened in text mode, only offsets returned by tell() are legal.  Use of other offsets causes undefined behavior.
 
 #### line position
+
+	function seek_line(f, line){
+		f.seek(0);
+		while(line-- >0){
+			f.getline();
+		}
+	}
+
