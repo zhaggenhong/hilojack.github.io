@@ -73,68 +73,6 @@ archlinux 下使用:
 	http://www.clonegoogle.com
 	http://www.gusou.co
 	http://g.ttlsa.com
-	https://g.ttlsa.com
-	http://duckduckgo.com (综合搜索，完全没有隐私问题)
-	http://173.194.14.53
-	http://209.116.186.231
-	http://210.242.125.83
-	http://209.85.225.80
-	http://203.116.165.225 (暂时挂了)
-	https://scholar.glgoo.com/
-	https://xie.lu/
-	https://wen.lu/
-	https://g.conn.cc/
-	http://google.0zv.net/
-	https://www.sssis.com/
-	http://www.googlestable.com/
-	http://laoshandaoshi.so/scholar/?hl=en
-	http://www.gfsoso.com
-	http://www.google.co.jp
-	http://www.glgoo.com
-	http://www.gfsswy.com
-	http://209.85.228.22
-	http://www.google.ca
-	http://www.google.co.kr
-	http://www.google.co.uk
-	http://www.google.de
-	http://www.886404.com
-	http://www.clonegoogle.com
-	http://www.google.co.in
-	http://g.ttlsa.com
-	http://www.google.fr
-	http://www.google.ru
-	http://209.85.228.42
-	http://www.sssis.com
-	http://www.google.ro
-	http://www.google.co.th
-	http://search.aol.com
-	http://webcache.googleusercontent.com
-	http://g.openibm.com
-	http://guge.io
-	http://www.google.it
-	http://www.google.pl
-	http://www.google.es
-	http://208.187.128.27
-	http://61.19.1.101
-	http://74.125.214.133
-	http://translate.google.co.in
-	http://209.116.186.212
-	http://64.233.167.165
-	http://110.232.86.15
-	http://173.194.1.13
-	http://64.233.167.166
-	http://www.xiexingwen.com
-	http://g.pwfee.com
-	http://210.242.125.83
-	http://www.googleforchina.com
-	http://www.baigoogledu.com
-	http://www.clonegoogle.com
-	http://so.chongbuluo.com
-	http://repigu.com
-	http://hi18.cn
-	http://www.gso8.com
-	http://www.gfsswy.com
-	http://g.pwfee.com
 
 ## VPN
 方法一：
@@ -184,6 +122,9 @@ Query site's ip:
 - 1. http://just-ping.com/
 - 2. http://whatismyipaddress.com/
 - 3. PingInfoView (software)
+
+# citrix
+http://wiki.open.qq.com/index.php?title=%E8%B7%B3%E6%9D%BF%E6%9C%BA%E7%99%BB%E5%BD%95%E8%AF%B4%E6%98%8E&oldid=22191#.E4.BD.BF.E7.94.A8Linux.E8.B7.B3.E6.9D.BF.E6.9C.BA.E7.99.BB.E5.BD.95.E5.88.B0Linux.E5.BA.94.E7.94.A8.E6.9C.8D.E5.8A.A1.E5.99.A8.E7.9A.84.E6.AD.A5.E9.AA.A4
 
 # openvpn
 

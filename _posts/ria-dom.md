@@ -24,48 +24,67 @@ description:
 
 ### 窗口
 
-	//窗口位置 (0,22)
+窗口位置 (0,22)
+
 	screenX = screenLeft, screenY = screenTop (窗口左上角点在整个屏幕的位置)
 
-	//窗口内外宽/高
+窗口内宽/高
+
 	window.innerWidth, window.innerHeight;
 	//Same to
 	document.documentElement.clientWidth, document.documentElement.clientHeight
-
 	897,731
+
+窗口外宽/高
+
 	window.outerWidth, window.outerHeight 当前页面可视区的外宽/高(含边界)
 	1177,826
 
-### 页面/Element
+### 页面/Element(width height)
+![dom-offset](/img/ria-dom-offset.gif)
+
 页面的长度不受屏幕窗口限制，如果超出窗口宽高，只能通过下拉查看整个页面
 
-	//不含 scrollBar, border, and margin.
+不含border, and margin.(clientWidth)
+
 	ele.clientWidth, ele.clientHeight; //As ele.style.width, ele.style.height
 	document.body.clientWidth .clientHeight body本身的宽/高
 
-	//不含margin.
+含border: offsetWidth = clientWidth + (clientLeft + cleintRight(没有)).
+
 	ele.offsetWidth, ele.offsetHeight;
 	document.body.offsetWidth .offsetHeight 同上
 
-	//全部
+含border + margin
+
 	document.body.scrollWidth .scrollHeight
 	960,11473	 11473 = 10742+731
 		body.scrollHeight(固定) >= document.body.scrollTop(变化) + window.innerHeight
 		body.scrollWidth(固定) >= document.body.scrollLeft(变化) + window.innerWidth
 
-	//滚动偏移
+#### 偏移
+
+##### 滚动偏移
+
 	ele.scrollLeft, ele.scrollTop
 	document.body.scrollLeft .scrollTop	正文滚动的偏移
 		window.scrollTo(left,top);
 		window.scroll(left,top);
 		window.scrollBy(offsetX,offsetY)
 
-	//left,top 偏移
-	ele.offsetLeft, ele.offsetTop; //ele.style.left, ele.style.top 相对偏移
+##### 相对偏移
+offsetLeft,offsetTop 相对偏移
 
-#### 根据窗口的(innerWidth,innerHeight) 查询element
-	document.elementFromPoint(500,300)
+1. offsetLeft = left + margin(left)
+2. clientLeft = the width of left border
 
+	ele.offsetLeft, ele.offsetTop; //ele.style.left, ele.style.top 也是相对偏移不过带有字符串"px"
+	$(this).offset().left; $(this).offset().top;
+
+##### touch 偏移
+
+	 var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+	 touchOriginY = touch.pageY;
 
 #### 查找元素在窗口的位置
 
@@ -91,6 +110,11 @@ description:
 		return pos;
 	}
 
+##### 根据窗口的(innerWidth,innerHeight) 查询element
+
+	document.elementFromPoint(500,300)
+
+
 
 ## location
 
@@ -109,10 +133,12 @@ redirect:
 	location.href;//simulate click
 
 ## history
+
 	history.back() //history.go(-1)
 	history.forward() // history.go(1)
 
 ## cookie
+
 	document.cookie = 'a=1;expires='+d.toGMTString()
 	function getCookie(k){
 		c=document.cookie;

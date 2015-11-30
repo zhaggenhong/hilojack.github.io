@@ -1,8 +1,8 @@
 ---
 layout: page
-title:	
+title:
 category: blog
-description: 
+description:
 ---
 # Preface
 css/html5/js 兼容表
@@ -16,7 +16,7 @@ http://caniuse.com/
 width 也会受单词的影响，所以你还需要加上
 
 	word-break: break-all;
-	
+
 # color
 在计算机中经常使用rgb 三原色来表示所有的颜色。在做艺术设计时，经常使用另一种更多允观的HSL或者HSV 来表示。对于HSL 来说，
 
@@ -27,7 +27,7 @@ width 也会受单词的影响，所以你还需要加上
 对于HSL(h,s,l)来说, 如果色相本身对应(hr,hg,hb):
 
 	r = 50%+(hr-50%)*s + {-50% + s*(hr-50%) } *[(l-50%)/50%]
-	  = 2 * {l + [s*(hr-0.5)+0.5] - l*[s*(hr-0.5)+0.5]} -1
+	r = 2 * {l + [s*(hr-0.5)+0.5] - l*[s*(hr-0.5)+0.5]} -1
 	g = 2 * {l + [s*(hg-0.5)+0.5] - l*[s*(hg-0.5)+0.5]} -1
 	b = 2 * {l + [s*(hb-0.5)+0.5] - l*[s*(hb-0.5)+0.5]} -1
 
@@ -37,13 +37,16 @@ width 也会受单词的影响，所以你还需要加上
 
 ![Have](/img/ria.color.hue.png)
 
+# html5
+<meta name="viewport" content="width=640">
+
 # 位置
 
 ## margin
 
 	Inherited: no
 
-边距: 
+边距:
 1. 两边间中距离, 取大边中的最大margin为实际margin.
 2. 如果当前元素是float-right, 那么以margin-right为准, 而非margin-left.
 3. 如果当前元素是float, 则margin就是距离其下元素的border外沿的距离.
@@ -52,12 +55,18 @@ width 也会受单词的影响，所以你还需要加上
 
 	Inherited: no
 	position:
-		static; 默认
+		static; 默认(left/top 不生效)
 		relative; 以static为基准
 		absolute; 以所在元素左上角为基准
 		fixed; 以窗口左上角为基准,不受鼠标滚动影响
 
 		如果父结点为relative/absolute则以父结点为基准
+
+### height
+
+	height:100%; 要起作用的话，就得使 position: absolute;
+
+padding border 都不占用width height
 
 ### middle window
 
@@ -77,7 +86,7 @@ width 也会受单词的影响，所以你还需要加上
 	  position:absolute;
 	  top:50%;
 	  left:50%;
-	  margin-top:-50px; /* this is half the height of your div*/  
+	  margin-top:-50px; /* this is half the height of your div*/
 	  margin-left:-100px; /*this is half of width of your div*/
 	}
 
@@ -109,10 +118,12 @@ CSS3 被划分为模块。 其中最重要的 CSS3 模块包括：
 - 用户界面
 
 # opacity透明度
+
 	opacity: 0~1
 	background: rgba(red,green,blue,opacity);
 
 # background
+
 	background:url x y no-repeat;//xy表示位置, 左上角是(0,0)
 	background:rgba/hsla;
 
@@ -133,7 +144,8 @@ CSS3 被划分为模块。 其中最重要的 CSS3 模块包括：
 		50% 50%;放缩
 
 ## background-position(位置)
- 	background-position: 
+
+ 	background-position:
 		center center;//x y
 		left;//x y
 
@@ -150,7 +162,8 @@ CSS3 被划分为模块。 其中最重要的 CSS3 模块包括：
 	background-repeat: no-repeat;
 	background-attachment: fixed; //do not scroll with the page
 
-# input 
+# input
+
 	input[type="submit"] {
 		background: limegreen;
 		color: black;
@@ -158,6 +171,7 @@ CSS3 被划分为模块。 其中最重要的 CSS3 模块包括：
 	}
 
 # boder
+
 	border-radius: 11px;//圆角半径
 	box-shadow: 2px 4px 6px 8px #ccc;
 	box-shadow: x  y 模糊值 延伸值 #ccc;//模糊值不能为负
@@ -172,12 +186,14 @@ box-shadow: h-shadow v-shadow blur spread color inset;
 	inset: 内部显示
 
 ## boder-image
+
 	border-image: url top right bottom left  repeat|initial|inherit;
 	object.style.borderImage="url(border.png) 30 30 round"
 	 repeat|initial|inherit;
 		round: 平铺 改变大小 整数个
 		repeat	重复	不改变大小
 		stretch		拉伸	改变大小 1个
+
 ## border-color
 	color 颜色
 	initial 默认值
@@ -192,7 +208,7 @@ set column width:
 ## border
 
 	合并间隔
-	border-collapse: collapse 
+	border-collapse: collapse
 
 # About Text
 
@@ -213,15 +229,15 @@ set column width:
 		normal	按单词换行.长单词不换行 (initial)
 	white-space: 控制空白(空格, 回车, 长句换行), 注意,它会控制长句换行, 但是不会影响单词换行
 		//忽略回车
-		nowrap; 合并空格| 忽略回车 | 长句不拆行 
-		normal; 合并空格| 忽略回车 | 长句要拆行 
+		nowrap; 合并空格| 忽略回车 | 长句不拆行
+		normal; 合并空格| 忽略回车 | 长句要拆行
 		//回车换行
-		pre;	不合空格| 回车换行 | 长句不拆行 
-		pre-wrap;不合空格| 回车换行 | 长句要拆行 
-		pre-line;合并空格| 回车换行 | 长句要拆行 
+		pre;	不合空格| 回车换行 | 长句不拆行
+		pre-wrap;不合空格| 回车换行 | 长句要拆行
+		pre-line;合并空格| 回车换行 | 长句要拆行
 
 ## overflow
-overflow 控制元素内容不超出元素本身width/height. 
+overflow 控制元素内容不超出元素本身width/height.
 
 	overflow:
 		hidden;
@@ -280,13 +296,13 @@ Refer to http://www.qianduan.net/css-content-counter-increment-counter-reset.htm
 	font-weight:
 		normal bold 100 200
 	font-style:
-		normal	italic 
+		normal	italic
 
 # transform(2D)
 	-webkit-transform:
 		rotate(30deg); 顺时针30度旋转
-		rotateX(); 
-		rotateY(); 
+		rotateX();
+		rotateY();
 		translate(xpx, ypx); 移动
 		scale(2, 4); 水平扩大两倍, 垂直扩大4倍
 		skew(30deg,20deg) 围绕 X 轴把元素倾斜 30 度，围绕 Y 轴倾斜 20 度。//-webkit-transform-origin:0px 0px ;倾斜的基点
@@ -385,7 +401,7 @@ CSS3 过渡是元素从一种样式逐渐改变为另一种的效果。
 
 # 用户界面属性：
 
-1. resize 
+1. resize
 1. box-sizing
 1. outline-offset
 
@@ -393,7 +409,7 @@ CSS3 过渡是元素从一种样式逐渐改变为另一种的效果。
 box-sizing 属性允许您以确切的方式定义适应某个区域的具体内容。
 
 	<head>
-		<style> 
+		<style>
 			div.container {
 				width:30em;
 				border:1em solid;
@@ -428,16 +444,16 @@ outline-offset 属性对轮廓进行偏移，并在超出边框边缘的位置�
 
 	Formal grammar: linear-gradient(  [ <angle> | to <side-or-corner> ,]? <color-stop> [, <color-stop>]+ )
 									  \---------------------------------/ \----------------------------/
-										Definition of the gradient line         List of color stops  
+										Definition of the gradient line         List of color stops
 
 						  where <side-or-corner> = [left | right] || [top | bottom]
 							and <color-stop> = <color> [ <percentage> | <length> ]?
 	linear-gradient( 45deg, blue, red );           /* A gradient on 45deg axis starting blue and finishing red */
-	linear-gradient( to left top, blue, red);      /* A gradient going from the bottom right to the top left starting blue and 
+	linear-gradient( to left top, blue, red);      /* A gradient going from the bottom right to the top left starting blue and
 													  finishing red */
 
-	linear-gradient( 0deg, blue, green 40%, red ); /* A gradient going from the bottom to top, starting blue, being green after 40% 
-													  and finishing red */ 
+	linear-gradient( 0deg, blue, green 40%, red ); /* A gradient going from the bottom to top, starting blue, being green after 40%
+													  and finishing red */
 
 
 

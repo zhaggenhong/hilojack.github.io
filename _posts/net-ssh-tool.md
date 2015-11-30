@@ -2,7 +2,7 @@
 layout: page
 title:	linux ssh
 category: blog
-description: 
+description:
 ---
 # Preface
 管理多台ssh 可以参考[pssh](/p/linux-pssh)
@@ -92,7 +92,6 @@ From remote to local
 
 	# recursive download
 	$scp -r user@your.server.example.com:/path/to/dir /home/user/Desktop/
-	
 
 从本地到远端：
 
@@ -109,7 +108,8 @@ From remote to local
 ## connect
 
 	ssh username@host -p port
-	ssh -v verbose
+		-v verbose
+		-T Disable pseudo-tty allocation(for test)
 
 ### connect X server
 假设我们正坐在一台装有 Linux 系统， 叫做 linuxbox 的机器之前，且系统中运行着 X 服务器，现在我们想要在名为 remote-sys 的远端系统中 运行 xload 程序，但是要在我们的本地系统中看到这个程序的图形化输出。我们可以这样做：
@@ -123,7 +123,7 @@ From remote to local
 
 ## excute command
 
-	ssh user@host bash < my.sh $1 $2 
+	ssh user@host bash < my.sh $1 $2
 	ssh user@host 'cat file.txt; ls'
 	//host 后的所有参数会作为cmd 发给远程服务器，所以不用加引号
 	ssh user@host cat file.txt; ls
@@ -140,7 +140,7 @@ From remote to local
 	$ ssh-keygen -t rsa
 	//or
 	$ ssh-keygen -t rsa -P "passwd" -f ~/.ssh/id_rsa -C 'x@qq.com'
-	
+
 	# 改变权限，必须
 	chmod 700 ~/.ssh
 	cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys

@@ -51,6 +51,7 @@ get filetype:
 
 	:echom expand('%')					"relative path
 	:echom expand('%:p')				"absolute path
+	:echom expand('~/.vimrc')				"absolute path
 	:echom fnamemodify('foo.txt', ':p') "Absolute path
 
 :h filename-modifiers:

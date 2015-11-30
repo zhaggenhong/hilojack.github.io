@@ -223,19 +223,30 @@ $(selector).fadeTo(speed,opacity,callback);
 		(index: " + i + ")";
 	});
 
-## append & prepend
+## insertBefore insertAfter
+newNode.insertBefore(oldNode)
 
-	 $(select).append('hello world!');
-	 $("p").prepend("Some prepended text.");
+	$( "<p>Test</p>" ).insertBefore( "#main" );
+	//move h1 node
+	$( "h1" ).insertBefore( "#main" );
+	//clone h1 node
+	$( "h1" ).clone().insertBefore( "#main" );
 
-	 $("p").prepend(node1, node2, ...);
-
-## after & before
-在行踪元素后面, 或者开头添加节点, 相当于:
+oldNode.before(node1,node2,...)
 
 	$("img").after("Some text after");
 	$("img").after(node1, node2, ...);
 	$("img").before("Some text before");
+
+## prepend & append
+newNode.prependTo(oldNode)
+
+	newNode.appendTo(oldNode)
+
+oldNode.prepend(node1, node2, ...)
+
+	 $(select).append('hello world!');
+	 $("p").prepend("<img src='xxx'>");
 
 ## remove & empty
 
@@ -254,7 +265,7 @@ $(selector).fadeTo(speed,opacity,callback);
 
 ## Table
 
-### create table 
+### create table
 	// convert string to JSON
 	response = $.parseJSON(response);
 
@@ -359,6 +370,29 @@ otherwise, the boundary string will be missing from it.
 		alert(data);
 	  }
 	});
+
+### hooks
+The callback hooks provided by $.ajax() are as follows:
+
+1. beforeSend
+	callback option is invoked; it receives the jqXHR object and the settings object as parameters.
+1. error
+	callback option is invoked, if the request fails. It receives the jqXHR, a string indicating the error type, and an exception object if applicable. Some built-in errors will provide a string as the exception object: "abort", "timeout", "No Transport".
+1. dataFilter
+	callback option is invoked immediately upon successful receipt of response data. It receives the returned data and the value of dataType, and must return the (possibly altered) data to pass on to success.
+1. success
+	callback option is invoked, if the request succeeds. It receives the returned data, a string containing the success code, and the jqXHR object.
+1. Promise
+	callbacks — .done(), .fail(), .always(), and .then() — are invoked, in the order they are registered.
+1. complete
+	callback option fires, when the request finishes, whether in failure or success. It receives the jqXHR object, as well as a string containing the success or error code
+
+	$.ajaxSetup({success:function(data){
+		if(data.errno === -9 && data.url){
+			location.href = data.url;
+		}
+
+	}});
 
 # noConflict
 
