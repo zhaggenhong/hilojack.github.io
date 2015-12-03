@@ -50,6 +50,11 @@ description:
 	⌦	Delete forward	U+2326
 	﹖⃝	Help	U+003F & U+20DD
 
+map:
+
+	Insert: fn+return
+	Alt+Insert: fn + alt/option + return
+
 # Alfred2.0
 如果需要以下功能
 - 更方便快捷的打开任意程序，

@@ -136,6 +136,8 @@ Example:
 
 	$b = array_column([['a'=>1,'b'=>2], ['a'=>3,'b'=>4]],'b');
 	print_r($b); //[2, 4]
+	$b = array_column([['a'=>1,'b'=>2], ['a'=>3,'b'=>4]],'b', 'a');
+	[1=>2, 3=>4]
 
 ## 统计频度
 
@@ -490,6 +492,10 @@ simpleXML
 
 	bool fnmatch('*.weibo.cn', $host, FNM_CASEFOLD);//Caseless match
 
+## csv
+
+	str_getcsv("a,b\n\n");//忽略\n
+
 ## preg
 
 	preg_quote('\\1'); \1 -> \\1
@@ -657,6 +663,7 @@ strtr — Translate characters or replace substrings
 ## 统计字符
 
 ### substr_count
+
 	substr_count
 
 ### count_chars

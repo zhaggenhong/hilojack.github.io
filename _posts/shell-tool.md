@@ -388,7 +388,7 @@ join multiple line:
 	split -b 100k file pre_hilo
 	cat pre_hilo* > file
 
-	split -l3 -d -a 2 a.txt pre-
+	split -l3 -d -a 2 a.txt profile-
 
 # other
 m4：简单的宏处理器

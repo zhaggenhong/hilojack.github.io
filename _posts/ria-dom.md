@@ -391,7 +391,7 @@ Example 浮层:
 	//显式所有的
 　　element.style.cssText
 
-# Dom Event
+# Event
 
 ## 一般事件
 
@@ -403,7 +403,7 @@ Example 浮层:
 	onmousedown、onmouseup
 	onfocus
 
-### input
+### input,change
 
 	input.addEventListener('input', function(){})
 

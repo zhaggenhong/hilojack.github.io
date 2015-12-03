@@ -8,6 +8,23 @@ description:
 css/html5/js 兼容表
 http://caniuse.com/
 
+# flex
+todo:
+	阮一峰
+Flex box现在越来越流行
+
+	flex:
+		 initial; 自适应
+
+	.parent{ display:flex;}
+	.children1{ flex:1;}
+	.children2{ flex:2;} //宽度自适应 比例2
+
+# lib
+
+## bootstrap
+http://getbootstrap.com/getting-started/
+
 # autosize
 如果想让网页宽度等于屏幕宽度（width=device-width），原始缩放比例（initial-scale=1）为1.0，即网页初始大小占屏幕面积的100%。
 
@@ -37,6 +54,25 @@ width 也会受单词的影响，所以你还需要加上
 
 ![Have](/img/ria.color.hue.png)
 
+
+# 响应式设计(Responsive Design)
+http://zh.learnlayout.com/media-queries.html
+
+	@media screen and (min-width:600px) {
+	  nav {
+		float: left;
+		width: 25%;
+	  }
+	  section {
+		margin-left: 25%;
+	  }
+	}
+	@media screen and (max-width:599px) {
+	  nav li {
+		display: inline;
+	  }
+	}
+
 # html5
 <meta name="viewport" content="width=640">
 
@@ -57,7 +93,7 @@ width 也会受单词的影响，所以你还需要加上
 	position:
 		static; 默认(left/top 不生效)
 		relative; 以static为基准
-		absolute; 以所在元素左上角为基准
+		absolute; 以所在父元素(position!=static)左上角为基准
 		fixed; 以窗口左上角为基准,不受鼠标滚动影响
 
 		如果父结点为relative/absolute则以父结点为基准
@@ -405,8 +441,26 @@ CSS3 过渡是元素从一种样式逐渐改变为另一种的效果。
 1. box-sizing
 1. outline-offset
 
-## resize
-box-sizing 属性允许您以确切的方式定义适应某个区域的具体内容。
+
+## inline-block
+请使用 inline-block 而不是float
+http://zh.learnlayout.com/inline-block-layout.html
+
+可以使用 inline-block 来布局。有一些事情需要你牢记：
+
+1. vertical-align 属性会影响到 inline-block 元素，你可能会把它的值设置为 top 。
+1. 你需要设置每一列的宽度
+1. 如果HTML源代码中元素之间有空格，那么列与列之间会产生空隙
+
+
+## box-sizing
+
+	box-sizing: 
+		border-box;
+			width = width + pad + border
+		content-box:
+
+box-sizing 属性允许您以确切的方式定义width 是否包含padding + border
 
 	<head>
 		<style>
@@ -415,7 +469,7 @@ box-sizing 属性允许您以确切的方式定义适应某个区域的具体内
 				border:1em solid;
 			}
 			div.box {
-				box-sizing:border-box;// 不加的话, box不会并列.
+				box-sizing:border-box;// 不加的话, box不会并列(默认width+border>50%)
 				width:50%;height:100px;
 				border:1em solid red;
 				float:left;
@@ -429,6 +483,13 @@ box-sizing 属性允许您以确切的方式定义适应某个区域的具体内
 			<div class="" style=" background: blue; height: 100px; clear: left; ">abc</div>
 		</div>
 	</body>
+
+float 使得block 变成漂浮(不过z-index 不变哦)滑块, div 不会被撑大，除非有：`clear:both` 或者`文字`撑大
+
+	clear: both
+		清理float 的漂浮动，但是不扩充div 高宽度
+	div .clear: overflow: auto
+		清理本div 内的float 的漂浮，且填扩充div 高宽度
 
 ## outline-offset
 outline-offset 属性对轮廓进行偏移，并在超出边框边缘的位置绘制轮廓。
@@ -455,21 +516,15 @@ outline-offset 属性对轮廓进行偏移，并在超出边框边缘的位置�
 	linear-gradient( 0deg, blue, green 40%, red ); /* A gradient going from the bottom to top, starting blue, being green after 40%
 													  and finishing red */
 
-
-
-# flex
-Flex box现在越来越流行
-
-	.parent{ display:flex;}
-	.children1{ flex:1;}
-	.children2{ flex:2;} //宽度自适应 比例2?
-
 # Reference
 - [matrix]
 - [css animation]
 - [cubic-bezier]
+- [css-book]
+- [css-book-zh]
 
-
+[css-book]: http://learn.shayhowe.com/advanced-html-css/performance-organization/#strategy-structure
+[css-book-zh]: http://zh.learnlayout.com/box-model.html
 [matrix]: http://www.zhangxinxu.com/wordpress/2012/06/css3-transform-matrix-%E7%9F%A9%E9%98%B5/
 [css animation]:http://www.ruanyifeng.com/blog/2014/02/css_transition_and_animation.html
 [cubic-bezier]: http://yiminghe.iteye.com/blog/1762706

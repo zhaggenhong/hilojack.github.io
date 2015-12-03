@@ -1,8 +1,8 @@
 ---
 layout: page
-title:	
+title:
 category: blog
-description: 
+description:
 ---
 # Preface
 
@@ -25,12 +25,13 @@ The ngx_http_core_module module supports embedded variables with names matching 
 		nginx: $fastcgi_script_name , 这可以被 rewrite 改写, 以上path 都会变
 			/a/b/c/
 		REQUEST_URI(query) 则不会变
-		
+
     SCRIPT_URI = HTTP_HOST+path 可能为空
         http://hilojack.com/a/b/c/
     REQUEST_URI = path + QUERY_STRING
 		nginx: $request_uri
         /a/b/c/?test=1
+
 其它:
 
 	$_SERVER['OLDPWD']

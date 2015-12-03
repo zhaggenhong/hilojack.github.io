@@ -1,19 +1,19 @@
 ---
 layout: page
-title: intellij 使用简介	
+title: intellij 使用简介
 category: blog
-description: 
+description:
 ---
 # Preface
 在vim/netbeans中混迹了数年后，终于还是投奔到idea的门下了。原因：
 
-- intellij idea 原生支持emacs keymap. 
+- intellij idea 原生支持emacs keymap.
 - 足够的扩展性。vim 虽然扩展性很强，但并非是无限扩展的。它很难做到：search and replace in project 时，弹出一个search results 的树形图，然后让你用鼠标勾选要替换的文件; 也很难做到copy image from system clipboard. 而现代的ide 原生就支持替换时的树形图显示. 较vim有更优秀，更稳定的插件支持(比如vim 的插件支持就很鸡肋: 1. vim ftp://host/path 会遇到各种环境问题 2. 有些ftp插件是用expect实现的，需要处理大量的异常字符串 或许有更好的ftp插件，可惜我没有找到). 虽然它的扩展性没有vim/emacs强，但绝对够用。
 - intellij 的设置窗口非常人性化: 一个`Cmd+,`就呼出来的，一目了然。
 - vim 自身的历史遗留问题：map不支持<C-1>， <C-A-char> , 在terminal vim 中这个问题可以通过修改键映射keycodes+fastcodes解决, 但是gvim/macvim无法修改keycodes
 - vim 不支持Gui 菜单,gvim/macvim 也只是少量的支持（大多数用户用不到，但是有些情况点击菜单还是挺高效直观的）
 - 强悍的开发环境不存在IDE太慢的问题，再说了intellij 本性的性能就不错
-- IDE更易学：几乎没有学习的时间成本(针对优秀的IDE, 主要就是IDEA), 点击菜单比`:h doc`好学多了！而且intellij本身就支持大部分emacs操作，不用再学别的快捷键了。你不用特别的学习emacs 按键的，你只需要学习下readline, readline在整个mac体系下是通用的。 
+- IDE更易学：几乎没有学习的时间成本(针对优秀的IDE, 主要就是IDEA), 点击菜单比`:h doc`好学多了！而且intellij本身就支持大部分emacs操作，不用再学别的快捷键了。你不用特别的学习emacs 按键的，你只需要学习下readline, readline在整个mac体系下是通用的。
 
 > 我并没有在intellij上吊死，写小文件和博客时，我就用vim, 现在也在深度用emacs.
 
@@ -21,17 +21,17 @@ description:
 https://www.jetbrains.com/phpstorm/help/directories-used-by-phpstorm-to-store-settings-caches-plugins-and-logs.html
 Library//App
 
-	Configuration 
+	Configuration
 	~/Library/Preferences/<PRODUCT><VERSION>
-			
-	Caches 
+
+	Caches
 	~/Library/Caches/<PRODUCT><VERSION>
-			
-	Plugins 
+
+	Plugins
 	~/Library/Application Support/<PRODUCT><VERSION>
 	~/Library/Application\ Support/WebIde80/
-			
-	Logs 
+
+	Logs
 	~/Library/Logs/<PRODUCT><VERSION>
 
 # preperty-read
@@ -93,7 +93,7 @@ variable.php:
 	class ClassA{
 	/**
 	 * @return ClassName
-	 * @return static 
+	 * @return static
 	 * @return static object
 	 */
 	  static function __construct(){
@@ -107,12 +107,12 @@ variable.php:
 
 # java project
 
-1. new project 
+1. new project
 2. java EE
 3. sdk: /Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk or /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/ or /Library/Java/Home(link)
 4. in project structure
 	Project: sdk 1.7 + out
-	module: 
+	module:
 		soruce tab:
 			set source dir(src)
 		dependence:
@@ -131,21 +131,21 @@ structure:
 
 # Refactor
 php提供了很强大的重构支持, `Ctrl+Shift+Alt+T` 即可弹出重构选项
-	
+
 ## rename
 选择任意一个变量/类名, 然后按`Shift+F6` 即可完成对其的重构
 
 ## change signature
 如果你想为调整函数/方法的参数顺序，或者增加新的参数，那就可以在函数定义处按`Ctrl+F6`. 重构后，所有调用此函数的代码都会被同步更新（你可以在确认重构前点preview）.
- 
+
 # Terminal
 	Alt+F12
 
-# view 
+# view
 
 	alt+Shift+c recent changes
 	Ctrl+Shift+E recent changed files
-	
+
 ## theme主题
 
 	Ctrl+`	 (view->switch scheme)
@@ -175,8 +175,8 @@ deployment 可以通过 右键项目文件呼出(前提是你成功配置了ftp 
 
 	Tools->deployment->configruation->Browse Remote host 可打目录，支持拖放文件上传/下载
 
-右键项目compare with .. 
-右键项目sync with .. 
+右键项目compare with ..
+右键项目sync with ..
 
 # Laravel Plugin
 http://blog.jetbrains.com/phpstorm/2015/01/laravel-development-using-phpstorm/
@@ -222,7 +222,7 @@ http://blog.jetbrains.com/phpstorm/2015/01/laravel-development-using-phpstorm/
 
 code style - php
 
-## select 
+## select
 
     Ctrl+Alt+w
         select word
@@ -236,16 +236,17 @@ code style - php
 	Cyclic expand word Shift+alt+/
 
 ### navigation
+
 	goto line Alt+G
 
 ### find(search) / replace
 
 	Cmd+F find next
 	Shift+Cmd+F find previous
-	
+
 	Ctrl+Shift+F find in project
 	Ctrl+Shift+R replace in project
-		
+
 ### tab
 
 	Command + Left/Right switch tab
@@ -265,9 +266,9 @@ code style - php
 #### move caret
 移动光标
 
-	Ctrl+[  move caret to code block start 
+	Ctrl+[  move caret to code block start
 	Ctrl+Shift+[  move to caret code block start (with selection)
-	Ctrl+]  move caret to code block end 
+	Ctrl+]  move caret to code block end
 	Ctrl+Shift+]  move to caret code block end (with selection)
 
 ### file
@@ -329,7 +330,14 @@ code style - php
 Open `Project Window`, right click and select `Mark Directory as` and `Excluded` from project.
 
 # html
+
 	快速查看样式：在HTML标签上进行右键，选择Show Applied Styles For Tag
+
+## z-coding
+> help z-coding on internet.
+
+	ul.nav>li*5>a
+
 
 # Path
 

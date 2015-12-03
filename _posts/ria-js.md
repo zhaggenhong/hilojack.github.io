@@ -2,7 +2,7 @@
 layout: page
 title:	js notes
 category: blog
-description: 
+description:
 ---
 # Preface
 本文参考: [](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript)
@@ -78,11 +78,11 @@ use strict参考：阮一峰 http://www.ruanyifeng.com/blog/2013/01/javascript_s
 
 	str = new String('xx');
 	str.func = function(f){
-		f();	
+		f();
 	}
 	str.anonymousFunc = function(){
 		this.func(function(){console.log(this)});
-			
+
 	}
 	str.anonymousFunc()
 
@@ -112,7 +112,7 @@ global -> caller -> callback(anonymous)
 		callback();
 	}
 	function caller(){
-		var v="I'm caller"; 
+		var v="I'm caller";
 		call(function(){console.log(v)});
 	}
 	caller();//I'm caller
@@ -124,7 +124,7 @@ global -> caller -> callback(anonymous)
 		console.log(v);
 	}
 	function caller(){
-		var v="I'm caller"; 
+		var v="I'm caller";
 		call();
 	}
 	caller();//I'm global
@@ -202,19 +202,19 @@ global -> caller -> callback(anonymous)
 		arr.sort(function(a,b){return a-b;});//自定义排序
 
 	操作方法:
-		
+
 		[0,1].concat(2,[3,4]);//返回数组[0,1,2,3,4];
 		arr.slice(start,[end]);//范围不含end本身,end可为负数,
 		arr.splice(start,[length]);//返回删除范围
 		arr.splice(start,length,val1,val2,....);//返回删除范围,并插入数据
 
 	位置方法:
-		
+
 		['aa','bb','cc'].indexOf('aa');//0 找不到就返回-1
 		['aa','bb','cc','aa'].lastIndexOf('aa');//3 找不到就返回-1
 
 	迭代方法:
-		
+
 		.every(func);//每一项运行给定函数都返回true,结果才返回true. //func= function(item,index,array){}; array是对数组本身的引用
 		.some(func);//只要其中一项运行指定函数时返回true,结果就返回true.
 		.filter(func);//返回运行为true item组成的数组
@@ -243,12 +243,12 @@ global -> caller -> callback(anonymous)
 
 	$d = new Date("October 13, 1975 11:13:00");
 	$d = new Date(miliseconds);
-	
+
 	//date & time
 	Date(); 		"Mon Apr 28 2014 23:25:02 GMT+0800 (CST)"
 	.toString(); 	"Mon Apr 28 2014 23:25:02 GMT+0800 (CST)"
 	.toUTCString();	"Mon, 28 Apr 2014 15:25:02 GMT" //UTC & GMT 是一样的(除了精度上有区别)
-	.toGMTString();	"Mon, 28 Apr 2014 15:25:02 GMT" 
+	.toGMTString();	"Mon, 28 Apr 2014 15:25:02 GMT"
 	.toLocaleString(); "4/28/2014 11:25:02 PM"
 
 	//date part
@@ -351,7 +351,7 @@ short:
 ### split
 支持regexp
 
-	stringObject.split(separator,[maxSize]); 
+	stringObject.split(separator,[maxSize]);
 	'1,2,3,4,5'.split(',', 3);//[1,2,3]
 	'1,2,3,4,5'.split(/,/);//[1,2,3,4,5]
 
@@ -404,7 +404,7 @@ short:
 			function(mathStr, first, second, ...){return replace;}
 
 eg:
-	
+
 	//reference
 	'funing smoking '.replace(/(\w+)ing/g, '$1');// "fun smok "
 	//func
@@ -450,18 +450,18 @@ Create RegExp：
 ### comile
 
 	r.compile(/\d/); //改变正则表达式
-	
+
 ### exec
 
 	str=' 1ing 2ing 3ing';
 	r=/\d(ing)/igm;
 	while((match = r.exec(str)) !== null){
 		console.log(match,r.lastIndex);
-		//第1次输出 ["1ing", "ing", index: 1, input: " 1ing 2ing 3ing"] 5 
+		//第1次输出 ["1ing", "ing", index: 1, input: " 1ing 2ing 3ing"] 5
 		//第2次输出 ["2ing", "ing", index: 6, input: " 1ing 2ing 3ing"] 10
 		//第3次输出 ["3ing", "ing", index: 11, input: " 1ing 2ing 3ing"] 15
 	}
-	
+
 ## Func
 这里罗列的是顶层函数（全局函数）
 
@@ -525,30 +525,30 @@ Create RegExp：
 null == undefined 可相等.
 
 但它们与false/true/0 都不能相等
-	null==0 //return false	
-	undefined==0 //return false	
-	undefined==false //return false	
-	
+	null==0 //return false
+	undefined==0 //return false
+	undefined==false //return false
+
 
 # 运算符
 
 ## 一元
 	delete variable
-	delete obj.name 
+	delete obj.name
 
 ## Bits Operation 位运算
 
 	num & num
-	num | num	
+	num | num
 	~num 取反
 	num ^ num	//xor
 	#位移
 	1<<2 # 1<<34 == 1<<2
 	#有符号右移(高位1不会变)
-	a=1<<31; 
+	a=1<<31;
 	a>>32 === a>>0 === a;
 
-	#无符号右移(高位1会变成0),输出无符号数 
+	#无符号右移(高位1会变成0),输出无符号数
 	a
 	-2147483648
 	a>>>0
@@ -574,18 +574,18 @@ null == undefined 可相等.
 				0 && NaN //return 0
 	var || var
 		逻辑 OR 运算并不一定返回 Boolean 值(同上)
-		
+
 # 语句
 
 ## 迭代
 	for(i in obj){obj[i]...} // PropertyIsEnumerable
-	for(i=0;i<5;i++){...} 
+	for(i=0;i<5;i++){...}
 
 # Function 函数
 
 ## anonymous func
 You can define a anonymous function via named function:
-Example: 
+Example:
 
 
 	//factorial
@@ -664,7 +664,7 @@ Example:
 	Object.prototype.hasOwnValue = function(val) {
 		for(var prop in this) {
 			if(this.hasOwnProperty(prop) && this[prop] === val) {
-				return true;   
+				return true;
 			}
 		}
 		return false;
@@ -679,7 +679,7 @@ Example1，在ES5 中Prototype 可以用来将定义魔法属性，可以实现�
 
 	Number.prototype = Object.defineProperty(
 	  Number.prototype, "double", {
-		get: function (){return (this + this)} 
+		get: function (){return (this + this)}
 	  }
 	);
 	(3).double;//6
@@ -719,15 +719,15 @@ Example1，在ES5 中Prototype 可以用来将定义魔法属性，可以实现�
 ## 定义对象的模式
 
 ### 工厂方式(deprecated)
-工厂方式的点是: 
+工厂方式的点是:
 1. 每次new factory 都会创建单独的函数
 2. 太复杂
-	
+
 	function factory(v1, v2){
 		obj = new Object();
 		obj.param1 = v1;
 		obj.param2 = v2;
-		obj.func = function(){}; 
+		obj.func = function(){};
 		return obj;
 	}
 	obj = factory(1,2)
@@ -743,7 +743,7 @@ Example1，在ES5 中Prototype 可以用来将定义魔法属性，可以实现�
 		this.func = function(){}; //为避免重复的func, 可在外部定义
 	}
 	obj = new constructor(1,2)
-	
+
 ### 原型方式(deprecated)
 没有工厂方法的缺点，但产生了新的缺点：
 
@@ -754,7 +754,7 @@ Example1，在ES5 中Prototype 可以用来将定义魔法属性，可以实现�
 	Car.prototype.color = "blue";
 	Car.prototype.showColor = function() {
 	  alert(this.color);
-	};	
+	};
 	(new Car) instanceof Car;//true;
 	(new Car) instanceof Object;//true;
 	(new Car) instanceof Number;//false;
@@ -787,7 +787,7 @@ Example1，在ES5 中Prototype 可以用来将定义魔法属性，可以实现�
 
 ### 对象冒充
 ClassB 继承 ClassA
-	
+
 	function ClassA(color){
 		this.color = color;
 	}
@@ -799,7 +799,7 @@ ClassB 继承 ClassA
 		this.method = ClassA1; //ClassB就冒充了ClassA1中的this(可以多重继承的)
 		this.method(num);
 		delete this.method;
-		
+
 		this.color = value; //Notice; 会覆盖前面的属性. 请确保属性名不冲突
 	}
 	new ClassB('red', 5);
@@ -840,7 +840,7 @@ apply与call方法类似, 除了参数调用形式不一样.
 	obj.color = "blue";
 
 	sayColor.apply(obj, new Array("The color is ", "a very nice color indeed."));
-		
+
 #### apply 实现继承.
 
 	function ClassB(sColor, sName) {
@@ -863,7 +863,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 ### 原型链（prototype chaining）
 用prototype 对象去继承.
 缺点: 不能控制被继承类的传参(一般都不会传参数)
-	
+
 	function ClassA() {
 	}
 
@@ -879,7 +879,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 
 ### 混合方式
 对象冒充: 不能冒充静态成员(prototype public)
-原型链: 因为prototype 是公共的, 所以传argument(private)就不合适了.故产生了apply/call + 原型的混合方式. 
+原型链: 因为prototype 是公共的, 所以传argument(private)就不合适了.故产生了apply/call + 原型的混合方式.
 
 	function ClassA(color) {
 		this.color = color;
@@ -895,7 +895,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 		var self = ClassB;
 		if( self.init === undefined){
 			self.init = true;
-			//self.prototype = new ClassA(); //1. 原型链冒充 原类的静态成员(prototype). 最好别传new ClassA(sColor),因为sColor应该是每个对象私有的. 
+			//self.prototype = new ClassA(); //1. 原型链冒充 原类的静态成员(prototype). 最好别传new ClassA(sColor),因为sColor应该是每个对象私有的.
 			self.prototype = Object.create(ClassA.prototype)
 		}
 		ClassA.call(this, sColor);// 2. 再冒充ClasA对象.

@@ -2,29 +2,29 @@
 layout: page
 title:	linux 下的各种日志
 category: blog
-description: 
+description:
 ---
 # Preface
 linux 下有很多日志，有的是系统级的，有的是应用程序级的. 本文只总结系统级日志。
 
 # 连接时间
 与连接时间相关的日志文件有（binary）:
-1. /var/log/wtmp 
+1. /var/log/wtmp
 2. /var/run/utmp
 
 w/who/finger/id/last/lastlog/ac 都是通过分析以上日志得到信息的。
 
-	# who -- display who is logged in 
+	# who -- display who is logged in
 	$ who
 
 	# w -- display who is logged in and what they are doing
-	$ w 
+	$ w
 	18:24  up 1 day,  8:34, 1 user, load averages: 1.32 1.30 1.33
 	USER     TTY      FROM              LOGIN@  IDLE WHAT
 	hilojack console  -                Wed09   32:33 -
 
 	# ac -- display connect-time accounting
-	$ ac -p 
+	$ ac -p
 	root         0.14
 	hilojack  7514.36
 	total     7514.50
@@ -34,10 +34,10 @@ w/who/finger/id/last/lastlog/ac 都是通过分析以上日志得到信息的。
 监控所有进程的操作
 
 	# 开启进程统计日志监控 enable/disable system accounting
-	$ accton /var/account/pacct 
+	$ accton /var/account/pacct
 
 	#  lastcomm -- show last commands executed in reverse order
-	$ lastcomm 
+	$ lastcomm
 	vim               S     root     pts/0      0.03 secs Thu Oct 30 18:34
 	lastcomm                root     pts/0      0.00 secs Thu Oct 30 18:34
 
@@ -54,6 +54,27 @@ syslog 主要有两种，rsyslog 和 syslog-ng( rsyslog is an alternative logger
 
 On mac osx: /var/log/system.log (man syslog)
 
+## facility and priority
+facility和priority对应本地syslog服务的”消息来源“（facility）和”紧急程度“（priority），下面会讲到，这两参数通过syslog的配置文件决定log写入到哪个文件中。
+
+	$ cat /etc/syslog.conf
+	local4.info            /var/log/test.log
+	*.info　　　　　　　　　　/var/log/message
+	auth,authpriv.*         /var/log/auth.log
+	*.info;mail.none;authpriv.none;cron.none /var/log/messages
+
+`*.info` 意味着info(7) 及info以上的(notie,warning,...) 都会被记录
+`;mail.none` 带分号标识、以及`none` 意味着这些facility 都不会被记录
+
+	none		-1
+	LOG_EMERG   0   /* system is unusable */
+	LOG_ALERT   1   /* action must be taken immediately */
+	LOG_CRIT    2   /* critical conditions */
+	LOG_ERR     3   /* error conditions */
+	LOG_WARNING 4   /* warning conditions */
+	LOG_NOTICE  5   /* normal but significant condition */
+	LOG_INFO    6   /* informational */
+	LOG_DEBUG   7   /* debug-level messages */
 
 ## php syslog
 Php default syslog's facility is "user" (and cannot be changed)
@@ -67,7 +88,7 @@ Example:
 	syslog(LOG_INFO,'info throw out by hilojack');
 	closelog();
 
-如果`local4.* /var/log/messages`, 那么错误就会出现在/var/log/messages.
+如果`local4.* /var/log/messages`, 那么local4 来源的所有级别消息会出现在/var/log/messages.
 
 	Mar 18 14:03:51 hilojack.air ident-php: errors throw out by hilojack
 	Mar 18 14:03:51 hilojack.air ident-php: info throw out by hilojack
@@ -85,6 +106,7 @@ facility=daemon 默认在`/var/log/messages`
 	daemon.*	/var/log/messages
 
 ## start/stop syslog/rsyslog
+
 	service rsyslog start
 	chkconfig --level 2345 rsyslog on
 
@@ -94,7 +116,7 @@ facility=daemon 默认在`/var/log/messages`
 实际启动的是 /sbin/syslogd 这个守护进程
 
 ## syslog 配置
-它的配置文件默认是: 
+它的配置文件默认是:
 1. /etc/syslog.conf 或者 /etc/rsyslog.conf (for rsyslog)
 2. /etc/sysconfig/syslog # (for old syslogd)
 
@@ -111,27 +133,27 @@ facility=daemon 默认在`/var/log/messages`
 	# Log all kernel messages to the console.
 	# Logging much else clutters up the screen.
 	#kern.*                                                 /dev/console
-	
+
 	# Log anything (except mail) of level info or higher.
 	# Don't log private authentication messages!
 	*.info;mail.none;authpriv.none;cron.none                /var/log/messages
-	
+
 	# The authpriv file has restricted access.
 	authpriv.*                                              /var/log/secure
-	
+
 	# Log all the mail messages in one place.
 	mail.*                                                  -/var/log/maillog
-	
-	
+
+
 	# Log cron stuff
 	cron.*                                                  /var/log/cron
-	
+
 	# Everybody gets emergency messages
 	*.emerg                                                 *
-	
+
 	# Save news errors of level crit and higher in a special file.
 	uucp,news.crit                                          /var/log/spooler
-	
+
 	# Save boot messages also to boot.log
 	local7.*                                                /var/log/boot.log
 
@@ -168,23 +190,23 @@ logrotate是基于CRON来运行的，其脚本是「/etc/cron.daily/logrotate」
 	exit 0
 
 实际运行时，Logrotate会调用配置文件「/etc/logrotate.conf」：
-	
+
 	# see "man logrotate" for details
 	# rotate log files weekly
 	weekly
-	
+
 	# keep 4 weeks worth of backlogs
 	rotate 4
-	
+
 	# create new (empty) log files after rotating old ones
 	create
-	
+
 	# uncomment this if you want your log files compressed
 	#compress
-	
+
 	# RPM packages drop log rotation information into this directory
 	include /etc/logrotate.d
-	
+
 	# no packages own wtmp -- we'll rotate them here
 	/var/log/wtmp {
 	    monthly
@@ -192,7 +214,7 @@ logrotate是基于CRON来运行的，其脚本是「/etc/cron.daily/logrotate」
 	    create 0664 root utmp
 	    rotate 1
 	}
-	
+
 	# system-specific logs may be also be configured here.
 
 ### 例子

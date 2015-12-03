@@ -88,6 +88,10 @@ For example:
     //not equal to
     ! ( expr1 expr2 )
 
+# inode
+
+	-inum n
+
 # match path
 
 ## -regex
