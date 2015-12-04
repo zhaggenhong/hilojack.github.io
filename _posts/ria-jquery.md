@@ -429,6 +429,10 @@ The callback hooks provided by $.ajax() are as follows:
 	.on( 'click mouserover' [, selector ] [, data ], handler(eventObject) )
 	//Attach an event handler function for one or more events to the selected elements.
 
+### on document
+
+	$(document).on('change', '.btn-file :file', function() {})
+
 ### Trigger Event
 不带参数时，就会触发事件(除了ready)
 
@@ -457,14 +461,19 @@ read 只能用于文档, (func 不能为空, 它不能触发ready)
 	});
 
 ## Del Event
+
+### unbind specify event listener
+
 	$('p').unbind('click');
 	$('p').attr('onclick','').unbind('click');
-
-
 
 dom原生的click
 
 	$('p')[0].click();//dom 自己的click
+
+### remove all listener
+
+	.off()
 
 # loadJs
 

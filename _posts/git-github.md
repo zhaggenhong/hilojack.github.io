@@ -30,6 +30,9 @@ http://www.jianshu.com/p/c69deb29720d
 
 # Continuous integration(CI)
 
+## github ci tool
+https://github.com/integrations/feature/build
+
 ## travis
 A hosted continuous integration service for the open source community
 

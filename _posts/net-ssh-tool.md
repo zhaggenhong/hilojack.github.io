@@ -111,6 +111,11 @@ From remote to local
 		-v verbose
 		-T Disable pseudo-tty allocation(for test)
 
+指定使用哪个密钥(public key)
+
+		ssh -i ~/.ssh/deploy-key -T git@github.com
+		ssh -i ~/.ssh/id_rsa.pub  -T git@github.com
+
 ### connect X server
 假设我们正坐在一台装有 Linux 系统， 叫做 linuxbox 的机器之前，且系统中运行着 X 服务器，现在我们想要在名为 remote-sys 的远端系统中 运行 xload 程序，但是要在我们的本地系统中看到这个程序的图形化输出。我们可以这样做：
 

@@ -2,7 +2,7 @@
 layout: page
 title:	ria module
 category: blog
-description: 
+description:
 ---
 # Preface
 本文参考阮一峰的: [js 模块化](http://www.ruanyifeng.com/blog/2012/10/javascript_module.html)
@@ -27,11 +27,11 @@ description:
 	module = (function(){
 		var count=1;
 		var incr = function(){
-			return ++count;	
+			return ++count;
 		}
 		return {incr:incr};
 	})();
-	module.count=100;
+	module.count=100;//和内部count 不同
 	module.incr();
 	module.incr();
 
@@ -41,7 +41,7 @@ description:
 	module = (mod = function(){
 		var count=1;
 		mod.incr = function(){
-			return ++count;	
+			return ++count;
 		}
 		return mod;
 	})();
@@ -86,13 +86,13 @@ node.js的模块系统，就是参照CommonJS规范实现的。在CommonJS中，
 AMD 规范采用异步加载模块，加载不影响后面的语句运行。AMD 也使用require 加载模块，但是它不同于CommonJS, 它需要两个参数：
 
 	require([module], callback);
-	
+
 Example:
 
 	require(['math'], function(math){
 		math.add(2,3);//异步
 	});
-	
+
 主要有两个Javascript库实现了AMD规范：require.js和curl.js。
 
 # RequireJs

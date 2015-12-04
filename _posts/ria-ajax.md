@@ -34,7 +34,7 @@ Detect Ajax：
 
 	$GLOBALS['HTTP_RAW_POST_DATA']
 
-## ajax jquery
+## ajax get post
 For html5, emulate jquery ajax
 
 	function request(type, url, opts, callback) {
@@ -128,7 +128,7 @@ http://www.sitepoint.com/html5-javascript-file-upload-progress-bar/
 
 	<progress max="100" value="0"></progress>
 
-# AJAX FormData
+# FormData
 > 上传文件时，不能用 xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 > 而必须使用默认的: Content-Type:multipart/form-data; boundary=----WebKitFormBoundaryfyRdj8roosVVWIsH
 
@@ -160,7 +160,7 @@ Add form listener:
 > here is an demo:
 http://stackoverflow.com/questions/166221/how-can-i-upload-files-asynchronously
 
-## Ajax FormData Jquery
+## FormData Jquery
 
 	$.ajax({
 		url: '/admin/banlance/sendbanlance?act=addTask',

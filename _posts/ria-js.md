@@ -132,6 +132,7 @@ global -> caller -> callback(anonymous)
 # Condition Expression
 
 	switch(n) { case 1: code break;}
+	带类型匹配
 
 # Variable
 
