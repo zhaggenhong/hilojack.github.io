@@ -2,7 +2,7 @@
 layout: page
 title:	mysql 索引
 category: blog
-description: 
+description:
 ---
 # Preface
 
@@ -18,13 +18,13 @@ description:
 # Data Index Type
 > http://stackoverflow.com/questions/12813363/what-is-the-difference-between-a-candidate-key-and-a-primary-key
 
-1. Primary Key: 
+1. Primary Key:
 	对数据对象唯一标识和完整标识的列. Primary Key 属于Candidate Key.  Each Candidate Key can qualify as Primary Key. Only one CK can be PK
 2. Candidate Key:
 	某关系变量的一组属性的集合，且同时满足：1.属性集合能确保在关系中能唯一标识元组，2. 在这个属性集合中找不出合适的子集满足条件
 3. SuperKey:
 	某关系变量的一组属性的集合，且同时满足：属性集合能确保在关系中能唯一标识元组. 所以候选键Candidate Key是最小超键SuperKey。
-	
+
 在数据库中，超键(SuperKey) 包含候选键(Candidate Key), 候选键包含主键(Primary Key)
 
 外键Foreign Key: 连接两表之间的关系属性或者属性集合，通常是主键属性。
@@ -73,16 +73,16 @@ Either UK or PK is a column or group of columns that can identify a uniqueness i
 PK is a special UK.
 
 	email char(6) UNIQUE;
-	UNIQUE(column_list); //The default  key_name is the first column in column_list 
+	UNIQUE(column_list); //The default  key_name is the first column in column_list
 	UNIQUE key_name(column_list);
 
 	drop index `key_name`;//drop index and unique has same syntax
 
-By Default: 
+By Default:
 
 1. Null: PK is not null but UK allows nulls(Note: By Default), so UK may not be unique.
-1. Unique: There can only be one and only one PK on a table but there can be multiple UK's 
-1. Clustered index: PK creates a `Clustered index` and UK creates a `Non Clustered Index`. 
+1. Unique: There can only be one and only one PK on a table but there can be multiple UK's
+1. Clustered index: PK creates a `Clustered index` and UK creates a `Non Clustered Index`.
 1. Candidate: UK may not be candidate key(Because it may be not unique)
 
 *Clustered Index* 就是数据内容本身是stored in order, 因为是有序的，所以范围查询(id>100, group by, etc.)、倒序查询都非常的高效
@@ -118,7 +118,7 @@ Technically, MySQL full-text search engine performs the following steps when the
 
 To use query expansion, use `with query expansion` search modifier in the `against()` function:
 
-	SELECT column1, column2 FROM table1 WHERE 
+	SELECT column1, column2 FROM table1 WHERE
 		MATCH(column1,column2) AGAINST('keyword',WITH QUERY EXPANSION)
 
 *Example*
@@ -223,6 +223,30 @@ EXAMPLE:
 
 # 索引原则
 
+## 索引自动选择
+> http://ourmysql.com/archives/108?f=wb
+
+如果id 是主键，program_id 是主键
+这张表大约容量30G，数据库服务器内存16G，无法一次载入。就是这个造成了问题。 
+会有以下问题
+
+	select * from program_access_log where program_id between 1 and 4000
+		先通过索引文件找出了所有program_id在1到4000范围里所有的id，这个过程非常快.
+			再通过id 查找记录，但是id 是离散的，所以mysql对这个表的访问不是顺序读取。
+
+	select * from program_access_log where id between 1 and 500000 and program_id between 1 and 4000
+		ID一到五十万和Program_id一到四千，因为program_id范围小得多，mysql选择它做为主要索引。
+		同上
+
+解决：
+1. 分表
+2. 分区(mysql > 5.x)
+3. 使用id
+
+	select * from program_access_log where id between 1 and 500000 and program_id between 1 and 15000000
+
+现在program_id的范围远大于id的范围，id被当做主要索引进行查找，由于id是主键，所以查找的是连续50万条记录，速度和访问一个50万条记录的表基本一样
+
 ## 最左前缀匹配原则
 1. mysql会一直向右匹配直到遇到范围查询(>、<、between、like)就停止匹配，比如a = 1 and b = 2 and c > 3 and d = 4 如果建立(a,b,c,d)顺序的索引，d是用不到索引的，如果建立 联合索引index(a,b,d,c) 则都可以用到，a,b,d的顺序可以任意调整。
 2. =和in可以乱序，比如`a = 1 and b = 2 and c = 3 ` 建立`index(a,b,c)`索引可以任意顺序，mysql的查询优化器会帮你优化成索引可以识别的形式
@@ -245,7 +269,7 @@ EXAMPLE:
 
 	show index from table_name;
 
-## explain 
+## explain
 用explain 获取mysql 如何query, 如何join(联结)，怎样的顺序join 参考：
 http://dev.mysql.com/doc/refman/5.5/en/explain-output.html
 

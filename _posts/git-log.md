@@ -1,18 +1,25 @@
 ---
 layout: page
-title:	
+title:
 category: blog
-description: 
+description:
 ---
 # Preface
 
 	#commit log
 	git log
 
+# filter log
+
 ## sepecify branch
+1. `^` means not in
+1. `A..B` means from A to B(exclude A)
 
 	git log [repo/]branch
+	git log banch1 branch2 #show commits that both in branch1 and branch2
 	git log ^banch1 branch2 #show commits that are not in branch1 but in branch2
+	git log banch1 ^branch2 #show commits that are not in branch2 but in branch1
+	git log banch1..branch2 #show commits that are not in branch2 but in branch1
 
 Remember that your clone of the repository will update its state of any remote branches only by doing git fetch. You can't connect directly to the server to check the log there, what you do is download the state of the server with git fetch and then locally see the log of the remote branches.
 
@@ -22,18 +29,13 @@ Perhaps another useful command could be:
 
 which will show you the commits that are in the remote branch, but not in your current branch (HEAD).
 
-## show merges
-
-	git log --merges //Print only merge commits. This is exactly the same as --min-parents
-	git log --no-merges //Do not print commits with more than one parent. This is exactly the same as --max-parents=1.
-
-## --not
+### --not
 
 	git log <branch> --not <branch2> //show commits of <branch> that not in <branch2>(since <branch2>), same as git log branch ^branch2
 
-## show reflog
+## filter file
 
-	git log -g
+	git log -p filename
 
 ## limit
 
@@ -42,6 +44,7 @@ which will show you the commits that are in the remote branch, but not in your c
 
 ### --since(--after)
 
+	//after 2 weeks ago
 	--since=2.weeks
 	--since='2 years ago'
 
@@ -49,24 +52,40 @@ which will show you the commits that are in the remote branch, but not in your c
 
 	--since, --after
 	--until, --before
-	--auther='hilojack'
+	--author='hilojack'
 	--committer
 	--no-merges
-	--all-match 
+	--all-match
 
-##	diff info 
+# info
 
-	#'-p' general diff patch
-	git log -p -2
-	#'--stat' general diffstat
-	git log --stat -2
+## show reflog
 
-## list file
+	git log -g
+
+## show merges
+
+	git log --merges //Print only merge commits. This is exactly the same as --min-parents
+	git log --no-merges //Do not print commits with more than one parent. This is exactly the same as --max-parents=1.
+
+## file info
+
+### list file
 like svn log -v
 
 	git log -1 --name-only
 	git log -1 --name-status
 	git log -1 --stat
+
+list all merge file: -m
+
+	git log -1 -m --stat
+	git log -m -1
+
+### file patch
+
+	#'-p' general diff patch
+	git log -p -2 [filename]
 
 ## format(--format)
 
@@ -83,7 +102,7 @@ like svn log -v
 		%ad author date
 		%ar author date(relative)
 		%cn committer name(relative)
-		%s subject 
+		%s subject
 
 ### other
 
@@ -95,32 +114,24 @@ like svn log -v
 	--relative-date
 	--pretty //same as --format
 
-## merge log
--m:
-
-	git log -m -1
-
 ## log context
 
 	-U<n>, --unified=<n>
            Generate diffs with <n> lines of context instead of the usual three
 
 
-# shorlog
+# other log
 
-	git shortlog [<object>] 
+## shortlog
+
+	git shortlog [<object>]
 	git shortlog <object> --not <object>
 
-# git reflog
+## git reflog
 引用日志：HEAD指向的日志
-	
+
 	git reflog //same as `git log -g`
 	c19cfa7 HEAD@{0}: commit: add css:blockquote
 	64c86f6 HEAD@{1}: commit: add a line
 	git show HEAD@{2}
-
-# git show
-show info about <object>
-
-	git show <object> //U could specify a tag or a commit as an object
 

@@ -1,8 +1,8 @@
 ---
 layout: page
-title:	
+title:
 category: blog
-description: 
+description:
 ---
 # Preface
 
@@ -18,7 +18,7 @@ For instance, to see the difference for a file "main.c" between now and two comm
 	$ git diff HEAD^^..HEAD -- main.c
 	$ git diff HEAD~2 HEAD -- main.c
 
-> The .. isn't really necessary, though it'll work with it (except in fairly old versions, maybe). 
+> The .. isn't really necessary, though it'll work with it (except in fairly old versions, maybe).
 > The -- is useful e.g. when you have a file named -p
 
 Equal:
@@ -28,7 +28,7 @@ Equal:
 	HEAD~3
 	//refer to # revision
 
-## git show 
+## git show
 git show specify commit
 
 	git show aa73513
@@ -44,7 +44,7 @@ where you only need to include enough of the SHA to identify the commits. You ca
 
 shows *what operations were done* to the files too
 
-	git diff --name-status [TAG|SHA1] 
+	git diff --name-status [TAG|SHA1]
 
 ## difftool
 
@@ -61,9 +61,9 @@ shows *what operations were done* to the files too
 
 	## diff working & commit
 	git diff HEAD
-	git diff HEAD ./lib # diff sub-dir between working & HEAD 
-	git diff branch1 //diff current branch based on branch1 
-	git diff branch1 feature//diff feature based on branch1 
+	git diff HEAD ./lib # diff sub-dir between working & HEAD
+	git diff branch1 //diff current branch based on branch1
+	git diff branch1 feature//diff feature based on branch1
 
 ### diff 2 branch
 
@@ -84,7 +84,7 @@ shows *what operations were done* to the files too
 	E
 	D
 	# 这种情形下,log命令的一个常用参数是--left-right,它会显示每个提交到底处于哪一 侧的分支
-	$ git log --left-right master...experiment 
+	$ git log --left-right master...experiment
 	<F
 	<E
 	>D
@@ -114,10 +114,17 @@ Example:
 	"two commit
 	git d origin/dev main/master -- mis/src/model/signcheck.php
 
-## diff option
+## diff files
 
 	#--stat just print statistic
 	git diff master..branch1 --stat
+
+show merged files
+
+	git diff -m --stat
+
+## check option
+
 	#check white space at the end of line
 	git diff --check
 

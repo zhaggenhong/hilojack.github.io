@@ -41,7 +41,7 @@ TIMESTAMP 比较特殊，`默认`的INSERT 或者UPDATE 会触发时间更新为
 	TIMESTAMP;
 	TIMESTAMP not null;
 
-设置了default 后，仅当insert 是才更新时间:
+设置了default 后，仅当insert 是才更新时间为default 对应的值:
 
 	TIMESTAMP null; //insert 时, 会被更新为NULL
 	TIMESTAMP DEFAULT CURRENT_TIMESTAMP; //insert 时, 会被更新为当前的时间

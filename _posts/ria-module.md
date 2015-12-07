@@ -19,13 +19,13 @@ description:
 	obj = {count:1, incr:function(){return ++this.count;}};
 	obj.incr();
 
-但是以上两种定义方法的成员变量会受到污染，比如count 是全局的.
+但是以上两种定义方法的成员变量会受到污染，比如`mod.count` 是暴露的.
 
 ## 使用匿名函数生成对象的局部变量：
 通过定义一个匿名函数，创建一个"私有"的命名空间
 
 	module = (function(){
-		var count=1;
+		var count=1;//局部变量与函数
 		var incr = function(){
 			return ++count;
 		}
@@ -35,7 +35,7 @@ description:
 	module.incr();
 	module.incr();
 
-简化下对象封装：
+简化下对象封装`mod.*` 写法：
 
 	var count = 200;
 	module = (mod = function(){
@@ -49,8 +49,6 @@ description:
 	module.incr();
 	module.incr();
 
-> 这种写法的问题是mod 是全局的
-
 ## 放大模式
 如果一个模块很大，必须分成几个部分，或者一个模块需要继承另一个模块，这时就有必要采用"放大模式"（augmentation）。
 
@@ -60,7 +58,7 @@ description:
 			return count++;
 		};
 		return mod;
-	})(module || {});
+	})(window.module || {});//之所以加{}，是因为window.module 可能因为module.js 延迟加载，而没有值. 这叫宽松加载
 	module.count=100;
 	module.incr();
 

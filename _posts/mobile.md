@@ -2,7 +2,7 @@
 layout: page
 title:	Sth. About China Mofile
 category: blog
-description: 
+description:
 ---
 # Preface
 之所以起这个标题纯是因为吐槽 -- 中移动网站的用户体验性还是太烂了, 而且资费实在是太复杂了. 以至于我不得不做一个笔记来理解这个事情.
@@ -60,11 +60,16 @@ JF到10086查询您当前的积分
 
 
 # 关于10086短信码
+
 	0000 统一查询也退订
 	ktfcjq0755 两城一家漫游优惠,已经废除
 	cxll	查询流量
 	cxtfgnzt	查询特服功能状态
+	qxlltc 取消10/20/30元数据流量套餐
 
+60分钟国内漫游免费通话时长(当月申请，下月生效)
+	兑换积分：1000分
+	短信申请代码：JFHB798
 
 
 # 关于ip拨号

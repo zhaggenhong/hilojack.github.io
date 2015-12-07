@@ -491,6 +491,22 @@ float 使得block 变成漂浮(不过z-index 不变哦)滑块, div 不会被撑�
 	div .clear: overflow: auto
 		清理本div 内的float 的漂浮，且填扩充div 高宽度
 
+## float
+float 会受到自身`margin`同样基于margin 准则
+
+	margin 是定义border 外边界之间的距离
+	如果两元素的margin 距离定义重合，则取最大margin
+
+float 块的margin 是在不浮动块的基础上叠加的：margin-top = 50px + 45px
+
+	<div style="width: 100%;height: 50px;background: yellow;float:left;"></div>
+	<div style="margin-top: 45px; "></div>
+
+如果div 的height 为0，则距离是值与其相邻元素的最小min(margin-top,margin-botom....)
+
+	<div style="margin-top: 100px; "></div>
+	<div style="margin-top: 45px; height:1px"></div>
+
 ## outline-offset
 outline-offset 属性对轮廓进行偏移，并在超出边框边缘的位置绘制轮廓。
 	轮廓不占用空间
