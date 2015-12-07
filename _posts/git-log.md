@@ -35,7 +35,8 @@ which will show you the commits that are in the remote branch, but not in your c
 
 ## filter file
 
-	git log -p filename
+	git log filename
+
 
 ## limit
 
@@ -83,9 +84,26 @@ list all merge file: -m
 	git log -m -1
 
 ### file patch
+via -p
 
 	#'-p' general diff patch
 	git log -p -2 [filename]
+
+via gitk
+
+	gitk [filename]
+
+via blame:
+To show what revision and author last modified each line of a file(single file):
+
+	git blame filename
+	git gui blame filename
+
+### follow all file history
+
+	git --follow -p -- filename
+	 --follow
+	  Continue listing the history of a file beyond renames (works only for a single file).
 
 ## format(--format)
 
@@ -106,13 +124,17 @@ list all merge file: -m
 
 ### other
 
-	--graph //brach log info
 	--shortstat
 	--name-only
 	--name-status //file list
 	--abbrev-commit
 	--relative-date
 	--pretty //same as --format
+
+## merge info
+
+	--graph //merge tree log info
+
 
 ## log context
 

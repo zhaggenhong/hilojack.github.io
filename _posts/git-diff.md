@@ -28,12 +28,6 @@ Equal:
 	HEAD~3
 	//refer to # revision
 
-## git show
-git show specify commit
-
-	git show aa73513
-	git show --name-only SHA1
-
 ## git diff filelist
 
 	git diff --name-only SHA1 SHA2
@@ -140,3 +134,22 @@ show merged files
 	//基于祖先做diff or git diff master...branch1
 	$git diff bb92
 
+# git diff-index
+diff working or stage with commit
+
+	git diff-index --cached  HEAD
+	:100644 100644 9c8caea89aa52f8047d9abf8f262745882d35185 0f92c8e9e1116b09c74a6cc6a2e5af66aee3789a M	path/navMenu.html
+
+## filter
+keep
+
+	git diff-index --diff-filter=ACMR HEAD
+		A add
+		M modified
+		C
+		R rename
+		D delete
+
+## info
+
+	--name-only
