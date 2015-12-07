@@ -785,8 +785,9 @@ Transaction 具备ACID特点：
 ## Start Transaction
 `Autocommit 0`表示关闭事务的自动提交，`begin` 是*临时*关闭事务的自动提交:
 
-	mysql> start Transaction #等价于begin，但是不推荐begin 因为begin 主要用于code block
-	mysql> AUTOCOMMIT 0
+	mysql> start Transaction	#事务结束时，不会开新的事务
+								#等价于begin，但是不推荐begin 因为begin 主要用于code block
+	mysql> AUTOCOMMIT 0			#事务结束，开启新的事务
 
 `AUTOCOMMIT 1` 表示每个命令都自动提交, 相当于关闭事务. 可以用以下命令查询：
 
