@@ -36,22 +36,8 @@ assert False, "Error!"
 	i=random.randint(1, 20)
 
 # Http
+[python-http](/p/python-http)
 
-## proxy
-
-	import urllib
-	import urllib2
-	url = 'http://weibo.cn'
-	data = urllib.urlencode({'k':'v'})
-	opener = urllib2.build_opener(urllib2.ProxyHandler({'http':'http://ip:port'}))
-	urllib2.install_opener(opener)
-	req = urllib2.Request(url, data)
-	try:
-		response = urllib2.urlopen(req,timeout=2)
-		the_page = response.read()
-		print the_page.decode('utf-8')
-	except:
-		pass
 
 # time
 

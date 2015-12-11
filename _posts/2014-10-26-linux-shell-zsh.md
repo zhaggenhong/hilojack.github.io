@@ -2,7 +2,7 @@
 layout: page
 title:	shell 终端使用技巧
 category: blog
-description: 
+description:
 ---
 # Preface
 本文总结了shell 终端的使用技术: 主要包括Readline 使用，以及zsh 与iTerm2 的使用
@@ -13,7 +13,7 @@ description:
 ## Readline
 
     Emacs keys  Action  Scope   Direction/Place
-    # Moving around   
+    # Moving around
     Ctrl-b  Move the cursor one character   ⇦ to the left
     Ctrl-f  Move the cursor one character   ⇨ to the right
     Alt-b   Move the cursor one word    ⇦ to the left
@@ -22,7 +22,7 @@ description:
     Ctrl-e  Move the cursor     ⇥ to the end of the line
     Ctrl-x-x[1] Move the cursor      ⇤⇥ to the start, and to the end again
 
-    # Cut, copy and paste   
+    # Cut, copy and paste
     Backspace   Delete  the character   ⇦ to the left of the cursor
     DEL
     Ctrl-d  Delete  the character   underneath the cursor
@@ -52,14 +52,14 @@ description:
     Alt-r   Undo all changes made to this line
     Ctrl-l  Clear the screen, reprinting the current line at the top
 
-    # Completion  
+    # Completion
     TAB Auto-complete a name
     Ctrl-t  Transpose/drag  char. before the cursor ↷ over the character at the cursor
 
 ### comment
 Comment your command
 
-	alt+# 
+	alt+#
 	ctrl+a # <enter>
 
 ### 定位
@@ -122,17 +122,17 @@ Comment your command
 #### 重复操作
 在shell中也有类似vim的num {motion}功能--[readline].也就是用数字指定操作次数.
 用法为:
-	
-	`MetaKey` + `Count`  Command 
+
+	`MetaKey` + `Count`  Command
 
 其中:
-	
+
 	MetaKey :一般默认的Meta Key是`Alt`,或`Esc`.
 	Count:repeat的次数,如果是负数,则是相反的意思
 	Command: 可以是字符/快捷键.(如果是数字,以CTRL+V与Count相分隔)
 
 以下是例子:
-	
+
 	`MetaKey`+`12` a #输出12个a
 	`MetaKey`+`3` ALT+B #光标左移三个单词
 	`MetaKey`+`-3` ALT+B #光标右移三个单词(-负数时,动作取反)
@@ -156,13 +156,13 @@ Or turn off history expandsion
 ## 事件指示器(Event Designators)
 
 
-	!! 
+	!!
 	echo !!
 		The Last command
-	!-4 
+	!-4
 	echo !-4
 		The Last 4'th command
-	!4 
+	!4
 	echo !-4
 		The First 4'th command
 	!cp
@@ -171,7 +171,7 @@ Or turn off history expandsion
 	!?str
 		Lastly command that contains string 'str'
 
-	cd - 
+	cd -
 	-
 		cd into last directory
 
@@ -181,7 +181,7 @@ Usage:
 
 	Event-Designator:Word-Designator
 
-Here is a word designators list: 
+Here is a word designators list:
 
 	0
 		The command
@@ -196,10 +196,10 @@ For Example:
 
 	!!*
 		All parameters(exclude cmd self)
-	!$ 
+	!$
 	!!:$
 		Last command's last parameter(seems like `alt-.`, ` $_` )
-	!^ 
+	!^
 	!!:^
 		Last command's first parameter
 	!!:4
@@ -214,7 +214,7 @@ For Example:
 
 	alias save 'pbpaste > \!^ '
 
-And now if you select some text in a window, copy it, and want to save it into a file, type `save file` and there it is. The !^ is a bit of history substitution that means "take the first argument from the last command." In this case, the last command was save and the first argument was the file path entered after. 
+And now if you select some text in a window, copy it, and want to save it into a file, type `save file` and there it is. The !^ is a bit of history substitution that means "take the first argument from the last command." In this case, the last command was save and the first argument was the file path entered after.
 
 Also, you can do as the following in case you input bad `save ` command.
 
@@ -238,10 +238,10 @@ Modifiers:
 
 For example:
 
-	!!:p 
+	!!:p
 	echo !!
 		打印上一条命令
-	!wget:p  
+	!wget:p
 	echo !wget
 		打印最近一条以wget打头的命令
 
@@ -260,12 +260,12 @@ Only the cmd start from `!` could be printed, here are some bad usages:
 ## Disable history
 
 	export HISTSIZE=0
-	
+
 ## Clear history
 	history -c
-		
+
 # iTerm2
-zsh号称终极shell, 配合iTerm2(terminal)会更加的方便. 本小节参考了池建强的[终极shell] 
+zsh号称终极shell, 配合iTerm2(terminal)会更加的方便. 本小节参考了池建强的[终极shell]
 
 ## readline
 iterm2 下默认option + f/b 不是指向esc+f/b 的，导致这两个快捷键不能按单词移动光标。
@@ -274,7 +274,7 @@ iterm2 下默认option + f/b 不是指向esc+f/b 的，导致这两个快捷键�
 
 ## window(tabs)
 
-	Cmd-W close current tab 
+	Cmd-W close current tab
 	cmd-Num	Goto tab No. as Num.
 	cmd-shift-[/] switch tab
 	Cmd-Shift-Left/Right Reorder current tab.
@@ -304,7 +304,7 @@ iterm2 下默认option + f/b 不是指向esc+f/b 的，导致这两个快捷键�
 # zsh
 
 
-## nocorrect 
+## nocorrect
 
 	unsetopt correct
 
@@ -375,7 +375,7 @@ This is a very useful feature. With approximate matching you find files even if 
 
 	ls (#a1)foobar
 
-matches all files with the name foobar but also files with the names fobar, foobra or foxbar. 
+matches all files with the name foobar but also files with the names fobar, foobra or foxbar.
 The number after the a defines how far the correction goes. A number of 1 corrects up to one mistake. Higher numbers do more correction. But be careful: the more correction you allow, the more false positives you'll get.
 
 ## useful alias
@@ -393,7 +393,7 @@ Install:
 ## conf
 
 ### theme
-如果你对theme中的提示符不爽, 可以改PROMPT(在.oh-my-zsh/themes/*). 参考[zsh-conf](https://wiki.archlinux.org/index.php/zsh#Customizing_the_prompt) 
+如果你对theme中的提示符不爽, 可以改PROMPT(在.oh-my-zsh/themes/*). 参考[zsh-conf](https://wiki.archlinux.org/index.php/zsh#Customizing_the_prompt)
 
 ### conf files
 At login, Zsh sources the following files in this [order](https://wiki.archlinux.org/index.php/zsh):
@@ -410,7 +410,7 @@ At login, Zsh sources the following files in this [order](https://wiki.archlinux
 	This file is generally used for automatic execution of user's scripts.
 
 ## 文件默认打开程序
-	
+
 	alias -s gz='tar -xzvf' #直接在命令行下输入tar文件, 就自动解压了
 	alias -s tgz='tar -xzvf'
 	alias -s zip='unzip'
@@ -419,7 +419,7 @@ At login, Zsh sources the following files in this [order](https://wiki.archlinux
 ## 强大的历史
 输入grep 再按上下键, 会查阅所有以grep 打头的历史命令
 
-## 目录跳转
+## autojump 目录跳转
 有autojump(j) 和 d 两个命令可方便的实现快速跳转：
 
 	d<CR> #罗列所有访问过的目录 再输入数字<CR> 就直接进入到对应的目录
@@ -431,11 +431,16 @@ At login, Zsh sources the following files in this [order](https://wiki.archlinux
 	...='cd ../..'
 
 如果开启了autojump 插件:
-	
+
 
 	j dirname #智能dir跳转, 支持模糊匹配
 	j -s ＃显示记录的所有目录
 	j -h ＃help
+
+### jump path
+
+	find ~ -name '*autojum*'
+	./.local/share/autojump/autojump.txt
 
 ## 插件
 .oh-my-zsh.sh 有这一行插件配置语句:
@@ -466,12 +471,12 @@ host user ...:
 
 color:
 
-	%{$fg[cyan]%} 
+	%{$fg[cyan]%}
 	%{$fg_bold[blue]%}
 	%{$reset_color%}
 
 git:
-	
+
 	%{$fg_bold[blue]%}$(git_prompt_info)
 
 vm:
@@ -479,7 +484,7 @@ vm:
 	%n@%m%{$fg[cyan]%} %c %{$fg_bold[blue]%}>%{$reset_color%}
 
 # 参考
-- [readline] 
+- [readline]
 - [shell_shortcutKey]
 - [终极shell]
 
