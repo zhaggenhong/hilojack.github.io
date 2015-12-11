@@ -52,3 +52,30 @@ assert False, "Error!"
 		print the_page.decode('utf-8')
 	except:
 		pass
+
+# time
+
+	import time
+	print time.time()
+		19972314124.05
+	print int(time.time())
+
+# string
+
+## json
+
+	import json
+	return json.dumps(data)
+
+# mysql
+
+## MySQLdb
+
+	import MySQLdb as mysql
+
+	db = mysql.connect(user="reboot",passwd="reboot123",db="memory",host="localhost")
+	db.autocommit(True)
+	cur = db.cursor()
+
+    sql = 'insert into memory (memory,time) value (%s,%s)'%(1024,1234)
+    cur.execute(sql)

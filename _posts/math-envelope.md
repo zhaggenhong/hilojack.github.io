@@ -2,7 +2,7 @@
 layout: page
 title:	红包飞的概率问题
 category: blog
-description: 
+description:
 ---
 # Preface
 
@@ -15,7 +15,7 @@ description:
 按每个随机数据的比例拆分
 
 ## 此时生成9个随机数,再排列，以间距拆分红包
-生成9个随机数rand(0,100), 然后加一个100，并从小到大排序：s1,s2,...,s9,100. 第一个人得到的金额是s1, 第二个人得到的金额是s2-s1,..., 最后一个人得到的金额是100-s9. 加入的100 不是随机数，这样公平吗？ 
+生成9个随机数rand(0,100), 然后加一个100，并从小到大排序：s1,s2,...,s9,100. 第一个人得到的金额是s1, 第二个人得到的金额是s2-s1,..., 最后一个人得到的金额是100-s9. 加入的100 不是随机数，这样公平吗？
 
 当然公平！让我们证明一下：假如随机数rand(0,1)
 
@@ -46,7 +46,7 @@ description:
 	if(num == 1)
 		return total;
 	t = total - min*mum;				/t 是可分得最大金额(除去了min)
-	ram = min + t*rand(0,1) * (2/num);	/**因为ave/(t/2) = (t/num)/(t/2) = 2/num */
+	ram = min + t*rand(0,1) * (2/num);	/**期望 E(t*rand*2/num) = t * 0.5 * 2/num = t /num */
 	return ram;
 
 max 为给定值的情况下, 可以使用方式2：

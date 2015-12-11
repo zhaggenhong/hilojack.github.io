@@ -840,7 +840,6 @@ Refer to [php-curl](https://github.com/hilojack/php-lib)
 	ip2long('0.0.1.1');//257
 	long2ip
 
-
 # Time
 
 ## timestamp

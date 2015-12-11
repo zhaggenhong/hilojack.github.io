@@ -32,6 +32,10 @@ description:
 
 代理键和自然键: 如果数据表中的所有候选键都不适合做主键(数据太长，意义层面太多), 就会请一个无意义的键做主键（比如自增的id）, 这就是代理键。有意义的主键就是自然键。
 
+## force index
+
+	select * from FORCE INDEX (indexname1, indexname2) where ...;
+
 ## INDEX/KEY
 普通索引
 

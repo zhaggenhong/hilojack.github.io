@@ -224,6 +224,7 @@ If this number(`10`) of child processes exit with Segmentation, page fault, and 
 
 	[global]
 	error_log = /var/log/fpm.error.log
+	 tail -f /home/xxx/php/logs/php-error.log
 	;默认路径是启动时的当前路径pwd
 	;Default value: #INSTALL_PREFIX#/log/php-fpm.log.
 	error_log = log/fpm.error.log

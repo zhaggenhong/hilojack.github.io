@@ -118,3 +118,18 @@ Iterator For
 	while x<6:
 		Statement
 
+# logic expression
+
+	>>> x =5; 1 < x < 10
+	True
+	>>> False or 0 or '' or 3
+	3
+
+	and or not
+	!= (not equal)
+	== (equal)
+	>= (greater-than-equal)
+	<= (less-than-equal)
+	True
+	False
+
