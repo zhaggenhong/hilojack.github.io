@@ -1,8 +1,8 @@
 ---
 layout: page
-title:	
+title:
 category: blog
-description: 
+description:
 ---
 # Preface
 常见的用于网络传输的数据格式有
@@ -32,12 +32,14 @@ thrift 与protobuf 相比，不仅包括二进制数据格式部分，还包括�
 ## install thrift
 
 	brew install thrift
-	git clone https://github.com/walkor/workerman-thrift 
+	git clone https://github.com/walkor/workerman-thrift
 
 ## 生成client
 1. 写thrift
 
 	thrift -gen php:server punish.thrift
+	cat punish.thrift
+		namespace php A.B.C
 
 2. copy 组件
 
@@ -117,7 +119,7 @@ long.weixin.qq.com  dns check （112.64.237.188 112.64.200.218）
 
 2 说明
 
-2.1 short.weixin.qq.com  
+2.1 short.weixin.qq.com
 是HTTP协议扩展，运行8080 端口，http body为二进制（protobuf）。
 
 主要用途（接口）：
@@ -130,7 +132,7 @@ long.weixin.qq.com  dns check （112.64.237.188 112.64.200.218）
 	行为日志上报。
 	朋友圈发表刷新
 
- 2.2  long.weixin.qq.com  
+ 2.2  long.weixin.qq.com
 tcp 长连接， 端口为8080，类似微软activesync的二进制协议。
 
 主要用途（接口）：
@@ -139,5 +141,5 @@ tcp 长连接， 端口为8080，类似微软activesync的二进制协议。
 	接受/发送语音；
 	接受/发送图片；
 	接受/发送视频文件等。
- 
+
 所有上面请求都是基于tcp长连接。在发送图片和视频文件等时，分为两个请求；第一个请求是缩略图的方式，第二个请求是全数据的方式。
