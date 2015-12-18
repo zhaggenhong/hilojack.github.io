@@ -134,10 +134,17 @@ VARCHAR 不会存储尾部空白\0，而从5.0.3 开始出于兼容性考虑，�
 
 	update talbeName set c='str' where id = 1
 
+	"abc\n123"
+
 ### Function
 > https://dev.mysql.com/doc/refman/5.0/en/string-functions.html
 
 	SELECT CONCAT('My', 'S', 'QL');
+
+#### length
+
+	select length('国'); //1
+	select length("中\');
 
 ### CHAR
 Length 不是字节数，而是字符数

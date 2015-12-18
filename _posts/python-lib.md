@@ -35,6 +35,10 @@ assert False, "Error!"
 	import random
 	i=random.randint(1, 20)
 
+## range
+
+	list(range(start, end))
+
 # Http
 [python-http](/p/python-http)
 

@@ -805,6 +805,7 @@ Transaction 具备ACID特点：
 # Backup and Recovery
 
 ## pager
+## shell
 
 	> pager tee -a a.txt
 	> nopager

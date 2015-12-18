@@ -70,6 +70,12 @@ import `ex47.game`, would find two file:
 	ex47/game.py
 	ex47/__init__.py
 
+## path
+
+	>>> import sys
+	>>> print(sys.path)
+	['', '/usr/local/Cellar/python3/3.5.0/Frameworks/Python.framework/Versions/3.5/lib/python35.zip', '/usr/local/Cellar/python3/3.5.0/Frameworks/Python.framework/Versions/3.5/lib/python3.5', '/usr/local/Cellar/python3/3.5.0/Frameworks/Python.framework/Versions/3.5/lib/python3.5/plat-darwin', '/usr/local/Cellar/python3/3.5.0/Frameworks/Python.framework/Versions/3.5/lib/python3.5/lib-dynload', '/usr/local/lib/python3.5/site-packages']
+
 ## from import
 
 	from sys import argv # import module "sys" and objects: argv

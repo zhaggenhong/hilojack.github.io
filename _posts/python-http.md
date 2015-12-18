@@ -143,6 +143,7 @@ If a response contains some Cookies, you can quickly access them:
 To send your own cookies to the server, you can use the cookies parameter:
 
 	>>> r = requests.get(url, cookies={'key':'value'})
+	>>> r = requests.get(url, cookies='key=value')
 
 	>>> r1 = requests.post('http://www.yourapp.com/login')
 	>>> r2 = requests.post('http://www.yourapp.com/somepage',cookies=r1.cookies)
@@ -185,7 +186,7 @@ Use a session object instead, it'll persist cookies and send them back to the se
 
 	with requests.Session() as s:
 		r = s.get(URL1)
-		r = s.post(URL2, data="username and password data payload")
+		r = s.post(URL2, params="username and password data payload")
 
 # urllib2
 urllib2 is deprecated

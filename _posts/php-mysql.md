@@ -135,7 +135,7 @@ commit
 ## connect & close
 
 	// 在此使用连接
-	$dbh = new PDO('mysql:host=localhost;dbname=test', $user, $pass);
+	$dbh = new PDO('mysql:host=localhost;dbname=test;port=xx', $user, $pass);
 	$pdo = new PDO("mysql:unix_socket=/tmp/mysql.sock;dbname=test");
 	// 现在运行完成，在此关闭连接
 	$dbh = null;
