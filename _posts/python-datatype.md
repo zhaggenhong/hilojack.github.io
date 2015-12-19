@@ -24,6 +24,22 @@ Convert data type:
 	int('07')
 	float(9)
 
+## isinstance
+也可用来判断数据类型
+
+	isinstance('abc', str); # True
+	isinstance('abc', Iterable); # True
+
+# Bytes
+
+	>>> type(b'abc')
+	<class 'bytes'>
+	>>> type('abc')
+	<class 'str'>
+
+	>>> type(b'abc'[2])
+	<class 'int'>
+
 # String
 double quotes and single quotes is same
 
@@ -149,6 +165,10 @@ with no space and new line:
 	dict.keys();//keys list
 	dict.values();//values list
 
+delete key
+
+	dict.pop(key)
+
 ## foreach dict
 
 	for k,v abbrev in dict.items():
@@ -179,7 +199,51 @@ list and enumerate
 	0 ['k1', 'v1']
 	1 ['k2', 'v2']
 
+# set
+set和dict类似，也是一组key的集合，但不存储value。由于key不能重复，所以，在set中，没有重复的key。
+
+要创建一个set，需要提供一个list作为输入集合：
+
+	>>> s = set([1, 2, 3])
+	>>> s
+	{1, 2, 3}
+
+注意，传入的参数[1, 2, 3]是一个list，而显示的{1, 2, 3}只是告诉你这个set内部有1，2，3这3个元素，显示的顺序也不表示set是有序的。。
+
+重复元素在set中自动被过滤：
+
+	>>> s = set([1, 1, 2, 2, 3, 3])
+	>>> s
+	{1, 2, 3}
+
+通过add(key)方法可以添加元素到set中，可以重复添加，但不会有效果：
+
+	>>> s.add(4)
+	>>> s
+	{1, 2, 3, 4}
+	>>> s.add(4)
+	>>> s
+	{1, 2, 3, 4}
+
+通过remove(key)方法可以删除元素：
+
+	>>> s.remove(4)
+	>>> s
+	{1, 2, 3}
+
+set可以看成数学意义上的无序和无重复元素的集合，因此，两个set可以做数学意义上的交集、并集等操作：
+
+	>>> s1 = set([1, 2, 3])
+	>>> s2 = set([2, 3, 4])
+	>>> s1 & s2
+	{2, 3}
+	>>> s1 | s2
+	{1, 2, 3, 4}
+
+set和dict的唯一区别仅在于没有存储对应的value，但是，set的原理和dict一样
+
 # list and tuple
+因为tuple不可变，所以代码更安全。如果可能，能用tuple代替list就尽量用tuple。
 
 	list = [1,2]
 	list +=[3,]
@@ -214,7 +278,6 @@ The difference between list and tuple:
 	>>> print zip(xl,yl)
 	[(1, 9), (3, 12), (5, 13)]
 
-
 ## join and split
 
 	','.join([1,2])
@@ -232,9 +295,12 @@ The difference between list and tuple:
 	[1,2][0]
 	[1,2][-1]
 
+slice
+
 	list[start:end:step]
 	list[0:3]
 	list[:-1]
+	list[::5]
 	print list[0:10:2]
 
 ## in array
@@ -253,11 +319,14 @@ The difference between list and tuple:
 
 
 	.index(value, [start, [stop]])
-	.insert(index, object)
-	.remove(value) -- remove first occurrence of value.
 	.count(value) -> integer -- return number of occurrences of value
 	.reverse() -> reverse *IN PLACE*
 	.sort(cmp=None, key=None, reverse=False) -- stable sort *IN PLACE*;
+
+remove and insert(in place)
+
+	.insert(index, object)
+	.remove(value) -- remove first occurrence of value.
 
 ## range:
 

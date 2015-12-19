@@ -37,11 +37,10 @@ assert False, "Error!"
 
 ## range
 
-	list(range(start, end))
+	list(range([start=0,] end))
 
 # Http
 [python-http](/p/python-http)
-
 
 # time
 
@@ -51,6 +50,21 @@ assert False, "Error!"
 	print int(time.time())
 
 # string
+
+## hex
+
+	hex(16)
+
+## url
+
+	import urllib
+	urllib.parse.parse_qs('a=1&b=2');
+	urllib.parse.parse_qs('a=1&b=2',unique_key=True);
+
+	urllib.parse.urlencode({'a':1})
+	'a=1'
+	urllib.parse.urlencode({'a':[1,2]}, doseq=True)
+	'a=1&a=2'
 
 ## json
 

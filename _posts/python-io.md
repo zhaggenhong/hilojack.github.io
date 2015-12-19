@@ -34,8 +34,8 @@ readlines:
 
 ## input
 
-	str = raw_input()
-	str = raw_input("Input some string:")
+	str = input()
+	str = input("Input some string:")
 
 ## Directory
 
