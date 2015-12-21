@@ -117,7 +117,9 @@ shell 中很多命令都是支持read from stdin的。 对于不支持stdin 的l
 		 Replacing one or more occurrences of replstr in up to replacements arguments
 		 The replstr must show up as a distinct argument to xargs
 	 -I replstr
-		 Replacing one or more occurrences of replstr in up to replacements arguments
+		Replacing one or more occurrences of replstr in up to replacements arguments
+	 -t
+	 	Echo the command to be executed to standard error immediately before it is executed.
 
 Example:
 
@@ -133,6 +135,12 @@ Example:
 
 > xargs 可以用于不支持管道的命令, 比如ls. 有的命令可通过参数"-"支持管道, 就不需要xargs 了
 > 当 xargs 后面没有接任何的命令时，默认是以 echo 来进行输出喔！
+
+## xargs eval
+eval is a shell builtin command, not a standalone executable. Thus, xargs can't run it directly. You probably want:
+
+	ls -1 | gawk '{print "`mv "$0" "tolower($0)"`"}' | xargs -t sh -c "eval {}"
+	sh -c "$cmd" '2nd,3rd,.. args is ignored'
 
 # grep
 
