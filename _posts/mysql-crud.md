@@ -16,7 +16,7 @@ Insert update delete select
 	select * from table where id in (3,4) or [name] in ('andy','paul');
 
 ### select with update
-借助`last_insert_id`
+借助`last_insert_id` 实现原子操作`select+update`
 
 	update t1 set counter=last_insert_id(counter+1) WHERE id = 1;
 	select last_insert_id();//counter
@@ -25,12 +25,16 @@ Insert update delete select
 	select last_insert_id();//1234
 
 ### subquery 子查询
-subquery 是嵌入另一条语句的select 语句
+subquery 是嵌入另一条语句的select 语句. 他是数据集合
+
+#### in
 
 	select * from tb where id>(select id from t limit 1)
 
 	//in
 	select * from tb where id in (select id from tb2)
+	//not in
+	select * from tb where id not in (select id from tb2)
 
 #### from sub sql
 
@@ -279,7 +283,7 @@ Example:
 	| America | 2       | Shanghai |
 	+---------+---------+----------+
 
-condion 可以使用and or 等
+condion 可以通过`On` 使用and or 等
 
 	On (cond1 and cond2)
 

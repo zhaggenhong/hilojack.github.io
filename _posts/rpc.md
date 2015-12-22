@@ -5,7 +5,16 @@ category: blog
 description:
 ---
 # Preface
-常见的用于网络传输的数据格式有
+> http://www.cnblogs.com/fxjwind/archive/2013/05/16/3082219.html
+
+rpc 问题其实是不同语言之间的数据通信问题:
+
+1. 序列化问题, 怎么样将类对象或其他数据转化为用于传输的通用的格式, 如二进制, 文本, xml
+2. 数据类型问题, 不同语言的数据类型的差异
+3. 方法调用问题, 不同语言的方法调用的差异
+
+当大数据时代来临的时候, 大家发现基于XML, 甚至Json的文本协议的方案的传输效率很成问题:
+所以Google和Facebook, 又开始研究基于二进制的RPC方案, 于是产生PB, Thrift, Avro 等数据格式或协议
 
 - protobuf(pb), binary
 - thrift

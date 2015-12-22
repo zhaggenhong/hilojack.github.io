@@ -23,7 +23,9 @@ time format:
 Compare time
 
 	select * from table where settime > '2014-01-01 01:02:03' limit 1;
+	select * from table where settime > '2014-01-01' limit 1;
 	select * from table where settime > 20140102101213 limit 1;
+	select * from table where settime > 20140102 limit 1;
 
 ### date & time
 

@@ -8,7 +8,6 @@ description:
 
 # todo
 - [索引原理-meituan]
-- clustered index
 
 # clustered index
 聚合索引(clustered index) / 非聚合索引(nonclustered index)
@@ -244,7 +243,7 @@ EXAMPLE:
 
 解决：
 1. 分表
-2. 分区(mysql > 5.x)
+2. 分区(`mysql > 5.x`)
 3. 使用id
 
 	select * from program_access_log where id between 1 and 500000 and program_id between 1 and 15000000

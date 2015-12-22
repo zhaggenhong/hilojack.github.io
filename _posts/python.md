@@ -6,10 +6,6 @@ description:
 ---
 # Preface
 
-# todo
-to read
-http://learnpythonthehardway.org/book/ex25.html
-
 # python3 vs python2
 http://www.dantangfan.com/diff-py2-py3/
 官方提供：
