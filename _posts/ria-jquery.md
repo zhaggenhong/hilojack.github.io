@@ -440,6 +440,7 @@ The callback hooks provided by $.ajax() are as follows:
 	//Attach an event handler function for one or more events to the selected elements.
 
 ### on document
+sub_selector 可以是动态insert 的node
 
 	$(document).on('change', '.btn-file :file', function() {})
 

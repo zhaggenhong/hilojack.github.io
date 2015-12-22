@@ -382,7 +382,6 @@ Linux进程间通信由以下几部分发展而来：
 		Windows: IOCP
 		.NET: BeginInvoke/EndInvoke
 
-
 ## ipcs(IPC status)
 ipcs -- report System interprocess communication facilities status
 

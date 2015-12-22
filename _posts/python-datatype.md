@@ -24,11 +24,25 @@ Convert data type:
 	int('07')
 	float(9)
 
+## type
+
+	>>> type(fn)==types.FunctionType
+	True
+	>>> type(abs)==types.BuiltinFunctionType
+	True
+	>>> type(lambda x: x)==types.LambdaType
+	True
+	>>> type((x for x in range(10)))==types.GeneratorType
+	True
+
 ## isinstance
 也可用来判断数据类型
 
 	isinstance('abc', str); # True
+	isinstance(b'abc', bytes); # True
+	isinstance(1, int); # True
 	isinstance('abc', Iterable); # True
+	isinstance([1, 2, 3], (list, tuple))
 
 # Bytes
 

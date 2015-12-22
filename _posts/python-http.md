@@ -9,6 +9,9 @@ description:
 # Request
 http://docs.python-requests.org/en/latest/index.html
 
+## Non Block
+If you are concerned about the use of blocking IO, there are lots of projects out there that combine Requests with one of Python’s asynchronicity frameworks. Two excellent examples are grequests and requests-futures.
+
 ## install
 
 	easy_install requests //2.7
