@@ -221,6 +221,13 @@ submit form elements:
 	//with Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryQHefs2ABc2lw02em
 	// and u should not set x-www-form-urlencoded
 
+#### select
+
+	$("select option").filter(function() {
+		//may want to use $.trim in here
+		return $(this).text() == text1;
+	}).attr('selected', true);
+
 # Dom Node
 
 ## Search Node
@@ -328,6 +335,7 @@ Example 浮层:
 ## node 属性
 
 	node.nodeName; //
+		TEXTAREA
 	node.nodeValue; //
 	node.nodeType; //元素1 属性2 文本3 注释8 文档9
 

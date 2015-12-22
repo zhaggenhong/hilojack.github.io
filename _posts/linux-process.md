@@ -2,7 +2,7 @@
 layout: page
 title:	linux 之进程
 category: blog
-description: 
+description:
 ---
 # Preface
 本文总结下进程那些事儿
@@ -64,11 +64,11 @@ getenv 返回的是对值的指针, 可以直接通过指针修改*子程序*的
 	int setenv(const char *name, const char *value, int rewrite);
 		rewrite = 0 不覆盖原来的定义，也不返回错误。
 		rewrite != 0 覆盖原来的定义
-			
+
 ### unsetenv
 	void unsetenv(const char *name);
 		即使name没有定义也不返回错误。
-	
+
 # Process Control, 进程控制
 linux 进程控制最重要的两个函数就是fork 和exec 了。
 
@@ -110,10 +110,10 @@ fork 子进程调试, 对于lldb 来说需要先断点，然后用新的*lldb* �
 
 #### fork: retry: Resource temporarily unavailable
 /etc/profile: fork: retry: Resource temporarily unavailable
- 
+
 原因：
 进程数到达最大值.ulimit -a可以查看当前系统的所有限制值，linux一般默认是1024
- 
+
 解决方法：
 
   在/etc/security/limits.conf最后增加：
@@ -124,9 +124,9 @@ fork 子进程调试, 对于lldb 来说需要先断点，然后用新的*lldb* �
 	* hard nproc 65535
 
 重启系统后生效，ulimit –a查看新的限制值；
- 
+
 关于nproc设置：centos6，内核版本是2.6.32.默认情况下，ulimit -u的值为1024，是/etc/security/limits.d/90-nproc.conf的值限
- 
+
 所以如果是centos6的需要如下修改, 首先在/etc/security/limits.conf中修改最大文件数
 
 	* soft nofile 102400
@@ -159,7 +159,7 @@ exec 一共有6 种函数(成功则执行新程序，失败则会返回-1)：
 3. e: 表示可以传一份新的环境变量数组的地址(而不是用继承的环境变量)
 
 调用示例：
-	
+
 	char *const ps_argv[] ={"ps", "-o", "pid,ppid,pgrp,session,tpgid,comm", NULL};
 	char *const ps_envp[] ={"PATH=/bin:/usr/bin", "TERM=console", NULL};
 	execl("/bin/ps", "ps", "-o", "pid,ppid,pgrp,session,tpgid,comm", NULL);
@@ -168,7 +168,7 @@ exec 一共有6 种函数(成功则执行新程序，失败则会返回-1)：
 	execve("/bin/ps", ps_argv, ps_envp);
 	execlp("ps", "ps", "-o", "pid,ppid,pgrp,session,tpgid,comm", NULL);
 	execvp("ps", ps_argv);
-	
+
 
 其实只有execve(2) 是真正的系统调用, 其它的5个函数都在间接的调用execve, 所以其它5 个函数都在`man 3`
 
@@ -272,7 +272,7 @@ upper 程序只关心输入，不关心输入来自于文件还是终端：
 			while(1);
 		}
 		/* child */
-		return 0;	  
+		return 0;
 	}
 
 僵尸进程是不能被kill的，因为它已经被终止了。只能通过父进程调用wait/waipid 来清理了（父进程挂了，那么init这个元老进程会负责清理的工作）
@@ -350,7 +350,7 @@ waitpid 示例:
 		 If WIFSIGNALED(status) is true, evaluates to the number of the signal that caused the termination of the process.
 
 # IPC, InterProcess Communication 进程间通信
-每个进程有自己独立的用户空间，而且只能访问自己的用户空间，进程间只能依赖内核: 
+每个进程有自己独立的用户空间，而且只能访问自己的用户空间，进程间只能依赖内核:
 进程A 将数据通过内核写到内核缓冲区，进程B 再从内核缓冲区读取数据。
 
 IPC 主要有这三种方式：管道(pipe), FIFO(mkfifo, named pipe), UNIX Domain Socket
@@ -360,15 +360,35 @@ Linux进程间通信由以下几部分发展而来：
 1. 早期UNIX进程间通信：包括管道、FIFO(named pipe)、信号。
 2. 基于System V的进程间通信：包括System V消息队列、System V信号灯（Semaphore）、System V共享内存。
 3. 基于Socket进程间通信
-3. 基于POSIX进程间通信：包括POSIX消息队列、POSIX信号灯、POSIX共享内存。Refer to: [c-io](/p/c-io), POSIX 既有BSD的特性也有SYSV的特性，此外还有一些Linux特有的特性，比如epoll(7)，注：epoll 是比select/poll 更高效的监听socket 的方式
+3. 基于POSIX进程间通信：包括POSIX消息队列、POSIX信号灯、POSIX共享内存。Refer to: [c-io](/p/c-io),
+	POSIX 既有BSD的特性也有SYSV的特性，此外还有一些Linux特有的特性，比如epoll(7)，注：epoll 是比select/poll 更高效的监听socket 的方式
 4. IPC(RPC/LPC)
 
-## ipcs(IPC status) 
+## 异步同步阻塞非阻塞
+> 链接：https://www.zhihu.com/question/19732473/answer/18752453
+
+1. 阻塞，非阻塞：进程/线程要访问的数据是否就绪，进程/线程是否需要*等待*；
+2. 同步，异步：访问数据的方式，同步需要*主动读写数据*，在读写数据的过程中还是会阻塞；异步只需要I/O操作完成的通知，并不主动读写数据，由操作系统内核完成数据的读写。
+
+对unix来讲：阻塞式I/O(默认)，非阻塞式I/O(nonblock)，I/O复用(select/poll/epoll)都属于同步I/O，因为它们在数据由内核空间复制回进程缓冲区时都是阻塞的(不能干别的事)。只有异步I/O模型(AIO)是符合异步I/O操作的含义的，即在1数据准备完成、2由内核空间拷贝回缓冲区后 通知进程，在等待通知的这段时间里可以干别的事。
+
+	同步：
+		阻塞block：
+		非阻塞Non-Block(Multiplexing): select, poll, epoll（轮循，死循环, 本质是同步的）
+			because the actual I/O operation (recvfrom) blocks the process.
+
+	异步: 不需要主动check, 当响应到达，内核触发callback 回调处理
+		linux: AIO
+		Windows: IOCP
+		.NET: BeginInvoke/EndInvoke
+
+
+## ipcs(IPC status)
 ipcs -- report System interprocess communication facilities status
 
 	 -a		 All
 	 -m      Display information about active shared memory segments.
-     -p      Show the pid information for active semaphores, message queues, and shared memory segments.  
+     -p      Show the pid information for active semaphores, message queues, and shared memory segments.
      -Q      Display system information about messages queues.
      -q      Display information about active message queues.
      -S      Display system information about semaphores.
@@ -391,11 +411,11 @@ RPC 可以基于HTTP 协议，也可以基于 在TCP 上设计的自定义的二
 php 的RPC 远端过程调用框架有:
 
 #### Yar(http)
-- 鸟哥的yar http框架: yar_server(new API)+yar_client, 可以用msgpack 这个扩展，它高效实现了二进制打包协议，也可用json 协议打包数据。yar 客户端服务端需要它. 
-yar 是基于http 的(http 传输头部有点浪费): 
+- 鸟哥的yar http框架: yar_server(new API)+yar_client, 可以用msgpack 这个扩展，它高效实现了二进制打包协议，也可用json 协议打包数据。yar 客户端服务端需要它.
+yar 是基于http 的(http 传输头部有点浪费):
 
 
-这里有一个对应的yar client for js: 
+这里有一个对应的yar client for js:
 https://github.com/hilojack/yar-javascript-client
 
 > Multiple transfer protocols supported (http implemented, tcp/unix will be supported later)
@@ -404,12 +424,12 @@ https://github.com/hilojack/yar-javascript-client
 *DEBUG*
 Usual RPC calls will be issued as HTTP POST requests. If a HTTP GET request is issued to the uri, the service information (commented section above) will be printed
 
-因为它是HTTP RPC，所以可以用curl 调试: 
+因为它是HTTP RPC，所以可以用curl 调试:
 
 	curl 'http://localhost:8080/a.php' -d ''
 	...PHP Yar ServerQPHPYAR_a:3:{s:1:"i";i:0;s:1:"s"...
 
-#### json-rpc 
+#### json-rpc
 https://github.com/jcubic/json-rpc for php and js
 https://github.com/jcubic/json-rpc
 
@@ -442,13 +462,13 @@ Pipe 是一种基本的IPC 机制，由pipe 函数创建:
 	#include <stdlib.h>
 	#include <unistd.h>
 	#define MAXLINE 80
-	
+
 	int main(void) {
 		int n;
 		int fd[2];
 		pid_t pid;
 		char line[MAXLINE];
-	
+
 		if (pipe(fd) < 0) {
 			perror("pipe");
 			exit(1);
@@ -505,7 +525,7 @@ shell 管道符，就是通过管道实现命令间的消息传递的
 			}
 			printf("pid=%d: i=%d,in=%d, fd[0]=%d, fd[1]=%d\n", pid, i,in, fd[0], fd[1]);
 			//child		关闭:	新in:fd[0], 旧out: 1
-			//			使用: 	旧in:0 		新out:fd[1] 
+			//			使用: 	旧in:0 		新out:fd[1]
 			if(pid == 0){
 				//read from 0
 				close(fd[0]);
@@ -513,14 +533,14 @@ shell 管道符，就是通过管道实现命令间的消息传递的
 				//write to fd[1]
 				close(1);
 				dup2(fd[1], 1);
-				close(fd[1]);//输出到fd[1] 
+				close(fd[1]);//输出到fd[1]
 				execvp(cmds[i][0], cmds[i]);//替换代码区
 
-			//parent 关闭: 	旧in:0 		新out:fd[1], 
+			//parent 关闭: 	旧in:0 		新out:fd[1],
 			//		 使用:	新in:fd[0], 旧out: 1
 			}else{
-				//close in ; 
-				//then read from fd[0] 
+				//close in ;
+				//then read from fd[0]
 				//if(in != 0){
 				//	close(in);
 				//}
@@ -537,7 +557,7 @@ shell 管道符，就是通过管道实现命令间的消息传递的
 		char status = *argv[1];
 		printf("%c\n", status);
 		if(status == '0'){
-			//df |grep dev 
+			//df |grep dev
 			char buf[10000];
 			i = read(in, buf, 10000);
 			write(1, buf, i); //不能使用，printf("%s", buf); 因为buf 的字符串不一定是以\0结尾的
@@ -572,7 +592,7 @@ FIFO 没有数据块，仅用来标识内核中的一条通道，其数据位于
 
 ## UNIX Domain Socket
 UNIX Domain Socket 通过一个socket 文件来标识内存中的通道, 这些socket 文件通常放在/var/run
-	
+
 	ls -l /var/run/*.socket
 	srw-rw-rw-  1 root  daemon     0B Oct 20 11:05 /var/run/systemkeychaincheck.socket
 

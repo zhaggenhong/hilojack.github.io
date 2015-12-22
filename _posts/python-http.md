@@ -17,7 +17,7 @@ http://docs.python-requests.org/en/latest/index.html
 
 ## request
 
-	>>> r = requests.get('https://api.github.com/events')
+	>>> r = requests.get('https://127.0.0.1:8000/a.php')
 	>>> r = requests.post("http://httpbin.org/post", data = {"key":"value"})
 	>>> r = requests.put("http://httpbin.org/put", data = {"key":"value"})
 	>>> r = requests.delete("http://httpbin.org/delete")

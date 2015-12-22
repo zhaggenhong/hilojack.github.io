@@ -7,11 +7,12 @@ description:
 # Preface
 
 Ctrl-tab
+
 	switch tab
 
 Note: SecureCRT's default copy and paste hotkeys,
 
-	CTRL+SHIFT+C (copy)
-	CTRL+SHIFT+V (paste)
+	COMMAND+SHIFT+C (copy)
+	COMMAND+SHIFT+V (paste)
 
 https://www.vandyke.com/support/tips/nl102004.html

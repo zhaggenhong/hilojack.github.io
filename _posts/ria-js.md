@@ -624,9 +624,17 @@ Example:
 
 # Object
 
+## has key value
+
+	if('key' in myObj){ }
+
+	function hasValue(obj, key, value) {
+		return obj.hasOwnProperty(key) && obj[key] === value;
+	}
+
 ## extend
 
-	Object.prototype.extend = function( defaults) {
+	Object.prototype.extend = function(defaults) {
 		for (var i in defaults) {
 			if (!this[i]) {
 				this[i] = defaults[i];

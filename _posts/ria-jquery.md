@@ -89,7 +89,7 @@ description:
 	$('p[attribute]');//select all `<p>` tags that have attribute
 	$('p[attribute="value"]');//equal value
 		$('[name=format]').show();
-	$('p[attribute!="value"]');//not equal value
+	$('p[input!="value"]');//not equal value
 	$('p[attribute^="prefix"]');//start with value-prefix
 	$('p[attribute$="subfix"]');//end with value-subfix
 	$('p[attribute*="substr"]');//contain substr
@@ -115,7 +115,7 @@ for class:
 
 ### via form
 
-	:input
+	input:button
 	:text
 	:password
 	:radio
@@ -134,6 +134,19 @@ for class:
 ## Convert dom node to jquery object:
 
 	 $jqNode = $(Node)
+
+# each
+
+## each selector
+
+	$("#navigation >a").each(function() {
+		 console.log(this.href)
+	});
+
+# each array & map
+
+	$.each(data['list'], function(key, item) {
+	$.each(data['list'], function(index, item) {
 
 # innerHTML
 
@@ -269,21 +282,18 @@ oldNode.prepend(node1, node2, ...)
 	// convert string to JSON
 	response = $.parseJSON(response);
 
-	$(function() {
-		$.each(response, function(i, item) {
-			var $tr = $('<tr>').append(
-				$('<td>').text(item.rank),
-				$('<td>').text(item.content),
-				$('<td>').text(item.UID)
-			); //.appendTo('#records_table');
-			console.log($tr.wrap('<p>').html());
-		});
+	$.each(response, function(i, item) {
+		var $tr = $('<tr>').append(
+			$('<td>').text(item.rank),
+			$('<td>').text(item.content),
+			$('<td>').text(item.UID)
+		); //.appendTo('#records_table');
+		console.log($tr.wrap('<p>').html());
 	});
 
 ### checked
 
 	$("#x" ).prop( "checked", true );
-
 
 # Css
 
@@ -484,5 +494,3 @@ dom原生的click
 	  console.log( "Load was performed." );
 	});
 
-# array
-$.each(data['list'], function(i, item) {
