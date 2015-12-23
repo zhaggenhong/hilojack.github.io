@@ -65,6 +65,7 @@ description:
 #### 偏移
 
 ##### 滚动偏移
+所有元素默认0:
 
 	ele.scrollLeft, ele.scrollTop
 	document.body.scrollLeft .scrollTop	正文滚动的偏移
@@ -73,7 +74,10 @@ description:
 		window.scrollBy(offsetX,offsetY)
 
 ##### 相对偏移
-offsetLeft,offsetTop 相对偏移
+offsetLeft,offsetTop 相对偏移:
+left:
+	static: 如果当前块border的外边，与父层border 的内边的距离
+	relative/absolute: 如果当前块border的外边，与上层postion: not static 内边的距离
 
 1. offsetLeft = left + margin(left)
 2. clientLeft = the width of left border
@@ -139,6 +143,7 @@ redirect:
 
 ## cookie
 
+	document.cookie='DEBUG=;expires=Mon, 05 Jul 2000 00:00:00 GMT'
 	document.cookie = 'a=1;expires='+d.toGMTString()
 	function getCookie(k){
 		c=document.cookie;
@@ -326,6 +331,8 @@ Example 浮层:
 ## .removeChild
 
 	child.parentNode.removeChild(child);
+	jqueryNode.remove()
+	jqueryNode.remove(subnode)
 
 ## child
 

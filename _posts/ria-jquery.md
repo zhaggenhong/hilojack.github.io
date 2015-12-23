@@ -486,6 +486,14 @@ dom原生的click
 
 	.off()
 
+# link
+
+## link confirm
+
+	$('.delete_row').click(function(){
+		return confirm("Are you sure you want to delete?");
+	})
+
 # loadJs
 
 	$.getScript( "ajax/test.js", function( data, textStatus, jqxhr ) {

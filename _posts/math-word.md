@@ -1,12 +1,12 @@
 ---
 layout: page
-title:	数学名词中英文对照
+title:	数学名词中英文对照 Mathematical Sign
 category: blog
-description: 
+description:
 ---
 # Preface
 
-A 　 
+A 　
 abbreviation 简写符号；简写
 absolute error 绝对误差
 absolute value 绝对值
@@ -87,9 +87,9 @@ average speed 平均速率
 axiom 公理
 axis 轴
 axis of parabola 拋物线的轴
-axis of symmetry 对称轴 
+axis of symmetry 对称轴
   
-B 　 
+B 　
 back substitution 回代
 bar chart 棒形图；条线图；条形图；线条图
 base （1）底；（2）基；基数
@@ -120,9 +120,9 @@ bounded function 有界函数
 brace 大括号
 bracket 括号
 breadth 阔度
-broken line graph 折线图 
+broken line graph 折线图
   
-C 　 
+C 　
 calculation 计算
 calculator 计算器；计算器
 cancel 消法；相消
@@ -201,7 +201,7 @@ computation 计算
 computer 计算机；电子计算器
 concave 凹
 concave downward 凹向下的
-D 　 
+D 　
 data 数据
 decagon 十边形
 decay 衰变
@@ -252,7 +252,7 @@ dependent variable 应变量；应变数
 depreciation 折旧
 descending order 递降序
 descending powers of X X的降序
-detached coefficients 分离系数(法) 
+detached coefficients 分离系数(法)
 deviation 偏差；变差
 deviation from the mean 离均差
 diagonal  对角
@@ -260,14 +260,14 @@ diagram 图；图表
 diameter 直径
 difference 差
 digit 数字
-dimension 量；量网；维(数) 
+dimension 量；量网；维(数)
 direct proportion 正比例
 direct tax, direct taxation 直接税
 direct variation 正变（分）
 directed angle 有向角
 directed number 有向数
 direction 方向；方位
-discontinuous 间断(的)；非连续(的)；不连续(的) 
+discontinuous 间断(的)；非连续(的)；不连续(的)
 discount 折扣
 discount per cent 折扣百分率
 discrete 分立；离散
@@ -275,9 +275,9 @@ discrete data 离散数据；间断数据
 discriminant 判别式
 dispersion 离差
 displacement 位移
-disprove 反证 
+disprove 反证
   
-E 　 
+E 　
 edge 棱；边
 elimination 消法
 elimination method 消去法；消元法
@@ -291,7 +291,7 @@ entire surd 整方根
 equal 相等
 equal ratios theorem 等比定理
 equal roots 等根
-equality 等(式) 
+equality 等(式)
 equality sign 等号
 equation 方程
 equation in one unknown 一元方程
@@ -299,13 +299,13 @@ equation in two unknowns 　
 (variables) 二元方程
 equation of a straight line 直线方程
 equation of locus 轨迹方程
-equiangular 等角(的) 
+equiangular 等角(的)
 extreme value 极值
-equidistant 等距(的) 
-equilaeral 等边(的) 
+equidistant 等距(的)
+equilaeral 等边(的)
 equilateral polygon 等边多边形
 equilateral triangle 等边三角形
-equivalent 等价(的) 
+equivalent 等价(的)
 error 误差
 escribed circle 旁切圆
 estimate 估计；估计量
@@ -341,7 +341,7 @@ exterior angle 外角
 external angle bisector 外分角
 external point of division 外分点
 extreme point 极值点
-F 　 
+F 　
 face 面
 factor 因子；因式；商
 factor method 因式分解法
@@ -349,7 +349,7 @@ factor theorem 因子定理；因式定理
 factorial 阶乘
 factorization 因子分解；因式分解
 factorization of polynomial 多项式因式分解
-FALSE 假(的) 
+FALSE 假(的)
 feasible solution 可行解；容许解
 Fermat’s last theorem 费尔马最后定理
 Fibonacci number 斐波那契数；黄金分割数
@@ -366,8 +366,8 @@ fixed deposit 定期存款
 fixed point 定点
 flow chart 流程图
 foot of perpendicular 垂足
-for all X 对所有X 
-for each /every X 对每一X 
+for all X 对所有X
+for each /every X 对每一X
 form 形式；型
 formal proof 形式化的证明
 format 格式；规格
@@ -388,7 +388,7 @@ frequency polygon 频数多边形；频率多边形
 frustum 平截头体
 function 函数
 function of function 复合函数；迭函数
-functional notation 函数记号 
+functional notation 函数记号
   
 G 　
 gain 增益；赚；盈利
@@ -420,7 +420,7 @@ group  组；
 grouped data 分组数据；分类数据
 grouping terms 并项；集项
 growth 增长
-growth factor 增长因子 
+growth factor 增长因子
   
 H 　
 half closed interval 半闭区间
@@ -438,7 +438,7 @@ histogram 组织图；直方图；矩形图
 horizontal  水平的；水平
 horizontal line 横线；水平线
 hyperbola 双曲线
-hypotenuse 斜边 
+hypotenuse 斜边
 I 　
 identical 全等；恒等
 identity 等（式）
@@ -459,7 +459,7 @@ inclined plane 斜面
 included angle 夹角
 included side 夹边
 inclusive 包含的；可兼的
-inconsistent 不相的(的)；不一致(的) 
+inconsistent 不相的(的)；不一致(的)
 increase 递增；增加
 increasing function 递增函数
 interior angles on the same side of the transversal 同旁内角
@@ -482,7 +482,7 @@ inverse problem 逆算问题
 inverse proportion 反比例；逆比例
 inverse sine function 反正弦函数
 inverse tangent function 反正切函数
-inverse variation 反变(分)；逆变(分) 
+inverse variation 反变(分)；逆变(分)
 irrational equation 无理方程
 irrational number 无理数
 irreducibility 不可约性
@@ -507,7 +507,7 @@ infinite sequence 无限序列；无穷序列
 infinite series 无限级数；无穷级数
 infinitely many 无穷多
 infinitesimal 无限小；无穷小
-infinity 无限(大)；无穷(大) 
+infinity 无限(大)；无穷(大)
 initial point 始点；起点
 initial side 始边
 initial value 初值；始值
@@ -528,14 +528,14 @@ interchange 互换
 interest 利息
 interest rate 利率
 interest tax 利息税
-interior angle 内角 
-  
-J 　 
-joint variation 联变(分)；连变(分) 
-  
-K 　 
-known 己知 
-  
+interior angle 内角
+ 
+J 　
+joint variation 联变(分)；连变(分)
+ 
+K 　
+known 己知
+ 
 L 　
 L.H.S. 末项
 law 律；定律
@@ -545,7 +545,7 @@ leading coefficient 首项系数
 least common multiple, lowest common multiple (L.C.M) 最小公倍数；最低公倍式
 least value 最小值
 lemma 引理
-length 长(度) 
+length 长(度)
 letter 文字；字母
 like surd 同类根式
 like terms 同类项
@@ -578,9 +578,9 @@ loss per cent 赔率；亏蚀百分率
 lower bound 下界
 lower limit 下限
 lower quartile 下四分位数
-lowest common multiple(L.C.M) 最小公倍数 
-  
-M 　 
+lowest common multiple(L.C.M) 最小公倍数
+ 
+M 　
 magnitude 量；数量；长度；大小
 major arc 优弧；大弧
 major axis 长轴
@@ -638,9 +638,9 @@ multiplier 乘数；乘式
 multiply 乘
 mutually exclusive events 互斥事件
 mutually independent 独立; 互相独立
-mutually perpendicular lines 互相垂直 
-  
-N 　 
+mutually perpendicular lines 互相垂直
+ 
+N 　
 n factorial n阶乘
 n th root n次根；n次方根
 natural number 自然数
@@ -650,7 +650,7 @@ negative index 负指数
 negative integer 负整数
 negative number 负数
 neighborhood 邻域
-net 净(值) 
+net 净(值)
 n-gon n边形
 nonagon 九边形
 non-collinear 不共线
@@ -675,8 +675,8 @@ numeral system 记数系统
 numerator 分子
 numerical 数值的；数字的
 numerical expression 数字式
-numerical method 计算方法；数值法 
-  
+numerical method 计算方法；数值法
+ 
 O 　
 oblique 斜的
 oblique cone 斜圆锥
@@ -700,12 +700,12 @@ ordered pair 序偶
 origin 原点
 outcome 结果
 output 输出
-overlap 交迭；相交 
-  
-P 　 
+overlap 交迭；相交
+ 
+P 　
 parabola 拋物线
-parallel 平行(的) 
-parallel lines 平行(直线) 
+parallel 平行(的)
+parallel lines 平行(直线)
 parallelogram 平行四边形
 parameter 参数；参变量
 partial fraction 部分分数；分项分式
@@ -728,7 +728,7 @@ prime factor 质因子；质因素
 prime number 素数；质数
 primitive (1)本原的；原始的；(2)原函数
 principal (1)主要的；(2)本金
-prism 梭柱(体)；角柱(体) 
+prism 梭柱(体)；角柱(体)
 prismoid 平截 防庾短?
 probability 概率
 problem 应用题
@@ -746,11 +746,11 @@ property tax 物业税
 proportion 比例
 proportional 成比例
 protractor 量角器
-pyramid 棱锥(体)；角锥(体) 
+pyramid 棱锥(体)；角锥(体)
 Pythagoras’ Theorem 勾股定理
 Pythagorean triplet 毕氏三元数组
 partial sum 部分和
-partial variation 部分变(分) 
+partial variation 部分变(分)
 particular solution 特解
 Pascal’s triangle 帕斯卡斯三角形
 pattern 模型；规律
@@ -769,7 +769,7 @@ perimeter 周长；周界
 period 周期
 periodic function 周期函数
 permutation 排列
-perpendicular 垂线；垂直(于) 
+perpendicular 垂线；垂直(于)
 perpendicular bisector 垂直平分线；中垂线
 perpendicular line 垂直线
 pictogram 象形图
@@ -790,19 +790,19 @@ point of intersection 交点
 point-slope form 点斜式
 polar axis 极轴
 polar coordinate plane 极坐标平面
-polar coordinate 极坐标系统 
-  
+polar coordinate 极坐标系统
+ 
 Q 　
 quadrant 象限
-quadratic equation 二次方程(式) 
+quadratic equation 二次方程(式)
 quadratic formula 二次公式
 quardratic function 二次函数
 quadratic inequality 二次不等式
 quadratic polynomial 四边形
 quantity 数量
 quartile 四分位数
-quotient 商；商式 
-  
+quotient 商；商式
+ 
 R 　
 R.H.S 右
 radian 弧度
@@ -855,8 +855,8 @@ rhombus 菱形
 right angle 直角
 right circular cone 直立圆锥（体）
 right circular cylinder 直立圆柱（体）
-right prism 直立棱柱；直立角柱(体) 
-right pyramid 直立棱锥；直立角锥(体) 
+right prism 直立棱柱；直立角柱(体)
+right pyramid 直立棱锥；直立角锥(体)
 right-angled triangle 直角二角形
 root 根
 rotation 旋转
@@ -864,10 +864,10 @@ round angle 周角
 rounded number 舍数
 rounding(off) 舍入；四舍五入
 row 行；棋行
-rule 规则；法(则) 
-ruler 直尺 
-  
-S 　 
+rule 规则；法(则)
+ruler 直尺
+ 
+S 　
 salaries tax   俸税
 sample 抽样；样本
 sample space 样本空间
@@ -909,7 +909,7 @@ significant figure 有效数字
 similar 相似
 similar figures 相似图形
 similar triangles 相似三角形
-similarity 相似(性) 
+similarity 相似(性)
 simple equation 简易方程
 simple interest 单利；单利息
 simplify 简化
@@ -925,10 +925,10 @@ slope-intercept form 斜率截距式；斜截式
 solid 立体；固体
 soild with uniform corss-section 有均匀横切面的立体
 solution 解；解法
-solution of equation 方程解 
-  
+solution of equation 方程解
+ 
 U 　
-uniform 一致(的)；均匀(的) 
+uniform 一致(的)；均匀(的)
 uniform cross-section 均匀横切面
 uniform speed 匀速率
 uniformly distributed 均匀分布
@@ -942,8 +942,8 @@ unknown 未知数；未知量
 unlike 异类项
 upper bound 上界
 upper limit 上限
-upper quartile 上四分位数 
-  
+upper quartile 上四分位数
+ 
 V 　
 value 值
 variable 变项；变量；元；变元；变数
@@ -956,36 +956,36 @@ vertical 铅垂；垂直
 vertical angle 顶角
 vertical line 纵线；铅垂
 vertically opposite angles 对顶角
-volume 体积 
-  
+volume 体积
+ 
 W 　
 weight (1)重量；(2)权
 weighted average, weighted mean 加权平均数
 whole number 整数；完整数
 width 阔度
-without loss of generality 不失一般性 
-  
+without loss of generality 不失一般性
+ 
 X 　
 x-axis x轴
 x-coordinate x坐标
-x-intercept x轴截距 
-  
+x-intercept x轴截距
+ 
 Y 　
 y-axis y轴
 y-coordinate y坐标
-y-intercept y轴截距 
-  
+y-intercept y轴截距
+ 
 Z 　
 zero 零
 zero factor 零因子
 zeros of a function 函数零值
 
 统计学
-population 母体 
+population 母体
 sample 样本
 census 普查
 sampling 抽样
-quantitative 量的 
+quantitative 量的
 qualitative/categorical 质的
 discrete 离散的
 continuous 连续的
@@ -994,15 +994,15 @@ sample statistics 样本统计量
 descriptive statistics 叙述统计学
 inferential/inductive statistics 推论/归纳统计学
 levels of measurement 衡量尺度
-nominal scale 名目尺度 
+nominal scale 名目尺度
 ordinal scale 顺序尺度
-interval scale 区间尺度 
+interval scale 区间尺度
 ratio scale 比例尺度
 frequency distribution 次数分配
 relative frequency 相对次数
 range 全距
 class midpoint 组中点
-class limits 组限 
+class limits 组限
 class boundaries 组界
 class width 组距
 cumulative frequency (以下) 累加次数
@@ -1019,8 +1019,8 @@ mean 平均数
 median 中位数
 mode 众数
 location measures 位置量数
-percentile 百分位数 
-quartile 四分位数 
+percentile 百分位数
+quartile 四分位数
 decile 十分位数
 dispersion measures 分散量数
 range 全距
@@ -1031,7 +1031,7 @@ standard deviation 标准差
 coefficient of variation 变异系数
 left-skewed 左偏
 negative-skewed 负偏
-right-skewed 右偏 
+right-skewed 右偏
 positive-skewed 正偏
 contingency table 列联表
 sampling distribution (of a statistic)(某个统计量的) 抽样分布
@@ -1040,11 +1040,11 @@ point estimator 点估计式
 unbiased estimator 不偏点估计式
 efficient estimator 有效点估计式
 consistent estimator 一致点估计式
-confidence level 信赖水准 
+confidence level 信赖水准
 confidence interval 信赖区间
 null hypothesis 虚无假设
 alternative hypothesis 对立假设
-left-tailed test 左尾检定 
+left-tailed test 左尾检定
 right-tailed test 右尾检定
 two-tailed test 双尾检定
 test statistic 检定统计量
