@@ -52,6 +52,15 @@ https://github.com/AnewG/Modern-php?files=1
 
 # Array
 
+## next end
+
+	$transport = array('foot', 'bike', 'car', 'plane');
+	$mode = current($transport); // $mode = 'foot';
+	$mode = next($transport);    // $mode = 'bike';
+	$mode = next($transport);    // $mode = 'car';
+	$mode = prev($transport);    // $mode = 'bike';
+	$mode = end($transport);     // $mode = 'plane';
+
 ## compact and extract
 
 ### compact

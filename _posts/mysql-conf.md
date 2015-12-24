@@ -2,7 +2,7 @@
 layout: page
 title:	mysql install
 category: blog
-description: 
+description:
 ---
 # Preface
 mysql安装
@@ -56,18 +56,18 @@ for centos
 It is always recommended to secure your MySQL installation. To do this, type the following on your Terminal:
 
 	$ mysql_secure_installation
-	 
+
 	Set root password? [Y/n] Y
 	Remove anonymous users? [Y/n] Y
 	Disallow root login remotely? [Y/n] Y
 	Remove test database and access to it? [Y/n] Y
 	Reload privilege tables now? [Y/n] Y
 
-## add user 
+## add user
 
 	mysql> CREATE USER 'monty'@'localhost' IDENTIFIED BY 'passwd';
 	mysql> GRANT ALL PRIVILEGES ON *.* TO 'monty'@'localhost' WITH GRANT OPTION;
-	
+
 
 For more: http://dev.mysql.com/doc/refman/5.0/en/resetting-permissions.html
 
@@ -100,57 +100,7 @@ If u have root authority
 	# current user
 	> SET PASSWORD = PASSWORD('cleartext password');
 
-# 乱码
-
-## collation
-[用于指定数据集如何排序，以及字符串的比对规则](http://zhongwei-leg.iteye.com/blog/899227)
-
-	show collation;
-
-collation 名字的规则可以归纳为这两类：
-
-1. `<character set>_<language/other>_<ci/cs>`
-2. `<character set>_bin`
-
-ci 是 case insensitive 的缩写， cs 是 case sensitive 的缩写。即，指定大小写是否敏感。
-那么 utf8_general_ci, utf8_unicode_ci, utf8_danish_ci 有什么区别? 他们各自存在的意义又是什么？
-同一个 character set 的不同 collation 的区别在于排序、字符对比的准确度（相同两个字符在不同国家的语言中的排序规则可能是不同的）以及性能。
-
-例如：
-  utf8_general_ci 在排序的准确度上要逊于 utf8_unicode_ci， 当然，对于英语用户应该没有什么区别。但性能上（排序以及比对速度）要略优于 utf8_unicode_ci. 例如前者没有对德语中 `ß = ss` (在德语中他们意义是等价的)的支持。
-
-而 utf8_danish_ci 相比 utf8_unicode_ci 增加了对丹麦语的特殊排序支持。
-
-1. 当表的 character set 是 latin1 时，若字段类型为 nvarchar, 则字段的字符集自动变为 utf8.
-可见 database character set, table character set, field character set 可逐级覆盖。
- 
- 2. 在 ci 的 collation 下，如何在比对时区分大小写：
-推荐使用
-
-	mysql> select * from pet where name = binary 'whistler'; //这样可以保证当前字段的索引依然有效 
-	mysql> select * from pet where binary name = 'whistler'; //会使索引失效。
-
-## 其它
-	 
-	//查看mysql 支持的字符集
-	show character set;
-	show collation;//影响字符排序\对比的性能与准确度
-
-	//check
-	show variables like "%char%";
-	show create table db.table;
-	show create database db;
-
-	client->connect->server/system/database->results
-
-	//临时设置编码
-	mysql_query("SET NAMES 'utf8'");//设定字符集,告诉服务器,我用的是utf-8编码, 我希望你也给我返回utf-8编码的查询结果.他会影响results|client|connect
-	mysql_set_charset("utf8");//设定字符集(会影响mysql_real_escape_string())
-	mysql_query("SET CHARACTER_SET_CLIENT=utf8"); 
-	mysql_query("SET CHARACTER_SET_RESULTS=utf8"); 
-	mysql_query("SET CHARACTER_SET_RESULTS=latin1"); 
-
-# Admin 
+# Admin
 
 ## Common options
 
@@ -215,7 +165,7 @@ mysql_safe is used to manager mysqld (it added some feature that correlate with 
 
 
 ## my.conf
-	
+
 	sudo cp /usr/local/Cellar/mariadb/10.0.10/support-files/my-large.cnf /etc/my.cnf
 
 ### scope
@@ -247,7 +197,7 @@ tab autocomplete
 	[mysql]
 	auto-rehash
 
-### log 
+### log
 
 	# 记录非索引查询(expire long_query_time)
 	log_slow_queries=1
@@ -359,11 +309,13 @@ Example:
 
 	mysqlshow 'test\_name'
 
-## mysqldump
+## dump & import
+
+### mysqldump
 用于导出表结构或者数据. 默认导出的是'*.sql' 格式，输出到标准输出。默认包含 insert 和 create 语句
 
 	mysqldump [opt] database [table] > db.sql
-	mysqldump [opt] --databases [options] db1 db2 ... 
+	mysqldump [opt] --databases [options] db1 db2 ...
 	mysqldump [opt] --all-databases
 		--no-create-info
 		-d, --no-data
@@ -389,14 +341,14 @@ Example:
 	$ mysqladmin create dst_db
 	$ mysqldump -hroot -p123 source_db | mysql -uUser -pPasswd dst_db; # 包含数据
 
-## mysqlhotcopy
+### mysqlhotcopy
 是优化的mysqldump 但只支持本机且只支持MyISAM/Archive. 这个我不用的
 
 	mysqlhotcopy [options] --suffix=.sql db1 db2 ... dbN /backup/
 	# 用posix正则匹配db
 	mysqlhotcopy [options] db./^preg$/ /backup/
 
-## mysqlimport
+### mysqlimport
 导入数据（.csv 数据而非.sql 数据）时，可以通过mysqlimport 为字段做定界:
 
 	mysqlimport [options] --fields-terminated-by=\t dbname file1.txt [... fileN.txt]
@@ -436,7 +388,7 @@ mysqlcheck用于检查所有类型的表, 不需要关闭守护进程:
 
 # mysql client
 
-	mysql -uroot -hhost -pxx database 
+	mysql -uroot -hhost -pxx database
 
 ## exec
 mysql client 有自己的interactive cli 模式，这种模式下每条语句以";"结束，也可以标记`\G`, `\H`，或者别名`status` 结束
@@ -463,7 +415,7 @@ It support that use ‘tab’ to complete command
 ## format & shell
 
 	#垂直显示
-	mysql> select * form db.tb\G 
+	mysql> select * form db.tb\G
 	mysql --vertical
 	#prompt
 	mysql -uroot --prompt='\u@\h \d>'
@@ -478,7 +430,7 @@ It support that use ‘tab’ to complete command
 
 	mysql --paper=less; #分页显示程序
 
-在mysql cli中使用pager: 
+在mysql cli中使用pager:
 
 	> pager grep 'pattern';
 	> pager less
@@ -538,7 +490,7 @@ You have to put this as root:
 
 	GRANT ALL PRIVILEGES ON *.* TO  'USERNAME'@'IP'  IDENTIFIED  BY  'PASSWORD';
 
-where IP is the IP you want to allow acess and USERNAME is the user you use to connect. 	
+where IP is the IP you want to allow acess and USERNAME is the user you use to connect.
 If you want to allow access from any IP just put `%` instead of your IP .
 
 Then you only have to put
@@ -553,6 +505,6 @@ Or restart mysql server and that's it
 
 > mysql client will access mysql unix socket via locahost, tcp/ip via 127.0.0.1
 
-## describe 
+## describe
 
 	describe db.table;
