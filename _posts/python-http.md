@@ -191,6 +191,15 @@ Use a session object instead, it'll persist cookies and send them back to the se
 		r = s.get(URL1)
 		r = s.post(URL2, params="username and password data payload")
 
+取设headers:
+
+	s = requests.Session()
+	s.auth = ('user', 'pass')
+	s.headers.update({'x-test': 'true'})
+
+	// both 'x-test' and 'x-test2' are sent
+	s.get('http://httpbin.org/headers', headers={'x-test2': 'true'})
+
 # urllib2
 urllib2 is deprecated
 

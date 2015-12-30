@@ -2,7 +2,7 @@
 layout: page
 title:	php 知识库
 category: blog
-description: 
+description:
 ---
 # Preface
 关于php 的函数
@@ -36,14 +36,14 @@ https://github.com/AnewG/Modern-php?files=1
 	FILTER_VALIDATE_INT
 	FILTER_VALIDATE_REGEXP
 
-### Sanitize filters 
+### Sanitize filters
 
 	var_dump('<a>hello</a>', FILTER_SANITIZE_STRING); //hello, like strip_tags
 	FILTER_SANITIZE_EMAIL 去掉和邮件地址无关的字符
 	FILTER_SANITIZE_NUMBER_INT 去掉和INT 无关的字符
 	FILTER_SANITIZE_SPECIAL_CHARS 去HTML 特殊字符 `<>&'"` 编码
 
-# Const 
+# Const
 
 	const N = 1
 	get_defined_constants(true)['user']
@@ -64,7 +64,7 @@ https://github.com/AnewG/Modern-php?files=1
 ## compact and extract
 
 ### compact
-For each of these, `compact()` looks for a variable with that name in the current symbol table 
+For each of these, `compact()` looks for a variable with that name in the current symbol table
 and adds it to the output array such that the variable name becomes the key and the contents of the variable become the value for that key.
 In short, it does the opposite of extract().
 
@@ -137,7 +137,7 @@ Example:
 		  ["foo"]=>
 		  string(6) "value1"
 		}
-	
+
 	var_dump(array_diff_key($arr, array_flip($allowed)));
 		  "bar"=> "value2"
 
@@ -191,18 +191,28 @@ array_flip 跟array_merge 一样，后面的key 会覆盖前面的
 ## 合并-拆分
 
 	array_combine($keys, $values)
-	array_merge(["k"=>1, 2=>3], ["k"=>0, 4=>5]); //Array ( [k] => 0 [0] => 3 [1] => 5) 
+	array_merge(["k"=>1, 2=>3], ["k"=>0, 4=>5]); //Array ( [k] => 0 [0] => 3 [1] => 5)
 	["k"=>1, 2=>3]+["k"=>0, 2=>5]; //不覆盖 Array ( [k] => 1 [2] => 3)
 	array_slice($arr, $start, $length, $preserve_key = false)
 	array_splice
 
-## 交差集
+## 交差并集
 
-	array_intersect()
-	array_intersect_assoc()
-	array_diff()
-	array_diff_key()
-	array_diff_assoc()
+### 并
+
+	var_dump(['a'=>1]+['a'=>2]);
+	array(1) {
+	  ["a"]=>
+	  int(1)
+	}
+
+### 交差
+
+	array_intersect();
+	array_intersect_assoc();
+	array_diff(); 			# diff value only
+	array_diff_assoc();		# diff value and key
+	array_diff_key();		# diff key only
 
 array_remove_key
 
@@ -231,7 +241,7 @@ array_keep_key
 ## range
 
 	range(1, 10);//1,2,3...10
-	
+
 ## 求和
 
 	array_sum
@@ -313,7 +323,7 @@ Exception 用来API 错误信息返回特别有方便,
 				echo json_encode([
 					'errno' => $e->getCode(),
 					'error' => $e->getMessage(),
-				], JSON_UNESCAPED_UNICODE);	
+				], JSON_UNESCAPED_UNICODE);
 			});
 		}
 	}
@@ -476,10 +486,10 @@ simpleXML
 
 ### foreach
 	foreach($movies as $k => $movie){
-		echo $movie->title;	
+		echo $movie->title;
 	}
 	foreach($movies->children() as $k => $movie){
-		echo $movie->title;	
+		echo $movie->title;
 	}
 
 # String
@@ -492,7 +502,7 @@ simpleXML
 			yield $i;
 		}
 	}
-	foreach (rangeChar('hilojack', 'hilojacz') as $v) 
+	foreach (rangeChar('hilojack', 'hilojacz') as $v)
 
 	range('A', 'Z')
 	array_merge(range('A', 'Z'), range('a', 'z'));
@@ -512,7 +522,7 @@ simpleXML
 ## split
 
 	array str_split ( string $string [, int $split_length = 1 ] )
-	
+
 
 ## DOM
 Operation html string like jquery
@@ -523,7 +533,7 @@ https://code.google.com/p/phpquery/
 
 	parse_ini_file('a.ini')
 	parse_ini_string('a.ini')
-	
+
 	get_defined_constants($categorize = true)['user']
 	parse_ini_file('a.ini') + get_defined_constants(true)['user']
 
@@ -546,11 +556,11 @@ https://code.google.com/p/phpquery/
 
 ## Double Quote
 
-	"$str" 
+	"$str"
 	"${str}"
 	"{$str}"
 
-	"$arr[0]" 
+	"$arr[0]"
 	"${arr[0]}"
 	"{$arr[0]}"
 
@@ -602,7 +612,7 @@ Alias to strchr
 
 ## html
 
-	nl2br 
+	nl2br
 	htmlentities: encode all characters
 	htmlspecialchars : encode only necessary characters
 	strip_tags
@@ -616,7 +626,7 @@ Example:
 	echo htmlspecialchars('<Il était une fois un être>.');
 	// Output: &lt;Il était une fois un être&gt;.
 	//                ^                 ^
-	
+
 > http://htmlpurifier.org/ 提供了强大的html 数据清洗库
 
 ## diff
@@ -645,7 +655,7 @@ strtr — Translate characters or replace substrings
 
 	str_repeat($str, $num);
 
-## pad 
+## pad
 	str_pad($str, $len, $pad, $type);
 
 ## preg regx
@@ -662,7 +672,7 @@ strtr — Translate characters or replace substrings
 
 	//parse rgb
 	list($r, $g, $b) = sscanf('0x00ccff', '0x%2x%2x%2x');
-	
+
 
 ### sprintf
 
@@ -701,7 +711,7 @@ heredoc 会解释变量
 	Now, I am printing some {$foo->bar[1]}.
 	This should print a capital 'A': \x41
 	EOT;
-	
+
 # i18n(gettext)
 
 	setlocale(LC_ALL, 'en_US');
@@ -808,7 +818,7 @@ Note the distinction between signed and unsigned values only affect unpack funct
 
 ## curl
 Refer to [php-curl](https://github.com/hilojack/php-lib)
-	
+
 ## headers
 
 ### getheader
@@ -914,11 +924,11 @@ Get user php is running as:
 
 	echo exec('whoami');
 
-# Disk 
+# Disk
 	filesize
 	float disk_free_space(str $dir); //返回目录所在分区剩余大小
 	float disk_total_space(str $dir); //返回目录所在分区大小
-	
+
 # Memory
 
 	memory_get_usage($real_usage = false); //false 返回emalloc分配的内存; true:返回操作OS分配的内存:real_size
@@ -972,7 +982,7 @@ shell_exec 等价于反引号:
 
 ## pipe
 
-	<?php 
+	<?php
 	$descriptorspec = array(
 		0 => array("pipe", "r"),  // stdin is a pipe that the child will read from
 		1 => array("pipe", "w"),  // stdout is a pipe that the child will write to
@@ -1031,7 +1041,7 @@ In php running:
 
 ## composer
 [composer](https://getcomposer.org/doc/00-intro.md#dependency-management)
-不是一个包管理器, 而是一个依赖管理器. 
+不是一个包管理器, 而是一个依赖管理器.
 尽管它处理的是包库(packages and libraries), 但是这些是基于Project(安装到vendor) 的，因为它默认不是全局安装的. 如果你愿意, 也可以使用global 全局安装。
 它主要用于：
 
@@ -1050,7 +1060,7 @@ composer 是一个php 脚本，可以通过brew 安装到：
 
 	composer self-update
 
-	# or 
+	# or
 	rm -rf ~/.composer /usr/local/bin/composer
 	#wget https://getcomposer.org/composer.phar -O  /usr/local/bin/composer
 	wget http://packagist.cn/composer/composer.phar -O  /usr/local/bin/composer
@@ -1066,7 +1076,7 @@ composer 是一个php 脚本，可以通过brew 安装到：
 http://pkg.phpcomposer.com/
 http://packagist.cn/
 
-### composer.json 
+### composer.json
 内容解释：
 
 	config 用于指定vendor 目录等
@@ -1104,7 +1114,7 @@ http://packagist.cn/
 ### 自动加载
 PHP官方社区创建了PSR-0标准。Composer里面自带PSR-0自动加载机制，在项目里面加入下面一行代码：
 
-	include_once './vendor/autoload.php'; 
+	include_once './vendor/autoload.php';
 
 > 其实自带的 spl_autoload_register(array('Doctrine', 'autoload')); 就足够
 

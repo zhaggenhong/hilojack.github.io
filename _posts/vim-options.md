@@ -20,6 +20,16 @@ description:
 
 	:setlocal nowrap
 
+## default options
+`:h &vim`
+
+	:se[t] {option}&        Reset option to its default value.  May depend on the
+							current value of 'compatible'. {not in Vi}
+	:se[t] {option}&vi      Reset option to its Vi default value. {not in Vi}
+	:se[t] {option}&vim     Reset option to its Vim default value. {not in Vi}
+
+	:se[t] all&             Reset all options
+
 ## help options
 
 

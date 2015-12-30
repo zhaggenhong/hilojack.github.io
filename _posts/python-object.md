@@ -8,6 +8,82 @@ description:
 
 pythone 一切皆对象
 
+# Class and Object
+
+	class MyStuff(object):
+		name = 'hilo'
+
+		def __init__(self):
+			self.tangerine = "And now a thousand years between"
+
+		def apple(self):
+			print "I AM CLASSY APPLES!"
+
+	obj = MyStuff();
+
+## Inheritance
+
+	class Parent(object):
+
+		def altered(self):
+			print "PARENT altered()"
+
+	class Child(Parent):
+
+		def altered(self):
+			print "CHILD, BEFORE PARENT altered()"
+			super(Child, self).altered()
+
+	Child().altered()
+
+super inherits init
+
+	class Child(Parent):
+		def __init__(self, stuff):
+			self.stuff = stuff
+			super(Child, self).__init__()
+
+## __dict__ 属性的dict
+属性分为：
+
+1. 类属性(class attribute)
+1. 对象属性(object attribute)。
+
+
+	class bird(object):
+		feather = True
+
+	class chicken(bird):
+		fly = False
+		def __init__(self, age):
+			self.age = age
+
+	summer = chicken(2)
+
+	print(bird.__dict__)
+	print(chicken.__dict__)
+	print(summer.__dict__)
+
+output:
+
+	{'__dict__': <attribute '__dict__' of 'bird' objects>, '__module__': '__main__', '__weakref__': <attribute '__weakref__' of 'bird' objects>, 'feather': True, '__doc__': None}
+	{'fly': False, '__module__': '__main__', '__doc__': None, '__init__': <function __init__ at 0x2b91db476d70>}
+	{'age': 2}
+
+属性访问时，是层层遍历的: `summer|chicken|bird|object`, 所以:
+
+	>>> print(summer.age)
+	2
+	>>> print(summer.fly)
+	False
+	>>> print(summer.feather)
+	True
+	>>> print(chicken.fly)
+	False
+	>>> print(chicken.feather)
+	True
+
+
 # attribute
 方法也是属性
 
@@ -26,6 +102,40 @@ pythone 一切皆对象
 
 	 if hasattr(fp, 'read'):
         return readData(fp)
+
+## __getattr__, __setattr__
+`obj.attr` 是attr
+`obj['key']` 是item
+
+当访问不存在的attr 时触发`obj.score`
+
+	def __getattr__(self, attr):
+		if attr=='score':
+			return 99
+		raise AttributeError('\'Student\' object has no attribute \'%s\'' % attr)
+
+## __call__
+与php `__invoke()`一样，它是将对象变函数
+
+	class Student(object):
+		def __init__(self, name):
+			self.name = name
+
+		def __call__(self):
+			print('My name is %s.' % self.name)
+
+调用方式如下：
+
+	>>> s = Student('Michael')
+	>>> s() # self参数不要传入
+	My name is Michael.
+
+能被调用的对象就是一个Callable对象
+
+	>>> callable(Student())
+	True
+	>>> callable(max)
+	True
 
 ## 实例与类属性
 
@@ -75,10 +185,10 @@ pythone 一切皆对象
 
 由于'score'没有被放到__slots__中，所以不能绑定score属性，试图绑定score将得到AttributeError的错误。
 
-> 使用__slots__要注意，__slots__定义的属性仅对当前类实例起作用，对继承的子类是不起作用的：
+> 使用__slots__要注意，__slots__定义的属性仅对当前类实例起作用，对继承的子类是不起作用的
 
 ## @property 属性
-Python内置的@property装饰器就是负责把一个方法变成属性调用的`Student().score=1`：
+Python内置的`@property`装饰器就是负责把一个方法变成属性调用的`Student().score=1`：
 
 	class Student(object):
 
@@ -109,8 +219,10 @@ Python内置的@property装饰器就是负责把一个方法变成属性调用�
 	>>> print(Student('Michael'))
 	Student object (name: Michael)
 
-`__str__()`返回用户看到的字符串，
-`__repr__()`返回程序开发者看到的字符串，也就是说，__repr__()是为调试服务的。
+`__str__()`返回用户看到的字符串(`print(obj)`)，
+`__repr__()`返回程序开发者看到的字符串，也就是说，__repr__()是为调试服务的: 直接输入`obj`。
+
+# item
 
 ## __iter__
 如果一个类想被用于for ... in循环，类似list或tuple那样，就必须实现一个`__iter__()`方法，该方法返回一个迭代对象，
@@ -240,81 +352,96 @@ function object
 
 	> dir(f)
 
-# Class and Object
+# Enum
 
-	class MyStuff(object):
+	>>> from enum import Enum
+	>>> Month = Enum('Month', ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'))
+	>>> for name, member in Month.__members__.items():
+	...      print(name, '=>', member, ',', member.value)
+	...
+	Jan => Month.Jan , 1
+	Feb => Month.Feb , 2
 
-		def __init__(self):
-			self.tangerine = "And now a thousand years between"
-
-		def apple(self):
-			print "I AM CLASSY APPLES!"
-
-	obj = MyStuff();
-
-## Inheritance
-
-	class Parent(object):
-
-		def altered(self):
-			print "PARENT altered()"
-
-	class Child(Parent):
-
-		def altered(self):
-			print "CHILD, BEFORE PARENT altered()"
-			super(Child, self).altered()
-
-	Child().altered()
-
-super inherits init
-
-	class Child(Parent):
-
-		def __init__(self, stuff):
-			self.stuff = stuff
-			super(Child, self).__init__()
-
-## __dict__ 属性的dict
-属性分为：
-
-1. 类属性(class attribute)
-1. 对象属性(object attribute)。
+如果需要更精确地控制枚举类型，可以从Enum派生出自定义类：
+@unique装饰器可以帮助我们检查保证没有重复值。
 
 
-	class bird(object):
-		feather = True
+	from enum import Enum, unique
 
-	class chicken(bird):
-		fly = False
-		def __init__(self, age):
-			self.age = age
+	@unique
+	class Weekday(Enum):
+		Sun = 0 # Sun的value被设定为0
+		Mon = 1
+		Tue = 2
 
-	summer = chicken(2)
+多种访问方法：
 
-	print(bird.__dict__)
-	print(chicken.__dict__)
-	print(summer.__dict__)
-
-output:
-
-	{'__dict__': <attribute '__dict__' of 'bird' objects>, '__module__': '__main__', '__weakref__': <attribute '__weakref__' of 'bird' objects>, 'feather': True, '__doc__': None}
-	{'fly': False, '__module__': '__main__', '__doc__': None, '__init__': <function __init__ at 0x2b91db476d70>}
-	{'age': 2}
-
-属性访问时，是层层遍历的: `summer|chicken|bird|object`, 所以:
-
-	>>> print(summer.age)
+	>>> day1 = Weekday.Mon
+	>>> print(day1)
+	Weekday.Mon
+	>>> print(Weekday.Tue)
+	Weekday.Tue
+	>>> print(Weekday['Tue'])
+	Weekday.Tue
+	>>> print(Weekday.Tue.value)
 	2
-	>>> print(summer.fly)
-	False
-	>>> print(summer.feather)
-	True
-	>>> print(chicken.fly)
-	False
-	>>> print(chicken.feather)
-	True
+	>>> print(Weekday(1))
+	Weekday.Mon
 
-# Object Property
+# type()
+动态语言和静态语言最大的不同，就是函数和类的定义，不是编译时定义的，而是运行时动态创建的。
+
+	class Hello(object):
+		def hello(self, name='world'):
+			print('Hello, %s.' % name)
+
+用type 创建类(like `lambda`), `class Xxx...`来定义类 其实是调用`type()函数`
+
+	>>> def fn(self, name='world'): # 先定义函数
+	...     print('Hello, %s.' % name)
+	...
+	>>> Hello = type('Hello', (object,), dict(hello=fn)) # 创建Hello class
+	>>> h = Hello()
+	>>> h.hello()
+	Hello, world.
+	>>> print(type(Hello))
+	<class 'type'>
+	>>> print(type(h))
+	<class '__main__.Hello'>
+
+# metaclass 元类
+metaclass允许你创建类或者修改类。换句话说，你可以把类看成是metaclass创建出来的“实例”。
+
+# super
+
+	class Root(object):
+		def __init__(self):
+			print("this is Root")
+	class B(Root):
+		def __init__(self):
+			print("enter B")
+			# print(self) # this will print <__main__.D object at 0x...>
+			super(B, self).__init__()
+			print("leave B")
+	class C(Root):
+		def __init__(self):
+			print("enter C")
+			super(C, self).__init__()
+			print("leave C")
+	class D(B, C):
+		pass
+
+	d = D()
+	print(d.__class__.__mro__)
+
+在 MRO 中，基类永远出现在派生类后面，如果有多个基类，基类的相对顺序保持不变。
+
+	enter B
+	enter C
+	this is Root
+	leave C
+	leave B
+	(<class '__main__.D'>, <class '__main__.B'>, <class '__main__.C'>, <class '__main__.Root'>, <type 'object'>)
+
 # todo
 > http://python.jobbole.com/82622/

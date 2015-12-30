@@ -28,6 +28,8 @@ Convert data type:
 
 	>>> type(fn)==types.FunctionType
 	True
+	>>> type(className); types.type
+	>>> type(obj); class className
 	>>> type(abs)==types.BuiltinFunctionType
 	True
 	>>> type(lambda x: x)==types.LambdaType

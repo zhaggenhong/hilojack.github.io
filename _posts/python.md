@@ -73,7 +73,7 @@ read output
 ### via call
 类似run, 但
 
-1. 返回errno
+1. 只返回errno
 
 	>>from subprocess import call
 	>>errno=call("ls -l", shell=True)

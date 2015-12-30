@@ -292,6 +292,7 @@ functools.partial就是帮助我们创建一个偏函数的，不需要我们自
 	64
 	>>> int2('1010101')
 	85
+
 最后，创建偏函数时，实际上可以接收函数对象、*args和**kw这3个参数，当传入：
 
 	max2 = functools.partial(max, 10)

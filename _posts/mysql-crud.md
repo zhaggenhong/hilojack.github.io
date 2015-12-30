@@ -358,7 +358,7 @@ UNION 要求select 的colume 数一致(用于分表合并)！
 	+---+
 
 # Group By
-对于聚合函数(clustered function)`count`, `max` 等，要想指定聚合的范围，就需要用`group by` 分组
+对于聚合函数(clustered function)`count`, `max` 等，要想指定聚合的范围，就需要用`group by` 分组.
 
 	MariaDB [test]> select * from emp;
 	+-------+------+--------+
@@ -370,6 +370,8 @@ UNION 要求select 的colume 数一致(用于分表合并)！
 	| Jim   | PM   |   4500 |
 	| Peter | PM   |   3100 |
 	+-------+------+--------+
+
+使用`group by` 时，非聚合的字段`dept`是随机的，与`max` 无关
 
 	MariaDB [test]> select  dept,max(salary) from emp group by dept;
 	+------+-------------+
