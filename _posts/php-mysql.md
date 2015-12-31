@@ -2,7 +2,7 @@
 layout: page
 title:	php-mysql
 category: blog
-description: 
+description:
 ---
 # Preface
 php 使用mysql时，主要通过两种面向对象的扩展mysqli 和 pdo。mysqli 用于访问mysql, 而pdo 抽象层次更高，可用于其它数据库。
@@ -67,9 +67,9 @@ connect info:
 	//assoc
 	$row = $res->fetch_row(); $row = $res->fetch_assoc();
 	//array
-	$row = $res->fetch_array(); 
+	$row = $res->fetch_array();
 	//all
-	$row = $res->fetch_all([ int $resulttype = MYSQLI_NUM ] ) 
+	$row = $res->fetch_all([ int $resulttype = MYSQLI_NUM ] )
 
 ### multi query & multi result
 
@@ -112,7 +112,7 @@ output
 		var_dump($user, $age);
 	}
 	var_dump($stmt->affected_rows, $stmt->error);
-	
+
 	$stmt->close();
 
 ## 事务
@@ -124,9 +124,9 @@ set auto commit to false(default it is true)
 	//check auto status via `SELECT @@autocommit;`
 
 commit
-	
+
 	if($mysqli->affected_rows > N)
-		$mysqli->commit();//true for succ. If you call commit now, there is no rollback of the successful statements 
+		$mysqli->commit();//true for succ. If you call commit now, there is no rollback of the successful statements
 	else
 		$mysqli->rollback();//true for succ
 
@@ -153,6 +153,7 @@ pdo default socket:
 	int(affected_rows)
 		exec
 
+## multi sqls
 $sql 可以为多条:
 
 	$sqls = "$sql1; $sql2; ";
@@ -160,17 +161,25 @@ $sql 可以为多条:
 	// works regardless of statements emulation
 	$pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, 0);
 	$pdo->exec($sqls);
-	
+
 	// works not with the following set to 0. You can comment this line as 1 is default
 	$pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, 1);
 	$pdo->prepare ($sqls)
+
+### nextRowset
+
+	$p = new PDO('mysql:unix_socket=/tmp/mysql.sock');
+	$ret = $p->query('select "a";show databases;select sleep(2);');
+	do{
+		var_dump($ret->fetchAll());
+	}while($ret->nextRowset());
 
 ## query
 query 与prepare 返回的都是结果集PDOStatement. 它继承了ArrayObject 所以可通过`foreach` 遍历出结果, 也可以通过`fetch` 获取结果集
 
 	$pdo = new PDO('sqlite:users.db');
 	public PDOStatement PDO::query ( string $statement )
-	
+
 	foreach($pdo->query('SELECT * from FOO') as $row) {
         print_r($row);
     }
@@ -189,7 +198,7 @@ query rowNumber
 bind via stmt->bindParam
 
 	$pdo = new PDO('sqlite:users.db');
-	$pdo = new PDO("mysql:host=localhost;dbname=test","root","123456"); 
+	$pdo = new PDO("mysql:host=localhost;dbname=test","root","123456");
 	$stmt = $pdo->prepare('SELECT name FROM users WHERE id = :id');
 	$stmt->bindParam(':id', $_GET['id'], PDO::PARAM_INT); // <-- Automatically sanitized by PDO
 	$stmt->execute();

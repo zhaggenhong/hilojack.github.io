@@ -12,6 +12,27 @@ description:
 	NULL means you do not have to provide a value for the field... default to null
 	NOT NULL means you must provide a value for the fields. 但很多情况下，插入数据时默认会给一个空值(0, 或者空字符串).
 
+## calc time
+
+### diff time
+
+	> SELECT UNIX_TIMESTAMP('2010-11-29 13:16:55') - UNIX_TIMESTAMP('2010-11-29 13:13:55') as output
+	180
+	> SELECT ABS(UNIX_TIMESTAMP(t.datetime_col1) - UNIX_TIMESTAMP(t.datetime_col2)) as out
+
+better solution:
+
+	SELECT TIMESTAMPDIFF(SECOND, '2010-11-29 13:13:55', '2010-11-29 13:16:55')
+
+### sec_to_time
+
+	select SEC_TO_TIME(103600000)
+	| 838:59:59              |
+
+	select TIME_FORMAT(SEC_TO_TIME(3600),'%H:%m');
+	| 01:00                                  |
+
+
 ## time
 time format:
 

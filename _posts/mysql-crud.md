@@ -6,6 +6,11 @@ description:
 ---
 # Preface
 
+## which database
+
+	//show which database is in use
+	SELECT DATABASE();
+
 # Operation
 Insert update delete select
 
@@ -356,6 +361,18 @@ UNION 要求select 的colume 数一致(用于分表合并)！
 	| 1 |
 	| 1 |
 	+---+
+
+# max
+
+## GREATEST and LEAST
+max of multi field
+
+	SELECT GREATEST(field1, field2)
+	SELECT GREATEST(max(field1), max(field2))
+
+It will return NULL if one of the fields is NULL. You could use IFNULL to solve this
+
+	SELECT GREATEST(IFNULL(field1, 0), IFNULL(field2, 0))
 
 # Group By
 对于聚合函数(clustered function)`count`, `max` 等，要想指定聚合的范围，就需要用`group by` 分组.

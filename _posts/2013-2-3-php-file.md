@@ -2,7 +2,7 @@
 layout: page
 title:	php 文件管理
 category: blog
-description: 
+description:
 ---
 # Preface
 以下是php文件管理函数归纳
@@ -41,7 +41,7 @@ description:
 
 	pathinfo()返回一个数组‘dirname’,'basename’,'filename', 'extension’
 	realpath('.');
-    dirname() 
+    dirname()
 	basename();filename+.+extension
 
 ### File location
@@ -73,12 +73,12 @@ dir:
 	$d->close();
 
 ### Match file
-用`glob` 代替`opendir`
+用`glob` 代替`opendir` 浏览文件
 
 	foreach (glob("*.txt") as $filename) {
 		echo "$filename size " . filesize($filename) . "\n";
 	}
-		
+
 ## Dir Operation
 
     mkdir ( string $pathname [, int $mode [, bool $recursive [, resource $context ]]] )
@@ -99,7 +99,7 @@ Via shell while :
 Via DirectoryIterator 针对目录的迭代类(php)
 
 	foreach (new DirectoryIterator('../moodle') as $index => $fileInfo) {
-		if($fileInfo->isFile()) 
+		if($fileInfo->isFile())
 		echo $fileInfo->getFilename() . "\n";
 		echo $fileInfo->getPath() . "\n";
 		echo $fileInfo->getPathName() . "\n";
@@ -122,9 +122,9 @@ Via RecursiveIteratorIterator(filter key(filename) with Regex):
 		var_export($matches);//.php
 	}
 
-	RecursiveRegexIterator::GET_MATCH 
-		like $matches in preg_match 
-	RecursiveRegexIterator::MATCH 
+	RecursiveRegexIterator::GET_MATCH
+		like $matches in preg_match
+	RecursiveRegexIterator::MATCH
 		get $fileObj
 
 # Upload File
@@ -142,8 +142,8 @@ Via RecursiveIteratorIterator(filter key(filename) with Regex):
 
 	$dst = fopen('dst.bin', 'w');
 	$fps = [
-		fopen('a.txt','r'),	
-		fopen('b.txt','r'),	
+		fopen('a.txt','r'),
+		fopen('b.txt','r'),
 	]
 	foreach($fps as $fp){
 		stream_copy_to_stream($fp, $dst);
@@ -251,7 +251,7 @@ fgets
 			// process the line read.
 		}
 		fclose($handle);
-	} 
+	}
 
 > 最后有一个空白符, 即换行符都没有
 
@@ -291,7 +291,7 @@ fgets
 # 并发访问中的文件锁
 
      flock ( int $handle , int $operation [, int &$wouldblock ] )
-	 $operation 
+	 $operation
      	flock($f, LOCK_SH); 默认值, 没有意义? 不是的，当LOCK_EX 时，这句会返回失败
      	flock($f, LOCK_EX) 独占锁，带阻塞等待
      	flock($f, LOCK_EX | LOCK_NB) or die('Another process is running!'); 独占锁，不阻塞
@@ -377,7 +377,7 @@ fgets
 		}
 
 		fclose($handle);
-		return $linecount;	
+		return $linecount;
 	}
 
 ## html

@@ -2,7 +2,7 @@
 layout: page
 title:	expect 键盘模拟
 category: blog
-description: 
+description:
 ---
 # Preface
 Expect 是Tcl/Tk 语言最有名的扩展，可通过[tcl/tk](/p/linux-tcl) 了解tck/tk 的用法
@@ -16,10 +16,8 @@ expect 本身的`send` 命令，不一定被`zip` 接收，因为zip 本身有�
 	spawn zip -e data11.zip a.sh b.sh
 	send "11\n"
 	expect {
-		"password:" {
-			send "11\n"
-			exp_continue
-		}
+		"yes/no" {send "yes\n"; exp_continue}
+		"password:" {send "password\r"}
 		eof; #
 	}
 	MM
@@ -53,7 +51,7 @@ send 用于write to spawn 启动的进程。send_user 用于write 当前stdout
 
 `expect "word"`, `expect "*word*"` 二者是等价的，而且都会匹配换行符
 
-从标准输出/错误读取内容，如匹配到"hi\n", 就执行send 
+从标准输出/错误读取内容，如匹配到"hi\n", 就执行send
 
 	$ cat test.expect
 	expect "Hi\n"
@@ -74,7 +72,7 @@ send 用于write to spawn 启动的进程。send_user 用于write 当前stdout
 	$expect_out(0,string)	匹配到的字符, "0,string" 是一个key
 
 其实 expect_out 是一个Array:
-	
+
 	foreach k [array name expect_out] {
 		puts "$k -> $expect_out($k)"
 	}
@@ -93,7 +91,7 @@ send 用于write to spawn 启动的进程。send_user 用于write 当前stdout
 单一分支
 
 	expect "hi" {send "You said hi"}
-	
+
 多分支
 
 	expect "hi" { send "You said hi\n" } \
@@ -119,11 +117,11 @@ send 用于write to spawn 启动的进程。send_user 用于write 当前stdout
 	expect "wildcard"
 	cmd
 
-或者 
+或者
 
 	expect {
 		"wildcard1" cmd
-		"wildcard2" {cmd; continue;} 
+		"wildcard2" {cmd; continue;}
 		"wildcard3" {cmd; break}
 		"wildcard4" break
 		"wildcard5" abort
@@ -138,7 +136,7 @@ send 用于write to spawn 启动的进程。send_user 用于write 当前stdout
 	-re 标志调用 regexp 匹配，
 	-ex 表明必须是精确匹配
 	-glob 通配符 默认
-		
+
 expect 的其它可选标志包括:
 
 	-i		前者表示要监控产生的进程
@@ -149,13 +147,13 @@ expect 的其它可选标志包括:
 ## Cmd Interpreter, 命令解析器
 按照Tcl 的语法规则，语句是不能换行的，换行是一条语句的结束，以下三条语句中后两条指令会报错. 除非加转义符
 
-	expect "hi" { send "You said hi\n" } 
-		"hello" { send "Hello yourself\n" } 
+	expect "hi" { send "You said hi\n" }
+		"hello" { send "Hello yourself\n" }
 		"bye" { send "That was unexpected\n" }
 
 expect 的解析规则类似于shell, `{ }` 等是关键字，expect 则是普通的字符
 
-	"expect" "hi" { "send" "You said hi\n" } 
+	"expect" "hi" { "send" "You said hi\n" }
 	# 这样就不行哦: { 会被解析为普通的参数，而不是expect 的语句边界关键字
 	"expect" "hi" "{" "send" "You said hi\n" "}"
 
@@ -181,35 +179,35 @@ interact 用于将输入输出 重新连接加标准输入与输出。实现交�
 -re 告诉 interact 将接下来的模式用作标准正规表达式，
 "." 是与输入时每个字符匹配的模式。
 
-参考以下这个例子: 
+参考以下这个例子:
 http://www.ibm.com/developerworks/cn/education/linux/l-tcl/l-tcl-blt.html#N10609
 
-	#!/usr/local/bin/expect 
-	# Script to enforce a 10 minute break 
+	#!/usr/local/bin/expect
+	# Script to enforce a 10 minute break
 	# every half hour from typing -
-	# Written for someone (Uwe Hollerbach) 
+	# Written for someone (Uwe Hollerbach)
 	# with Carpal Tunnel Syndrome.
-	# If you type for more than 20 minutes 
-	# straight, the script rings the bell 
-	# after every character until you take 
+	# If you type for more than 20 minutes
+	# straight, the script rings the bell
+	# after every character until you take
 	# a 10 minute break.
-	
+
 	# Author: Don Libes, NIST
 	# Date: Feb 26, '95
-	
+
 	spawn $env(SHELL)
-	
+
 	# set start and stop times
 	set start [clock seconds]
 	set stop [clock seconds]
-	
+
 	# typing and break, in seconds
-	set typing 1200	
+	set typing 1200
 	set notyping 600
-	
+
 	interact -nobuffer -re . {
 	  set now [clock seconds]
-	
+
 	  if {$now-$stop > $notyping} {
 	    set start [clock seconds]
 	  } elseif {$now-$start > $typing} {
@@ -248,7 +246,7 @@ Refer to: http://wiki.tcl.tk/3914
 
 ## set, config
 set 用于设置变量，其中有些变量, 比如`timeout` 属于expect 配置
-	
+
 	set <var> <value>
 
 	set timeout -1
@@ -265,25 +263,25 @@ wait 用于等待任务(即spawn 启动的进程)结束
 	#!/usr/bin/expect
 	proc scp {user password host} {
 		global env
-	 
+
 		set home $env(HOME)
-	 
+
 		spawn ssh -o StrictHostKeyChecking=no $user@$host mkdir -p ~/.ssh
 		expect "*password:" {send "$password\r"}
-	 
+
 		spawn scp -r -o StrictHostKeyChecking=no $home/.ssh/id_rsa $user@$host:~/.ssh
 		expect "*password:" {send "$password\r"}
-	 
+
 		spawn scp -r -o StrictHostKeyChecking=no $home/.ssh/authorized_keys $user@$host:~/.ssh
 		expect "*password:" {send "$password\r"}
-	 
+
 		wait
 	}
-	 
+
 	set user [lindex $argv 0]
 	set password [lindex $argv 1]
 	set host [lindex $argv 2]
-	 
+
 	scp $user $password $host
 
 # loop
@@ -303,5 +301,5 @@ exp_continue
 - [expect manual]
 
 [expect by xuanhao]: http://www.xuanhao360.com/linux-expects/
-[expect manual]: 
+[expect manual]:
 http://linux.die.net/man/1/expect

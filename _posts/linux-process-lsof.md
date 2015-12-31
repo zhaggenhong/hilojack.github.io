@@ -70,6 +70,7 @@ example
 
 	$lsof -p 23295
 	$lsof -p $$
+	$lsof -p pid1 -p pid2
 
 ## via dir
 查询指定目录下被进程开启的文件（使用+D 递归目录）：

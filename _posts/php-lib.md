@@ -1097,7 +1097,7 @@ http://packagist.cn/
 
 关于version: `~1.2` 相当于 `>=1.2,<2.0` `1.*` 相当于`>=1.0, <2.0`. 示例中的monolog 位于[](https://packagist.org/packages/monolog/monolog)
 
-通过以下composer install 会下载依赖到`vendors/monolog/monolog`, 它会读取`composer.lock`, 如果没有，就读取`composer.json`
+或者通过以下`composer install` 会下载依赖到`./vendors/monolog/monolog`, 它会读取`composer.lock`, 如果没有，就读取`composer.json`
 
 	composer install
 

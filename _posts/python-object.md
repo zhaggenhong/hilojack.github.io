@@ -412,6 +412,33 @@ function object
 # metaclass 元类
 metaclass允许你创建类或者修改类。换句话说，你可以把类看成是metaclass创建出来的“实例”。
 
+metaclass，直译为元类，简单的解释就是： 先定义metaclass，就可以创建类，最后创建实例。
+
+我们先看一个简单的例子，这个metaclass可以给我们自定义的MyList增加一个add方法：
+
+	class ListMetaclass(type):
+		def __new__(cls, name, bases, attrs):
+			attrs['add'] = lambda self, value: self.append(value)
+			return type.__new__(cls, name, bases, attrs)
+
+有了ListMetaclass，我们在定义类的时候还要指示使用ListMetaclass来定制类，传入关键字参数metaclass：
+
+	class MyList(list, metaclass=ListMetaclass):
+		pass
+
+__new__()方法接收到的参数依次是：
+
+	当前准备创建的类的对象；
+	类的名字；
+	类继承的父类集合；
+
+测试一下MyList是否可以调用add()方法：
+
+	>>> L = MyList()
+	>>> L.add(1)
+	>> L
+	[1]
+
 # super
 
 	class Root(object):
