@@ -382,8 +382,13 @@ Stored Routine 分为stored procedure 和 stored function ，即存储过程和�
 
 	CREATE PROCEDURE get_num()
 		select 45 as num;
+		select 5 as age;
 
 	CALL get_num();
+	+-----+
+	| num |
+	+-----+
+	|  45 |
 
 *存储过程*可以接受输入参数，并且可将输入参数再返回给调用方。需要回传的参数需要在前面加`@`(表示这是一个变量,且是按引用传值?)
 

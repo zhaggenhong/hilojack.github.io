@@ -75,6 +75,8 @@ like list
 
 	## capitalize
 	'hilo'.capitalize()
+	'hilo'.upper()
+	'hilo'.lower()
 
 	## len
 	len('abc')

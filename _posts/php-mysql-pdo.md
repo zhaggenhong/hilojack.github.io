@@ -11,6 +11,9 @@ description:
 
 需求，一般情况下，php读写mysql时并没有超时设定，仅仅通过php的set_time_limit设置总超时时间，强制停止。
 
+## 超时时
+超时时，mysql 的执行会中断. 可以用例程+sleep+update 验证
+
 ## via mysqlnd
 注意：设置项 `mysqlnd.net_read_timeout` 的级别是PHP_INI_SYSTEM。所以在php代码中不能修改mysql查询的超时时间。
 
@@ -36,7 +39,10 @@ mysqli 没有暴露超时的常量，我们需要查看MySQL的代码, 得到MYS
 	$mysqli = mysqli_init();
 	$mysqli->options(11 /*MYSQL_OPT_READ_TIMEOUT*/, 10);//10*3=30s
 
-不过, 因为在libmysql中有重试机制(尝试一次, 重试俩次), 所以, 最终我们设置的超时阈值都会三倍于我们设置的值.
+因为在libmysql中有重试机制(尝试一次, 重试俩次), 所以, 最终我们设置的超时阈值都会三倍于我们设置的值.
+
+	define('MYSQL_OPT_READ_TIMEOUT',  11);
+	define('MYSQL_OPT_WRITE_TIMEOUT', 12);
 
 ## 源码修改
 
