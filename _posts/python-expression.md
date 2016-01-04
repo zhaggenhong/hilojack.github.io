@@ -279,3 +279,20 @@ Python的for循环本质上就是通过不断调用next()函数实现的，例�
 	True
 	False
 
+# with
+with 可以捕获异常, 类型必须:
+
+	class DummyResource:
+		def __enter__(self):
+			return self	  # 可以返回不同的对象
+		def __exit__(self, exc_type, exc_value, exc_tb):
+			print( '[Exit %s]: Free resource.')
+			if exc_tb is None:
+				print('Exited without exception.')
+			else:
+				print('Exited with exception raised.')
+				return True   # 不再raise 出异常
+
+	with DummyResource() as obj:
+		10/0
+		print('do sth...')
