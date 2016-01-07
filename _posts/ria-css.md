@@ -8,6 +8,10 @@ description:
 css/html5/js 兼容表
 http://caniuse.com/
 
+# ide
+css snippets plugin
+http://docs.emmet.io/
+
 # flex
 todo:
 	阮一峰

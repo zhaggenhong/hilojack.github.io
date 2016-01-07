@@ -8,6 +8,12 @@ description:
 
 # 错误与异常
 
+## error
+Go语言错误处理:
+http://tonybai.com/2015/10/30/error-handling-in-go/
+错误是值
+https://www.360us.net/article/34.html
+
 ## 异常
 可以在except语句块后面加一个else，当没有错误发生时，会自动执行else语句：
 

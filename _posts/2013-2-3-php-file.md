@@ -133,6 +133,17 @@ Via RecursiveIteratorIterator(filter key(filename) with Regex):
 
 # File Operation
 
+## temp file
+
+	//create tmp uniq file
+	$tmpfname = tempnam(sys_get_temp_dir(), 'pre_'); // good
+
+	//create tmp file handler
+	$temp = tmpfile();
+	fwrite($temp, "writing to tempfile");
+	fseek($temp, 0);
+	$file = stream_get_meta_data($temp)['uri'];
+
 ## copy
 
 	copy('src.txt', 'dst.txt');//force copy file

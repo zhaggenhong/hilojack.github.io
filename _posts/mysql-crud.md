@@ -192,7 +192,9 @@ ON DUPLICATE KEY 不支持where
 但可以使用if 代替:
 
 	IF(condition, exp1, exp2)
-	INSERT INTO table (a,b,c) VALUES (1,2,3)  ON DUPLICATE KEY UPDATE c=IF(c<5, c=c+1, c)
+	INSERT INTO table (a,b,c) VALUES (1,2,3)  ON DUPLICATE KEY UPDATE c=IF(c<5, c+1, c)
+	select IF(false, 1, 0)
+
 
 ### replace when DUPLICATE key
 REPLACE 可以将`DELETE和INSERT`合二为一，形成一个原子操作(它也是基本唯一键的)
@@ -203,13 +205,11 @@ REPLACE 可以将`DELETE和INSERT`合二为一，形成一个原子操作(它也
 
 	REPLACE INTO users(phone) VALUES(18210111011), (18210111012);
 
->
-
 REPLACE也可以使用SET语句
 
 	REPLACE INTO users SET phone=1000,name='hilojack'
 
-*Note:* 如果insert 时, 有两条记录都满足删除要求，则会删除两条（on DUPLICATE 则只删除最前面的一条）
+*Note:* 如果insert 时, 有两条记录都满足删除要求(比如phone,id 都DUPLICATE了)，则会删除两条（on DUPLICATE 则只删除最前面的一条）
 
 	REPLACE INTO users(phone,id) VALUES(18210111011, 134);
 

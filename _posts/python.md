@@ -156,6 +156,7 @@ import `ex47.game`, would find two file:
 > 之所以我们说，private函数和变量“不应该”被直接引用，而不是“不能”被直接引用，是因为Python并没有一种方法可以完全限制访问private函数或变量
 
 ## path
+此PATH 与 SHELL PATH 是独立的
 
 ### sys.path
 

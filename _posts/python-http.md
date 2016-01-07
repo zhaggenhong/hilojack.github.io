@@ -151,6 +151,10 @@ To send your own cookies to the server, you can use the cookies parameter:
 	>>> r1 = requests.post('http://www.yourapp.com/login')
 	>>> r2 = requests.post('http://www.yourapp.com/somepage',cookies=r1.cookies)
 
+keep cookie
+
+	>>> s.get('https://www.google.com', cookies = {'cookieKey':'cookieValue'})
+
 ### Redirection and History
 By default Requests will perform location redirection for all verbs except HEAD.
 
@@ -196,6 +200,8 @@ Use a session object instead, it'll persist cookies and send them back to the se
 	s = requests.Session()
 	s.auth = ('user', 'pass')
 	s.headers.update({'x-test': 'true'})
+	# 如何构造？？help(*cookie_jar)
+	s.cookies.set_cookie('a=1;b=2;domain/')? tetst
 
 	// both 'x-test' and 'x-test2' are sent
 	s.get('http://httpbin.org/headers', headers={'x-test2': 'true'})

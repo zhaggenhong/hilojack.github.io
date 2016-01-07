@@ -97,7 +97,8 @@ lambda 不能显式使用return :
 	def person(name, age, *, city='bj', job):
 		print(name, age, city, job)
 
-`*`后面的参数被视为命名关键字参数, 传参时必须带关键字参数名
+`*`后面的参数被视为命名关键字参数, 传参时必须带参数名
+`*`前面的参数可带可不带参数名
 
 	>>> person('Jack', 24, job='Engineer')
 
@@ -280,13 +281,14 @@ Python的for循环本质上就是通过不断调用next()函数实现的，例�
 	False
 
 # with
-with 可以捕获异常, 类型必须:
+with 可以捕获异常, 类必须支持`__enter__, __exit__`:
 
 	class DummyResource:
 		def __enter__(self):
+			print('enter');
 			return self	  # 可以返回不同的对象
 		def __exit__(self, exc_type, exc_value, exc_tb):
-			print( '[Exit %s]: Free resource.')
+			print( 'Free resource.')
 			if exc_tb is None:
 				print('Exited without exception.')
 			else:
@@ -296,3 +298,8 @@ with 可以捕获异常, 类型必须:
 	with DummyResource() as obj:
 		10/0
 		print('do sth...')
+
+利用with 断言指定类型的Error，比如通过d['empty']访问不存在的key时，断言会抛出KeyError：
+
+	with self.assertRaises(KeyError):
+		value = d['empty']

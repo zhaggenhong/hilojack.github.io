@@ -420,6 +420,8 @@ Example
 	class_uses — Return the traits used by the given class
 
 	spl_autoload_register([func1,func2]) 用于代替只支持一个func 的 __autoload($class)
+		func1 不用返回true/false. spl 自动判断是否成功加载了类, 不成功则依次调用func2 func3...
+		它会让__autoload 失效
 
 常量:
 

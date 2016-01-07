@@ -15,7 +15,7 @@ description:
 超时时，mysql 的执行会中断. 可以用例程+sleep+update 验证
 
 ## via mysqlnd
-注意：设置项 `mysqlnd.net_read_timeout` 的级别是PHP_INI_SYSTEM。所以在php代码中不能修改mysql查询的超时时间。
+注意：设置项 `mysqlnd.net_read_timeout` 的级别是PHP_INI_SYSTEM。在php代码中不能修改mysql查询的超时时间。
 
 ## mysqli 读写超时
 > http://www.laruence.com/2011/04/27/1995.html
