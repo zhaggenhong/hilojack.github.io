@@ -1004,9 +1004,15 @@ shell_exec 等价于反引号:
 		echo "command returned $return_value\n";
 	}
 
+## master kill 
+不会影响这样的
+
+	`sleep 1&`
+
 
 # shutdown
-register_shutdown_function($callback);
+
+	register_shutdown_function($callback);
 
 ## fastcgi
 > http://stackoverflow.com/questions/4806637/continue-processing-after-closing-connection

@@ -31,6 +31,7 @@ html_doc = '''
 	</body>'''
 soup = BeautifulSoup(html_doc, 'html.parser')
 soup.body.div.findAll('p')[1]
+soup.div.findAll('p')[1]
 ```
 
 ### parent,parents
@@ -150,9 +151,29 @@ tag的 class 属性是 多值属性 .按照CSS类名搜索tag时,可以分别搜
 
 ## add node
 
+### create node
+
+via new tag
+
+	tag = soup.new_tag("i")
+	tag.string = "Don't"
+
+via text node
+
+	'bar'
+
+via bs4
+
+	tag = BeautifulSoup('<br>', 'html.parser')
+
+### wrap
+
+	soup.p.wrap(soup.new_tag("div")
+	# <div><p><b>I wish I was bold.</b></p></div>
+
 ### append
 
-	oup = BeautifulSoup("<a>Foo</a>")
+	soup = BeautifulSoup("<a>Foo</a>")
 	soup.a.append("Bar")
 	# <html><head></head><body><a>FooBar</a></body></html>
 
@@ -227,10 +248,18 @@ string 不能被编辑，但能替换
 	'red'
 	' 456\n'
 
-输出的字符串中可能包含了很多空格或空行,使用 .stripped_strings 可以去除多余空白内容:
+输出的字符串中可能包含了很多空格或空行,使用 .stripped_strings 可以去除前后多余空白内容:
 
 	>>> for str in BeautifulSoup("<div>1 23\n <p>red</p> 456\n</div>", 'html.parser').div.stripped_strings: str;
 	...
 	'1 23'
 	'red'
 	'456'
+
+## format
+
+	tag.prettify()
+
+### strip tags
+
+	b.div.get_text()

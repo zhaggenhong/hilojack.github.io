@@ -11,9 +11,9 @@ description:
 
 	def func(s1,s2=None):
 		global X
+		print global_var
 		func.count++
 		local_var=4
-		print global_var
 		retrun s1,s2
 
 	s1,s2 = func("-%s-" % 'Hello','-%s-' % 'Hilo' 'jack')

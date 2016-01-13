@@ -35,7 +35,9 @@ Passing Parameters In URLs
 	>>> print(r.url)
 		http://httpbin.org/get?key2=value2&key1=value1
 
-### post json
+	>>> r = requests.get("http://httpbin.org/get", params={'key':'val'})
+
+### post json(raw)
 
 	>>> import json
 	>>> payload = {'some': 'data'}
@@ -45,6 +47,12 @@ Instead of encoding the dict yourself, you can also pass it directly using the j
 
 	>>> payload = {'some': 'data'}
 	>>> r = requests.post(url, json=payload)
+
+	json='a=1&b=2'
+	 ["raw"]=>
+	  string(9) ""a=1&b=2""
+
+>>> print(s.post('http://hilo.sinaapp.com/header.php', json='a=1&b=2').text)
 
 ### post a Multipart-Encoded File
 
@@ -60,6 +68,11 @@ If you want, you can send strings to be received as files:
 
 	>>> files = {'file': ('report.csv', 'some,data,to,send\nanother,row,to,send\n')}
 	>>> r = requests.post(url, files=files)
+
+### post data
+
+	data=urllib.parse.parse_qs('a=1&b=1')
+	>>> r = requests.post("http://httpbin.org/post", data = data)
 
 ## Custom Headers
 For example, we didn’t specify our user-agent in the previous example:

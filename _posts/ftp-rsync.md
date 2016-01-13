@@ -1,8 +1,8 @@
 ---
 layout: page
-title:	
+title:
 category: blog
-description: 
+description:
 ---
 # Preface
 
@@ -45,7 +45,7 @@ user:
 	-vvv v 越多，信息越多
 
 不带选项
-	
+
 	rsync file server:/path/
 		同步条件：只要文件不一到就同步
 		rwx: 如果目的端没有文件，则创建新文件时rwx 与源端一致；否则rwx 不变
@@ -56,7 +56,7 @@ user:
 	rsync -p file server:/path/
 		rwx 会和源端操持一致(无论是新老文件)
 
-带`-g` `-o`: 
+带`-g` `-o`:
 
 	rsync -go file server:/path/
 		保持文件的属组(group)和属主（owner）需要管理员权限
@@ -173,7 +173,7 @@ PATTERN 是一个shell 通配符
 如果你要隐藏的隐私太多的话，在命令行选项中设置会比较麻烦，rsync还是很体贴，它提供了–exclude-from选项，让你可以把隐私一一列在一个文件里，然后让rsync直接读取这个文件就好了。
 
 
-# 远端rsync
+# server rsync
 有两种方法同步远程服务器的文件
 
 1. 远程服务部署一个rsyncd 进程 监听同步请求
@@ -181,31 +181,32 @@ PATTERN 是一个shell 通配符
 
 ## config
 
-	uid = nobody 
-	gid = nobody 
+	uid = nobody
+	gid = nobody
 	use chroot = yes
-	max connections = 4 
+	max connections = 4
 	syslog facility	= 指定rsync 向syslog 发送消息的级别
-	syslog facility = local5 
+	syslog facility = local5
 	pid file = /var/rsyncd.pid
-	 
+
 	[ftp]
     hosts allow = 1.16.0.0/16 10.209.0.157
     hosts deny  = *
-    path = /www/proj 
+    path = /www/proj
     uid = ftp
     gid = ftp
     read only   = false
     list        = true
     pid file = /var/rsyncd.pid
     log file = /var/logs/rsyncd.pid
+	lock file = /tmp/rsyncd/rsyncd.lock
 	exclude = 与client 使用-exclude 相同
 	include = 与client 使用-include 相同
 
 start:
 
 	rsync --daemon --config=/etc/rsyncd.conf --port=873
-	
+
 install:
 
 	curl -s https://github.com/hilojack/php-lib/blob/master/app/rsync.sh | sh
@@ -344,15 +345,15 @@ Example
 
 ### file mode
 
-	file_open_mode=0755 #本地用户上传档案后的档案权限，与chmod 所使用的数值相同。默认值为0666。 
-	local_umask=022		#本地用户新增档案时的umask 值。 默认值为077。 
-	anon_umask=077		#设置匿名登入者新增或上传档案时的umask 值。默认值为077，则新建档案的对应权限为700。 
+	file_open_mode=0755 #本地用户上传档案后的档案权限，与chmod 所使用的数值相同。默认值为0666。
+	local_umask=022		#本地用户新增档案时的umask 值。 默认值为077。
+	anon_umask=077		#设置匿名登入者新增或上传档案时的umask 值。默认值为077，则新建档案的对应权限为700。
 
-Refer to: http://yuanbin.blog.51cto.com/363003/108262/ 
+Refer to: http://yuanbin.blog.51cto.com/363003/108262/
 
 ### chroot_local_user
 
-	chroot_local_user=YES 
+	chroot_local_user=YES
 
 Allow local users to log in.( This is default)
 
@@ -373,9 +374,9 @@ security: 'one_process_model' is anonymous only
 ## userlist( 530 Permission denied)
 530 Permission denied
 
-	userlist_enable=YES          
-	userlist_deny=YES           
-	userlist_file=/etc/vsftpd/user_list #要阻止的用户(530 Permission denied.)	
+	userlist_enable=YES
+	userlist_deny=YES
+	userlist_file=/etc/vsftpd/user_list #要阻止的用户(530 Permission denied.)
 
 这个配置与`userlist_deny`, `userlist_enable` 有关
 

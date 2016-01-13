@@ -62,6 +62,24 @@ double quotes and single quotes is same
 	print "a\nb" ;# The character here "\n" is new line
 	print 'a\nb'
 
+## not Escape
+use  encode
+
+	>>> string = "abc\ndef"
+	>>> print (repr(string))
+	>>> 'abc\ndef'
+
+	>>> print "foo\nbar".encode('string_escape')
+	foo\nbar
+
+## un eval
+
+	>>> repr('a()')
+	"'a()'"
+	>>> repr('\n')
+	"'\\n'"
+
+
 ## Access String
 like list
 
@@ -170,6 +188,17 @@ with no space and new line:
 	del dict['x']
 	dict[1]=123
 	dict.setdefault(1, 123)
+
+## has_key
+
+	if key in dict:
+
+## dict to object
+
+	class Employee(object):
+		def __init__(self, initial_data):
+			for key in initial_data:
+				setattr(self, key, initial_data[key])
 
 ## access dict
 

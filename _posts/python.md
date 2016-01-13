@@ -164,6 +164,8 @@ import `ex47.game`, would find two file:
 	>>> sys.path.append('path')
 	>>> print(sys.path)
 	['', '/usr/local/Cellar/python3/3.5.0/Frameworks/Python.framework/Versions/3.5/lib/python35.zip', '/usr/local/Cellar/python3/3.5.0/Frameworks/Python.framework/Versions/3.5/lib/python3.5', '/usr/local/Cellar/python3/3.5.0/Frameworks/Python.framework/Versions/3.5/lib/python3.5/plat-darwin', '/usr/local/Cellar/python3/3.5.0/Frameworks/Python.framework/Versions/3.5/lib/python3.5/lib-dynload', '/usr/local/lib/python3.5/site-packages']
+	 '/usr/local/lib/python3.5/site-packages'
+	 /usr/local/lib/python3.5/site-packages/pip/_vendor/requests/cookies.py
 
 ### PYTHONPATH
 相当于sys.path.append()
