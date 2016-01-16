@@ -141,3 +141,5 @@ like `str.replace`
 	re.sub(r'\w+', lambda m: m.group().upper(), ' hilo jack')
 	' HILO JACK'
 
+str.replace([list], rep) not work
+

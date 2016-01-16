@@ -90,10 +90,24 @@ archlinux 下使用:
 1. 红帽子网络加速器：这家做了大概两年时间吧，和风驰差不多，也提供 windows 客户端和各个平台的配置文件。
 
 ## Shadowsocks
+
+### bandwagonhost
 用 bandwagonhost /digital ocean/linode 等搭建
 
-购买见：
+## 购买
+IAMSMART5FQ956
+http://banwagong.cn/youhui.html
+
+$3.99 年付的好像没有了
+
+Monthly 价格
+https://bandwagonhost.com/vps-hosting.php
+$2.99 10G SSD/256M RAM/128M xSWAP/500M Bandwidth/
+$4.99 20G SSD/512M RAM/256M xSWAP/1000M Bandwidth/
+
+测试：
 https://www.v2ex.com/t/97626
+
 
 Install:
 http://www.jianshu.com/p/08ba65d1f91a

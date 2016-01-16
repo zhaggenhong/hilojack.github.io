@@ -253,6 +253,7 @@ oldNode.before(node1,node2,...)
 
 ## prepend & append
 newNode.prependTo(oldNode)
+newNode.prependTo(html)
 
 	newNode.appendTo(oldNode)
 
@@ -301,6 +302,7 @@ oldNode.prepend(node1, node2, ...)
 
 	.addClass(ClassName);
 	.removeClass(ClassName);
+	.removeClass();//all
 	.toggleClass(ClassName);
 
 ## Attribute

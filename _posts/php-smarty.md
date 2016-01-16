@@ -2,12 +2,12 @@
 layout: page
 title:	php smarty
 category: blog
-description: 
+description:
 ---
 # Preface
 在smarty 中, 为了模仿一些语言的语法糖，比如 `date_format:"%H:%M:%S" 与修饰符模仿了shell管道, $arr.key 模仿了其它对象语言的关键字`, 不得不增加一套巨大的编译系统, 产生了如下的缺点：
 
-	效率低: 作为编译型语言效率低是事实: 
+	效率低: 作为编译型语言效率低是事实:
 	扩展性低: 为了判断子模板是否存在，我必须修源码
 	语法糖复杂: 学习复杂的smarty,blade 语法. 比如繁琐的foreach 语法
 	易用性低：不方便在里面写php(用户组件); 因为smarty 一等，php 是二等公民、js是三等公民、html/css 是四等公民（这种复杂的关系导致编译系统巨大）我不能方便写
@@ -17,10 +17,10 @@ description:
 
 - yaf-simple-view 扩展性和性能都很强，原生的php 语法
 - handlebarsjs(还不支持if else)
-	http://handlebarsjs.com 
+	http://handlebarsjs.com
 PHP 实现： 通用模板
-	https://github.com/zordius/lightncandy 
-- blade 
+	https://github.com/zordius/lightncandy
+- blade
 
 三者比较：
 http://vschart.com/compare/blade-template-engine/vs/smarty-template-engine/vs/handlebars-js
@@ -30,6 +30,13 @@ http://vschart.com/compare/blade-template-engine/vs/smarty-template-engine/vs/ha
 	$smarty->setTemplateDir('./templates')
 		   ->setCompileDir('./templates_c')
 		   ->setCacheDir('./cache');
+
+# foreach
+
+	{if ! isset($var)} {/if}
+	{foreach $columns as $k=>$v}
+		$('<td>').text(item.{$k}){if ! $v@last},{/if}
+	{/foreach}
 
 # var
 
@@ -45,9 +52,9 @@ http://vschart.com/compare/blade-template-engine/vs/smarty-template-engine/vs/ha
 # include
 
 	{include file="header.tpl" title=foo var=hilojack}
-	echo $_smarty_tpl->getSubTemplate ("header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 9999, null, 
+	echo $_smarty_tpl->getSubTemplate ("header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 9999, null,
 		array('title'=>'foo','var'=>'hilojack'), 0);
-		
+
 其中title var 是assign 变量名
 
 	echo $_smarty_tpl->tpl_vars['varname']->value;?>
@@ -61,7 +68,7 @@ http://vschart.com/compare/blade-template-engine/vs/smarty-template-engine/vs/ha
 Example in `smarty.func.php`
 
 	function Smarty_Include_Compile_hook($include_file_name){
-		$out = '';	
+		$out = '';
 		if($include_file_name === 'xxx'){
 			$out = 'xxx';
 		}
@@ -109,7 +116,7 @@ Compile
 
 ### register plugin
 
-	//./smarty/sysplugins/smarty_internal_compile_private_registered_function.php 
+	//./smarty/sysplugins/smarty_internal_compile_private_registered_function.php
 	$smarty->registerPlugin(Smarty::PLUGIN_MODIFIER, 'func', $callback = [$className, 'func']);
 
 compile code
@@ -120,8 +127,8 @@ compile code
 		$output = "<?php echo \$_smarty_tpl->smarty->registered_plugins[Smarty::PLUGIN_FUNCTION]['{$tag}'][0][0]->{$function[1]}({$_params},\$_smarty_tpl);?>\n";
 	} else {
 		$output = "<?php echo {$function[0]}::{$function[1]}({$_params},\$_smarty_tpl);?>\n";
-	} 
-	
+	}
+
 
 # Class methods
 

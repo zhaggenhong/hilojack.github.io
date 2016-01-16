@@ -226,6 +226,16 @@ submit form elements:
 	//with Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryQHefs2ABc2lw02em
 	// and u should not set x-www-form-urlencoded
 
+#### submit
+
+	$("form").submit(function(e){
+	  return confirm("Submitted");
+	});
+	$('button').click(function(e){
+		$("#submitForm").attr("action", url);
+		$("#submitForm").submit();
+	})
+
 #### select
 
 	$("select option").filter(function() {

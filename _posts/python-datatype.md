@@ -23,6 +23,7 @@ Convert data type:
 
 	int('07')
 	float(9)
+	str(9)
 
 ## type
 
