@@ -56,7 +56,7 @@ subquery 是嵌入另一条语句的select 语句. 他是数据集合
 	select * from t1 where exists(select * from t2 where t2.id=t1.id);
 
 	select * from t1 where exists(select * from t2,t1 where t2.id=t1.id);
-		like: select * from t2 left join t1 on t2.id=t1.id, so it is always true
+		same as: select * from t2 left join t1 on t2.id=t1.id, so it is always true
 
 构建多表的查询叫联结(join)，与join 相比subquery 更简单直观
 

@@ -262,6 +262,16 @@ oldNode.prepend(node1, node2, ...)
 	 $(select).append('hello world!');
 	 $("p").prepend("<img src='xxx'>");
 
+The main difference is that `appendChild` is a DOM method and `append` is a jQuery method. The second one uses the first as you can see on jQuery source code
+
+	append: function() {
+		return this.domManip(arguments, true, function( elem ) {
+			if ( this.nodeType === 1 || this.nodeType === 11 || this.nodeType === 9 ) {
+				this.appendChild( elem );
+			}
+		});
+	},
+
 ## remove & empty
 
 	$("#div1").remove(); //删除自己
@@ -294,7 +304,8 @@ oldNode.prepend(node1, node2, ...)
 
 ### checked
 
-	$("#x" ).prop( "checked", true );
+	$("#x").prop("checked", true);
+	$("#x").prop("checked")
 
 # Css
 

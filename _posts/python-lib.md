@@ -69,7 +69,30 @@ assert False, "Error!"
 ## json
 
 	import json
-	return json.dumps(data)
+	str = json.dumps(data)
+	print(json.loads(str))
+
+### json class
+json dumps 类时，得用default
+
+	class Student(object):
+		def __init__(self, name, age, score):
+			self.name = name
+			self.age = age
+			self.score = score
+
+	s = Student('Bob', 20, 88)
+	>>> print(json.dumps(s, default=lambda m: return { 'name': std.name, 'age': std.age, 'score': std.score }))
+	{"age": 20, "name": "Bob", "score": 88}
+
+反序列化为class
+
+	def dict2student(d):
+		return Student(d['name'], d['age'], d['score'])
+	运行结果如下：
+
+	>>> json_str = '{"age": 20, "score": 88, "name": "Bob"}'
+	>>> print(json.loads(json_str, object_hook=dict2student))
 
 # mysql
 

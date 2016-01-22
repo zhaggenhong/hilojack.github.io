@@ -8,6 +8,15 @@ description:
 css/html5/js 兼容表
 http://caniuse.com/
 
+# priority
+	style > id > hover(鼠标悬停) > class
+
+# 层次
+
+	div ul {} #
+	div > ul {} #ul 是div 的children
+	tr,td{} #并列
+
 # ide
 css snippets plugin
 http://docs.emmet.io/
@@ -23,6 +32,57 @@ Flex box现在越来越流行
 	.parent{ display:flex;}
 	.children1{ flex:1;}
 	.children2{ flex:2;} //宽度自适应 比例2
+
+## flex center
+http://zh.learnlayout.com/flexbox.html
+
+	display:flex;
+	align-items: center;
+	justify-content: center;
+
+# align
+
+	text-align:	(horizonal center)
+	align-items: center; (content vertical center)
+	justify-content: center; (horizonal center)
+	align-content:
+
+## page center
+利用absolute + margin 修正
+
+	<div style="position: absolute; left: 50%;top: 50%;z-index: 99;background: red;
+			width: 500px;height: 500px;
+			margin-top: -250px;margin-left: -250px;">
+    </div>
+
+利用absolute + 内层relative top/left 修正
+
+    <div style="position: absolute; left: 50%;">
+        <div style="position: relative; left: -50%; border: dotted red 1px;">
+            I am some centered shrink-to-fit content! <br />
+        </div>
+    </div>
+
+## screen center
+利用fixed + margin修正:
+
+	<div style=" position: fixed;
+		top: 50%;
+		left: 50%;
+		margin-top: -50px;
+		margin-left: -50px;
+		width: 100px;
+		height: 100px;
+		background: red;
+		z-index: 99999;
+	"></div>
+
+利用fixed + 内层relative top/left 修正
+
+	<div style=" position: fixed; top: 50%; left: 50%;">
+		<div style=" position: relative; width: 500px; height: 500px; background: blue; top: -250px; left: -250px;  ">
+		</div>
+	</div>
 
 # lib
 
@@ -372,6 +432,31 @@ CSS3 过渡是元素从一种样式逐渐改变为另一种的效果。
 	transition:1s width, 1s 2s height cubic-bezier(.8,.9,.1,2);//2s是延迟
 	img:hover{} 经常用
 
+## transition display
+display 它不受transition 时间限制（立即执行, 删除node的操作）
+visibility:hidden 会延时执行 因为它不是连续的.(hidden 会暂用空间+ z-index: -infinite)
+
+	div > ul {
+	  transition: visibility 0s, opacity 0.5s linear;
+	}
+	.h{
+	  opacity: 0;
+	  visibility: none;
+	}
+
+如果想实现display 延时执行，请使用animation.
+
+	@keyframes my {
+		0%   {opacity: 1}
+		50%   {opacity: 0.50}
+		100%   {opacity: 0;display:none}
+	}
+	.h{
+		animation: my 5s forwards;
+	}
+	<div class="h"></div>
+
+
 ## cubic-bezier 贝塞尔曲线
 上文提到的 cubic-bezier 公式为
 
@@ -412,6 +497,7 @@ CSS3 过渡是元素从一种样式逐渐改变为另一种的效果。
 	none：默认值，回到动画没开始时的状态。
 	backwards：让动画回到第一帧的状态。
 	both: 循环时, 轮流应用forwards和backwards规则
+	forwards: 最后一
 
 ## animation-direction
 动画循环播放时，每次都是从结束状态跳回到起始状态，再开始播放。animation-direction属性，可以改变这种行为。(浏览器对alternate的支持不好, 请慎用)

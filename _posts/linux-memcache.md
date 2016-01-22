@@ -83,10 +83,11 @@ Memcached提供了cas(Check And Set)命令，可以保证多个并发访问操�
 	-m <num>
               Use  <num>  MB  memory  max  to  use  for  object storage; the default is 64
               megabytes.
+	-p <PORT>
 
 Example:
 
-	memcached -s /tmp/mc.sock -a 0755 -d
+	memcached -s /tmp/mc.sock -a 0755 -d -p 11211
 
 ## status
 
@@ -95,6 +96,21 @@ Example:
 	-vvv          extremely verbose (also print internal state transitions)
 
 # Client
+
+## shell client
+To make a connection to Memcached using Telnet, use the following command:
+
+	$ telnet localhost 11211
+		Trying 127.0.0.1...
+		Connected to localhost.
+		Escape character is '^]'.
+		If at any time you wish to terminate the Telnet session, simply type "quit" and hit return:
+
+	> stats
+	> quit
+	Connection closed by foreign host.
+
+## php client
 
 	$m = new memcached;
 	$m->setOption ( memcached::OPT_DISTRIBUTION, memcached::DISTRIBUTION_CONSISTENT );
@@ -115,7 +131,7 @@ To use unix socket, you should:
 ## touch(expiration)
 
 	public bool Memcached::touch ( string $key , int $expiration= time() + secs )
-	
+
 ## increment
 
 	public int Memcached::increment ( string $key [, int $offset = 1 ] )

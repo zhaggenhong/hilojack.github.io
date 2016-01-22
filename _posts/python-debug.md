@@ -133,3 +133,7 @@ pdb，让程序以单步方式运行，可以随时查看运行状态。
 
 如果要比较爽地设置断点、单步执行，就需要一个支持调试功能的IDE。目前比较好的Python IDE有PyCharm.
 
+
+# perf
+python 性能分析
+http://www.imooc.com/article/4170

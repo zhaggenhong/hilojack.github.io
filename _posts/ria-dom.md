@@ -243,6 +243,11 @@ submit form elements:
 		return $(this).text() == text1;
 	}).attr('selected', true);
 
+### action
+相当于鼠标全选
+
+	textareaNode.select()
+
 # Dom Node
 
 ## Search Node

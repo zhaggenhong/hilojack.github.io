@@ -181,8 +181,9 @@ query 与prepare 返回的都是结果集PDOStatement. 它继承了ArrayObject �
 	public PDOStatement PDO::query ( string $statement )
 
 	foreach($pdo->query('SELECT * from FOO') as $row) {
-        print_r($row);
+        print_r($row); #assoc
     }
+	$pdo->query($sql)->fetch()['key']
 
 query all:
 

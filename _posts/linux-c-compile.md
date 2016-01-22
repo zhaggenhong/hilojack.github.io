@@ -2,7 +2,7 @@
 layout: page
 title:	linux c 之 编译
 category: blog
-description: 
+description:
 ---
 # Preface
 
@@ -30,7 +30,7 @@ gcc 可通过指定 -E 得到预处理结果
 
 	gcc -E a.c
 
-## Object-like Macro 
+## Object-like Macro
 
 	#define N 50
 	#undefine N
@@ -77,12 +77,12 @@ gcc 可通过指定 -E 得到预处理结果
 		DEVICE_INIT(k,v);
 	else
 		return 1;
-	
+
 ## Inline Function 内联函数
 函数调用有调用开销，为了节省这一开销，C99支持了 内联函数inline 关键字，它是告诉编译器在编译时，将函数像MAX 宏那样展开。
 
 	static inline int MAX(int a, int b){
-		return a>b ? a:b;	
+		return a>b ? a:b;
 	}
 
 ## #、##运算符和可变参数
@@ -106,16 +106,16 @@ Example: 替换为字符串：`fputs("strncmp(\"ab\\\"c\\0d\", \"abc\", '\\4\"')
 	CONCAT(con, cat)
 
 Example: 定义一个宏展开成两个`#`, 不可写成`####`, 它会被切割成两个`##` token, 会产生错误
-	
+
 	#define HASH_HASH # ## #
 
 得到`123`:
 
 	#define FOO(a, b, c) a##b##c
-	FOO(1,2,3)  
+	FOO(1,2,3)
 	FOO(,2,3) //得到23
-	
-	
+
+
 `...` 也可用于宏函数的可变参数， 可变参数的形参用__VA_ARGS表示
 
 	#define showStr(...) showlist(#__VA_ARGS__)
@@ -126,7 +126,7 @@ Example: 定义一个宏展开成两个`#`, 不可写成`####`, 它会被切割�
 	showStr(The first, second, and third items.);
 	showArgs(The first, second, and third items.);
 	report(x>y, "x is %d but y is %d", x, y);
-	
+
 	#define DEBUGP(format, ...) printk(format, ## __VA_ARGS__)
 	DEBUGP("a"); //当__VA_ARGS 为空时，## 做字符串拼接时会吃掉前面的逗号","，不会得到: printk("a",). 这种用法只针对##__VA_ARGS, 这只是预编译器特别处理的, 不要太纠结了
 
@@ -134,8 +134,8 @@ Example: 定义一个宏展开成两个`#`, 不可写成`####`, 它会被切割�
 	funcx("a"); //当__VA_ARGS 为空时，## 做字符串拼接时会吃掉前面的逗号","，不会得到: `"a"`, 这种用法只针对##__VA_ARGS
 	funcx("a",1,2); //"a",1,2
 	funcx(,,3,4); //,,3,4 这会导致错误
-	
-		
+
+
 处理结果：
 
 	showlist(The first, second, and third items.);
@@ -150,11 +150,11 @@ Example: 定义一个宏展开成两个`#`, 不可写成`####`, 它会被切割�
 ## Condition Preprocessor
 条件语句可以嵌套使用
 
-### ifndef 
+### ifndef
 
 	#ifndef DEF
 	#define DEF
-	extern void push(char); 
+	extern void push(char);
 	#endif
 
 这种保护头文件的用法称为Header Guard: 防止定义 声明 其它代码 被定义多次
@@ -182,7 +182,7 @@ Example: 定义一个宏展开成两个`#`, 不可写成`####`, 它会被切割�
 
 
 
-# gcc 
+# gcc
 以 [linux c linker] 的倒序打印为例子：
 
 	/* stack.c */
@@ -209,7 +209,7 @@ Example: 定义一个宏展开成两个`#`, 不可写成`####`, 它会被切割�
 		push('a');
 		push('b');
 		push('c');
-		
+
 		while(!is_empty())
 			putchar(pop());
 		putchar('\n');
@@ -229,7 +229,7 @@ Example: 定义一个宏展开成两个`#`, 不可写成`####`, 它会被切割�
 	# 编译为汇编码(assemble code)
 	gcc -S a.c -o a.s
 
-### gcc -E 
+### gcc -E
 
 	gcc -E a.c ;//查看所有编译源码(展开stdio.h 等)
 
@@ -244,13 +244,13 @@ Example: 定义一个宏展开成两个`#`, 不可写成`####`, 它会被切割�
 		printf("%f\n",sin(3.14/4));
 	}
 	MM
-	# 直接编译的话,如果找不到相应的库，会提示undefined reference to sin。 
+	# 直接编译的话,如果找不到相应的库，会提示undefined reference to sin。
 	# -lm 加入libm.so这个函式库(不需要写lib 和.so)
 	# -lc 加入libc.so这个函式库(不需要写lib 和.so), 这个是默认的，不需要指定
 	gcc -lm sin.c
 
 	# 通过-L 设定搜索函式库(.so,.a) 的路径
-	gcc -lm sin.c -L/lib64 -L/usr/lib 
+	gcc -lm sin.c -L/lib64 -L/usr/lib
 
 	# 通过-I 指定搜索include header(*.h) 的路径，或者通过环境变量CPATH 设定
 	gcc sin.c -I/usr/include
@@ -273,9 +273,9 @@ Example: 定义一个宏展开成两个`#`, 不可写成`####`, 它会被切割�
 		T push
 		T pop
 		T is_empty
-		
+
 用readelf -a main 可以看到:
-- main 的.bss 合并了main.o与stack.o 的.bss; 
+- main 的.bss 合并了main.o与stack.o 的.bss;
 - main 的.data 合并了main.o 与stack.o 的.data;
 - main 的.text 合并了main.o 与stack.o 的.text 代码段.
 
@@ -313,7 +313,7 @@ Example: 定义一个宏展开成两个`#`, 不可写成`####`, 它会被切割�
 ### exit
 
 	exit(main(argc, argv));
-	
+
 exit 是libc 库中的函数(/lib64/libc.so.6):
 1. 首先做一些清理工作，
 2. 然后调用 _exit系统调用终止进程，
@@ -333,16 +333,16 @@ exit 是libc 库中的函数(/lib64/libc.so.6):
 
 ## nm 查看符号表
 	#查看目录档
-	nm a.o 
+	nm a.o
 	#查看执行档
 	nm a.out
 
 # make & makefile
-Refer to 阮一峰: 
+Refer to 阮一峰:
 http://www.ruanyifeng.com/blog/2015/03/build-website-with-make.html
 
 短小的c 源码用gcc 编译没有什么问题，但是如果源码过多，编译参数会让人疯掉的，我们可以用make 实现编译指令的简化
-执行make时, make 会查找当前目录下的makefile, 
+执行make时, make 会查找当前目录下的makefile,
 
 - configure 用于检测编译环境, 然后生成makefile
 - makefile 则记录的原始码如何编译的细节
@@ -352,17 +352,17 @@ http://www.ruanyifeng.com/blog/2015/03/build-website-with-make.html
 	make -f rules.txt
 
 ## makefile 语法
-	
-	<target> : <prerequisites> 
+
+	<target> : <prerequisites>
 	[tab]  <commands>
 
 prerequisites 和 commands 都是可选的，但是不能同时缺少
 
 Example:
-	
+
 	var1 = val1
 	var2=val2
-	target ... : prerequisites ... 
+	target ... : prerequisites ...
 		command1
 		command2
 		export foo=bar
@@ -394,7 +394,7 @@ target 一般是一个文件名，也可以是多个文件名(文件名之间用
 
 常用的目标:
 
-	all:main 缺少目标
+	all:main 
 	install 编译后的安装工作
 	clean 清理二进制
 	distclean 清理二进制和配置文件
@@ -417,7 +417,7 @@ command 是一行一个进程的：
 如果需要所有的command 运行于同一进程，用伪指令`.ONESHELL:`
 
 	.ONESHELL:
-	target ... : prerequisites ... 
+	target ... : prerequisites ...
 		command1
 		command2
 
@@ -467,13 +467,13 @@ Example: clean 清除编译文件 这一target 不需要条件。
 
 	# default
 	OUTPUT_OPTION = -o $@
-	
+
 	# default
 	CC = cc
-	
+
 	# default
 	COMPILE.c = $(CC) $(CFLAGS) $(CPPFLAGS) $(TARGET_ARCH) -c
-	
+
 	%.o: %.c
 		$(COMPILE.c) $(OUTPUT_OPTION) $<
 
@@ -504,9 +504,9 @@ Example: clean 清除编译文件 这一target 不需要条件。
 make 调用自身变量时，变量需要放在 $( ) 之中。这会被make 解析为字符串
 makefile 的变量可以嵌套， 以下规则会输出"Huh?"
 
-	foo = $(bar) 
-	bar = Huh? 
-	all: 
+	foo = $(bar)
+	bar = Huh?
+	all:
 		@echo $(foo)
 
 makefile规则时应该避免嵌套递归导致的死循环：
@@ -517,7 +517,7 @@ makefile规则时应该避免嵌套递归导致的死循环：
 如果想让make 在遇到变量定义时立即展开, 可以用`:=`
 
 	foo := $(bar) #因为bar 未定义，bar 展开后是空值
-	bar = Huh? 
+	bar = Huh?
 
 还可以在定义时追加/非空不赋值
 
@@ -530,7 +530,7 @@ makefile规则时应该避免嵌套递归导致的死循环：
 如果想定义一个空格：
 下面的代码中，nullstring 是空字符，space 是空格。如果不写后面的注释，难以看出 nullstring 后面还有一个空格
 
-	nullstring := 
+	nullstring :=
 	space := $(nullstring) # end of the line
 
 `+=` 运算符用于变量字符串的拼接
@@ -675,7 +675,7 @@ patsubst 函数用于模式匹配的替换，格式如下。
 
 通常会用`include` 包含并触发更新头文件依赖关系。比如：
 
-	SOURCE = main.c other.c 
+	SOURCE = main.c other.c
 	include $(SOURCE:.c=.d)
 	%.d: %.c
 		set -e; rm -f $@; \
@@ -694,7 +694,7 @@ patsubst 函数用于模式匹配的替换，格式如下。
 
 ## make options
 
-	-n 
+	-n
 		Print each command, but not excute command.
 	-C dir
 		Change to directory dir before reading the makefiles or doing anything else.
@@ -702,7 +702,7 @@ patsubst 函数用于模式匹配的替换，格式如下。
 
 	VAR=value
 		Eg. `make CPPFLAGS=-g`, 在make 命令行中定义变量
-		
+
 
 ## Example
 将CofferScript脚本转为JavaScript脚本。
@@ -714,7 +714,7 @@ patsubst 函数用于模式匹配的替换，格式如下。
 		coffee -co $(dir $@) $<
 
 	coffee: $(build_files)
-	
+
 执行
 
 	$ make coffee
@@ -805,17 +805,17 @@ kernel的函式库则位于/lib/modules
 
 # Shared Library 共享库
 
-	> gcc -c lib/*.c  -fPIC 
+	> gcc -c lib/*.c  -fPIC
 
 因为需要编译为动态的共享库，所以编译时，必须加-fPIC 编译为与位置无关(Position Independent Code )的目标代码（Relocatable）.一般的目标文件的全局变量地址在链接时会确定 固定的地址。而-fPIC 可以实现生成的共享库中，地址不是写死的, 而是加载时再确定(比如加载时将动态库的数据段基地址写到ebx)
 
 生成共享库：
 
-	> gcc -shared -o libstack.so push.o pop.o 
+	> gcc -shared -o libstack.so push.o pop.o
 
 使用共享库编译链接:
-	
-	> gcc a.c -g -L. -lstack -Ilib -o main 
+
+	> gcc a.c -g -L. -lstack -Ilib -o main
 
 由于共享库在编译时，并没有编译到main中，所以执行main 时，可能找不到共享库libstack.so：
 
@@ -861,7 +861,7 @@ linux 编大部分程序在编译时，都是使用的动态共享库. 每个程
 2. 执行ldconfig，它会将配置指定的动态库载入cache
 3. 同时将cache 记录到 /etc/ld.so.cache
 
-	ldconfig 
+	ldconfig
 		-f conf_file
 		-C cache 指定cache 记录文件，默认 /etc/ld.so.cache
 		-p 读出/etc/ld.so.cache
@@ -890,7 +890,7 @@ linux 编大部分程序在编译时，都是使用的动态共享库. 每个程
 
 通过gdb 单步执行时可以看出:  跳到了 -> .plt 段`push@plt`,
 第一条指令又跳到`jmp *0x804a008` ,
-0x804a008 中保存的地址为动态链接器地址，所以它又会jmp 到动态链接器(/lib/ld-linux.so.2), 
+0x804a008 中保存的地址为动态链接器地址，所以它又会jmp 到动态链接器(/lib/ld-linux.so.2),
 链接器会找到动态库，获取动态库的地址(写入到0x804a008, 下次jmp时直接取到push 链接器，而不用再调用动态链接器)及以及数据段基址(写入到ebx)
 下一次调用push 时，
 
@@ -910,8 +910,8 @@ soname 是主版本命名。 比如`libcap.so.2` 是soname ,只包含主版本�
 
 realname 包括次版本，编译时生成共共享文件时的 realname (realname 带次版本号)
 
-	$ gcc -shared -Wl,-soname,libstack.so.1 -o libstack.so.1.0  push.o pop.o 
-	
+	$ gcc -shared -Wl,-soname,libstack.so.1 -o libstack.so.1.0  push.o pop.o
+
 linker name 是链接时 -l 参数所要查找的文件名，它没有主版本号。比如, 编译时 -lstack 参数 表示要查找 libstack.so
 
 ## Virtual Memory 虚拟内存

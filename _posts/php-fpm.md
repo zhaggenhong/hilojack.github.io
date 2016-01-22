@@ -44,6 +44,10 @@ php 本身的配置文件是php.ini `php-fpm | grep php.ini`：
 	Installing build environment:     /usr/local/lib/php/build/
 	Installing header files:          /usr/local/include/php/
 
+也可以：
+
+	phpini=`php -d 'display_errors=stderr' -r 'echo php_ini_loaded_file();'`
+
 php-fpm 进程管理器的配置文件是php-fpm.conf ,如果编译时指定了配置文件路径则可以通过以下命令查询, 否则默认的路径是/etc/php-fpm.conf):
 
 	php-fpm -t

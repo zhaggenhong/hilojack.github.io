@@ -68,7 +68,8 @@ description:
 ### 3des example
 
 	/**
-	 *  if blocksize mod 8 = 0, it is pkcs5
+	 * if blocksize mod 8 = 0, it is pkcs5
+	 * mcrypt 默认的填充值为 null （'\0'），java或.NET 默认填充方式为 PKCS7
 	 */
 	function pkcs7_pad($text, $blocksize) {
 	   $pad = $blocksize - (strlen($text) % $blocksize);

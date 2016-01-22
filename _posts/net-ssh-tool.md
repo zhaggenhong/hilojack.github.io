@@ -146,10 +146,10 @@ From remote to local
 	//or
 	$ ssh-keygen -t rsa -P "passwd" -f ~/.ssh/id_rsa -C 'x@qq.com'
 
-	# 改变权限，必须
-	chmod 700 ~/.ssh
+	# 将其它人的pub 导入本ssh server
 	cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
-	# 改变权限，必须
+	# 改变权限，必须()
+	chmod 700 ~/.ssh
 	chmod 600 ~/.ssh/authorized_keys
 	chmod 600 -R ~/.ssh/*
 
