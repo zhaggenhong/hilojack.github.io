@@ -1004,11 +1004,32 @@ shell_exec 等价于反引号:
 		echo "command returned $return_value\n";
 	}
 
-## master kill 
-不会影响这样的
+non-block
+
+	stream_set_blocking($pipes[1],false);
+	stream_set_blocking($pipes[2],false);
+	while( true ) {
+		$read= array();
+		if( !feof($pipes[1]) ) $read[]= $pipes[1];
+		if( !feof($pipes[2]) ) $read[]= $pipes[2];
+		if (!$read) break;
+
+		$ready= stream_select($read, $write=NULL, $ex= NULL, 2);
+		if ($ready === false) {
+			break; #should never happen - something died
+		}
+
+		foreach ($read as $r) {
+			$s= fread($r,1024);
+			$output.= $s;
+		}
+	}
+
+## master kill
+master kill 不会结束子进程
 
 	`sleep 1&`
-
+	`sleep 1 &> out.txt &`;# non-block
 
 # shutdown
 

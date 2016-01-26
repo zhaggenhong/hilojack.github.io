@@ -18,6 +18,7 @@ description:
 	$(sel1,sel2,sel3)
 
 	$('#id')[0];//原生的dom, 非jquery 对象
+	$('#id').eq(0);//jquery 对象
 
 ## find
 
@@ -143,7 +144,7 @@ for class:
 		 console.log(this.href)
 	});
 
-# each array & map
+## each array & map
 
 	$.each(data['list'], function(key, item) {
 	$.each(data['list'], function(index, item) {
@@ -410,12 +411,15 @@ The callback hooks provided by $.ajax() are as follows:
 1. complete
 	callback option fires, when the request finishes, whether in failure or success. It receives the jqXHR object, as well as a string containing the success or error code
 
-	$.ajaxSetup({success:function(data){
+	$.ajaxSetup({dataFilter:function(data){
 		if(data.errno === -9 && data.url){
 			location.href = data.url;
 		}
-
+		return data;
 	}});
+	dataFilter,success
+
+Note: Global callback functions should be set with their respective global Ajax event handler methods—.ajaxStart(), .ajaxStop(), .ajaxComplete(), .ajaxError(), .ajaxSuccess(), .ajaxSend()—rather than within the options object for $.ajaxSetup().
 
 # noConflict
 

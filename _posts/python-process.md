@@ -19,8 +19,8 @@ fork, getpid()
 	else:
 		print('I (%s) just created a child process (%s).' % (os.getpid(), pid))
 
-# multiprocessing
- multiprocessing 比fork 简单
+# multiprocessing func
+multiprocessing.Process(func) 比fork 简单
 
 	from multiprocessing import Process
 	import os
@@ -49,6 +49,7 @@ join()方法可以等待子进程结束后再继续往下运行，通常用于�
 
 # pool
 如果要启动大量的子进程，可以用进程池的方式批量创建子进程：
+multiprocessing.Pool(4) 比fork 简单
 
 	from multiprocessing import Pool
 	import os, time, random
@@ -69,7 +70,8 @@ join()方法可以等待子进程结束后再继续往下运行，通常用于�
 		p.close()
 		p.join()
 		print('All subprocesses done.')
-	执行结果如下：
+
+执行结果如下：
 
 	Parent process 669.
 	Waiting for all subprocesses done...
@@ -102,6 +104,8 @@ join()方法可以等待子进程结束后再继续往下运行，通常用于�
 
 subprocess模块可以让我们非常方便地启动一个子进程，然后控制其输入和输出。
 
+## subprocess.call
+
 下面的例子演示了如何在Python代码中运行命令nslookup www.python.org，这和命令行直接运行的效果是一样的：
 
 	import subprocess
@@ -110,7 +114,7 @@ subprocess模块可以让我们非常方便地启动一个子进程，然后控�
 	r = subprocess.call(['nslookup', 'www.python.org'])
 	print('Exit code:', r)
 
-	运行结果：
+运行结果：
 
 	$ nslookup www.python.org
 	Server:        192.168.19.4
@@ -123,6 +127,7 @@ subprocess模块可以让我们非常方便地启动一个子进程，然后控�
 
 	Exit code: 0
 
+## subprocess.Popen
 如果子进程还需要输入，则可以通过communicate()方法输入：
 
 	import subprocess
@@ -154,9 +159,10 @@ subprocess模块可以让我们非常方便地启动一个子进程，然后控�
 
 
 # 进程间通信
-
 Process之间肯定是需要通信的，操作系统提供了很多机制来实现进程间的通信。Python的multiprocessing模块包装了底层的机制，提供了Queue、Pipes等多种方式来交换数据。
 
+## via queue
+其实管道也是一种queue
 我们以Queue为例，在父进程中创建两个子进程，一个往Queue里写数据，一个从Queue里读数据：
 
 	from multiprocessing import Process, Queue
@@ -190,7 +196,8 @@ Process之间肯定是需要通信的，操作系统提供了很多机制来实�
 	    pw.join()
 	    # pr进程里是死循环，无法等待其结束，只能强行终止:
 	    pr.terminate()
-	运行结果如下：
+
+运行结果如下：
 
 	Process to write: 50563
 	Put A to queue...
