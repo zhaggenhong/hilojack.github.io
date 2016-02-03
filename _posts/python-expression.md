@@ -157,7 +157,12 @@ Iterator For
 
 	[w.capitalize() for w in ['aa','bb','cc']]
 
-## 判断对象是否可迭代
+#### for 本质
+
+	for arg in argv:
+	for(i=0; i<len(argv); i++): arg = argv[i] //len(argv) 是实时计算的, 会受argv.pop 的影响
+
+### 判断对象是否可迭代
 
 	>>> from collections import Iterable
 	>>> isinstance('abc', Iterable) # str是否可迭代
@@ -179,6 +184,13 @@ Python内置的enumerate函数可以把一个list变成索引-元素对，这样
 
 	while x<6:
 		Statement
+
+# 三元运算符
+在python中的格式为
+
+	为真时的结果 if 判定条件 else 为假时的结果  
+
+	1 if 5>3 else 0
 
 # 列表生成式
 

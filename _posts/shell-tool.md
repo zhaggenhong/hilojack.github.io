@@ -275,8 +275,8 @@ However, you can achieve simpler code with extra work.
 Example:
 
 	cat a b | sort | uniq > c # c 是 a 和 b 的并集
-	cat a b | sort | uniq -d > c # c 是 a 和 b 的交集
-	cat a b | sort | uniq -u > c # c 是 a 和 b 的差集
+	cat a b | sort | uniq -d > c # c 是 a 和 b 的交集(重复)
+	cat a b | sort | uniq -u > c # c 是 a 和 b 的差集(不重复)
 
 统计重复日志文件中url 的访问pv 次数(同一ip 算一次)，并按从高到低排序`sort|uniq -c|sort -r -d`:
 

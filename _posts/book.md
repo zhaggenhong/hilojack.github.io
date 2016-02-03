@@ -9,6 +9,9 @@ description:
 # video
 https://laracasts.com/
 
+# practice online
+https://www.shiyanlou.com/courses/195
+
 # code
 建议增加《Don't make me think》、《Rework》、《清醒思考的艺术》、《黑客与画家》、以及《Unix高级环境编程》、《Unix网络编程》、《TCP/lP详解》
 

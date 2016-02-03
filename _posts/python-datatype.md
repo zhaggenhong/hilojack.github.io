@@ -6,6 +6,17 @@ description:
 ---
 # Preface
 
+# variable
+To check the existence of a local variable:
+
+	if 'myVar' in locals():
+	  # myVar exists.
+
+To check the existence of a global variable:
+
+	if 'myVar' in globals():
+	  # myVar exists.
+
 
 # Data Type
 数据类型
@@ -118,8 +129,9 @@ zfill
 	print '1'.zfill(2);
 
 ## trim
+包括\n, ' ', '\t\r'
 
-	'a\n  '.strip()+',end'
+	'a\n  '.strip() + ',end'
 
 ## Concat String
 
@@ -193,6 +205,8 @@ with no space and new line:
 ## has_key
 
 	if key in dict:
+	if hasattr(obj, 'attribute'):
+		# obj.attr_name exists.
 
 ## dict to object
 
@@ -383,7 +397,7 @@ remove and insert(in place)
 	>>> print range(2,4)
 	[2, 3]
 
-## pop,append
+## pop,append(push)
 
 	>>> list = [1,2]
 	del list[1]

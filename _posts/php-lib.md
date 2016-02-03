@@ -911,6 +911,10 @@ Refer to [DateInterval](http://jp2.php.net/manual/zh/dateinterval.construct.php)
 	$diff = $end->diff($start);
 	echo "Difference: " . $diff->format('%m month, %d days (total: %a days)') . "\n";
 
+## gettimestamp
+
+	DateTime::createFromFormat('Y年m月d日','2015年8月9日').getTimestamp()
+
 # user
 
 	get_current_user() Gets PHP script owner's name

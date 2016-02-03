@@ -23,6 +23,11 @@ tcpdump可以分为三大部分内容，第一是“选项”，第二是“过�
 		遇到协议号或端口号时，不要将这些号码转换成对应的协议名称或端口名称。比如，我们希望显示21，而非tcpdump自作聪明的将它显示成FTP。
 	-X
 		把协议头和包内容都以16 进制显示出来（tcpdump会以16进制和ASCII的形式显示），这在进行协议分析时是绝对的利器。
+	-A
+		选项，则tcpdump只会显示ASCII形式的数据包内容，不会再以十六进制形式显示；
+
+	-XX
+		选项，则tcpdump会从以太网部分就开始显示网络包内容，而不是仅从网络层协议开始显示。一般不需要这么低层
 	-c count
 		只抓一个包
 	port 8000
@@ -66,7 +71,7 @@ tcpdump可以分为三大部分内容，第一是“选项”，第二是“过�
 
 大家在使用tcpdump时，有时会有这样的需求：“对于tcpdump输出的内容，提取每一行的第一个域，即”时间域”，并输出出来，为后续统计所用”，这种场景下，我们就需要使用到-l来将默认的全缓冲变为行缓冲了。
 
-	# tcpdump -i eth0 -l |awk '{print $1}' ;#打印时间
+	$ tcpdump -i eth0 -l |awk '{print $1}' ;#打印时间
 	tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
 	listening on eth0, link-type EN10MB (Ethernet), capture size 65535 bytes
 	22:56:57.571680
@@ -111,13 +116,27 @@ tcpdump可以分为三大部分内容，第一是“选项”，第二是“过�
 ## -w -r 流量保存与回放
 保存流量：
 
-	# tcpdump -i eth0 -w flowdata
+	$ tcpdump -i eth0 -w flowdata
 
 flowdata 是一个binary! 查看的话需要借助`-r`
 
 	sudo tcpdump -r flowdata
 
+# tcp
+分析tcp 包时，不要限制`dst or src`：
+
+	sudo tcpdump -i en5 -nn -A host hilojack.com
+
+## 三次握手
+
+## 绝对序列号seq
+tcp在收到第一条数据包之后，后续的数据包，是使用之前数据包的偏移来显示的，这个“1” 就是seq 4071349707的偏移1，也就是4071349708.
+如果一开始不习惯这样，同时验证这个说法，我们可以使用tcpdump -i lo -S 来打印出绝对序列号
+
+
 # filter
+
+	'condition1 and condition2 or condtion3...'
 
 ## logic
 
@@ -140,8 +159,8 @@ packet filter syntax
 ## dst & src
 可以借助`or` `and`, 限制源与目的机ip
 
-	# tcpdump -i eth0 'dst 8.8.8.8'
-	# tcpdump -i eth0 -c 3 'dst port 53 or dst port 80'
+	$ tcpdump -i eth0 'dst 8.8.8.8'
+	$ tcpdump -i eth0 -c 3 'dst port 53 or dst port 80'
 
 tcpdump还支持如下的类型：
 
@@ -224,14 +243,9 @@ offset用来指定数据报偏移量，表示从某个协议的数据报的第�
 
 
 
-- 使用`-A`选项，则tcpdump只会显示ASCII形式的数据包内容，不会再以十六进制形式显示；
-
-- 使用`-XX`选项，则tcpdump会从以太网部分就开始显示网络包内容，而不是仅从网络层协议开始显示。
-
-
 - 使用如下命令，则tcpdump会列出所有可以选择的抓包对象。
 
-	# tcpdump -D
+	$ tcpdump -D
 	1.eth0
 	2.any (Pseudo-device that captures on all interfaces)
 	3.lo
