@@ -333,6 +333,18 @@ The difference between list and tuple:
 
 	del tuple[0] error
 
+## loop list
+
+	for idx, val in enumerate(ints):
+		print(idx, val)
+	for idx, val in enumerate(ints, start=5):
+		print(idx, val)
+
+## in list
+
+	if x in list
+	if index < len(list)
+
 ## zip list
 
 	>>> xl = [1,3,5]
@@ -357,13 +369,17 @@ The difference between list and tuple:
 	[1,2][0]
 	[1,2][-1]
 
-slice
+## slice list
+exclude end
 
 	list[start:end:step]
 	list[0:3]
 	list[:-1]
 	list[::5]
 	print list[0:10:2]
+
+	len = len(list)
+	list[0:len]
 
 ## in array
 

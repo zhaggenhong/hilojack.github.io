@@ -26,6 +26,20 @@ os cwd
 	>>> os.getcwd()
 	'/tmp'
 
+# sys
+
+## MEMORY, getsizeof
+If you need to know MEMORY USAGE of a given type, you can use the function sys.getsizeof
+
+	>>> from sys import getsizeof
+	>>> l = []
+	>>> getsizeof(l)
+	64
+	>>> getsizeof("toto")
+	53
+	>>> getsizeof(10.5)
+	24
+
 # 环境变量
 在操作系统中定义的环境变量，全部保存在os.environ这个变量中，可以直接查看：
 
