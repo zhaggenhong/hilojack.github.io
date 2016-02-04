@@ -163,6 +163,11 @@ Iterator For
 	for(i=0; i<len(argv); i++): arg = argv[i] //len(argv) 是实时计算的, 会受argv.pop 的影响
 
 ### 判断对象是否可迭代
+可用：
+
+	hasattr([],'__iter__')
+
+或者:
 
 	>>> from collections import Iterable
 	>>> isinstance('abc', Iterable) # str是否可迭代
@@ -192,7 +197,8 @@ Python内置的enumerate函数可以把一个list变成索引-元素对，这样
 
 	1 if 5>3 else 0
 
-# 列表生成式
+# List Comprehensions, 列表生成式
+列表生成式即List Comprehensions
 
 	>>> [x * x for x in range(1, 11)]
 	[1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
@@ -249,10 +255,13 @@ for循环后面还可以加上if判断，这样我们就可以筛选出仅偶数
 
 把list、dict、str等Iterable变成Iterator可以使用iter()函数：
 
-	>>> isinstance(iter([]), Iterator)
+	>>> import collections
+	>>> isinstance(iter([]), collections.Iterator)
 	True
-	>>> isinstance(iter('abc'), Iterator)
+	>>> isinstance(iter('abc'), collections.Iterator)
 	True
+	>>> isinstance([i for i in [1,2]], collections.Iterator)
+	False
 
 为什么list、dict、str等数据类型不是Iterator？
 

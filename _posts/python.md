@@ -179,3 +179,12 @@ import `ex47.game`, would find two file:
 
 	import sys;
 	sys.argv
+
+# install
+
+## pip3
+
+	easy_install requests //2.7
+	pip3 install requests
+	import requests
+
