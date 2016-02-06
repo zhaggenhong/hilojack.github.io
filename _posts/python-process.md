@@ -7,7 +7,11 @@ description:
 # Preface
 
 # fork
-fork, getpid()
+Cover these functions:
+- os.fork()
+- os.getpid()
+
+Example
 
 	import os
 
@@ -19,8 +23,13 @@ fork, getpid()
 	else:
 		print('I (%s) just created a child process (%s).' % (os.getpid(), pid))
 
-# multiprocessing func
-multiprocessing.Process(func) 比fork 简单
+# multiprocessing func(跨平台)
+fork 与子程序func 是分离的, 父进程同步子进程比较麻烦
+multiprocessing.Process(func) 则可以直接传func:
+
+1. child = multiprocessing.Process(func)
+2. child.start()
+2. child.join() 等待子进程结束后再继续往下运行，通常用于进程间的同步
 
 	from multiprocessing import Process
 	import os
@@ -51,6 +60,10 @@ join()方法可以等待子进程结束后再继续往下运行，通常用于�
 如果要启动大量的子进程，可以用进程池的方式批量创建子进程：
 multiprocessing.Pool(4) 比fork 简单
 
+1. p = multiprocessing.Poll(4)
+2. for i in range(5): p.apply_async(func, args=(i,))
+2. child.join() 等待子进程结束后再继续往下运行，通常用于进程间的同步
+
 	from multiprocessing import Pool
 	import os, time, random
 
@@ -65,7 +78,7 @@ multiprocessing.Pool(4) 比fork 简单
 		print('Parent process %s.' % os.getpid())
 		p = Pool(4)
 		for i in range(5):
-			p.apply_async(long_time_task, args=(i,))
+			p.apply_async(long_time_task, args=(i,)) # 加5个任务
 		print('Waiting for all subprocesses done...')
 		p.close()
 		p.join()
@@ -98,8 +111,7 @@ multiprocessing.Pool(4) 比fork 简单
 
 由于Pool的默认大小是CPU的核数，如果你不幸拥有8核CPU，你要提交至少9个子进程才能看到上面的等待效果。
 
-# 子进程
-
+# shell 子进程
 很多时候，子进程并不是自身，而是一个外部进程。我们创建了子进程后，还需要控制子进程的输入和输出。
 
 subprocess模块可以让我们非常方便地启动一个子进程，然后控制其输入和输出。
@@ -156,6 +168,82 @@ subprocess模块可以让我们非常方便地启动一个子进程，然后控�
 	Authoritative answers can be found from:
 	mail.python.org    internet address = 82.94.164.166
 	mail.python.org    has AAAA address 2001:888:2000:d::a6
+
+# Shell
+
+## exec python
+
+	cat a.py | python
+	cat a.py | python - arg1
+
+Note: raw_input 将不会正常工作，We better use :
+
+	python <(cat p.py)
+	python p.py
+
+## exec shell
+
+### subprocess.Popen
+Popen 是最基础的类, 它是非阻塞的(除非有`.stdout.read()`)
+
+	subprocess.Popen('sleep 61') #wrong
+	subprocess.Popen(['sleep', '61']).pid; #ok
+
+	subprocess.Popen(['echo','12'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
+
+read output
+
+	proc = subprocess.Popen(['ls','-l'],stdout=subprocess.PIPE)
+	line = proc.stdout.readline();
+	while line;
+		print "test:", line.rstrip()
+		line = proc.stdout.readline();
+
+#### shell=True 时:
+1. 只取第一个参数，且把参数当成shell 语句而非命令
+2. 可以执行multiple commands
+
+	subprocess.Popen('sleep 5;echo abc',shell=True, stdout=subprocess.PIPE).stdout.read()
+
+### via call
+类似run, 但
+
+1. 只返回errno
+
+	>>from subprocess import call
+	>>errno=call("ls -l", shell=True)
+	total 240
+	-rw-r--r--   1 hilojack  staff   1.6K Dec 16 13:26 a.txt
+
+### via run
+它封装(package)的`subprocess.Popen`
+
+	>>> import subprocess
+
+doesn't capture output
+
+	>>> subprocess.run(["ls", "-l", "/dev/null"])
+	crw-rw-rw-  1 root  wheel    3,   2 Dec 19 11:13 /dev/null
+	CompletedProcess(args=['ls', '-l', '/dev/null'], returncode=0)
+
+capture output
+
+	>>> subprocess.run(["ls", "-l", "/dev/null"], stdout=subprocess.PIPE)
+	CompletedProcess(args=['ls', '-l', '/dev/null'], returncode=0, stdout=b'crw-rw-rw-  1 root  wheel    3,   2 Dec 19 11:13 /dev/null\n')
+	>>> subprocess.run(["ls", "-l", "/dev/null"], stdout=subprocess.PIPE).stdout
+	crw-rw-rw-  1 root  wheel    3,   2 Dec 19 11:13 /dev/null
+
+check error
+
+	>>> subprocess.run("exit 1", shell=True)
+	CompletedProcess(args='exit 1', returncode=1)
+
+	>>> subprocess.run("exit 1", shell=True, check=True)
+	Traceback (most recent call last):
+	  File "<stdin>", line 1, in <module>
+	  File "/usr/local/Cellar/python3/3.5.0/Frameworks/Python.framework/Versions/3.5/lib/python3.5/subprocess.py", line 711, in run
+		output=stdout, stderr=stderr)
+	subprocess.CalledProcessError: Command 'exit 1' returned non-zero exit status 1
 
 
 # 进程间通信

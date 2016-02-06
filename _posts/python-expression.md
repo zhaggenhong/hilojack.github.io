@@ -193,7 +193,7 @@ Python内置的enumerate函数可以把一个list变成索引-元素对，这样
 # 三元运算符
 在python中的格式为
 
-	为真时的结果 if 判定条件 else 为假时的结果  
+	为真时的结果 if 判定条件 else 为假时的结果
 
 	1 if 5>3 else 0
 
@@ -251,7 +251,7 @@ for循环后面还可以加上if判断，这样我们就可以筛选出仅偶数
 		return 'done'
 
 # Iterator, 迭代器
-生成器都是Iterator对象，但list、dict、str虽然是Iterable，却不是Iterator。
+生成器(generator)都是Iterator对象，但list、dict、str虽然是Iterable，却不是Iterator。
 
 把list、dict、str等Iterable变成Iterator可以使用iter()函数：
 
