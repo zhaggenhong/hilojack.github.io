@@ -8,10 +8,15 @@ description:
 
 # time
 
+	import time
+	time.time()
+		19972314124.05238
+
 ## sleep
 
 	import time
 	time.sleep(1)#1s
+	time.sleep(random.random())
 
 # datetime
 

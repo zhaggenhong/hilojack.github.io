@@ -15,7 +15,6 @@ https://www.shiyanlou.com/courses/195
 # code
 建议增加《Don't make me think》、《Rework》、《清醒思考的艺术》、《黑客与画家》、以及《Unix高级环境编程》、《Unix网络编程》、《TCP/lP详解》
 
-
 http://lucida.me/blog/developer-reading-list/
 
 编码:隐匿在计算机软硬件背后的语言 http://www.amazon.cn/gp/product/B009RSXIB4/ref=as_li_ss_tl?ie=UTF8&camp=536&tag=lucida-23&creativeASIN=B009RSXIB4&linkCode=as2&creative=3132
@@ -31,7 +30,6 @@ http://blog.t7sky.com/fenxiang/
 
 Another
 http://segmentfault.com/a/1190000000329966
-
 
 ## swift
 所见即所得的playground

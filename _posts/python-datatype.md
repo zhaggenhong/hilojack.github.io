@@ -17,6 +17,8 @@ To check the existence of a global variable:
 	if 'myVar' in globals():
 	  # myVar exists.
 
+## reference
+list, tuple, dict 都是引用型的，无论是赋值，还是func 传值, 还是线程`threading.Thread(target=run_thread, args=(list,))`
 
 # Data Type
 数据类型
@@ -73,6 +75,10 @@ double quotes and single quotes is same
 
 	print "a\nb" ;# The character here "\n" is new line
 	print 'a\nb'
+
+## chr
+
+	chr(65); 'A'
 
 ## not Escape
 use  encode
@@ -356,6 +362,7 @@ The difference between list and tuple:
 
 	','.join([1,2])
 	'1,2'.split(',');
+	'1,2,3'.split(',',1);# 只切割一次
 
 ## shuffle list
 

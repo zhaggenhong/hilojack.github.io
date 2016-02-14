@@ -8,6 +8,7 @@ description:
 
 
 # function
+var 默认是global 的
 
 	def func(s1,s2=None):
 		global X

@@ -13,6 +13,8 @@ description:
 # Coroutines, 协程
 php 的generator 不仅可以中断并返回值. 调用方(Caller) 还可以通过`send` 向generators 传值。这就实现了php 的协程(Coroutines)
 
+> 对应到Python语言，单进程的异步编程模型称为协程，有了协程的支持，就可以基于事件驱动编写高效的多任务程序。我们会在后面讨论如何编写协程。
+
 Coroutines 可以通过`send()` 实现向 generators 传值，这实现了主程(caller)与生成器(generator)之间的双向通信
 
 	function gen() {

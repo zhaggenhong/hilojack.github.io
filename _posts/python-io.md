@@ -131,6 +131,7 @@ StringIO操作的只能是str，如果要操作二进制数据，就需要使用
 	>>> f = BytesIO()
 	>>> f.write('中文'.encode('utf-8'))
 	6
+
 	>>> print(f.getvalue())
 	b'\xe4\xb8\xad\xe6\x96\x87'
 
@@ -141,6 +142,11 @@ string 与 bytes 相互转换
 	>>> b'\xe2\x82\xac20'.decode('utf-8')
 	'€20'
 	>>> '123'.encode('utf-8')
+
+或者：
+
+	>>> bytes([0, 1, 97])
+	b'\x00\x01a'
 
 # url
 

@@ -68,8 +68,19 @@ SQL语句中的裸字符串会受到连接字符集或introducer设置的影响�
 # 基本概念
 > http://www.laruence.com/2008/01/05/12.html
 
-
 ## MySQL字符集设置
+系统配置
+
+	[client]
+	default-character-set = utf8
+
+	[mysqld]
+	default-storage-engine = INNODB
+	character-set-server = utf8
+	collation-server = utf8_general_ci
+
+重启MySQL后，可以通过MySQL的客户端命令行检查编码：
+
 系统变量：
 
 	character_set_server：默认的内部操作字符集
@@ -88,13 +99,13 @@ SQL语句中的裸字符串会受到连接字符集或introducer设置的影响�
 
 用introducer指定文本字符串的字符集：
 
-	– 格式为：[_charset] ‘string’ [COLLATE collation]
+	– 格式为：[_charset] 'string' [COLLATE collation]
 
 例如：
 
 	SELECT _latin1 'string';
 
-	SELECT _utf8 ‘你好’ COLLATE utf8_general_ci;
+	SELECT _utf8 '你好' COLLATE utf8_general_ci;
 
 由introducer修饰的文本字符串在请求过程中不经过多余的转码，直接转换为内部字符集处理。
 

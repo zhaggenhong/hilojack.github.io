@@ -1,26 +1,24 @@
 ---
 layout: page
-title:	
+title:
 category: blog
-description: 
+description:
 ---
 # Preface
 
 # lpthw
 > http://learnpythonthehardway.org/book/ex50.html
 
-## install lpthw
+## Install lpthw
 
 	easy_install lpthw.web
 
-	cd projects
-	mkdir gothonweb
-	cd gothonweb
+	mcd projects/gothonweb
 	mkdir bin gothonweb tests docs templates
 	touch gothonweb/__init__.py
 	touch tests/__init__.py
 
-## edit `bin/app.py`:
+## Edit `bin/app.py`:
 
 	import web
 
@@ -51,7 +49,7 @@ description:
 	if __name__ == "__main__":
 		app.run()
 
-## edit `templates/index.html` 
+## edit `templates/index.html`
 
 	$def with (greeting)
 	$if greeting:
@@ -158,7 +156,7 @@ The lpthw.web framework has a very simple API for processing requests, which loo
             headers=None, https=False)
 
 ## session
-bin/session.py and create `/sessions/` Directory to store sessions
+`bin/session.py` and create `/sessions/` Directory to store sessions
 
 	import web
 

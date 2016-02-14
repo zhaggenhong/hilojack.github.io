@@ -68,7 +68,7 @@ description:
 
 ## 断言
 
-	self.assertEqual(abs(-1), 1) # 断言函数返回的结果与1相等
+	self.assertEqual(abs(-1), 1); # 断言函数返回的结果与1相等
 
 另一种重要的断言就是期待抛出指定类型的Error，比如通过d['empty']访问不存在的key时，断言会抛出KeyError：
 
@@ -91,7 +91,7 @@ description:
 
 这是推荐的做法，因为这样可以一次批量运行很多单元测试，并且，有很多工具可以自动来运行这些单元测试。
 
-## setUp与tearDown
+## setUp 与 tearDown
 可以在单元测试中编写两个特殊的setUp()和tearDown()方法。这两个方法会分别在每调用一个测试方法的前后分别被执行。
 
 setUp()和tearDown()方法有什么用呢？设想你的测试需要启动关闭一个数据库

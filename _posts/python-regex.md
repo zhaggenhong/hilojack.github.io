@@ -54,6 +54,14 @@ description:
 
 在上面的例子中，1 表示分组 (<)，当然也可以为空因为后面跟着一个问号。
 
+## ignore string Escape
+
+	>>> print('abc\n001')
+	abc
+	001
+	>>> print(r'abc\n001')
+	abc\n001
+
 # regex
 
 	re.match(r'regex', str)
@@ -73,14 +81,6 @@ compile with modifier:
 
 	re.compile(r'.*', re.S) # re.S == re.DOTALL
 
-## ignore string Escape
-
-	>>> print('abc\n001')
-	abc
-	001
-	>>> print(r'abc\n001')
-	abc\n001
-
 ## search
 
 	>>> pattern = re.compile("d")
@@ -92,6 +92,7 @@ compile with modifier:
 
 	>>> re.search(r'abc', '1 abc').span()
 	(2, 5)
+	not include 5
 
 If you want to locate a match anywhere in string, use search() .
 
