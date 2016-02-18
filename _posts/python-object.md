@@ -90,7 +90,7 @@ output:
 ## dir list attribute
 
 	>>> dir('ABC')
-	['__add__', '__class__', '__contains__',
+	['__add__', '__class__', '__contains__',...
 
 ## hasattr
 
@@ -113,6 +113,8 @@ output:
 		if attr=='score':
 			return 99
 		raise AttributeError('\'Student\' object has no attribute \'%s\'' % attr)
+
+## __getitem__, __setitem__
 
 ## __call__
 与php `__invoke()`一样，它是将对象变函数
@@ -268,8 +270,8 @@ Fib实例虽然能作用于for循环，看起来和list有点像，但是，把�
 
 但是list有个神奇的切片方法：
 
->>> list(range(100))[5:10]
-[5, 6, 7, 8, 9]
+	>>> list(range(100))[5:10]
+	[5, 6, 7, 8, 9]
 
 对于Fib却报错。原因是`__getitem__()`传入的参数可能是一个int，也可能是一个切片对象slice，所以要做判断：
 
@@ -352,7 +354,7 @@ function object
 
 	> dir(f)
 
-# Enum
+# Enum(__members__)
 
 	>>> from enum import Enum
 	>>> Month = Enum('Month', ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'))
@@ -421,16 +423,17 @@ metaclass，直译为元类，简单的解释就是： 先定义metaclass，就�
 			attrs['add'] = lambda self, value: self.append(value)
 			return type.__new__(cls, name, bases, attrs)
 
-有了ListMetaclass，我们在定义类的时候还要指示使用ListMetaclass来定制类，传入关键字参数metaclass：
-
-	class MyList(list, metaclass=ListMetaclass):
-		pass
-
 __new__()方法接收到的参数依次是：
 
 	当前准备创建的类的对象；
 	类的名字；
 	类继承的父类集合；
+	类属性
+
+有了ListMetaclass，我们在定义类的时候还要指示使用ListMetaclass来定制类，传入关键字参数metaclass：
+
+	class MyList(list, metaclass=ListMetaclass):
+		pass
 
 测试一下MyList是否可以调用add()方法：
 
@@ -461,7 +464,7 @@ __new__()方法接收到的参数依次是：
 	d = D()
 	print(d.__class__.__mro__)
 
-在 MRO 中，基类永远出现在派生类后面，如果有多个基类，基类的相对顺序保持不变。
+在 MRO 中，基类永远出现在派生类后面，如果有多个基类，基类的相对顺序保持不变, 见`__mro__`。
 
 	enter B
 	enter C

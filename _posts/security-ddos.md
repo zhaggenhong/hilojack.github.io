@@ -82,7 +82,7 @@ IP欺骗攻击是一种黑客通过向服务端发送虚假的包以欺骗服务
 # 防范总结
 
 ## 砸带宽或云平台
-超过D的就好了；
+超过D的流量就好了；
 
 ## 封ip
 防火墙，流量清洗:SYN(限制握手时间), IP
@@ -99,3 +99,6 @@ IP欺骗攻击是一种黑客通过向服务端发送虚假的包以欺骗服务
 ## 隐藏或更换自己的IP
 - 隐藏自的IP，前提是要先找一个高防的盾机，再把IP隐藏起来
 - 更换被攻击的IP： 修改dns mapping
+
+# nginx ddos
+https://www.52os.net/articles/nginx-anti-ddos-setting.html

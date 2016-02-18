@@ -2,12 +2,12 @@
 layout: page
 title:	PHP 的协程多任务
 category: blog
-description: 
+description:
 ---
 # Preface
 学习了一下php 的基于yield 的多任务[Cooperative Multitasking]. 本文最终实现了这样一个*非阻塞(Non-Blocking)*且支持*协程调用栈(Stacked Coroutines)* 的*server demo*:
 
-	curl https://raw.githubusercontent.com/hilojack/php-lib/master/yield/stacked-coroutine.php | php &; 
+	curl https://raw.githubusercontent.com/hilojack/php-lib/master/yield/stacked-coroutine.php | php &;
 	sleep 5; curl -d 'test' http://localhost:8000/
 
 # Coroutines, 协程
@@ -48,7 +48,7 @@ Coroutines 可以通过`send()` 实现向 generators 传值，这实现了主程
 
 # cooperative multitasking, 多任务协作
 
-- cooperative multitasking: currently running task *voluntarily* passes back control to the scheduler, so it can run another task. 
+- cooperative multitasking: currently running task *voluntarily* passes back control to the scheduler, so it can run another task.
 - preemptive multitasking:  where the *scheduler* can *interrupt* the task after some time whether it likes it or not
 
 早期的win95 和 MAC OS 采用的是cooperative multitasking, 这样的坏处是：
@@ -159,7 +159,7 @@ Both tasks will just echo a message and then pass control back to the scheduler 
 # Communicating between task and scheduler
 How to Communicating between task and scheduler:
 
-1. Historically the generic `int` interruption instruction was used, 
+1. Historically the generic `int` interruption instruction was used,
 2. Nowadays there are more specialized and faster `syscall/sysenter` instructions.
 
 We will communicate via `system calls` passed through the `yield` expression. The yield here will act both as an interrupt and as a way to pass information to (and from) the scheduler.
@@ -212,7 +212,7 @@ The first system call will do nothing more than return the task ID:
 
 > setSendValue 起到的作用是将$this->sendValue 作为task的 yield 的返回`$this->coroutine->send($this->sendValue);`
 
-It does so by setting the tid as next send value and rescheduling the task. For system calls the scheduler does not automatically reschedule the task, we need to do it manually (you’ll see why a bit later). 
+It does so by setting the tid as next send value and rescheduling the task. For system calls the scheduler does not automatically reschedule the task, we need to do it manually (you’ll see why a bit later).
 Using this new syscall we can rewrite the previous example:
 
 	function task($max) {
@@ -478,7 +478,7 @@ These syscalls are just proxies to the respective methods in the scheduler:
 	}
 
 
-The `waitingForRead` and `waitingForWrite` properties are just arrays containing the sockets to wait for and the tasks that are waiting for them. 
+The `waitingForRead` and `waitingForWrite` properties are just arrays containing the sockets to wait for and the tasks that are waiting for them.
 The interesting part is the following method, which actually checks whether the sockets are ready and reschedules the respective tasks:
 
 	protected function ioPoll($timeout) {
@@ -581,11 +581,11 @@ Writing the server is relatively easy now:
 
 > The complete code for [server-non-block](https://raw.githubusercontent.com/hilojack/php-lib/master/yield/server-non-block.php)
 
-This will accept connections to `localhost:8000` and just send back a HTTP response with whatever it was sent. 
+This will accept connections to `localhost:8000` and just send back a HTTP response with whatever it was sent.
 
-You can try the server out using something like `ab -n 10000 -c 100 localhost:8000/`. This will send 10000 requests to it with 100 of them arriving concurrently. Using these numbers I get a median response time of 10ms. 
+You can try the server out using something like `ab -n 10000 -c 100 localhost:8000/`. This will send 10000 requests to it with 100 of them arriving concurrently. Using these numbers I get a median response time of 10ms.
 
-But there is an issue with a few requests being handled really slowly (like 5 seconds), that’s why the total throughput is only 2000 reqs/s (with a 10ms response time it should be more like 10000 reqs/s). With higher concurrency count (e.g. -c 500) it mostly still works well, but some connections will throw a “Connection reset by peer” error. 
+But there is an issue with a few requests being handled really slowly (like 5 seconds), that’s why the total throughput is only 2000 reqs/s (with a 10ms response time it should be more like 10000 reqs/s). With higher concurrency count (e.g. -c 500) it mostly still works well, but some connections will throw a “Connection reset by peer” error.
 As I know very little about this low-level socket stuff I didn’t try to figure out what the issue is.
 
 # Stacked coroutines, 协程堆栈
@@ -608,6 +608,9 @@ If you use this scheduler system you will run into this problem: We are used to 
 	$scheduler = new Scheduler;
 	$scheduler->newTask(task());
 	$scheduler->run();
+
+> 我们想让：ten times 结束后才开始 five times
+> yield retval($v) 中的值$v, 其实是`return $v`, 要中断并传给父generator
 
 This code tries to put the recurring “output n times” code into a separate coroutine and then invoke it from the main task. But this won’t work. As mentioned at the very beginning of this article calling a generator (or coroutine) will not actually do anything, it will only return an object.
 
@@ -666,7 +669,7 @@ In order to turn a coroutine into a stacked coroutine (which supports subcalls) 
 		}
 	}
 
-This function acts as a simple proxy between the `caller` and the `currently running subcoroutine`. This is handled in the `$gen->send(yield $gen->key() => $value);` line. 
+This function acts as a simple proxy between the `caller` and the `currently running subcoroutine`. This is handled in the `$gen->send(yield $gen->key() => $value);` line.
 Additionally it checks whether a return value is a generator, in which case it will start running it and pushes the previous coroutine on the stack. Once it gets a CoroutineReturnValue it will pop the stack again and continue executing the previous coroutine.
 
 In order to make the stacked coroutines usable in tasks the `$this->coroutine = $coroutine;` line in the `Task` constructor needs to be replaced with `$this->coroutine = stackedCoroutine($coroutine);`.
@@ -740,7 +743,7 @@ Now the server can be rewritten a bit cleaner:
 The complete code for [stacked coroutine](https://raw.githubusercontent.com/hilojack/php-lib/master/yield/stacked-coroutine.php)
 
 # Error handling
-Coroutines provide the ability to throw exceptions inside them using the `throw()` method. 
+Coroutines provide the ability to throw exceptions inside them using the `throw()` method.
 
 The throw() method takes an exception and throws it at the current suspension point in the coroutine. Consider this code:
 
@@ -822,7 +825,7 @@ Try it out: Received Exception
 		}
 	}
 
-Sadly this won’t work properly yet, because the `stackedCoroutine` function doesn’t handle the exception correctly. 
+Sadly this won’t work properly yet, because the `stackedCoroutine` function doesn’t handle the exception correctly.
 To fix it the function needs some modifications:
 
 	function stackedCoroutine(Generator $gen) {
