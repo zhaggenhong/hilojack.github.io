@@ -281,4 +281,13 @@ hello()会首先打印出Hello world!，然后，yield from语法可以让我们
 
 注意aiohttp的初始化函数init()也是一个coroutine，`loop.create_server()` 则利用asyncio创建TCP服务。
 
+> https://docs.python.org/3/library/asyncio-eventloop.html
+
 - run_forever 是死循环：循环遍历执行每个loop, 否则只遍历一次就结束了
+	BaseEventLoop.run_forever()
+
+	Run until stop() is called.
+	If stop() is called before run_forever() is called, this polls the I/O selector once with a timeout of zero, runs all callbacks scheduled in response to I/O events (and those that were already scheduled), and then exits.
+
+	If stop() is called while run_forever() is running, this will run the current batch of callbacks and then exit. 
+	Note that callbacks scheduled by callbacks will not run in that case; they will run the next time run_forever() is called.

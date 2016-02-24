@@ -14,8 +14,10 @@ description:
 		var optionSelected = $("option:selected", this); //you are finding all selector elements inside this's context.
 	    var valueSelected = this.value;
 
-	//匹配多个元素
+	//分别匹配多个元素
 	$(sel1,sel2,sel3)
+	//匹配多个条件
+	$('p.a.b')
 
 	$('#id')[0];//原生的dom, 非jquery 对象
 	$('#id').eq(0);//jquery 对象
@@ -32,9 +34,11 @@ description:
 	父
 		.parent();//父节点
 	祖父\曾神父\曾曾祖父...
-		.prents(); //所有父节点
+		.prents(); .parents('div')//所有父节点; 所有的父div
 		.parents('ul'); //所有标签为ul的父节点
 		$('span').parentsUntil('div'); //父节点以div为止, 不含div
+		$('span').parentsUntil('div').parent(); //父节点以div为止, 含div
+			== $('span').closest('div')
 后代:
 	子、
 		$('div').children(); //所有div之下的所有子节点

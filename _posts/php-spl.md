@@ -2,7 +2,7 @@
 layout: page
 title:	php spl 学习
 category: blog
-description: 
+description:
 ---
 # Preface
 SPL(Standard PHP Library) 标准库是php 自带的extension `php -m | grep SPL`，它提供了：常用的数据结构如栈，队列，堆, 数组, 以及这些数据结构的迭代器。如果需要还可自己扩展这些SPL.
@@ -14,12 +14,12 @@ SPL 主要被看作使Object(各路数据结构封装) 模仿Array 的Interfaces
 在对象的基础上 为支持迭代运算符foreach, php 提供了
 
 
-- Iterator 
+- Iterator
 	Interface for external iterators or objects that can be iterated themselves internally.
 	提供了自定义遍历的方法：`current,key,next,valid,rewind`
 	它属于低层Iterator ，只提供了遍历的方法而非实现，难以对关联数组或对象属性作遍历. 也不能在foreach 做引用传值(An iterator cannot be used with foreach by reference)
-- IteratorAggregate 
-	Interface to create an external Iterator. 
+- IteratorAggregate
+	Interface to create an external Iterator.
 	此接口为支持对属性的遍历，提供了将Object 自动重载为 外部Iterator 的方法: 自动调用 `getIterator`, 它需要借助重载类`new ArrayIterator|ArrayObject`
 	它属于高层Iterator ，提供了遍历的实现，可以在foreach 做引用传值
 
@@ -33,7 +33,7 @@ SPL 主要被看作使Object(各路数据结构封装) 模仿Array 的Interfaces
 这两个接口都继承了 internal engine interface ，叫Traversable. 它提供了类似Array 统一的遍历(traversable)对象元素的方式: foreach，而不需要了解对象的具体实现。
 但是这个接口不能被php 类继承，只能被 Iterator & IteratorAggregate 继承。
 
-Iterator/IteratorAggregate 迭代器是SPL 的一部分，它指的是一种设计模式(Design Pattern). Wikimedia 中说： 
+Iterator/IteratorAggregate 迭代器是SPL 的一部分，它指的是一种设计模式(Design Pattern). Wikimedia 中说：
 Iterator is a design pattern in which iterators are used to access the elements of an aggregate object sequentially without exposing its underlying representation".
 
 Example
@@ -84,10 +84,10 @@ Example
 			$this->pos++;
 		}
 		function rewind(){
-			$this->pos = 0;	
+			$this->pos = 0;
 		}
 		function key(){
-			return $this->pos;	
+			return $this->pos;
 		}
 	}
 	$arr = [
@@ -155,7 +155,7 @@ ArrayAccess 没有提供foreach 支持，如果需要的话需要借助 Iterator
 	$arr = new MyRecursive([[1,2],[3,4]]);
 	foreach($arr as $k => $v){
 		if($arr->hasChildren()){
-			var_dump($v);	
+			var_dump($v);
 		}
 	}
 
@@ -165,35 +165,35 @@ ArrayAccess 没有提供foreach 支持，如果需要的话需要借助 Iterator
 	class MyRecursiveIterator implements RecursiveIterator {
 		private $_data;
 		private $_position = 0;
-		
+
 		public function __construct(array $data) {
 			$this->_data = $data;
 		}
-		
+
 		public function valid() {
 			return isset($this->_data[$this->_position]);
 		}
-		
+
 		public function hasChildren() {
 			return is_array($this->_data[$this->_position]);
 		}
-		
+
 		public function next() {
 			$this->_position++;
 		}
-		
+
 		public function current() {
 			return $this->_data[$this->_position];
 		}
-		
+
 		public function getChildren() {
 			return new self($this->_data[$this->_position]);
 		}
-		
+
 		public function rewind() {
 			$this->_position = 0;
 		}
-		
+
 		public function key() {
 			return $this->_position;
 		}
@@ -245,12 +245,12 @@ arrayObject 内部有一个隐含的数组(storage), :
 1. ArrayAccess(下标)
 2. IteratorAggregate (create an external Iterator), 注意不是Iterator）
 2. exchangeArray
-2. 隐含了`__array` 这样的魔法函数(php 目前还不支持此魔法); 
-3. asort()/ksort()/usort()/natsort()等;setIteratorClass(); 
+2. 隐含了`__array` 这样的魔法函数(php 目前还不支持此魔法);
+3. asort()/ksort()/usort()/natsort()等;setIteratorClass();
 
 	class data extends arrayObject{
 		function set(){
-			$this->exchangeArray(['key'=>1]);	
+			$this->exchangeArray(['key'=>1]);
 		}
 		function offsetSet($k, $v){
 			parent::offsetSet($k, $v);
@@ -293,11 +293,11 @@ FilterIterator 提供了fiter. 只extends IteratorIterator (construct 会接受I
 		}
 	}
 
-## DirectoryIterator 
+## DirectoryIterator
 DirectoryIterator 针对目录的迭代类
 
 	foreach (new DirectoryIterator('../moodle') as $fileInfo) {
-		if($fileInfo->isFile()) 
+		if($fileInfo->isFile())
 		echo $fileInfo->getFilename() . "\n";
 	}
 
@@ -318,9 +318,9 @@ via RecursiveIteratorIterator(filter key(filename) with Regex):
 		var_export($matches);
 	}
 
-	RecursiveRegexIterator::GET_MATCH 
-		like $matches in preg_match 
-	RecursiveRegexIterator::MATCH 
+	RecursiveRegexIterator::GET_MATCH
+		like $matches in preg_match
+	RecursiveRegexIterator::MATCH
 		get $fileObj
 
 via shell
@@ -340,6 +340,8 @@ via shell
 		$file->next();
 	}
 
+`$i ` 从0 开始, 且最后`$line` 为空字符:
+
 	foreach($file as $i=>$line){
 		echo "$i:$line\n";
 	}
@@ -352,7 +354,7 @@ fgets
 			// process the line read.
 		}
 		fclose($handle);
-	} 
+	}
 
 > 最后有一个空白符, 即换行符
 
@@ -361,10 +363,10 @@ fgets
 ## RegexIterator
 It is used to filter another iterator based on a regular expression.
 
-	$a = new ArrayIterator(array('test1', 'test2', 'test3')); 
-	$i = new RegexIterator($a, '/^(test)(\d+)/', RegexIterator::REPLACE); 
-	$i->replacement = '$2:$1'; 
-	var_export(iterator_to_array($i)); 
+	$a = new ArrayIterator(array('test1', 'test2', 'test3'));
+	$i = new RegexIterator($a, '/^(test)(\d+)/', RegexIterator::REPLACE);
+	$i->replacement = '$2:$1';
+	var_export(iterator_to_array($i));
 
 Output:
 
@@ -453,7 +455,7 @@ Example
     }
 	public function import($arr) {
 		foreach($arr as $k=>$v){
-			$this->$k = $v;	
+			$this->$k = $v;
 		}
 	}
 
@@ -465,7 +467,7 @@ Example
 	public function getCallerName(){
         return debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS, 3)[2]['function'];
     }
-	
+
 # Exception
 
 	LogicException (extends Exception)

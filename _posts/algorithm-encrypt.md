@@ -242,7 +242,7 @@ Blowfish 主要包括关键的几个S盒和一个复杂的核心变换函数。
 # Asymmetric Cryptography
 Public-key Cryptography [公开密钥加密](http://zh.wikipedia.org/zh/%E5%85%AC%E5%BC%80%E5%AF%86%E9%92%A5%E5%8A%A0%E5%AF%86)，又称非对称加密(Asymmetric Cryptography)
 
-公钥的形式就是数字证书
+公钥的一种表现形式就是数字证书
 
 常见的公钥加密算法有:
 
@@ -255,6 +255,10 @@ Public-key Cryptography [公开密钥加密](http://zh.wikipedia.org/zh/%E5%85%A
 
 ## RSA
 > RSA Encryption: Java to PHP , please refer to : http://stackoverflow.com/questions/1662769/rsa-encryption-java-to-php
+
+## openssl generate key
+refer [openssl](/p/net-ssl-tool)
+> 注意与ssh 的区别， `ssh-keygen -t rsa`
 
 ## sign 签名
 
