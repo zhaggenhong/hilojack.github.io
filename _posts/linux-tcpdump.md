@@ -12,6 +12,66 @@ tcpdump可以分为三大部分内容，第一是“选项”，第二是“过�
 
 > 要用tcpdump抓包，一定要切换到root账户下，因为只有root才有权限将网卡变更为“混杂模式”。
 
+# Wireshark
+> http://blogread.cn/it/article/7130?f=catemore
+
+对Android网络抓包分析，一般是使用tcpdump抓个文件，再到PC用Wireshark打开分析。能不能达到直接使用Wireshark的效果？ 答案是可以的，至少已经非常接近了。实现起来很简单，原理就是将tcpdump的数据重定向到网络端口，再通过管道(pipe)转到wireshark就可以了。
+
+   Android上使用的指令:
+
+   i. tcpdump
+
+正是因为可以生成libpcap格式的数据，Wireshark可以加以处理。
+
+ 官网:http://www.tcpdump.org/
+
+ 下面这个链接介绍了Android版本的编译:
+
+ http://omappedia.org/wiki/USB_Sniffing_with_tcpdump
+   ii. netcat, 又称为瑞士军刀，小巧而功能强悍。如果在手机没有nc指令，可以方便地使用busybox提供的版本(直接到Google Play里安装)。
+
+http://www.busybox.net/
+   iii. Wireshark, 不嗦了。
+
+http://www.wireshark.org/
+   两条指令
+
+   准备好了工具，依下面的方式执行两条指令就可以了 (只需要替换tcpdump所在的路径，以及nc前要不要加个busybox):
+
+   i. 使用adb shell在Android设备上执行:
+
+tcpdump -n -s 0 -w - | busybox nc -l -p 11233 
+
+ *其中nc -l -p 11233, 即建立一个服务器端，以11233端口提供服务。需要以root用户执行。
+   ii. 在主机的命令下执行:
+
+adb forward tcp:11233 tcp:11233 && nc 127.0.0.1 11233 | wireshark -k -S -i - 
+
+*其nc 127.0.0.1 11233，即建立一个客户端，连接到本机的11233端口。wireshark的参数见后面的补充说明。
+   *在Mac OS下有时需要在wireshark前加上sudo, 不然打开失败。如果没有看到结果，可以在nc指令加-v参数，显示更多的信息来查看。比如出现”Connection refused“时，注意检查指定的端口号是否正确。
+
+   也可以参考这里:
+
+http://www.kandroid.org/online-pdk/guide/tcpdump.html
+   效果如下，注意标题显示”Capturing from Standard Input”。 04
+
+   补充说明
+
+   i. tcpdump详解
+
+http://www.cnblogs.com/ggjucheng/archive/2012/01/14/2322659.html
+   ii. 什么是libpcap格式
+
+http://wiki.wireshark.org/Development/LibpcapFileFormat
+   iii. wireshark参数
+
+http://man.lupaworld.com/content/network/wireshark/c9.2.html
+
+ 官方:http://www.wireshark.org/docs/man-pages/wireshark.html
+   *Wireshark还带一些其它指令，如下：
+
+http://www.wireshark.org/docs/man-pages/
+
 # exmaple
 
 	sudo tcpdump -i lo0 -nn -X  -c 1 port 8000

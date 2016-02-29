@@ -291,3 +291,37 @@ hello()会首先打印出Hello world!，然后，yield from语法可以让我们
 
 	If stop() is called while run_forever() is running, this will run the current batch of callbacks and then exit. 
 	Note that callbacks scheduled by callbacks will not run in that case; they will run the next time run_forever() is called.
+
+## yield send
+
+	import types
+	@types.coroutine
+	def switch():
+		yield
+
+	async def coro1():
+		print("C1: Start")
+		await switch()
+		print("C1: Stop")
+
+	async def coro2():
+		print("C2: Start")
+		print("C2: a")
+		print("C2: b")
+		print("C2: c")
+		print("C2: Stop")
+
+	c1 = coro1()
+	c2 = coro2()
+	def run(coros):
+		coros = list(coros)
+
+		while coros:
+			# Duplicate list for iteration so we can remove from original list.
+			for coro in list(coros):
+				try:
+					coro.send(None)
+					c1 = coro
+				except StopIteration:
+					coros.remove(coro)
+	run([c1,c2])

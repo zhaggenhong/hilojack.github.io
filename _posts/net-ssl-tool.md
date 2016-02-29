@@ -24,11 +24,11 @@ description:
 4.1.2、RSA
 1、私钥
 
-	openssl genrsa -out didi_rsa_private_key.pem 1024
+	openssl genrsa -out my_rsa_private_key.pem 1024
 
 2、公钥
 
-	openssl rsa -in didi_rsa_private_key.pem -pubout -out didi_rsa_public_key.pem
+	openssl rsa -in my_rsa_private_key.pem -pubout -out my_rsa_public_key.pem
 
 ## self RSA
 下例生成一个自签名证书(self sign certificate), 而非[ssl-ca](/p/ssl-ca) 中CA 签名证书(`CA -sign`)
