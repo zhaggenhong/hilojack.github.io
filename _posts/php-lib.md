@@ -529,6 +529,8 @@ Operation html string like jquery
 
 https://code.google.com/p/phpquery/
 
+[php-dom](/p/php-dom)
+
 ## ini
 
 	parse_ini_file('a.ini')
