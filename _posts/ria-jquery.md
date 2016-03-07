@@ -286,11 +286,26 @@ The main difference is that `appendChild` is a DOM method and `append` is a jQue
 
 # Dom
 
-## .attr
+## .attr,.prop
 
 	$(node).attr('action')
+	$(node).prop('action')
 	$(node).html()
 	$(node).text();
+
+- prop 包括true/false 属性：checked,selected, disabled, etc..
+- attr 不包括true/false 属性
+
+### checked
+
+	$("#x").prop("checked", true);			//$('#x')[0].checked
+	$("#x").prop("checked")
+	$("input[type="radio"]").val(["1"]); //select val = 1
+	$("input[type="checkbox"]").val(["1", 2]); //select val = 1,2
+
+get checked val
+
+	$('input[name=radioName]:checked', '#myForm').val()
 
 ## Table
 
@@ -307,11 +322,6 @@ The main difference is that `appendChild` is a DOM method and `append` is a jQue
 		console.log($tr.wrap('<p>').html());
 	});
 
-### checked
-
-	$("#x").prop("checked", true);
-	$("#x").prop("checked")
-
 # Css
 
 ## ClassName
@@ -321,7 +331,7 @@ The main difference is that `appendChild` is a DOM method and `append` is a jQue
 	.removeClass();//all
 	.toggleClass(ClassName);
 
-## Attribute
+## Css Attribute
 
 	.css(propertyname); //return Attribute value
 	.css(propertyname, value); //set Attribute value
