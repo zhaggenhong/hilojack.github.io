@@ -102,6 +102,7 @@ oAuth2.0 认证流程
                      Figure 1: Abstract Protocol Flow
 
 其中：
+
 - Client: Third Party Application
 - Resource Owner: User, User Agent
 - Resource Server, Authorization Server:
@@ -284,11 +285,14 @@ Example:
 
 # SSO
 There are many Single Sign-On Service(SSO) implement Protocols.
+
 1. OpenID: 是IDP提供一个身份唯一标识把第三方的应用帐号绑定到唯一标识上，只起到了认证的作用。
-2. CAS(Central Authentication Service): 本身没有授权，也没有权限控制，但是CAS支持SAML(SAML支持XACML协议进行权限控制)，所以就支持了权限控制。
+2. CAS(Central Authentication Service): 本身没有权限控制，但是CAS支持SAML(SAML支持XACML协议进行权限控制)，所以就支持了权限控制。
+	SAML协议较OAUTH来说比较复杂，但是功能也十分强大，支持认证，权限控制和用户属性。
 	https://github.com/Jasig/phpCAS
-3. OAUTH2: SAML协议较OAUTH来说比较复杂，但是功能也十分强大，支持认证，权限控制和用户属性。
 4. LADP
+
+CAS vs OAuth :
 
 - CAS: Both CAS and SAML act as an gateway in front of a group of applications which belong to one organization.
 - OAuth: is used to authorize and authenticate between different organizations.
