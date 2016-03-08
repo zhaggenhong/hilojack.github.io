@@ -297,6 +297,7 @@ hello()会首先打印出Hello world!，然后，yield from语法可以让我们
 	import types
 	@types.coroutine
 	def switch():
+		print('switch')
 		yield
 
 	async def coro1():
@@ -325,3 +326,15 @@ hello()会首先打印出Hello world!，然后，yield from语法可以让我们
 				except StopIteration:
 					coros.remove(coro)
 	run([c1,c2])
+
+out:
+
+	C1: Start
+	switch
+	C2: Start
+	C2: a
+	C2: b
+	C2: c
+	C2: Stop
+	start
+	C1: Stop

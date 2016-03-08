@@ -2,22 +2,21 @@
 layout: page
 title:	安全 - 帐号设计
 category: blog
-description: 
+description:
 ---
 # Preface
-帐号设计可以分很多角度，本文主要从安全的角度阐述以下问题:
+帐号设计可以涉及到很多细节，本文主要从安全的角度作一个总结:
 
 1. password 安全
 1. sid 的设计
 3. 内部Api 授权
 
-# password
+# password 安全
 密码安全问题请参考[](/p/security-cryptography)
 通常的网站的密码是用md5/sha256 等方式hash过的
 
-
 # sid
-这里的sid 是指用于标识用户身份的sid
+这里的sid 是指用于标识用户身份的sid(session id)
 
 1. sid 生成(Forge, 伪造)
 2. sid 算法保密
@@ -25,15 +24,15 @@ description:
 2. 防止CSRF, HTTP Only
 
 ## create sid(Forge sid, 伪造sid)
-防止伪造sid 方法就是签名(广义的签名，而非专指证书签名)，签名的方法有很多，但是签名要注意问题是：
+防止伪造sid 方法就是签名(这里指的是广义的签名，而非专指证书签名)，签名的方法有很多，但是签名要注意问题是：
 
-1. 签名必须足够的长, 这样才能防止碰撞(签名足够长才能保证碰撞出无效的值的概率最大)
+1. 签名必须足够的长, 这样才能防止碰撞(签名足够长才能保证碰撞出无效的值的概率最大)、防止暴力攻击
 1. 签名密钥要保密(可是对称加密、非对称加密、不可拟加密md5 sha1)
 
 ## sid 算法保密
 sid 算法保密主要有以下方法
 
-1. 密钥保密：让更少的人知道sid 的生成算法的密钥(帐号系统管理者): 
+1. 密钥保密：让更少的人知道sid 的生成算法的密钥(帐号系统管理者):
 sid 的生成算法对于做业务的开发者必须保密, 一般通过帐号接口生成；只要帐号接口的实现者能保密sid 的生成算法，sid 就是安全的。
 相应的，解sid 时需要提供相应的解密接口。如果采用非对称加密算法，解密时也不需要接口，直接用公钥解密就行
 
@@ -48,7 +47,7 @@ sid 可以包括的数据有: uid , sid version 等
 存储这些信息一般需要经过base64、移位、随机数(用于更新sid, 避免帐号管理者伪造sid)、签名等处理
 
 ### sid 的存储
-如果用户更改了密码，或者用户的sid 被窃取了，sid 就必须及时更新. 所以sid 的生成必须的失效性. 可以将这个sid 存放到一个集合中. 这个集成可以允许添加、更新(删除). 
+如果用户更改了密码，或者用户的sid 被窃取了，sid 就必须及时更新. 所以sid 的生成必须的失效性. 可以将这个sid 存放到一个集合中. 这个集成可以允许添加、更新(删除).
 
 1. 建议不要选择bloom filter 存储sid. bloom filter 有几个问题：
 	用户更新sid 时就意味着要删除老的sid, 删除老的sid 可能会删除不相关的sid(这和错误率有关); 还需要防止sid 应该过期而没有过期的情况(没有成功清理sid)
@@ -61,15 +60,14 @@ Central Authentication Service (CAS)
 https://github.com/Jasig/phpCAS
 
 # Api Token
-在大型项目中，一般都分业务开发和接口服务方。对于业务开发者而言，他需要调用各种内部接口(api). 有时候，业务服务器访问内部api 时，就需要出示用户身份(uid)。 在内网中这种访问通常是明文传输的, uid 作为用户的身份标识就需要保密。通常我们会将uid 签名为token, 方法如下：
+在大型项目中，一般都分业务开发和接口服务方。对于业务开发者而言，他需要调用各种内部接口(api). 有时候，业务服务器访问内部api 时，就需要出示用户身份(uid)。 在内网中这种访问通常是明文传输的, uid 作为用户的身份标识就需要保密、防伪造。通常我们会将uid 签名为token, 方法如下：
 
 1. 用 md5/sha1签名，签名key 需要由开发者保密. 这个方法无法避免内网中间人侦听，也无法避免开发者在服务端使坏。
 2. 如要避免业务开发者使坏，可以在开发机上提供开发者自己的uid token 白名单, 也就是限制开发机上的用户。只有线上的机器才能访问token 的生成密钥或者生成接口
 2. 如要避免内网中间人，将其它所有的请求参数加密
 
-
 # Authorization
-对于中小企业而言，构建自己的帐户系统成本可能过大：主要是安全问题, 存储成本. 
+对于中小企业而言，构建自己的帐户系统成本可能过大：主要是安全问题, 存储成本.
 对于用户而言，访问一个新网站，就注册一个新号：用户体验不好，太多的密码用户也记不住
 
 有没有一种办法，用户不注册帐号也让能让网站获取用户的身份呢？
@@ -80,7 +78,7 @@ https://github.com/Jasig/phpCAS
 
 # oAuth2
 本文参考：
-1. [理解oAuth2.0-阮一峰](http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html)	
+1. [理解oAuth2.0-阮一峰](http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html)
 2. [oAuth2.0-rfc](http://www.rfcreader.com/#rfc6749)
 
 ## Protocol Flow
@@ -109,7 +107,7 @@ oAuth2.0 认证流程
 其中：
 - Client: Third Party Application
 - Resource Owner: User, User Agent
-- Resource Server, Authorization Server: 
+- Resource Server, Authorization Server:
 
 token 所包含的信息有：
 用户身份，Client 身份(client_id)，过期时间，scope 授权范围
