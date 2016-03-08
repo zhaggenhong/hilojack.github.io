@@ -10,6 +10,7 @@ description:
 1. password 安全
 1. sid 的设计
 3. 内部Api 授权
+4. SSO 单点登录
 
 # password 安全
 密码安全问题请参考[](/p/security-cryptography)
@@ -54,10 +55,6 @@ sid 可以包括的数据有: uid , sid version 等
 	有的sid 是无效的，却在bloom filter是有效的。因为 bloom filter 可以做到很低的错误率，并且sid 有签名检验。这种情况发生的概率非常低
 
 2. 通常使用hash 表（`uid->sid`）存储更新sid
-
-# CAS & LADP
-Central Authentication Service (CAS)
-https://github.com/Jasig/phpCAS
 
 # Api Token
 在大型项目中，一般都分业务开发和接口服务方。对于业务开发者而言，他需要调用各种内部接口(api). 有时候，业务服务器访问内部api 时，就需要出示用户身份(uid)。 在内网中这种访问通常是明文传输的, uid 作为用户的身份标识就需要保密、防伪造。通常我们会将uid 签名为token, 方法如下：
@@ -285,5 +282,16 @@ Example:
 
 	grant_type=refresh_token&refresh_token=tGzv3JOkF0XG5Qx2TlKWIA
 
-# LDAP 认证
+# SSO
+There are many Single Sign-On Service(SSO) implement Protocols.
+1. OpenID: 是IDP提供一个身份唯一标识把第三方的应用帐号绑定到唯一标识上，只起到了认证的作用。
+2. CAS(Central Authentication Service): 本身没有授权，也没有权限控制，但是CAS支持SAML(SAML支持XACML协议进行权限控制)，所以就支持了权限控制。
+	https://github.com/Jasig/phpCAS
+3. OAUTH2: SAML协议较OAUTH来说比较复杂，但是功能也十分强大，支持认证，权限控制和用户属性。
+4. LADP
+
+- CAS: Both CAS and SAML act as an gateway in front of a group of applications which belong to one organization.
+- OAuth: is used to authorize and authenticate between different organizations.
+
+## LDAP 认证
 http://www.ossxp.com/doc/redmine/admin_guide/admin_guide.html#id32
