@@ -2,7 +2,7 @@
 layout: page
 title:	nginx debug
 category: blog
-description: 
+description:
 ---
 # Preface
 
@@ -39,7 +39,7 @@ nginx不会打印出变量. 有一个办法可以[探测变量](http://www.justi
 	}
 
 Update: 其实nginx 有一个echo moudle, 需要编译一下
-	
+
 	location /{
 	 echo The current request uri is $request_uri;
 	 }
@@ -49,11 +49,21 @@ Update: 其实nginx 有一个echo moudle, 需要编译一下
 check for default log path assigned by compile:
 
 	nginx -V
-	--http-log-path=/usr/local/var/log/nginx/access.log 
+	--http-log-path=/usr/local/var/log/nginx/access.log
 	--error-log-path=/usr/local/var/log/nginx/error.log
-	
+
 	access_log /var/log/nginx/access.log;
 	error_log /var/log/nginx/error.log;
+
+	events {
+		debug_connection 127.0.0.1;
+		debug_connection localhost;
+		debug_connection 192.0.2.0/24;
+		debug_connection ::1;
+		debug_connection 2001:0db8::/32;
+		debug_connection unix:;
+		...
+	}
 
 参考: ngx_core_module
 
@@ -135,6 +145,38 @@ php.ini中memory_limit设低了会出错，修改了php.ini的memory_limit为64M
 
 解决问题很简单，增加children的数量，并且将 max_requests 设置未 0 或者一个比较大的值：
 
+### 502 bad gateway
+> [error] 15421#0: *16 upstream sent too big header while reading response header from upstream
+
+增加缓冲区的方法，解决了Nginx 502 Bad Gateway
+
+	http {
+		...
+		fastcgi_buffers 8 16k;
+		fastcgi_buffer_size 32k;
+		...
+	}
+
+代理缓冲区设置过小
+
+	server {
+	        listen       80;
+	        server_name  *.lxy.me;
+
+	        location / {
+
+	###############添加这3行
+	               proxy_buffer_size 64k;
+	              proxy_buffers   32 32k;
+	              proxy_busy_buffers_size 128k;
+	###############添加这3行
+	            proxy_set_header Host $host;
+	            proxy_set_header X-Real-IP       $remote_addr;
+	            proxy_set_header X-Forwarded-For  $proxy_add_x_forwarded_for;
+	............
+	}
+
+
 ### 502 timeout
 
 	fastcgi_connect_timeout 300;
@@ -149,3 +191,7 @@ phpini: `php -i |grep max_execution_time`
 
 	max_execution_time = 300
 
+其它原因：
+
+1. 可能因为phpcgi进程不够用而造成502，需要修改/usr/local/php/etc/php-fpm.conf 将其中的max_children值适当增加。
+2. 也有可能是max_requests值不够用。需要说明的是这连个配置项占用内存很大，请根据服务器配置进行设置。否则可能起到反效果。

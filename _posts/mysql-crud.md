@@ -179,10 +179,16 @@ Not exists 保证
 		);
 
 ### update when DUPLICATE key
-插入行后会导致在`一个UNIQUE索引或PRIMARY KEY`中出现重复值，则执行UPDATE
+插入行后会导致在`一个UNIQUE索引或PRIMARY KEY`中出现重复值，则执行后面的UPDATE
 
 	INSERT INTO table (a,b,c) VALUES (1,2,3)  ON DUPLICATE KEY UPDATE c=c+1;
 	INSERT INTO table (a) VALUES (1),(1),(2),(3)  ON DUPLICATE KEY UPDATE id=id;
+	INSERT INTO table (a) VALUES (1),(1),(2),(3)  ON DUPLICATE KEY UPDATE id=last_insert_id(id);
+
+`VALUES(column)` 会返回insert 中的值:
+
+	INSERT INTO table (a,b,c) VALUES (1,2,3),(4,5,6) ON DUPLICATE KEY UPDATE a=VALUES(a), b=VALUES(b),c=VALUES(c);
+	INSERT INTO table (a,b,c) VALUES (1,2,3),(4,5,6) ON DUPLICATE KEY UPDATE c=VALUES(a)+VALUES(b);
 
 ON DUPLICATE KEY 不支持where
 

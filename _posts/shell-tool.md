@@ -144,7 +144,7 @@ eval is a shell builtin command, not a standalone executable. Thus, xargs can't 
 
 # grep
 
-	grep [-acinv] [--color=auto] 'pattern' filename
+	grep [-acinv] [--color=auto] [--] 'pattern' filename
 	选项与参数：
 	-x : whole line
 	-a ：将 binary 文件以 text 文件的方式搜寻数据

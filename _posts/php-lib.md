@@ -492,6 +492,16 @@ simpleXML
 		echo $movie->title;
 	}
 
+# and or
+
+	php > echo 65 & 63;
+	1
+	php > echo 66 & 63;
+	2
+	php > echo 127 & 63;
+	63
+
+
 # String
 
 ## range string

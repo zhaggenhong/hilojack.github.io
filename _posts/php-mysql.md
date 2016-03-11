@@ -140,6 +140,11 @@ commit
 	// 现在运行完成，在此关闭连接
 	$dbh = null;
 
+### init command
+
+	$options = [PDO::MYSQL_ATTR_INIT_COMMAND=> 'set names utf8'];
+	$dbh = new PDO('mysql:host=localhost;dbname=test;port=xx', $user, $pass, $options);
+
 pdo default socket:
 
 	pdo_mysql.default_socket= /tmp/mysql.sock

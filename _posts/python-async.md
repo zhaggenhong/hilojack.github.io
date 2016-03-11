@@ -246,7 +246,7 @@ hello()会首先打印出Hello world!，然后，yield from语法可以让我们
 
 我们先安装aiohttp：
 
-	pip install aiohttp
+	pip3 install aiohttp
 
 然后编写一个HTTP服务器，分别处理以下URL：
 

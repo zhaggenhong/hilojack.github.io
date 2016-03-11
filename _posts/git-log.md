@@ -141,7 +141,6 @@ To show what revision and author last modified each line of a file(single file):
 	-U<n>, --unified=<n>
            Generate diffs with <n> lines of context instead of the usual three
 
-
 # other log
 
 ## shortlog
