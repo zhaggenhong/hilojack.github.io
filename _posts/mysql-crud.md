@@ -223,6 +223,19 @@ REPLACE也可以使用SET语句
 
 	UPDATE ed_names SET c_request = c_request+1 WHERE id = 'x'"
 
+### update DUPLICATE
+mysql update 多个unique key 时,如果遇到 `duplicate key`
+
+一般情况下可以通过排序避免(mysql update/insert 时会按一定的顺序去查数据是否有效):
+
+	UPDATE <table> set i=i+1 where id>10 order by i desc;
+	UPDATE <table> set i=i-1 where id>10 order by i asc;
+
+如果`i`没有加索引，排序比较耗时或内存，就变通一下，比如负数：
+
+	UPDATE <table> set i=-i where id>10;
+	UPDATE <table> set i=1-i where id>10;
+
 ### LOCK
 
 	LOCK TABLES `TTT_DATAALLOWANCE` WRITE;

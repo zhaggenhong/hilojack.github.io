@@ -87,6 +87,7 @@ For more: http://dev.mysql.com/doc/refman/5.0/en/resetting-permissions.html
 	$ mysqld_safe --init-file=init.sql
 
 ### via skip grant
+
 	$ mysqld  --skip-grant-tables
 	//or
 	$ mysqld_safe  --skip-grant-tables

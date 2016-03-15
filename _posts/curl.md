@@ -15,8 +15,7 @@ description:
         timeout
 
 # header
-
-curl 默认发送post数据是application/x-www.form-urlencoded(不同于在form 表单中设置: enctype="multipart/form-data"), 如果是`text/plain`, post 数据就被存放于 HTTP_RAW_POST_DATA.
+curl 默认发送post数据是: application/x-www.form-urlencoded(不同于在form 表单中设置: enctype="multipart/form-data"), 如果是`text/plain`, post 数据就被存放于 HTTP_RAW_POST_DATA.
 
 	#send post as HTTP_RAW_POST_DATA (file_get_contents(php://input)):
 	//$GLOBALS["HTTP_RAW_POST_DATA"];
@@ -25,12 +24,13 @@ curl 默认发送post数据是application/x-www.form-urlencoded(不同于在form
 
 ## -I
 
-	-I used with HEAD as method
-		Also you can use -X to replace ` HAED method`
+	-I, --head
+	  (HTTP/FTP/FILE)  Fetch  the  HTTP-header only!
 
 # upload
 
 	curl 'http://localhost:8000/up.php'  -F 'pic=@img/a.png'
+	curl 'http://localhost:8000/up.php'  -F 'pic=@img/a.png' -F 'var=value'
 	curl -F "file=@localfile;filename=nameinpost" url.com
 	curl -F "file=@localfile;filename=nameinpost;type=text/html" url.com
 	curl 'http://localhost:8000/up.php' -H 'Content-Type: multipart/form-data; boundary=W' -d $'--W\r\nContent-Disposition: form-data; name="pic"; filename="a.png"\r\nContent-Type: image/png\r\n\r\ndata\r\n--W\r\nContent-Disposition: form-data; name="var"\r\n\r\nvalue\r\n--W--\r\n'
@@ -64,6 +64,7 @@ cmd:
 	-x, --proxy <[protocol://][user:password@]proxyhost[:port]>
 
 # debug
+
 	-v verbose
 	-s silent
 

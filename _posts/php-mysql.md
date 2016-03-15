@@ -163,13 +163,17 @@ $sql 可以为多条:
 
 	$sqls = "$sql1; $sql2; ";
 
-	// works regardless of statements emulation
-	$pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, 0);
-	$pdo->exec($sqls);
-
 	// works not with the following set to 0. You can comment this line as 1 is default
-	$pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, 1);
+	$pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, true);
 	$pdo->prepare ($sqls)
+
+也可以不支持multi sqls
+
+	// works regardless of statements emulation
+	$pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+	$pdo->exec($sqls);//not work
+
+
 
 ### nextRowset
 
@@ -201,7 +205,7 @@ query rowNumber
 	$nrows = $db->query('select count(*) from table where x')->fetch(PDO::FETCH_NUM)[0];
 
 ## prepare(bindParam)
-bind via stmt->bindParam
+bind via `stmt->bindParam`
 
 	$pdo = new PDO('sqlite:users.db');
 	$pdo = new PDO("mysql:host=localhost;dbname=test","root","123456");
@@ -211,7 +215,7 @@ bind via stmt->bindParam
 	while($row = $stmt->fetch(PDO::FETCH_ASSOC))
 		print_r($row);
 
-bind via stmt->execute(assoc)
+bind via `stmt->execute(assoc)`:
 
 	$calories = 150;
 	$colour = 'red';
@@ -220,7 +224,7 @@ bind via stmt->execute(assoc)
 		WHERE calories < :calories AND colour = :colour');
 	$sth->execute(array(':calories' => $calories, ':colour' => $colour));
 
-bind via stmt->execute(number array)
+bind via `stmt->execute(number array)`:
 
 	$calories = 150;
 	$colour = 'red';
@@ -240,8 +244,13 @@ bind via stmt->execute(number array)
 	int PDO::exec ( string $statement );//return line number of affected rows
 	$count = $dbh->exec("DELETE FROM fruit WHERE colour = 'red'");
 
-PDO::exec() 在一个单独的函数调用中执行一条 SQL 语句，返回受此语句影响的行数。
+`PDO::exec()` 在一个单独的函数调用中执行一条 SQL 语句，返回受此语句影响的行数。
+`PDO::exec()` 不会从一条 SELECT 语句中返回结果。
 
-PDO::exec() 不会从一条 SELECT 语句中返回结果。
-对于在程序中只需要发出一次的 SELECT 语句，可以考虑使用 PDO::query()。
-对于需要发出多次的语句，可用 PDO::prepare() 来准备一个 PDOStatement 对象并用 PDOStatement::execute() 发出语句。
+## lastInsertId
+
+	pdo->lastInsertId();
+
+## note
+- `PDO::query()`对于在程序中只需要发出一次的 SELECT 语句，可以考虑使用 PDO::query()。
+- `stmt->excute()`对于需要发出多次的语句，可用 PDO::prepare() 来准备一个 PDOStatement 对象并用 PDOStatement::execute() 发出语句。
