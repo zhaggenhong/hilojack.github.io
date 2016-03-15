@@ -105,6 +105,7 @@ word boundary:
 	<Up><Down><Left><Right>
 
 ## multi
+default nomagic, need `\\` backslash
 
 		 'magic' 'nomagic'	matches of the preceding atom ~
 	\*	0 or more	as many as possible

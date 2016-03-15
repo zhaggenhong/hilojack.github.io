@@ -208,8 +208,9 @@ array_flip 跟array_merge 一样，后面的key 会覆盖前面的
 
 ### 交差
 
-	array_intersect();
-	array_intersect_assoc();
+	array_intersect();		# inte value only
+	array_intersect_assoc();# inte value and key
+	array_intersect_key();# inte key only
 	array_diff(); 			# diff value only
 	array_diff_assoc();		# diff value and key
 	array_diff_key();		# diff key only
@@ -241,6 +242,7 @@ array_keep_key
 ## range
 
 	range(1, 10);//1,2,3...10
+	range(1, 5, 3);//1,4
 
 ## 求和
 
@@ -444,10 +446,12 @@ simpleXML
 	XML;
 
 ### loadStr
+
 	$movies = new SimpleXMLElement($xmlstr);
 	//or $movies = simplexml_load_string($xmlstr);
 
 ### loadDom
+
 	$dom = new DOMDocument;
 	$dom->loadXML('<books><book><title>blah</title></book></books>');
 	if (!$dom) {
