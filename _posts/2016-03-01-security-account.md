@@ -13,7 +13,7 @@ description:
 4. SSO 单点登录
 
 # password 安全
-密码安全问题请参考[](/p/security-cryptography)
+密码安全问题请参考[密码安全](/p/security-cryptography)
 通常的网站的密码是用md5/sha256 等方式hash过的
 
 # sid
