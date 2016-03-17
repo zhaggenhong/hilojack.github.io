@@ -1,8 +1,8 @@
 ---
 layout:	post
-title:	
+title:
 category: blog
-description: 
+description:
 ---
 # Preface
 
@@ -30,7 +30,7 @@ runlevel含义是基于rcN.d的, 不同的OS对于rcN.d的定义是不同的, �
 
 	0	Halt(Shutdown)
 	1	Single-user Mode
-	2	Multi-user Mode	
+	2	Multi-user Mode
 	3	Multi-user Mode with Networking
 	4	Not used/User-definable	For special purposes.
 	5	Start the system normally with appropriate display manager. ( with GUI )	Same as runlevel 3 + display manager.
@@ -42,8 +42,8 @@ runlevel含义是基于rcN.d的, 不同的OS对于rcN.d的定义是不同的, �
 > Mac OSX 应该用的是`/etc/rc.common`
 
 ## init.d
-如果你执行以下命令, 你会发现: 
-	
+如果你执行以下命令, 你会发现:
+
 	ll -id /etc/init.d /etc/rc.d/init.d #它们是硬链接
 
 init.d里面放置的是运行级脚本, 脚本文件写法：vi /etc/init.d/BLAH
@@ -94,7 +94,7 @@ init.d里面放置的是运行级脚本, 脚本文件写法：vi /etc/init.d/BLA
 	service sshd start
 
 实际执行的是:
-	
+
 	/etc/init.d/Name argv1 argv2 ...
 	/etc/init.d/sshd start
 
@@ -124,7 +124,7 @@ chkconfig serviceName 与 service Name 不同，前者用于开机运行级(和i
 	setup---->防火墙设置   如果没放行就设置放行.
 
 # systemd
-linux 下的init(service/chkconfig) 这种系统服务管理器比较臃肿了，而systemd是一种更加优秀的服务管理器。 
+linux 下的init(service/chkconfig) 这种系统服务管理器比较臃肿了，而systemd是一种更加优秀的服务管理器。
 
 ## service list
 systemctl list-unit-files
@@ -140,7 +140,7 @@ systemd 取消了init 数字运行级.而改用multi-user.target, graphical.targ
 	systemctl isolate graphical.target
 
 # launchd
-launchd 是mac 下的系统服务管理器, 
+launchd 是mac 下的系统服务管理器,
 
 	# 类似于chkconfig add mysqld; chkconfig --level 2345 mysqld on
 	# 或者 systemctl enable mysqld
@@ -148,7 +148,7 @@ launchd 是mac 下的系统服务管理器,
 
 	# 类似于service mysqld start  或者 systemctl start mysqld
     launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
-	
+
 
 	# 类似于service mysqld stop | systemctl stop mysqld
 	launchctl unload -w ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
@@ -167,8 +167,8 @@ launchctl管理OS X的启动脚本，控制启动计算机时需要开启的服�
 
 Launchd脚本存储在以下位置：
 
-	~/Library/LaunchAgents    
-	/Library/LaunchAgents          
+	~/Library/LaunchAgents
+	/Library/LaunchAgents
 	/Library/LaunchDaemons
 	/System/Library/LaunchAgents
 	/System/Library/LaunchDaemons
@@ -186,7 +186,7 @@ Launchd脚本存储在以下位置：
 ## ~/.bash_profile ~/.profile
 这几个文件是次启动脚本(同样是login shell 才会读)，对于bash 来说，它会顺序遍历以下脚本并执行第一个：
 
-	~/.bash_profile 
+	~/.bash_profile
 	~/.bash_login
 	~/.profile
 
@@ -216,7 +216,7 @@ Launchd脚本存储在以下位置：
 
 ## *ctl
 许多*ctl 实际是对一些服务的单独封装. 比如: apachectl 就是对httpd的独立封装
-	
+
 	vi `which apachectl`
 
 在Mysql中mysql.service 也是对mysql_safe启动的单独封装
@@ -262,3 +262,105 @@ Task: Restart cron service
 	service crond restart
 
 	# systemctl restart crond.service
+
+# daemon, 守护进程启动方法
+> 参考 http://www.ruanyifeng.com/blog/2016/02/linux-daemon.html
+
+## background job
+
+	$ sleep 5 &
+
+background job:
+
+	1. 继承当前 session （对话）的标准输出（stdout）和标准错误（stderr）。因此，后台任务的所有输出依然会同步地在命令行下显示。
+	2. 不再继承当前 session 的标准输入（stdin）。你无法向这个任务输入指令了。如果它试图读取标准输入，就会暂停执行（halt）。
+
+## SIGHUP signal
+用户退出session 后，会发生：
+
+	1. 用户准备退出 session
+	1. 系统向该 session 发出SIGHUP信号
+	1. session 将SIGHUP信号发给所有子进程
+	1. 子进程收到SIGHUP信号后，自动退出
+
+那么，"后台任务"是否也会收到SIGHUP信号？ 这由 Shell 的huponexit参数决定的。
+
+	$ shopt | grep huponexit
+
+大部分linux 这个参数默认关闭（off）。因此，session 退出的时候，不会把SIGHUP信号发给"后台任务"。所以，一般来说，"后台任务"不会随着 session 一起退出。
+
+## disown
+因为有的系统的huponexit参数可能是打开的（on）。
+更保险的方法是使用disown命令。它可以将指定任务从"后台任务"列表（jobs命令的返回结果）之中移除。一个"后台任务"只要不在这个列表之中，`session 就肯定不会向它发出SIGHUP信号`。
+
+	$ node server.js &
+	$ disown
+
+执行上面的命令以后，server.js进程就被移出了"后台任务"列表。你可以执行jobs命令验证，输出结果里面，不会有这个进程。
+
+disown的用法如下。
+
+	# 移出最近一个正在执行的后台任务
+	$ disown
+
+	# 移出所有正在执行的后台任务
+	$ disown -r
+
+	# 移出所有后台任务
+	$ disown -a
+
+	# 不移出后台任务，但是让它们不会收到SIGHUP信号
+	$ disown -h
+
+	# 根据jobId，移出指定的后台任务
+	$ disown %2
+	$ disown -h %2
+
+## 标准IO
+使用disown命令之后，还有一个问题。那就是，退出 session 以后，如果后台进程与标准I/O有交互，它还是会挂掉。
+
+还是以上面的脚本为例，现在加入一行。
+
+	var http = require('http');
+
+	http.createServer(function(req, res) {
+	  console.log('server starts...'); // 加入此行
+	  res.writeHead(200, {'Content-Type': 'text/plain'});
+	  res.end('Hello World');
+	}).listen(5000);
+
+启动上面的脚本，然后再执行disown命令。
+
+	$ node server.js &
+	$ disown
+
+接着，你退出 session，访问5000端口，就会发现连不上。
+
+为了解决这个问题，需要对"后台任务"的标准 I/O 进行重定向。
+
+	$ node server.js > stdout.txt 2> stderr.txt < /dev/null &
+	$ disown
+
+## nohup 命令
+还有比disown更方便的命令，就是nohup。
+nohup命令不会自动把进程变为"后台任务"，所以必须加上`&`符号
+
+	$ nohup node server.js 2>&1 &
+
+nohup命令对server.js进程做了三件事。
+
+	阻止SIGHUP信号发到这个进程。
+	关闭标准输入。该进程不再能够接收任何输入，即使运行在前台。
+	重定向标准输出和标准错误到文件nohup.out。
+
+也就是说，nohup命令实际上将子进程与它所在的 session 分离了。
+
+## Screen 命令与 Tmux 命令
+另一种思路是使用 terminal multiplexer （终端复用器：在同一个终端里面，管理多个session），典型的就是 Screen 命令和 Tmux 命令。
+
+Tmux 比 Screen 功能更多、更强大 见[/p/linux-tmux](/p/linux-tmux)
+
+
+
+## Systemd
+除了专用工具以外，Linux系统有自己的守护进程管理工具 Systemd 。它是操作系统的一部分，直接与内核交互，性能出色，功能极其强大。我们完全可以将程序交给 Systemd ，让系统统一管理，成为真正意义上的系统服务。

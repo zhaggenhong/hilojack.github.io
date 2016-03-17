@@ -8,6 +8,8 @@ description:
 
 # git diff
 
+## diff between commit
+
 	git diff $start_commit $end_commit -- path/to/file
 	git diff $start_commit path/to/file
 	git diff $start_commit
@@ -63,12 +65,13 @@ shows *what operations were done* to the files too
 
 	## diff 2 branch
 	git diff master..branch1 #diff branch1 based on The Parent of master&branch1 基于共同祖先做diff, 即得到branch1的变更.
+
 	## The following 3 commands is equal in function.
 	git log origin/master..HEAD
 	git log ^origin/master HEAD
 	git log HEAD --not origin/master
 
-	## 如果你想查找所有从refA或refB包含的但是不被refC包含的提交
+	## 如果你想查找所有从refA或refB包含的但是不被refC包含的提交(A+B-C)
 	git log refA refB ^refC
 	git log refA refB --not refC
 
@@ -134,13 +137,19 @@ show merged files
 	//基于祖先做diff or git diff master...branch1
 	$git diff bb92
 
-# git diff-index
-diff working or stage with commit
+# diff mode
 
+## git diff-index
+compare a tree to a working tree or index
+
+	# to index
 	git diff-index --cached  HEAD
 	:100644 100644 9c8caea89aa52f8047d9abf8f262745882d35185 0f92c8e9e1116b09c74a6cc6a2e5af66aee3789a M	path/navMenu.html
 
-## filter
+	# to working tree
+	git diff-index HEAD
+
+### filter
 keep
 
 	git diff-index --diff-filter=ACMR HEAD
@@ -150,6 +159,11 @@ keep
 		R rename
 		D delete
 
-## info
+### info
 
 	--name-only
+
+## diff-tree
+git-diff-tree - Compares the content and mode of blobs found via two tree objects
+
+	git diff-tree --name-only -r $oldrev..$newrev 

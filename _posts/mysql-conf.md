@@ -312,6 +312,8 @@ Example:
 
 ## dump & import
 
+	$ mysqldump -hroot -p123 source_db [table] | mysql -uUser -pPasswd dst_db; # 包含数据
+
 ### mysqldump
 用于导出表结构或者数据. 默认导出的是'*.sql' 格式，输出到标准输出。默认包含 insert 和 create 语句
 

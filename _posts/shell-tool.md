@@ -167,7 +167,7 @@ eval is a shell builtin command, not a standalone executable. Thus, xargs can't 
 	-h, --no-filename
 	-H, --with-filename
 	-E, --extended-regexp
-
+	-e 'pattern1' -e pattern2
 	-P perl patterns
 
 ## max-count
@@ -198,19 +198,19 @@ ignore binary
 ## grep filter self
 Refer to: [](/p/shell)
 
-remove grep command while use ps
+Remove grep command while use ps
 
 	ps aux | grep perl | grep -v grep
 	ps aux | grep [p]erl
 
-## about pattern
+## exclude file 
 
 	--exclude=\*.{html,htm,js}
 
 ## multi patterns
-If you have multi patterns, you can put them into a file.
 
-	grep -f patterns.txt data.txt
+	-e 'pattern1' -e pattern2
+	-f pattern.txt
 
 If you want to do the minimal amount of work, change
 

@@ -12,6 +12,35 @@ tmux 用于复用终端窗口, 安装tmux 很简单
 
 > 除了tmux 还有screen. 另一个只用于保持会话的最小可选方案是 dtach。
 
+# Usage:
+
+	$ tmux
+	$ node server.js
+
+	# 返回原来的session
+	$ tmux detach
+
+除了tmux detach，另一种方法是按下`Ctrl + B和d` ，也可以回到原来的 session。
+
+	# 下次登录时，返回后台正在运行服务session
+	$ tmux attach
+	如果新建多个 session，就需要为每个 session 指定名字。
+
+	# 新建 session
+	$ tmux new -s session_name
+
+	# 切换到指定 session
+	$ tmux attach -t session_name
+
+	# 列出所有 session
+	$ tmux list-sessions
+
+	# 退出当前 session，返回前一个 session
+	$ tmux detach
+
+	# 杀死指定 session
+	$ tmux kill-session -t session-name
+
 # Shortcuts
 The default shortcuts prefix is `ctrl+b`, you and set it to `ctrl+d`
 

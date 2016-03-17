@@ -283,7 +283,12 @@ hello()会首先打印出Hello world!，然后，yield from语法可以让我们
 
 > https://docs.python.org/3/library/asyncio-eventloop.html
 
+- run_until_complete
+
+	vim /usr/local/Cellar/python3/3.5.0/Frameworks/Python.framework/Versions/3.5/lib/python3.5/asyncio/base_events.py +291
+
 - run_forever 是死循环：循环遍历执行每个loop, 否则只遍历一次就结束了
+
 	BaseEventLoop.run_forever()
 
 	Run until stop() is called.

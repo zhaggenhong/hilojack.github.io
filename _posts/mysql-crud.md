@@ -203,7 +203,7 @@ ON DUPLICATE KEY 不支持where
 
 
 ### replace when DUPLICATE key
-REPLACE 可以将`DELETE和INSERT`合二为一，形成一个原子操作(它也是基本唯一键的)
+REPLACE 可以将`DELETE和INSERT`合二为一，形成一个原子操作(它也是基于唯一键的)
 
 	REPLACE INTO users (phone) VALUES(18210111011);
 　
