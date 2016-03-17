@@ -126,18 +126,15 @@ chkconfig serviceName 与 service Name 不同，前者用于开机运行级(和i
 # systemd
 linux 下的init(service/chkconfig) 这种系统服务管理器比较臃肿了，而systemd是一种更加优秀的服务管理器。
 
-## service list
-systemctl list-unit-files
+这种方法有两个缺点。
 
-## systemctl
-systemctl stop/status/reload/restart/is-enabled/help <service>
+1. 一是启动时间长。init进程是串行启动，只有前一个进程启动完，才会启动下一个进程。
+2. 二是启动脚本复杂。init进程只是执行启动脚本，不管其他事情。脚本需要自己处理各种情况，这往往使得脚本变得很长。
 
-## 运行级
-systemd 取消了init 数字运行级.而改用multi-user.target, graphical.target 文件命名的方式
+	$ sudo /etc/init.d/apache2 start
+	# 或者
+	$ service apache2 start
 
-	ln -s [/usr]/lib/systemd/system/multi-user.target /etc/systemd/default.target
-	# 临时切换到 graphical
-	systemctl isolate graphical.target
 
 # launchd
 launchd 是mac 下的系统服务管理器,
