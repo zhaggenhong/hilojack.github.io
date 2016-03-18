@@ -42,6 +42,10 @@ http://vschart.com/compare/blade-template-engine/vs/smarty-template-engine/vs/ha
 
 ## assign var
 
+	{assign "i" "0"}
+	{assign "i" $i+1}
+	{assign var=running_total value=$running_total+$some_array[$row].some_value}
+
 	{assign var="var" value="$Name suffix"}
 
 	 $_smarty_tpl->tpl_vars["var"] = new Smarty_variable(((string)$_smarty_tpl->tpl_vars['Name']->value . " suffix"), null, 0);?>
