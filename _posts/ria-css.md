@@ -9,9 +9,10 @@ css/html5/js 兼容表
 http://caniuse.com/
 
 # priority
+
 	style > id > hover(鼠标悬停) > class
 
-# 层次
+## 层次
 
 	div ul {} #
 	div > ul {} #ul 是div 的children
@@ -57,14 +58,22 @@ http://zh.learnlayout.com/flexbox.html
 
 利用absolute + 内层relative top/left 修正
 
-    <div style="position: absolute; left: 50%;">
-        <div style="position: relative; left: -50%; border: dotted red 1px;">
+    <div style="
+		position: absolute;
+		left: 50%;
+	">
+        <div style="
+		position: relative;
+		left: -50%;
+		border: dotted red 1px;
+		">
             I am some centered shrink-to-fit content! <br />
         </div>
     </div>
 
 ## screen center
 利用fixed + margin修正:
+` margin-top: -50px;	//不可以用百分比`
 
 	<div style=" position: fixed;
 		top: 50%;
@@ -78,9 +87,12 @@ http://zh.learnlayout.com/flexbox.html
 	"></div>
 
 利用fixed + 内层relative top/left 修正
+`top: -250px;	//不可以用百分比`
 
 	<div style=" position: fixed; top: 50%; left: 50%;">
-		<div style=" position: relative; width: 500px; height: 500px; background: blue; top: -250px; left: -250px;  ">
+		<div style=" position: relative; width: 500px; height: 500px; background: blue; 
+		top: -250px; left: -250px;
+		">
 		</div>
 	</div>
 
@@ -272,7 +284,7 @@ CSS3 被划分为模块。 其中最重要的 CSS3 模块包括：
 
 # boder
 
-	border-radius: 11px;//圆角半径
+	border-radius: 10px;//圆角半径
 	box-shadow: 2px 4px 6px 8px #ccc;
 	box-shadow: x  y 模糊值 延伸值 #ccc;//模糊值不能为负
 
@@ -281,7 +293,7 @@ box-shadow: h-shadow v-shadow blur spread color inset;
 
 	h-v: 位置
 	blur: 模糊化
-	spread: 尺寸
+	spread: 阴影尺寸
 	color:颜色
 	inset: 内部显示
 
@@ -295,6 +307,7 @@ box-shadow: h-shadow v-shadow blur spread color inset;
 		stretch		拉伸	改变大小 1个
 
 ## border-color
+
 	color 颜色
 	initial 默认值
 	transparent 透明
@@ -399,6 +412,8 @@ Refer to http://www.qianduan.net/css-content-counter-increment-counter-reset.htm
 		normal	italic
 
 # transform(2D)
+旋转、移位....
+
 	-webkit-transform:
 		rotate(30deg); 顺时针30度旋转
 		rotateX();
@@ -527,7 +542,7 @@ visibility:hidden 会延时执行 因为它不是连续的.(hidden 会暂用空�
 
 # 用户界面属性：
 
-1. resize
+1. resize 类似textarea 那样resize
 1. box-sizing
 1. outline-offset
 

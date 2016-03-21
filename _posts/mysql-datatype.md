@@ -32,6 +32,30 @@ better solution:
 	select TIME_FORMAT(SEC_TO_TIME(3600),'%H:%m');
 	| 01:00                                  |
 
+### subdate
+
+	select current_date
+		2016-03-20
+
+	# tomorrow
+	select subdate(current_date, -1)
+		2016-03-21
+
+### between
+
+	val BETWEEN val1 and val2;
+	date BETWEEN date1 and date2;
+
+example
+
+	select 5 between 3 and 6;
+		1
+	select 3 between 3 and 6;
+		1
+	select 6 between 3 and 6;
+		1
+	select 1 between 3 and 6;
+		0
 
 ## time
 

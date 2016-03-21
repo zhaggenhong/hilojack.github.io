@@ -85,6 +85,23 @@ init.d里面放置的是运行级脚本, 脚本文件写法：vi /etc/init.d/BLA
 			exit 1 ;;
 	esac
 
+### init.d/functions
+包括常用的函数: `daemon`, `__pids_pidof`
+
+	daemon():
+		Usage: daemon [+/-nicelevel] {program}
+		daemon vsftpd
+		启动service
+
+	killproc():
+		Usage: killproc [-p pidfile] [ -d delay] {program} [-signal]"
+
+	# Output PIDs of matching processes, found using pidof
+	__pids_pidof() {
+	    pidof -c -o $$ -o $PPID -o %PPID -x "$1" || \
+		pidof -c -o $$ -o $PPID -o %PPID -x "${1##*/}"
+	}
+
 
 ## service
 通过service 可以手动启动init.d下的服务脚本
@@ -356,7 +373,6 @@ nohup命令对server.js进程做了三件事。
 另一种思路是使用 terminal multiplexer （终端复用器：在同一个终端里面，管理多个session），典型的就是 Screen 命令和 Tmux 命令。
 
 Tmux 比 Screen 功能更多、更强大 见[/p/linux-tmux](/p/linux-tmux)
-
 
 
 ## Systemd

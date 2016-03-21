@@ -76,6 +76,19 @@ double quotes and single quotes is same
 	print "a\nb" ;# The character here "\n" is new line
 	print 'a\nb'
 
+## unicode
+默认是utf8 binary.
+
+	'abc'.encode('ascii')
+		b'abc'
+	'中国'.encode('utf8')
+		b'\xe4\xb8\xad'
+	'中国'.encode('GB2312')
+		b'\xd6\xd0'
+
+	b'\xd6\xd0'.decode('GB2312')
+		中
+
 ## chr
 
 	chr(65); 'A'

@@ -10,6 +10,13 @@ description:
 
 	print open('a.php').read(); //cat a.php
 
+stdin file
+
+
+	import fileinput
+	for line in fileinput.input():
+		print(line)
+
 ## Open File
 
 	fp = open(filename[, mode])

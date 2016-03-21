@@ -1,8 +1,8 @@
 ---
 layout: page
-title:	
+title:
 category: blog
-description: 
+description:
 ---
 # Preface
 参考阮一峰的[ssl运行机制]，TLS/SSL 基于非对称加密，它解决了以下风险：
@@ -12,22 +12,47 @@ description:
 3. 冒充风险(pretending): 通过证书, 避免中间人攻击. (公钥是和证书一起的，证书可信，公钥就可信)
 
 # todo
-http://segmentfault.com/a/1190000002963044#articleHeader4
 
 # TLS/SSL
 传输层安全协议（Transport Layer Security，缩写为 TLS），
 及其前身安全套接层（Secure Sockets Layer，SSL）是一种安全协议，目的是为互联网通信，提供安全及数据完整性保障。在网景公司（Netscape）推出首版Web浏览器的同时提出SSL，IETF将SSL进行标准化，1999年公布了 TLS标准文件。
 
-TLS/SSL 本身属于应用层，高层的应用层协议（例如：HTTP、FTP、Telnet等等）能透明的建立于TLS协议之上。 
+TLS/SSL 本身属于应用层，高层的应用层协议（例如：HTTP、FTP、Telnet等等）能透明的建立于TLS协议之上。
 它可和http 一起构成了https
 
 TLS 有1.0 1.1 1.2 1.3 三个规范, 目前主流浏览器都支持 TLS1.2
+
+## TLS 协议组成
+> http://segmentfault.com/a/1190000002963044#articleHeader4
+> https://segmentfault.com/a/1190000004631778#articleHeader3
+
+协议由两层构成：`TLS Record Protocol`和`TLS Handshake Protocol`
+
+`TLS Record Protocol`处于较低的一层，基于一些可信任的协议，如TCP，为高层协议提供数据封装、压缩、加密等基本功能的支持。它保证了通信的两个基本安全属性：
+
+	1．保密连接。数据传输使用对称加密算法，如AES，RC4等，该对称加密算法的密钥对于每个连接是唯一的，基于密钥协商协议生成，比如TLS handshake protocol，Record Protocol也可以不使用加密。
+	2．可信连接。消息的传输包括了基于密钥的消息认证码（keyed MAC），使用安全Hash函数计算MAC，用于完整性检查。Record Protocol也可以不使用MAC，但是这种模式只用于安全参数协商时。
+
+`Record Protocol`用于封装多种高层的协议，其中一个种就是`TLS handshake protocol`，这种协议允许客户与服务器相互认证，在应用程序通信前，协商加密算法和加密密钥。`TLS handshake protocol`保证了连接的三个基本安全属性：
+
+	1．两端的身份可以通过非对称或者公钥加密算法（DSA，RSA等）进行认证。认证过程是可选的，但至少要求一端被认证。
+	2．共享密钥的协商是安全的。密钥协商对于监听者和任何被认证的连接都是不可见的。
+	3．协商是可信的。攻击者无法修改协商信息。
+
+TLS协议提供的服务主要有：
+
+	1）认证用户和服务器，确保数据发送到正确的客户机和服务器；
+	2）加密数据以防止数据中途被攻击者监听；
+	3）维护数据的完整性，确保数据在传输过程中不被攻击者篡改。
+
+TLS协议在协议栈中如下图所示：
+
 
 ## 通信过程
 SSL/TLS 是基于非对称加密的，客户端需要通过服务端的公钥以确认服务端的身份，所以：
 
 *确认服务器的身份*
-	
+
 1. 客户端需要先拿到服务端的公钥, 这个公钥放在服务端的证书中。但是如何确认证书可信？
 2. CA 确认
 
@@ -80,20 +105,20 @@ AES, Blowfish, Camellia, SEED, CAST-128, DES, IDEA, RC2, RC4, RC5, Triple DES, G
 - 公开密钥加密：
 	RSA, DSA, Diffie–Hellman key exchange, Elliptic curve, GOST R 34.10-2001[3]
 
-`openssl` 可以用来生成ssl 密钥(.key), 证书请求(.csr), 签名证书(.crt). 
+`openssl` 可以用来生成ssl 密钥(.key), 证书请求(.csr), 签名证书(.crt).
 
 下例生成一个自签名证书(self sign certificate), 而非[ssl-ca](/p/ssl-ca) 中CA 签名证书(`CA -sign`)
 
-	# 生成一个RSA密钥 
+	# 生成一个RSA密钥
 	openssl genrsa -des3 -out my.key 1024
-	 
+
 	# 拷贝一个不需要输入密码的密钥文件(public)
 	openssl rsa -in my.key -out my_nopass.key
-	 
+
 	# 生成一个证书请求
 	openssl req -new -key my.key -out my.csr
 	#会提示输入省份、城市、域名信息等 //common name 一定要填写实际的域名，否则浏览器会报: ERR_CERT_COMMON_NAME_INVAID
-	 
+
 	# 自己签发证书
 	openssl x509 -req -days 365 -in my.csr -signkey my.key -out my.crt
 
@@ -123,7 +148,7 @@ For more details:
 # Import Certificate
 
 ## On MacOSX
-1. Open Keychain 
+1. Open Keychain
 2. `File->Import Items(Shift+Cmd+i)` to import `my.crt`, `ca.crt` in `system`
 3. Select *always trust*
 
