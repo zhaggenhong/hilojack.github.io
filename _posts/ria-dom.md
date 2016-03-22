@@ -523,10 +523,11 @@ Refer to : http://segmentfault.com/blog/jslite/1190000002465197
 
 ### stop
 
-	ev.preventDefault()  prevents the default action the browser makes on that event.
-	ev.stopPropagation() stops the event from bubbling up/capturing the event chain.
+	event.preventDefault()  prevents the default action the browser makes on that event.
+	event.stopPropagation() stops the event from bubbling up/capturing the event chain.
 
 ### method
+回调函数
 
 	function(event){
 		event.x,

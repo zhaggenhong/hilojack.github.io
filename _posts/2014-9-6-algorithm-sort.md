@@ -25,7 +25,10 @@ description:
 - n代表数据规模
 - m代表数据的最大值减最小值
 
-> 其中基于比较的算法的极限是O(n*logn). 简单的证明就是n 个元素的排列组合有n! 种，每一次比较只能排除一半的可能，至少需要比较log(n!) < log(n^n) = n * logN
+> 其中基于比较的算法的极限是O(n*logn). 比较排序可以被抽象为一棵完全二叉树(数列组合有n! 种)，每一次比较只能排除一半的可能，至少需要比较x次，2^x > n!,
+> x >= log2(n!) 才能区分所有的情况，否则不能区分满射。根据特林公式：n! ~ (2*pi*n)^(1/2) * (n/e)^n, 有O(n!) ~ O(n*log(n/e))
+
+<img src="//zhihu.com/equation?tex=k%5Cgeq+log_%7B2%7D%28%5Csqrt%7B2%5Cpi+n%7D+%5Cleft%28+%5Cfrac%7Bn%7D%7Be%7D++%5Cright%29%5E%7Bn%7D%29+%3Dlog_%7B2%7D%28%5Csqrt%7B2%5Cpi+n%7D%29%2Bnlog%5Cleft%28+%5Cfrac%7Bn%7D%7Be%7D++%5Cright%29%3DO%5Cleft%28+nlogn+%5Cright%29+" alt="k\geq log_{2}(\sqrt{2\pi n} \left( \frac{n}{e}  \right)^{n}) =log_{2}(\sqrt{2\pi n})+nlog\left( \frac{n}{e}  \right)=O\left( nlogn \right) " eeimg="1">
 
 	OS: winxp, Compiler: vc8, CPU：Intel T7200,  Memory: 2G
 	不同数组长度下调用6种排序1000次所需时间（秒）

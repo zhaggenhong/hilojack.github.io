@@ -314,6 +314,7 @@ With `space` to move region.
 	⌥ +⌘ +A		Undo Select in Finder
 
 ## Copy(Cut) & paste
+
 	#copy file
 	⌘ +C #copy
 	⌘ +V #paste

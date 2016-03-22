@@ -31,7 +31,7 @@ Supervisor 是一个监控程序，当其它程序发生错误时，自动重启
 # 使用supervisorctl管理程序
 
 	1）开启/停止某个程序
-	 supervisorctl [start | stop] [program名称]      //在supervisord.conf中定义的
+	 supervisorctl [start | stop | restart] [program名称]      //在supervisord.conf中定义的
 	 supervisorctl start fetch_weibo
 
 	2）查看进程状态
