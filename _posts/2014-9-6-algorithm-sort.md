@@ -2,7 +2,7 @@
 layout: page
 title:	排序算法
 category: blog
-description: 
+description:
 ---
 # Preface
 常规的几种排序算法, 参考[维基sort](http://zh.wikipedia.org/wiki/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95)
@@ -10,7 +10,7 @@ description:
 |名称	|数据对象	|稳定性	|时间复杂度(平均/最坏)	|空间复杂度	|描述|
 |冒泡排序|数组,链表	|是	|O(n^2)	|O(1)	|（无序区，有序区）。从无序区通过交换找出最大元素放到有序区前端。|
 |插入排序|数组,双链表	|是	|O(n^2)	|O(1)	|（有序区，无序区）。把无序区的第一个元素插入到有序区的合适的位置。对数组：比较得少，换得多。|
-|选择排序|数组,链表	|否/是|O(n^2)	|O(1)	|（有序区，无序区）。在无序区里找一个最小的元素跟在有序区的后面。对数组：比较得多，换得少。| 
+|选择排序|数组,链表	|否/是|O(n^2)	|O(1)	|（有序区，无序区）。在无序区里找一个最小的元素跟在有序区的后面。对数组：比较得多，换得少。|
 |堆排序	|数组,链表	|否	| O(nlogn)	|O(1)	|（最大堆，有序区）。从堆顶把根卸出来放在有序区之前，再恢复堆。|
 |归并排序|数组、链表|是	| O(nlogn)	|O(n) +O(logn) ，如果不是从下到上	|把数据分为两段，从两段中逐个选最小的元素移入新数据段的末尾。可从上到下或从下到上进行。|
 |快速排序|数组,链表	|否/是|O(nlogn), O(n^2)	|O(logn) ,O(n)	|找一个中值分成两堆|
@@ -81,7 +81,7 @@ description:
 		int i=0;
 		insert_sort(arr, L);
 		do{
-			printf("%d ",arr[i]);	
+			printf("%d ",arr[i]);
 		}while(++i<L);
 	}
 
@@ -102,10 +102,10 @@ description:
 
 # Shell Sort 希尔排序
 希尔排序(Shell Sort) 是对插入排序的推广。
-其基本思想是， 希尔排序通过将比较的全部元素分为几个区域来提升插入排序的性能。这样可以让一个元素可以一次性地朝最终位置前进一大步。然后算法再取越来越小的步长进行排序，算法的最后一步就是普通的插入排序，但是到了这步，需排序的数据几乎是已排好的了（此时插入排序较快）	
-从这个角度上说Shell Sort 属于分组排序	
+其基本思想是， 希尔排序通过将比较的全部元素分为几个区域来提升插入排序的性能。这样可以让一个元素可以一次性地朝最终位置前进一大步。然后算法再取越来越小的步长进行排序，算法的最后一步就是普通的插入排序，但是到了这步，需排序的数据几乎是已排好的了（此时插入排序较快）
+从这个角度上说Shell Sort 属于分组排序
 
-复杂度: 	
+复杂度:
 Shell Sort 的时间复杂度 依赖于一个步长的增量序列(Increment Sequence), 这涉及到数学上未解决的难题, 通常认为是O(n^(5/4))。下表展示了常见序列下的时间复杂度。此外，希尔排序是不稳定的, 因为分组移动时扰乱了同值元素的次序。
 
 |步长序列|	最坏情况下复杂度|
@@ -120,10 +120,10 @@ Shell Sort 的时间复杂度 依赖于一个步长的增量序列(Increment Seq
 斐波那契数列(Fibonacci Sequence)公式 是
 
 	f(n) = f(n-1) + f(n-2); 数列为: 1、1、2、3、5、8、13、21.
-	
-当n 越大f(n)/f(n-1) 越接近黄金分割(sqrt(5)-1)/2 = 0.618,  见[Fibonacci] 
 
-对应的shell sequence是 
+当n 越大f(n)/f(n-1) 越接近黄金分割(sqrt(5)-1)/2 = 0.618,  见[Fibonacci]
+
+对应的shell sequence是
 
 	a(n) = floor(fibonacci(n+1)^(sqrt(5)+1)
 
@@ -160,11 +160,11 @@ Shell Sort 的时间复杂度 依赖于一个步长的增量序列(Increment Seq
 				}
 				arr[j+seq] = tmp;
 			}
-		}	
+		}
 	}
 
 	int main(){
-		int arr[12] = {9,23,1, 3, 290,0, 
+		int arr[12] = {9,23,1, 3, 290,0,
 			900,1 ,23, -9, 19, 10};
 		shell_sort(arr, 12);
 		int i = 0;
@@ -176,14 +176,14 @@ Shell Sort 的时间复杂度 依赖于一个步长的增量序列(Increment Seq
 希尔排序到1 million 以下的表现比快速排序快。
 
 # Select Sort 选择排序
-- 插入排序关键是找插入点: 数据比较多，数据移动较少.	
-- 而选择排序则是每一次找一个最大(小)值, 数据比较较多, 数据移动少	
+- 插入排序关键是找插入点: 数据比较多，数据移动较少.
+- 而选择排序则是每一次找一个最大(小)值, 数据比较较多, 数据移动少
 - 稳定性: 不稳定(有可能交换使同值元素换位) 但是如果愿意新增加一个数据(消耗O(n)), 则可以实现稳定的选择排序。
 
 代码：
 
 	/**
-	 * 示例为不稳定的选择排序 空间复杂度是O(1). 
+	 * 示例为不稳定的选择排序 空间复杂度是O(1).
 	 * 注意: 如果需要稳定的选择排序: 对于数组,可以加一个结果数组，空间复杂度是O(n); 对于链表，不需要增加结果数组，空间复杂度仍然为O(1)
 	 */
 	void select_sort(int *arr, int n){
@@ -204,9 +204,9 @@ Shell Sort 的时间复杂度 依赖于一个步长的增量序列(Increment Seq
 
 
 # Heap Sort 堆排序
-- 空间复杂度: O(1)	
-- 时间复杂度：通过大（小）堆(O(log n)), 选出堆的最大值(O(logN))，并放到堆末尾的有序区间	
-- 类似选择排序: 最小堆的根被换到最后，得到一个从大到小的有序区间	
+- 空间复杂度: O(1)
+- 时间复杂度：通过大（小）堆(O(log n)), 选出堆的最大值(O(logN))，并放到堆末尾的有序区间
+- 类似选择排序: 最小堆的根被换到最后，得到一个从大到小的有序区间
 - 稳定性：因为同值的元素有的会被顶上去，有的会被顶下去，所以堆排序不是稳定排序
 
 操作：
@@ -263,7 +263,7 @@ Shell Sort 的时间复杂度 依赖于一个步长的增量序列(Increment Seq
 	}
 	int main(void)
 	{
-		int arr[12] = {9,23,1, 3, 290,0, 
+		int arr[12] = {9,23,1, 3, 290,0,
 			900,1 ,23, -9, 19, 10};
 		int i = 0;
 		heap_sort(arr, 12);
@@ -274,7 +274,7 @@ Shell Sort 的时间复杂度 依赖于一个步长的增量序列(Increment Seq
 		}
 	}
 
-> 最大堆与最小堆 可以应用于 topK 问题，实现O(n*logK) 的时间复杂度. 
+> 最大堆与最小堆 可以应用于 topK 问题，实现O(n*logK) 的时间复杂度.
 当K 特别大时，topK 问题也可以通过快速排序(Quick Sort)中的中值索引i, 实现平均时间复杂度O(1+2...+n) = O(2n) = O(n). 这种算法的缺点是原始数据移动(n)和内存消耗(logN)比较大。
 
 # Merge Sort 归并排序
@@ -304,12 +304,12 @@ Shell Sort 的时间复杂度 依赖于一个步长的增量序列(Increment Seq
 			// 分别归并排序
 			merge_sort(list1, list1_size);
 			merge_sort(list2, list2_size);
-	 
+
 			// 归并
 			merge_array(list1, list1_size, list2, list2_size);
 		}
 	}
-	 
+
 	/**
 	 * @brief 归并两个有序数组
 	 * @param list1
@@ -322,7 +322,7 @@ Shell Sort 的时间复杂度 依赖于一个步长的增量序列(Increment Seq
 		int i, j, k;
 		i = j = k = 0;
 		int *list = malloc((list1_size + list2_size)*sizeof(int));
-	 
+
 		while (i < list1_size && j < list2_size) {
 			list[k++] = list1[i] < list2[j] ? list1[i++] : list2[j++];
 		}
@@ -332,21 +332,21 @@ Shell Sort 的时间复杂度 依赖于一个步长的增量序列(Increment Seq
 		while (j < list2_size) {
 			list[k++] = list2[j++];
 		}
-	 
+
 		for (int ii = 0; ii < (list1_size + list2_size); ++ii) {
 			list1[ii] = list[ii];
 		}
 		free(list);
-	 
+
 	}
 
 # Quick Sort 快速排序
-Merge Sort 和Quick Sort 都使用了分而治之的思想，递归深度为logN, 时间都是O(NlogN)。	
+Merge Sort 和Quick Sort 都使用了分而治之的思想，递归深度为logN, 时间都是O(NlogN)。
 
 - 空间复杂度 `O(logN)`
 - 稳定性： 否
 
-与Merge Sort 不同的是, Merge Sort 通过位置做划分（主要是合并, 合并时需要空间O(n)）, 
+与Merge Sort 不同的是, Merge Sort 通过位置做划分（主要是合并, 合并时需要空间O(n)）,
 而Quick Sort 是通过值做划分，主要工作是划分本身, 划分时只需要给一点栈空间(logN)，而且Quick Sort 排序不稳定. 如果需要稳定的 Quick Sort, 则需要空间O(n);
 > 从概率上说， 快速排序的平均速度比堆排序要快一些
 
@@ -385,7 +385,7 @@ Merge Sort 和Quick Sort 都使用了分而治之的思想，递归深度为logN
 	#include <stdio.h>
 	#define MAX_STACK 200
 	struct call{
-		int *arr;	
+		int *arr;
 		int n;
 	};
 	struct call stack[MAX_STACK];
@@ -514,7 +514,7 @@ Merge Sort 和Quick Sort 都使用了分而治之的思想，递归深度为logN
 	 }
 
 交换法
-	
+
 	a=a^b
 	b=a^b a^b^b == a
 	a=a^b a^b^a == b
@@ -543,7 +543,7 @@ Merge Sort 和Quick Sort 都使用了分而治之的思想，递归深度为logN
 		float num ;
 		struct bucket * r;
 	};
-	
+
 	/**
 	 * 对单链表做冒泡排序 时间：O(k^2)
 	 */
@@ -570,7 +570,7 @@ Merge Sort 和Quick Sort 都使用了分而治之的思想，递归深度为logN
 					break;
 				}
 			}while((int)head->r != end);
-		}	
+		}
 	}
 	/**
 	 * 桶排序
@@ -583,15 +583,15 @@ Merge Sort 和Quick Sort 都使用了分而治之的思想，递归深度为logN
 		//buckets 空间：O(n) 初始化时间:O(n)
 		struct bucket * buckets = calloc(sizeof(struct bucket) , n);
 		int buckets_len = 0;
-	
+
 		int m = n/2;
 		//bucket_head 空间:O(m) 初始化时间:O(m)
 		struct bucket * (*bucket_head) = calloc(sizeof(struct bucket *), m);
 		struct bucket * ptr;
 		int i,j;
-	
+
 		//链表有k个元素，查找时间是O(K)
-		//放桶的时间： O(n) * O(k) = O(n*k). 
+		//放桶的时间： O(n) * O(k) = O(n*k).
 		for(i=0; i<n ;i++){
 			//j号桶
 			j = floor( m * (arr[i]-min) / (max - min));
@@ -626,7 +626,7 @@ Merge Sort 和Quick Sort 都使用了分而治之的思想，递归深度为logN
 		free(buckets);
 		free(bucket_head);
 	}
-	
+
 	void print(float * arr, int n, char * str){
 		printf("%s: \n", str);
 		int i;

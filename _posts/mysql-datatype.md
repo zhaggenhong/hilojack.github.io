@@ -6,11 +6,17 @@ description:
 ---
 # Preface
 
-
 # Data Type(数据类型)
 
 	NULL means you do not have to provide a value for the field... default to null
 	NOT NULL means you must provide a value for the fields. 但很多情况下，插入数据时默认会给一个空值(0, 或者空字符串).
+
+## 不要用null
+Null 列的缺点:
+
+- 难以优化索引：Mysql难以优化引用可空列查询，它会使索引、索引统计和值更加复杂。
+- 更多的空间：可空列需要更多的存储空间，还需要mysql内部进行特殊处理。
+> NULL columns require additional space in the rowto record whether their values are NULL. For MyISAM tables, each NULL columntakes one bit extra, rounded up to the nearest byte.”
 
 ## calc time
 

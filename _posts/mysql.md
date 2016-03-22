@@ -2,7 +2,7 @@
 layout: page
 title:	mysql
 category: blog
-description: 
+description:
 ---
 # Storage Engines
 
@@ -98,14 +98,23 @@ It's another name is  HEAP Engine.
 1. 支持散列索引和B 树索引. B 树索引更优秀的是：可以使用最左前缀和范围查询(`< > >=`等)
 
 	create table users(
-		name varchar(15) not null,	
-		passwd varchar(15) not null,	
-		INDEX USING HASH(name),	
+		name varchar(15) not null,
+		passwd varchar(15) not null,
+		INDEX USING HASH(name),
 		INDEX USING BTREE(name)
 	)ENGINE=MEMORY;
 
 ## MERGE Engine
-本质上是MyISAM 表的聚合器，分表后这聚合成MERGE 表会使操作非常方便。然后删除MERGE 表而不影响原来的数据。
+本质上是`MyISAM` 表的聚合器，分表后这聚合成MERGE 表会使操作非常方便。然后删除MERGE 表而不影响原来的数据。
+
+	create table user1(id int auto_increment primary key, name varchar(20)) ENGINE=MyISAM;
+	create table user2(id int auto_increment primary key, name varchar(20)) ENGINE=MyISAM;
+	CREATE TABLE IF NOT EXISTS `alluser` (
+	   `id` int(11) NOT NULL AUTO_INCREMENT,
+	   `name` varchar(20) NOT NULL,
+	   index(id)
+	 ) TYPE=MER_MyISAM UNION=(user1,user2) INSERT_METHOD=LAST;
+
 
 ## FEDERATED Engine 引用
 创建一个对远程表的引用，然后就可以像使用本地表一样使用远程的表了
@@ -169,7 +178,7 @@ Here is a `renameInnoDB` shell:
 	  PRIMARY KEY (`id`),
 	  UNIQUE KEY `uid` (`uid`),
 	  KEY `number` (`number`)
-	) ENGINE=MyISAM DEFAULT CHARSET=utf8 
+	) ENGINE=MyISAM DEFAULT CHARSET=utf8
 
 #### Copy Table
 Copy table struct only:
@@ -195,11 +204,11 @@ Copy table struct and data;
 
 ### union table 分表联合
 
-	CREATE TABLE `union_tb` ( 
+	CREATE TABLE `union_tb` (
 		`uid` char(10) NOT NULL,
-		`create_time` int(10) unsigned NOT NULL, 
-		INDEX(uid) 
-	) TYPE=MERGE UNION=(union_tb1,union_tb2,union_tb3,.......) INSERT_METHOD=LAST 
+		`create_time` int(10) unsigned NOT NULL,
+		INDEX(uid)
+	) TYPE=MERGE UNION=(union_tb1,union_tb2,union_tb3,.......) INSERT_METHOD=LAST
 
 将分表合为一张表，方便分表查询
 
@@ -426,7 +435,7 @@ Also, you could ignore the safety problem in replication, you could set `SET GLO
 > 创建存储例程时，语句很长会难以调试，建议将语句写到文件中，然后再执行`mysql db_name < test.sql`
 
 ### safety
-存储例程要求只能是 和DEFINER 定义的user 相匹配的用户 或者SUPER(root) 用户可以使用存储过程. 默认的user 是定义时的：CURRENT_USER 
+存储例程要求只能是 和DEFINER 定义的user 相匹配的用户 或者SUPER(root) 用户可以使用存储过程. 默认的user 是定义时的：CURRENT_USER
 
 	CREATE PROCEDURE DEFINER='hilojack'@'localhost' get_num()
 		select 45 as num;
@@ -436,14 +445,14 @@ Also, you could ignore the safety problem in replication, you could set `SET GLO
 	characteristic:
 		COMMENT 'string'		"描述信息
 	  | LANGUAGE SQL			"SQL 是存储例程唯一支持的语言，将来可能支持perl/python/php
-	  | [NOT] DETERMINISTIC		"有助于存储函数的优化，带此标识的函数只要每次的参数不变，都返回不变的值(但可以执行update/insert) 
+	  | [NOT] DETERMINISTIC		"有助于存储函数的优化，带此标识的函数只要每次的参数不变，都返回不变的值(但可以执行update/insert)
 	  							"而NOT 则可返回变化的值. 默认的是 NOT DETERMINISTIC.
 								"声明的是 DETERMINISTIC, 而产生的是nondeterministic 也不会报错，mysql 不会检查, 这需要人为保证
 	  | { CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }	"指示存储过程将完成的任务类型，默认值CONTAINS SQL 指示会出现SQL但不会读写数据，NO SQL 指示无SQL，READS 指示只能读数据，MODIFIES 指示SQL 可以读写
 	  | SQL SECURITY { DEFINER | INVOKER }	"默认DEFINER 根据定义过程的*定义者*的权限执行此过程，INVOKER 则根据调用过程用户的权限执行
 
 ## BEGIN-END 语句块
-这是一个作用域，可为此作用域设定局部变量.	
+这是一个作用域，可为此作用域设定局部变量.
 在`BEGIN` 和 `END` 之间, 子语句间以`;` 分割
 
 	delimiter //
@@ -485,7 +494,7 @@ show create routine
 		statement list;//不像例程语句体，它即不需要BEGIN/END 也不需要 其它的delimiter
 	ELSEIF condition THEN
 		statement list;
-	ELSE 
+	ELSE
 		statement list;//an empty statement_list is not permitted.
 		BEGIN
 		END;
@@ -510,9 +519,9 @@ REFER to : help case statement
 
 还有一种`help case operator`:
 
-	CASE value 
-		WHEN [compare_value] THEN result 
-		[WHEN [compare_value] THEN result ...] 
+	CASE value
+		WHEN [compare_value] THEN result
+		[WHEN [compare_value] THEN result ...]
 		[ELSE result] END
 
 	CASE WHEN [condition] THEN result [WHEN [condition] THEN result ...]
@@ -634,24 +643,24 @@ EXAMPLE:
 
 	delimiter //
 	CREATE trigger bu_get
-	before update on test.ahui 
+	before update on test.ahui
 	for each row
 	BEGIN
-	if NEW.d>20140101020304 then 
+	if NEW.d>20140101020304 then
 		update ahui set i='8' where id=10 limit 1;
 	end if;
 	end; //
 	delimiter ;
-	
+
 其中：
 
-	NEW 表示更新的NEW ROW 
-	OLD 表示更新的OLD ROW 
+	NEW 表示更新的NEW ROW
+	OLD 表示更新的OLD ROW
 	bu 约定为before update (只是约定啦)
 
 ## Show Triggers
 List triggers via command:
-	
+
 	"list triggers
 	SHOW TRIGGERS [FROM db_name] [LIKE expr | WHERE expr]
 	"show create trigger
@@ -687,10 +696,10 @@ List triggers via command:
 
 Example:
 
-	create view t_view as 
+	create view t_view as
 		select s1,s2,t1.id from t1,t2 where t1.id=t2.id order by s2;
 
-	create view t_view_alias (seg1, seg2, id) as 
+	create view t_view_alias (seg1, seg2, id) as
 		select s1,s2,t1.id from t1,t2 where t1.id=t2.id order by s2;
 
 ## View Algorithm
@@ -719,10 +728,10 @@ Example:
 
 比如:
 
-	create e_age_view as 
+	create e_age_view as
 		select * from e_view where age >20
 		With LOCAL CHECK OPTION;
-	create e_view as 
+	create e_view as
 		select * from e where salary>5;
 
 当执行以下语句会违反内嵌视图`e_view` 对salary 的限制`salary>5`：
@@ -773,7 +782,7 @@ Transaction 具备ACID特点：
 	事务内的操作序列不受其它进程或者线程干扰. 也就是操作不可分割
 2. 一致性(Consistency):
 	要么所有的操作都成功(commit)，要么所有的操作都失败(rollback), 不会出现数据不一致的情况
-3. 隔离性(Isolation): 
+3. 隔离性(Isolation):
 	未完成的操作序列必须与系统隔离，直到事务完成(commit)为止。又称独立性
 3. 持久性(Durability):
 	所有提交的数据都应该以某种方式保存，系统一旦出现故障后可以成功恢复
@@ -802,7 +811,7 @@ Transaction 具备ACID特点：
 > 注意`start transaction` 与 `begin` 不会修改`autocommit` 变量. 但是它们的作用是`临时性的禁用了autocommit`.
 
 ## Excute Transaction
-在`commit` `rollback` 之前，任务数据修改都不会生效. 
+在`commit` `rollback` 之前，任务数据修改都不会生效.
 
 	mysql> COMMIT
 	mysql> ROLLBACK
@@ -819,7 +828,7 @@ Transaction 具备ACID特点：
 
 	SELECT [select_options] INTO OUTFILE 'filename'
 		[Export options] #与LOAD DATA INFILE 的options 一样(除了LOCAL,LOW_PRIORITY|CONCURRENT)
-		FROM table_name 
+		FROM table_name
 		[additional select options];
 
 The file `output.txt` is defaultly stored on server's datadir(On mac OSX: /usr/local/var/mysql/). And it cannot override an existing file
@@ -836,8 +845,8 @@ Refer: [mysql-conf](/p/mysql-conf)
 
 ## Load Data
 
-	LOAD DATA [LOW_PRIORITY | CONCURRENT] [LOCAL] INFILE 'file_name' 
-					#LOW_PRIORITY 低优先，待没有客户端读取数据时再执行 
+	LOAD DATA [LOW_PRIORITY | CONCURRENT] [LOCAL] INFILE 'file_name'
+					#LOW_PRIORITY 低优先，待没有客户端读取数据时再执行
 					# CONNECTION:配合MyISAM,执行时允许其它线程获取数据
 					# LOCAL 目标文件必须位于客户端，默认是读取服务器端的文件
 		[REPLACE | IGNORE]	#REPLACE: 主键冲突或者唯一键冲突时
@@ -871,8 +880,8 @@ Before you use `LOCAL INFILE`, you  should set 'local-infile' in `[mysql]` or st
 mysqlimport 是load data infile 的命令行版本
 
 	mysqlimport [OPTIONS] db_name tb_name.txt tb2.txt ...
-		--columns=id,name 
-		--debug 
+		--columns=id,name
+		--debug
 		--delete  # 导入目录前删除数据
 		--replace, -r
 		--silent, -s
