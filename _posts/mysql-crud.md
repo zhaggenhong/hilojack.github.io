@@ -407,7 +407,9 @@ It will return NULL if one of the fields is NULL. You could use IFNULL to solve 
 	| Peter | PM   |   3100 |
 	+-------+------+--------+
 
-使用`group by` 时，非聚合的字段`dept`是随机的，与`max` 无关
+	MariaDB [test]> select * from t group by i%2 desc;
+
+使用`group by` 时，非聚合的字段`dept`是不确定的，与`max` 无关
 
 	MariaDB [test]> select  dept,max(salary) from emp group by dept;
 	+------+-------------+

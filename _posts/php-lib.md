@@ -156,6 +156,7 @@ Example:
 	print_r(array_count_values($array));//1=>2 hello=>2 world=>1
 
 ### array_unique
+
 	array_unique();
 
 ## sort 排序
@@ -470,9 +471,11 @@ simpleXML
 ## Operation
 
 ### get
+
 	echo $movies->movie[0]->plot;
 
 ### exist
+
 	isset($movies->movie);
 
 ### add
@@ -489,6 +492,7 @@ simpleXML
 
 
 ### foreach
+
 	foreach($movies as $k => $movie){
 		echo $movie->title;
 	}
@@ -504,7 +508,6 @@ simpleXML
 	2
 	php > echo 127 & 63;
 	63
-
 
 # String
 
