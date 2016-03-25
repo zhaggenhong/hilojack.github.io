@@ -54,6 +54,8 @@ check for default log path assigned by compile:
 
 	access_log /var/log/nginx/access.log;
 	error_log /var/log/nginx/error.log;
+	access_log /tmp/nginx/access.log;
+	error_log /tmp/nginx/error.log;
 
 	events {
 		debug_connection 127.0.0.1;
