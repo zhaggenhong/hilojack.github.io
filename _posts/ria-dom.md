@@ -423,6 +423,15 @@ Example 浮层:
 
 # Event
 
+## DOMContentLoaded and load
+Chrome，Safari – Chrome和Safari中网络选项还展示了两项额外的信息，DOMContentLoaded事件触发的时间用蓝线表示，load事件触发的时间用红线表示。
+如果这两个事件同时发生，这条线会显示为紫色。
+
+- DOMContentLoaded代表的那条线表示当浏览器已经完成解析文档（但其他资源比如图片和样式表可以还没下载完成），
+- load事件代表的线表示所有资源都已经加载完成了。
+
+
+
 ## 一般事件
 
     //冒泡事件

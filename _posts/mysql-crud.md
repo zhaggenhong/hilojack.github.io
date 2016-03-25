@@ -419,6 +419,7 @@ It will return NULL if one of the fields is NULL. You could use IFNULL to solve 
 	| RD   |        5000 |
 	+------+-------------+
 
+## group and where
 放在group by 之前：
 
 	where
@@ -428,6 +429,10 @@ It will return NULL if one of the fields is NULL. You could use IFNULL to solve 
 	order by
 	limit
 	having(相当于where)
+
+## multi group
+
+	group by primary_col [desc], second_col [asc];
 
 ## sum for distinct
 
@@ -469,7 +474,13 @@ order 也必须放在最后：
 	+------+-------------+-------------+
 
 ## Group order by
-Order by 需要放到gropu by 的后面做最后处理
+Order by 需要放到group by 的后面做最后处理
+
+	[GROUP BY {col_name | expr | position}
+      [ASC | DESC], ... [WITH ROLLUP]]
+    [HAVING where_condition]
+    [ORDER BY {col_name | expr | position}
+      [ASC | DESC], ...]
 
 ## 与distinct 比较
 如果id 是索引的，那么它会在mysql 内部转为`group by`: 见 http://ccvita.com/156.html

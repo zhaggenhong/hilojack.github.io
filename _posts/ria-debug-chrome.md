@@ -29,18 +29,41 @@ chrome://net-internals/#spdy
 # shortcuts
 建议使用vimium
 
+# 保存你的更改
+在工具中即时编辑样式或JavaScript很爽。但当你高高兴兴地做了修改，然后又要在源代码中重新实现一遍就不那么爽了。
+
+Chrome和Safari的资源选项卡中提供了一项贴心的功能：它保存了你每次修改的版本（按Ctrl + S之后），还允许你往前或往后查看每个版本的变化。
+
+你修改过的文件名旁边会出现一个箭头图标，表示它可以展开/收起以查看修改过的版本列表。在Chrome中，右键点击文件名可以选择保存这个文件。不过在Safari中你只能悲剧地复制和粘贴了。
+
 # Element
 - Dom Breakpoint
 
-# inspect element
-Select element and inspect it
+## Select element and inspect it
 
 	$0 current select 
 	$1 last select 
 	$2 the last 2'th select 
 	$3 the last 3'th select 
 
+## watch Element
+当DOM改变时创建一个断点
+
+仅仅想找出是哪段脚本改变了某个元素的属性，简单地选中你要监视的元素，右键点击它，选择中断条件：
+
+- Break on Subtree Modification
+- Break on Attributes Modification
+- Break on Node Removal
+
+# var
+所有浏览器中的一个常用工具，“监视”允许通过脚本选项卡右上栏的方便的区域来观察一组变量。要观察一个变量很简单，只要输入它的名字，“监视”将保持它最新的值。
+
 # console
+
+## 实时编辑和执行JavaScript代码
+
+Chrome–在Chrome中，你可以直接在页面中进行编辑，并不需要使用单独的编辑器或者重新加载页面。简单地双击你想要改变代码，然后输入新的代码！按Ctrl + S （Mac，Cmd+S）保存。
+
 
 ## console log
 
