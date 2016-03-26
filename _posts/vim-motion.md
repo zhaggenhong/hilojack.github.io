@@ -2,7 +2,7 @@
 layout: page
 title:	vim-motion
 category: blog
-description: 
+description:
 ---
 # Preface
 
@@ -11,6 +11,12 @@ description:
 # insert
 
 	gI		Insert in column 1
+
+# line
+
+	. current line
+	+ next line
+	+4 next 4'th line
 
 # marks
 marks 不是保存在register 中的，这个注意一下
@@ -32,10 +38,9 @@ Last jump
 modified && insert stop && changed
 
 	'. 			To the position the latest modified.
-	'^  `^		To the position where the cursor was the last time when Insert mode was stopped.  
-				This is used by the |gi| command. 
-	`[  `]		To the first/last character of the previously changed or yanked text. 
-
+	'^  `^		To the position where the cursor was the last time when Insert mode was stopped.
+				This is used by the |gi| command.
+	`[  `]		To the first/last character of the previously changed or yanked text.
 
 Visual mode
 
@@ -56,26 +61,26 @@ sentence
 	`{mark}		jump to pos defined by mark
 	'{mark}		jump to the line head of pos defined by mark
 
-	'{a-z}  `{a-z}		
+	'{a-z}  `{a-z}
 			Jump to the mark {a-z} in the current buffer.
 			with sigle quote, jump to the begining of the line
 
-	'{A-Z0-9}  `{A-Z0-9}	
+	'{A-Z0-9}  `{A-Z0-9}
 			To the mark {A-Z0-9} in the file where it was set (not
-				a motion command when in another file). global 
+				a motion command when in another file). global
 
 	g'{mark}  g`{mark}
 				Jump to the {mark}, but don't change the jumplist when
-				jumping within the current buffer.  
+				jumping within the current buffer.
 
 # jumplist, jumps
-A "jump" is one of the following commands: 
+A "jump" is one of the following commands:
 
-	"'", "`", "G", "/", "?", "n", "N", "%", "(", ")", "[[", "]]", "{", "}", ":s", ":tag", "L", "M", "H" 
-	and the commands that start editing a new file.  
-	
+	"'", "`", "G", "/", "?", "n", "N", "%", "(", ")", "[[", "]]", "{", "}", ":s", ":tag", "L", "M", "H"
+	and the commands that start editing a new file.
+
 If you make the cursor "jump" with one of these commands, the position of the cursor before the jump is
-remembered. 
+remembered.
 
 	ctrl-o 跳到旧的jump (jump backward in insert & normal mode)
 	ctrl-i/<TAB> 跳到新的jump (jump forward in normal mode)
@@ -94,7 +99,7 @@ ps: <C-O> 或者 <C-I>/<TAB> 前面都可加数字(jumpid),比如
 
 	g; "跳到上次修改
 	g, "跳到新的修改
-	`. "跳到上次修改 
+	`. "跳到上次修改
 
 # Various motions
 
@@ -103,7 +108,7 @@ matched
 
 	% 			括号对(可通过:set matchpairs?查询支持哪些括号对)
 
-parent 
+parent
 
 	[( ])		like %, previous / next *unmatched* parent "()"
 	[{ ]}		like %, previous / next *unmatched* parent "{}"
@@ -124,7 +129,7 @@ hilight bracket:
 	?{	/}		前/后一个{ }
 
 `:h section , :h 'sections'` to see sectin defines
-A section start at the nroff macros ".SH", ".NH", ".H", ".HU", ".nh" and ".sh".  
+A section start at the nroff macros ".SH", ".NH", ".H", ".HU", ".nh" and ".sh".
 
 	[[	]]	"{" opening braces,
 			1. backward/forward secions(A)
@@ -143,7 +148,7 @@ custom section:
 
 	function! s:NextSection(type, backwards)
 		if a:type == 1
-			let pattern = '\v(\n\n^\S|%^)' 
+			let pattern = '\v(\n\n^\S|%^)'
 			let flags = 'e'
 		elseif a:type == 2
 			let pattern = '\v^\S.*\=.*:$'

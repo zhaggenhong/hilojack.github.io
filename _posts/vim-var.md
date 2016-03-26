@@ -1,13 +1,13 @@
 ---
 layout: page
-title:	
+title:
 category: blog
-description: 
+description:
 ---
 # Preface
 本文会系统描述vim 的语法，如果想了解具体选项和操作技巧，参考我的vim 笔记
 
-主要参考 [book]: 
+主要参考 [book]:
 http://learnvimscriptthehardway.stevelosh.com/ (中文)
 http://learnvimscriptthehardway.onefloweroneworld.com/ (英文)
 
@@ -16,14 +16,14 @@ http://learnvimscriptthehardway.onefloweroneworld.com/ (英文)
 
 It lists the following types:
 
-    (nothing) In a function: local to a function; otherwise: global 
-    buffer-variable    b:     Local to the current buffer.                          
-    window-variable    w:     Local to the current window.                          
-    tabpage-variable   t:     Local to the current tab page.                        
-    global-variable    g:     Global.                                               
-    local-variable     l:     Local to a function.                                  
-    script-variable    s:     Local to a :source'ed Vim script.                     
-    function-argument  a:     Function argument (only inside a function).           
+    (nothing) In a function: local to a function; otherwise: global
+    buffer-variable    b:     Local to the current buffer.
+    window-variable    w:     Local to the current window.
+    tabpage-variable   t:     Local to the current tab page.
+    global-variable    g:     Global.
+    local-variable     l:     Local to a function.
+    script-variable    s:     Local to a :source'ed Vim script.
+    function-argument  a:     Function argument (only inside a function).
     vim-variable       v:     Global, predefined by Vim.
 
 ## buffer var
@@ -66,7 +66,7 @@ Explain:
 	echo 017	"15
 	echo 019	"19
 
-### float: 
+### float:
 >  :help floating-point-precision
 >  :help Float
 
@@ -78,13 +78,22 @@ operator
 
 	echo 5%2	"1
 	echo 5/2 	"2
+	echo 5-2 	"3
+	echo 5+2 	"7
 	echo 5/2.0 	"2.5
+
+### bit operator
+
+	and(12,4) 4
+	or(0x01,0x10)
+	xor(x,y)
+	pow(x,y)
 
 ## String
 
-	echo '\\' 
+	echo '\\'
 		\\
-	echo "\\" 
+	echo "\\"
 		\
 	echo 'a'		'b'
 		a b
@@ -93,6 +102,7 @@ operator
 
 ### match
 
+	echo match(string, search);//return pos(start from 0, like strpos)
 	echo match('abc', 'bc');//1
 
 ### stridx(strpos)
@@ -102,7 +112,7 @@ operator
 	:echo stridx("Starting point", "start")   -1
 
 ### index
-> :h List, 
+> :h List,
 
 	str[start:end]		"include end"
 	str[:end]			"include end"
@@ -179,8 +189,8 @@ Note that double quotes are used.
 1. `echom` 会以特殊形式打印不可见字符, `echo` 则不会：
 2. `echom` 只能打印字符串
 
-	echo "\n" 
-	echom "\n" 
+	echo "\n"
+	echom "\n"
 
 # Dictionary
 > :h Dictionary
@@ -189,7 +199,7 @@ Note that double quotes are used.
 
 	:echo {'a': 1, 100: 'foo'}
 	:echo {'a': 1, 100: 'foo',}
-		{'a': 1, '100': 'foo'}  	
+		{'a': 1, '100': 'foo'}
 
 ## index
 
@@ -230,15 +240,16 @@ has_key
 items
 
 	:echo items({'a': 100, 'b': 200})
-		[['a', 100], ['b', 200]]  
+		[['a', 100], ['b', 200]]
 
 
-# List
+# List(Array)
 > :h List
 
 	:echo ['foo', [3, 'bar']]
 	:let list=['foo', [3, 'bar']]
-	
+
+	# swap
 	let [a,b] = [1,2]
 
 ## index
@@ -263,7 +274,7 @@ items
 
 	index(list, value)	" return -1, if there is no value found
 
-## strint list
+## string list
 
 	'abcd'[1:]
 	'abcd'[:-1]	"abcd
@@ -274,6 +285,10 @@ items
 
 	echo ['a', 'b'] + ['c']
 
+append list
+
+	let arr+=[4,5,6]
+
 ## list function
 
 	add(list, value)
@@ -283,7 +298,8 @@ items
 
 	join(foo, ',')
 	echo split("one two", " ")
-	
+	echo split("one\ntwo", "\n")
+
 ## reverse
 
 	:call reverse(list)
@@ -297,7 +313,7 @@ items
 ## map
 
 	:echo map([1,2,3], '"> " . v:val . " <"')
-		['> 1 <', '> 2 <', '> 3 <'] 
+		['> 1 <', '> 2 <', '> 3 <']
 
 # deepcopy
 list and dict is assigned by reference:

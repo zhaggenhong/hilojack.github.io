@@ -136,6 +136,11 @@ return list
 
 > refer `# Window`
 
+### argument file
+
+	argc()				Number	number of files in the argument list
+	argv( {nr})			String	{nr} entry of the argument list
+
 ### Read Only 只读
 
 	vim -R a.txt　#加!也可以修改
