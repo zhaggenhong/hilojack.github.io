@@ -8,10 +8,15 @@ description:
 
 
 # function
-var 默认是global 的
+var 默认:
+
+- assignment (local)
+- none-assignment (global)
+
+强制global:
 
 	def func(s1,s2=None):
-		global X
+		global X;		#放在使用前
 		print global_var
 		func.count++
 		local_var=4
@@ -133,6 +138,15 @@ lambda 不能显式使用return :
 		return None
 	finally:
 		do sth.
+
+## switch
+
+	def zero():
+		print("zero")
+	one = lambda:print('one')
+
+	{'a':lambda x: print(x), 'b':zero}['a'](2)
+		2
 
 ## if
 

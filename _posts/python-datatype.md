@@ -229,7 +229,7 @@ with no space and new line:
 
 ## dict to object
 
-	class Employee(object):
+	class Dict2Obj(object):
 		def __init__(self, initial_data):
 			for key in initial_data:
 				setattr(self, key, initial_data[key])
