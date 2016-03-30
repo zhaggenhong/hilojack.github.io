@@ -29,6 +29,10 @@ Insert update delete select
 	select last_insert_id('1234');
 	select last_insert_id();//1234
 
+> 手动指定id时，last_insert_id() 不改变
+> insert+DUPLICATE update 中（update） 时，last_insert_id() 不改变
+> 只有当下次insert 发生 并且使用 自增id 时, last_insert_id() 才发生改变
+
 ### subquery 子查询
 subquery 是嵌入另一条语句的select 语句. 他是数据集合
 
@@ -54,9 +58,8 @@ subquery 是嵌入另一条语句的select 语句. 他是数据集合
 > 先查tb 的一条记录，然后将这条记录放到内层查询，如果内层查询有结果，则where 返回true 命中此条记录。然后继续下一条tb 中的记录
 
 	select * from t1 where exists(select * from t2 where t2.id=t1.id);
-
 	select * from t1 where exists(select * from t2,t1 where t2.id=t1.id);
-		same as: select * from t2 left join t1 on t2.id=t1.id, so it is always true
+								select * from t2,t1 where t2.id=t1.id;//always true
 
 构建多表的查询叫联结(join)，与join 相比subquery 更简单直观
 
@@ -162,7 +165,7 @@ import
 	insert into table1 (select * from table2);
 	insert into table1 select * from table2;
 
-insert_id:
+insert_id(php):
 
 	mysql_insert_id();
 	$mysqli->insert_id;
@@ -313,7 +316,7 @@ condion 可以通过`On` 使用and or 等
 	On (cond1 and cond2)
 
 ## Outer Join
-对于如下数据，Inner Join 会漏掉了capital=3 ,如果不想漏掉它， 此时应该考虑`{Left| Right} [OUTER] Join`(OUTER 是可选的)
+对于如下数据，Inner Join 会漏掉了capital=3 ,如果不想漏掉它， 此时应该考虑`{Left| Right} [OUTER] Join`(OUTER 是可有可无的)
 Left Join 的结果集包括所有的Left, Right Join 则包括了所有的Right 结果集
 
 	MariaDB [test]> select * from country;

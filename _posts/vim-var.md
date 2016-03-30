@@ -119,6 +119,12 @@ operator
 	xor(x,y)
 	pow(x,y)
 
+### convert string to number
+
+	:echom "hello" + 10		"10
+	:echom "10hello" + 10	"20
+	:echom "hello10" + 10	"10
+
 ## String
 
 	echo '\\'

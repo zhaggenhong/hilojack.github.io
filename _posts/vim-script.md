@@ -50,9 +50,9 @@ execute commands:
 
 ## if
 
-	:if 0
+	:if ! 0
 	:    echom "if"
-	:elseif "nope!"
+	:elseif ! "nope!"
 	:    echom "elseif"
 	:else
 	:    echom "finally!"
@@ -66,13 +66,19 @@ if string
 	:echom "10hello" + 10	"20
 	:echom "hello10" + 10	"10
 
-	if "something"
+	if ! "something"
 	    echom "false"
 	endif
 
 	if "123"
 	    echom "true"
 	endif
+
+## comment expression
+
+	:" This is a comment
+	:imap a b | " This is a comment
+	:imap a b \| |" This is a comment
 
 ## comparision expression
 > Read :help expr4 to see all the available comparison operators.
