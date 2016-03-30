@@ -53,6 +53,7 @@ Socks5 takes precedence over -x:
 > This option overrides any previous use of -x, --proxy, as they are mutually exclusive.
 
 	--socks5 <host[:port]>
+	--socks5 127.0.0.1:1080
 
 ## via proxy
 global:
