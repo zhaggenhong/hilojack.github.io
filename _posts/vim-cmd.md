@@ -92,7 +92,8 @@ multi args:
 	:exe "echom" "'Hello," "world!'"
 
 It will parse such args:
-	function,
+
+	function: eg. expand(),etc.
 
 	:exec "!echo" expand('%:')
 
