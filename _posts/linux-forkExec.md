@@ -2,7 +2,7 @@
 layout: page
 title:	linux 下的Fork 与 Exec
 category: blog
-description: 
+description:
 ---
 # Preface
 多进程的的内容包括进程控制, 进程通信, 进程本身的结构.
@@ -45,7 +45,7 @@ exec命令示例
 
 当我们执行exec 3>test时：
 
-    root@localhost:/dev/fd#exec 3>/root/test/test 
+    root@localhost:/dev/fd#exec 3>/root/test/test
     root@localhost:/dev/fd#ls
     0  1  2  255  3
     root@localhost:/dev/fd#
@@ -76,8 +76,8 @@ kill -15 默认向进程发送GIGTERM 信号
 	SEGV	11	segmentfault
 
 # Rerference
-- [memory]   
-- [fork]  
+- [memory]
+- [fork]
 
 [fork]: http://www.cnblogs.com/hicjiajia/archive/2011/01/20/1940154.html "x1"
 [memory]: http://arhythmically40.rssing.com/chan-19541204/all_p4.html#item76
