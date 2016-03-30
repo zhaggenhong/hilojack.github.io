@@ -6,6 +6,104 @@ description:
 ---
 # Preface
 
+# User
+
+	import os, stat
+
+    uid = os.getuid()
+    euid = os.geteuid()
+    gid = os.getgid()
+    egid = os.getegid()
+
+# Directory
+
+## glob files
+Starting with Python version 3.5, the glob module supports the `"**"` directive for recursive
+(which is parsed only if you pass `recursive flag`):
+
+	import glob
+	glob.glob(pathname, *, recursive=False); # list
+	glob.iglob(pathname, *, recursive=False); # iterator
+
+	for filename in glob.iglob('src/**/*.c', recursive=True):
+		print(filename)
+
+If you need an list, just use `glob.glob` instead of `glob.iglob`.
+
+## access permision
+Use the real uid/gid to test for access to a path.
+
+	access(path, mode, *, dir_fd=None, effective_ids=False, follow_symlinks=True)
+		mode
+			Operating-system mode bitfield.  Can be F_OK to test existence,
+			or the inclusive-OR of R_OK, W_OK, and X_OK.
+
+example:
+
+	if os.access(file, os.R_OK):
+		# Do something
+	else:
+		if not os.access(file, os.R_OK):
+			print(file, "is not readable")
+		else:
+			print("Something went wrong with file/dir", file)
+		break
+
+### chmod
+
+	os.chmod(path, mode)
+	os.chown(path, uid, gid)
+
+## file.stat
+
+	import os
+	st = os.stat(path)
+    if st.st_uid == euid:
+        return st.st_mode & stat.S_IRUSR != 0
+
+## isfile
+
+	os.path.isfile("bob.txt") # Does bob.txt exist?  Is it a file, or a directory?
+	os.path.isdir("bob")
+
+## mkdir/rename/delete/
+
+	os.mkdir(dir,mode=511)
+		os.makedirs(newDir/dir);//recursive
+
+### move file:
+
+	os.rename(fileA, existedDir/fileB)
+	os.move(fileA, existedDir/fileB)
+		os.renames('dirA', 'newDir/DirB')//auto create dir
+		os.renames('a', 'c/')// rename a to c (rmdir c if c is existed)
+
+> `shutil.move()` uses `os.rename()` if the destination is on the current filesystem. 
+Otherwise, `shutil.move()` copies the source to destination using `shutil.copy2()` and then removes the source.
+
+### copy file
+`copy2` is also often useful, it preserves the `original modification and access info (mtime and atime)` in the file metadata.
+
+	shutil.copyfile(src, existedDir/dst)
+	shutil.copy2(src, existedDir/dst)
+
+### remove file
+
+	os.rmdir(empty_dir);	//empty dir
+		shutil.rmtree(dir_only)
+	os.remove(file_only);	//file_only
+
+## current directory
+
+	os.getcwd()
+	os.chdir(path)
+	os.chroot(path)
+
+## mkfile
+
+	os.mkfifo(path, mode=438, *, dir_fd=None)
+        Create a "fifo" (a POSIX named pipe).
+
 # File
 
 	print open('a.php').read(); //cat a.php
@@ -16,6 +114,17 @@ stdin file
 	import fileinput
 	for line in fileinput.input():
 		print(line)
+
+## IOError
+
+	import glob, os
+	try:
+		for file in glob.glob("\\*.txt"):
+			with open(file) as fp:
+				# do something with file
+	except IOError:
+		print("could not read", file)
+
 
 ## Open File
 

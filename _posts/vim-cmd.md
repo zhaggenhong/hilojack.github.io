@@ -91,6 +91,11 @@ multi args:
 		:arg1 arg2 arg3 will be concat to command seperated by "<space>"
 	:exe "echom" "'Hello," "world!'"
 
+It will parse such args:
+	function,
+
+	:exec "!echo" expand('%:')
+
 ## multi command
 
 	:cmd1|cmd2|cmd3
@@ -162,7 +167,10 @@ Syntax:
 
 	# 替换式
 	!{motion}{program} "program处理完了后，替换motion
-	:[range]!{program} "program处理完了后，替换range
+	:{range}!{program} "program处理完了后，替换range
+
+	# 插入式
+	:{range}r!{program} "program处理完了后，替换range
 
 	# 非替换式(仅:w)
 	:[range]{cmd} !{program} "自带cmd 处理内容时，重定向文件描述符到stdin，program 读取stdin
@@ -183,11 +191,26 @@ eg:
 	:[range]w[rite] [++opt] !{cmd}
 	:w !sudo tee %
 
+## External shell
+`[r]!{cmd}` parse as `!expand(cmd)`
+
+	:!echo a%b
+		same as: :exec '!'.expand('a%b')
+
 ## system
 
 	echo system('ls')
 	echo system('wc -c', stdin)
 	echo system('cat', 'sth.')
+
+## Escaping Shell Command Arguments
+`shellescape()` is a shell function(即php中的`escapeshellarg`), and `expand()` is used to expand vim's special string like'<cWORD>':
+
+	:echo shellescape("<cWORD>")
+		'<cWORD>'
+	:echom shellescape(expand("<cWORD>"))
+	:nnoremap <leader>g :exe "grep -R " . shellescape(expand("<cWORD>")) . " ."<cr>
+
 
 # user defined command
 The rules of user defined commmand
@@ -265,7 +288,7 @@ Executing `script2.vim` will result in `None` being echoed.
 > Calling a function may be an alternative.
 
 #### Completion behavior
-By default, the arguments of user defined commands do not undergo completion.	
+By default, the arguments of user defined commands do not undergo completion.
 However, by specifying one or the other of the following attributes, argument
 completion can be enabled:
 
@@ -324,10 +347,10 @@ function with the following signature: >
 	endfun
 
 #### 3. Range handling,
-By default, `user-defined` commands do not accept a line number range.	
+By default, `user-defined` commands do not accept a line number range.
 
-However, it is possible to specify that the command does take a range,	
-	either in the `line number` position (`-range=N`, like the `|:split|` command)	
+However, it is possible to specify that the command does take a range,
+	either in the `line number` position (`-range=N`, like the `|:split|` command)
 	or as a `"count"` argument (`-count=N`, like the `|:Next|` command).
 
 Possible attributes are:
@@ -400,7 +423,7 @@ The valid escape sequences are
 
 #### q-args(signle)
 If the first two characters of an escape sequence are `q-` (for example, `<q-args>`)
-then `the value is quoted` in such a way as to make it a valid value for use in an expression. 
+then `the value is quoted` in such a way as to make it a valid value for use in an expression.
 
 > This uses the argument as one single value.
 

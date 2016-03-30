@@ -25,7 +25,7 @@ https://www.360us.net/article/34.html
 		print('ValueError:', e)
 	except ZeroDivisionError as e:
 		print('ZeroDivisionError:', e)
-	else:
+	except:
 		print('no error!')
 	finally:
 		print('finally...')

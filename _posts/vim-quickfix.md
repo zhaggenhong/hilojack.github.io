@@ -79,7 +79,7 @@ grep will replace `<cWORD>` with "the long WORD under the cursor"
 	:grep -R <cword> .
 
 ## Escaping Shell Command Arguments
-shellescape() is a shell function, and `expand()` is used to expand vim's special string like'<cWORD>':
+shellescape() is a shell function(即php中的`escapeshellarg`), and `expand()` is used to expand vim's special string like'<cWORD>':
 
 	:echo shellescape("<cWORD>") 
 		'<cWORD>'

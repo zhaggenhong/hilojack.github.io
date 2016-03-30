@@ -1,8 +1,8 @@
 ---
 layout: page
-title:	
+title:
 category: blog
-description: 
+description:
 ---
 # Preface
 
@@ -45,6 +45,33 @@ get filetype:
 
 # Directory
 
+## Directory Manager
+nerdtree 是一个非常强大的文件管理插件
+
+以下命令都可以调用插件查看文件目录，
+你看上方会得到相应的帮助。
+其中-会返回上一级，x 会启动文件管理器，D会删除文件
+
+	:Sex [dir]//切割窗口并浏览文件
+	:Vex	split vertical
+	:edit dir  #dir可以为ftp://
+	:Explore dir #dir可以为ftp://
+	:Te dir #以tab打开一个dir
+	ctrl+o "非常有用的，返回上一个位置:
+
+### 当前目录
+你可以查看当前目录
+
+	:pwd :call getcwd()
+	#在当前窗口(lcd)下设置的当前目录
+	:lcd /etc
+	#重设所有窗口的当前目录（除了使用lcd的窗口）
+	:cd /etc
+		:cd 		change to HOME directory
+		:cd %:h		change to directory of current file
+		:cd -		change to previous current directory
+		
+
 ## Path
 > :h expand()
 > :h filename-modifiers
@@ -59,6 +86,20 @@ get filetype:
 	:. reduce file name to current directory
 	:r root of the file name(without extension)
 	:e extension of file name
+
+### buffer
+Register `%` contains the name of the current file,
+and register `#` contains the name of the alternate file.
+string `~` replace HOME
+
+	:echo @% 				def/my.txt	directory/name of file (relative to the current working directory of /abc)
+	:echo expand('%:t') 	my.txt		name of file ('tail')
+	:echo expand('%:t:r') 	my			name of filename (without extension)
+	:echo expand('%:p') 	/abc/def/my.txt	full path
+	:echo expand('%:p:h')	/abc/def	directory containing file ('head')
+	:echo expand('%:p:h:t')	def			First get the full path with :p (/abc/def/my.txt),
+										then get the head of that with :h (/abc/def),
+										then get the tail of that with :t (def)
 
 ### wildcard
 > :h wildcard
@@ -80,9 +121,14 @@ directory.  Example: >
 ### filename
 
 	fnameescape('./a b')
+		./a\ b
 	simplify("./dir/.././/file/") == "./file/"
+	simplify("./a b")
+		./a b
 
 ## list file
+
+	:echo glob('~/*')
 
 	:echo globpath('.', '*')
 	:echo globpath('.', '*.txt')
@@ -109,6 +155,11 @@ return list
 	getline({lnum}) "get line of lnum
 	getline('.')
 
+## setline
+
+	let result = system('cat', 'sth.')
+	call setline(line('.'), getline('.') . ' ' . result)
+
 ## indent
 
 	function! IndentLevel(lnum)
@@ -116,6 +167,7 @@ return list
 	endfunction
 
 ## append
+insert string after line {lnum}
 
 	setlocal buftype=nofile
     call append(lnum, split('a,b', ','))
@@ -167,7 +219,7 @@ return list
 ## Write
 append(without change reload)
 
-	:[range]w >> 
+	:[range]w >>
 	:[range]w >> {file}
 
 ## Exit
@@ -178,11 +230,11 @@ append(without change reload)
 保存
 
 	:wa 全部保存
-	:wqa 
+	:wqa
 
 write when changes exist
 
-	:x :xit :exit 
+	:x :xit :exit
 
 不保存
 
@@ -204,7 +256,7 @@ write when changes exist
 	/* vim:set tabstop=7: */
 
 模式行的格式是(两边可放任意字符，建议是/* */)：
-	
+
 	any-text vim:set name=value ...: any-text
 
 模式行的数量可以限制，比如：

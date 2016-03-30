@@ -54,6 +54,36 @@ It lists the following types:
 	  finish
 	endif
 
+exists:
+
+	exists({expr})	The result is a Number, which is non-zero if {expr} is
+			&option-name
+			+option-name
+			$ENVNAME
+			*funcname
+			varname
+			:cmdname	Ex command: built-in command, user command or command modifier
+					Returns:
+					1  for match with start of a command
+					2  full match with a command
+					3  matches several user commands
+			:2match
+						The |:2match| command.
+			:3match
+						The |:3match| command.
+			#event
+						autocommand defined for this event
+			#event#pattern
+						autocommand defined for this event and pattern
+			#group
+						autocommand group exists
+			#group#event
+						autocommand defined for this group and event.
+			#group#event#pattern
+						autocommand defined for this group, event and pattern.
+			##event
+						autocommand for this event is supported.
+
 Explain:
 
 	:finish "like function return"
@@ -142,6 +172,7 @@ lower or upper case
 
 	echo 'a' . 'b'
 	echo 10 . 'b'		"10b
+	echo 10'b'			"10 b
 	echo 10.1 . 'b'		"101b
 
 ### expr-quote

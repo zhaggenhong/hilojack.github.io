@@ -134,9 +134,22 @@ global -> caller -> callback(anonymous)
 	switch(n) { case 1: code break;}
 	带类型匹配
 
+# break
+
+	break [label];
+
+	function foo () {
+		dance:
+		for(var k = 0; k < 4; k++){
+			for(var m = 0; m < 4; m++){
+				if(m == 2){
+					break dance;
+				}
+			}
+		}
+	}
+
 # Variable
-
-
 强制类型转换:
 
 	Boolean(value) - 把给定的值转换成 Boolean 型；
@@ -340,6 +353,10 @@ short:
 	.slice(start, [end]) //start, end可为负
 	#case
 	.toLowerCase() / .toUpperCase()
+
+### .trim()
+
+	' a '.trim()
 
 ### unicode
 

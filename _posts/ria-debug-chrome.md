@@ -36,6 +36,10 @@ Chrome和Safari的资源选项卡中提供了一项贴心的功能：它保存�
 
 你修改过的文件名旁边会出现一个箭头图标，表示它可以展开/收起以查看修改过的版本列表。在Chrome中，右键点击文件名可以选择保存这个文件。不过在Safari中你只能悲剧地复制和粘贴了。
 
+# Event Listeners
+change:
+	input#url
+
 # Element
 - Dom Breakpoint
 

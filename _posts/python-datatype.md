@@ -352,6 +352,11 @@ The difference between list and tuple:
 
 	del tuple[0] error
 
+## list join
+
+	list1 = [1, 2, 3]
+	str1 = ''.join(str(e) for e in list1)
+
 ## loop list
 
 	for idx, val in enumerate(ints):
@@ -488,11 +493,13 @@ Syntax:
 	print [i for i in range(100) if i%2 == 1]
 
 ## map
-
+<python3
 
 	# map的func为None 作用同zip()
-	print map(None, [4, 5, 6])
+	print(map(None, [4, 5, 6]))
 	print map(None, [1, 2, 3], [4, 5, 6])
+		>>> print(map(None, [4, 5, 6], [5,6,7]))
+		[(4, 5), (5, 6), (6, 7)]
 
 	# map 针对一个序列
 	print map(lambda x: x*2, [4, 5, 6])
@@ -547,3 +554,22 @@ out:
 
 	print x**2; # x^2
 
+## isNumber
+For int use this:
+
+	>>> "1221323".isdigit()
+	True
+
+But for float we need some tricks ;-). Every float number has one point...
+
+	>>> "12.34".isdigit()
+	False
+	>>> "12.34".replace('.','',1).isdigit()
+	True
+	>>> "12.3.4".replace('.','',1).isdigit()
+	False
+
+Also for negative numbers just add lstrip():
+
+	>>> '-12'.lstrip('-')
+	'12'

@@ -430,8 +430,6 @@ Chrome，Safari – Chrome和Safari中网络选项还展示了两项额外的信
 - DOMContentLoaded代表的那条线表示当浏览器已经完成解析文档（但其他资源比如图片和样式表可以还没下载完成），
 - load事件代表的线表示所有资源都已经加载完成了。
 
-
-
 ## 一般事件
 
     //冒泡事件
@@ -441,6 +439,22 @@ Chrome，Safari – Chrome和Safari中网络选项还展示了两项额外的信
 	onmouseover 和 onmouseout 事件
 	onmousedown、onmouseup
 	onfocus
+
+### eventNamespace
+This is a namespaced event and the documentation [docs] describes it pretty well:
+
+	$(document).on('click.modal.data-api', '[data-toggle="modal"]', function (e) {
+		//do something
+	});
+
+An event name can be qualified by `event namespaces` that simplify removing or triggering the event.
+
+For example, `click.myPlugin.simple` defines both the `myPlugin` and `simple` namespaces for this particular click event.
+A click event handler attached via that string could be removed with `.off("click.myPlugin")` or `.off("click.simple")` without disturbing other click handlers attached to the elements.
+
+> Namespaces are similar to CSS classes;
+> Namespaces beginning with an underscore `_` are reserved for jQuery's use.
+
 
 ### input,change
 
