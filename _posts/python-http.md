@@ -37,11 +37,12 @@ Passing Parameters In URLs
 
 	>>> r = requests.get("http://httpbin.org/get", params={'key':'val'})
 
-### post json(raw)
 
-	>>> import json
-	>>> payload = {'some': 'data'}
-	>>> r = requests.post(url, data=json.dumps(payload))
+### post data(non-raw)
+
+	>>> print(s.post('http://hilo.sinaapp.com/header.php', data={'a':1}).text)
+
+### post json(raw)
 
 Instead of encoding the dict yourself, you can also pass it directly using the json parameter (added in version 2.4.2) and it will be encoded automatically:
 

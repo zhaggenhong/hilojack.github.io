@@ -38,6 +38,10 @@ It lists the following types:
 
 # var data type
 
+## convert type
+
+	string({expr})
+
 ## check var type
 
 	type({expr})	The result is a Number, depending on the type of {expr}:
@@ -142,10 +146,22 @@ operator
 	echo match('abc', 'bc');//1
 
 ### stridx(strpos)
+### strridx(strpos)
 
 	:echo stridx("An Example", "Example")	     3
 	:echo stridx("Starting point", "Start")    0
 	:echo stridx("Starting point", "start")   -1
+
+	strridx({haystack}, {needle} [, {start}])
+
+### substr strpart()
+
+	strpart(str, start, len)
+
+	strpart("abcdefg", 3, 2)    == "de"
+	strpart("abcdefg", -2, 4)   == "ab"
+	strpart("abcdefg", 5, 4)    == "fg"
+	strpart("abcdefg", 3)	    == "defg"
 
 ### index
 > :h List,
@@ -153,6 +169,21 @@ operator
 	str[start:end]		"include end"
 	str[:end]			"include end"
 	str[start:]		"include end"
+
+## substitute()
+
+	substitute({expr}, {pat}, {sub}, {flags})
+		When {flags} is "g", all matches of {pat} in {expr} are
+			replaced.  Otherwise {flags} should be "".
+
+
+## strip trim
+
+	function! Strip(input_string)
+		return substitute(a:input_string, '^\s*\(.\{-}\)\s*$', '\1', '')
+	endfunction
+
+	let new_var = Strip(var)
 
 ### string func
 strlen
