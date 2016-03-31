@@ -53,7 +53,8 @@ which will show you the commits that are in the remote branch, but not in your c
 
 	--since, --after
 	--until, --before
-	--author='hilojack'
+	--author=<pattern>,
+		--author='hilojack'
 	--committer
 	--no-merges
 	--all-match
@@ -77,6 +78,7 @@ like svn log -v
 	git log -1 --name-only
 	git log -1 --name-status
 	git log -1 --stat
+	git log --name-only --oneline
 
 list all merge file: -m
 
@@ -108,6 +110,7 @@ To show what revision and author last modified each line of a file(single file):
 ## format(--format)
 
 	--format=oneline|short|full|fuller
+		--oneline
 	--format="%h - %an,$ar"
 		%H commit hash
 		%h abbreviation commit hash
@@ -134,7 +137,6 @@ To show what revision and author last modified each line of a file(single file):
 ## merge info
 
 	--graph //merge tree log info
-
 
 ## log context
 

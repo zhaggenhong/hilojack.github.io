@@ -6,7 +6,12 @@ description:
 ---
 # Preface
 
-# git diff
+# git diff category
+
+1. git diff sha1 main/origin: 
+	between commit
+2. git diff --staged // same as : git diff --cached : between cached and commit
+2. git diff // between working and staged
 
 ## diff between commit
 
@@ -30,7 +35,7 @@ Equal:
 	HEAD~3
 	//refer to # revision
 
-## git diff filelist
+### git diff filelist
 
 	git diff --name-only SHA1 SHA2
 

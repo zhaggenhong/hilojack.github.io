@@ -38,6 +38,8 @@ http://vschart.com/compare/blade-template-engine/vs/smarty-template-engine/vs/ha
 		$('<td>').text(item.{$k}){if ! $v@last},{/if}
 	{/foreach}
 
+# display
+
 # var
 
 ## assign var
