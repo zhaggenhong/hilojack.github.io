@@ -536,6 +536,13 @@ simpleXML
 
 	preg_quote('\\1'); \1 -> \\1
 
+preg multiple group capture:(last one)
+
+	php > echo preg_replace('#(\w)*#i', '\1', "abcd");
+	d
+	php > echo preg_replace('#((\w)*)_((\w)*)#i', '\1-\2-\3-\4', "ab_cd");
+	ab-b-cd-d
+
 ## split
 
 	array str_split ( string $string [, int $split_length = 1 ] )
@@ -901,6 +908,16 @@ last week:
 		20151102
 	echo date("Ymd", strtotime("last week"));
 		20151026
+
+last day of last month:
+first day of last month:
+
+	echo date("Ymd", strtotime('-1 month', strtotime('20160531')));
+		20160501
+	echo date("Ymd", strtotime("last day of last month", strtotime('20160531')));
+		20160401
+	echo date("Ymd", strtotime("first day of last month", strtotime('20160531')));
+		20160430
 
 ## locale
 

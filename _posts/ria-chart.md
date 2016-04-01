@@ -1,8 +1,8 @@
 ---
 layout: page
-title:	
+title:
 category: blog
-description: 
+description:
 ---
 # Preface
 
@@ -85,5 +85,5 @@ http://echarts.baidu.com/doc/example/line1.html
 			}
 		]
 	};
-                    
+
 

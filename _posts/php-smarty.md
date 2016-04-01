@@ -30,6 +30,10 @@ http://vschart.com/compare/blade-template-engine/vs/smarty-template-engine/vs/ha
 	$smarty->setTemplateDir('./templates')
 		   ->setCompileDir('./templates_c')
 		   ->setCacheDir('./cache');
+	$smarty->$smarty->left_delimiter = ''
+	$smarty -> auto_literal = false; 
+	$smarty -> left_delimiter = "{{"; 
+	$smarty -> right_delimiter = "}}";
 
 # foreach
 

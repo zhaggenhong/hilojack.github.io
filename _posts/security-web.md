@@ -1,8 +1,8 @@
 ---
 layout: page
-title:	
+title:
 category: blog
-description: 
+description:
 ---
 # Preface
 
@@ -12,6 +12,9 @@ description:
 	\<script\>alert(\"感觉不错的样子！\")\</script\>
 	<script>alert(/xss/)</script>
 
+## 危害
+
+
 ## todo
 Refer: http://www.cnblogs.com/TankXiao/archive/2012/03/21/2337194.html
 
@@ -19,9 +22,11 @@ Refer: http://www.cnblogs.com/TankXiao/archive/2012/03/21/2337194.html
 
 	<iframe/onload=alert(10)>
 
-## onerror onchange
+## onerror onchange onload
 
 	t = '<img src=1 onerror=alert(2)>'
+	t = '<img src=1 onload=alert(2)>'
+	t = '<img src=1 onchange=alert(2)>'
 
 ## style(for ie6)
 expression
@@ -59,12 +64,12 @@ Solutions:
 ## Active 保护
 根据android 的官方说明，如果acitity，默认没有声明export，其在声明了filter，该acitity将默认发布出去。
 
-	Intent qq = new Intent(); 
+	Intent qq = new Intent();
 	ComponentName com = new ComponentName("com.tencent.mobileqq", "com.tencent.mobileqq.activity.ForwardRecentActivity");
-	qq.setComponent(com); 
-	startActivity(qq); 
+	qq.setComponent(com);
+	startActivity(qq);
 
-如果该activity只是qq内部使用，建议将sign级别的签名或者干脆就不要暴露出去，即添加android:exported="false" 
+如果该activity只是qq内部使用，建议将sign级别的签名或者干脆就不要暴露出去，即添加android:exported="false"
 
 - app内使用的私有Activity不应配置intent-filter，如果配置了intent-filter需设置exported属性为false。
 - 签名验证内部（in-house）app
