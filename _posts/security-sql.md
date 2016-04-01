@@ -11,11 +11,16 @@ description:
 
 # sql Injection
 > https://www.owasp.org/index.php/SQL_Injection
+> https://www.owasp.org/index.php/Testing_for_SQL_Injection_(OTG-INPVAL-005)
 
 	select * from name = '$name'
 		$name = "ahui' or 'a'='a"
 		$name = "ahui' ;delete from t1; --"
 		$name = "ahui' ;delete from t1; #"
+
+## union
+
+		$name = "ahui' UNION ALL SELECT ... #"
 
 # Wide Charset Injection
 > http://security.stackexchange.com/questions/9908/multibyte-character-exploits-php-mysql
