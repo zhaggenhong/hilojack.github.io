@@ -92,6 +92,10 @@ VARCHAR 不会存储尾部空白\0，而从5.0.3 开始出于兼容性考虑，�
 > https://dev.mysql.com/doc/refman/5.0/en/string-functions.html
 
 	SELECT CONCAT('My', 'S', 'QL');
+	select 'My' 'S' 'OL'
+		MySQL
+	select 'My''S';like vim
+		My'S
 
 #### length
 
