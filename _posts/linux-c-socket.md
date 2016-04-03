@@ -2,10 +2,11 @@
 layout: page
 title:	linux c socket 编程
 category: blog
-description: 
+description:
 ---
 # Preface
 Socket 可以有很多概念：
+
 1. 在TCP/IP 中,"IP + TCP或UDP端口号" 唯一标识网络通讯中的*进程*，"IP+端口号"就被称为socket
 2. 在TCP 协议中，建立连接的两个进程各有一个socket 标识，这两个*socket pair* 唯一标识一个*连接*。(socket 有插座的意识，常用来描述网络连接的一对一关系)
 4. TCP/IP 最早在BSD UNIX 上实现，为TCP/IP 协议设计的应用层编程接口称为*socket API*
@@ -48,7 +49,7 @@ Example:
 socket API 是一层抽象的网络编程接口，适用于各类低层网络协议，如：IPv4、IPv6、UNIX Domain Socket。然而各种网络协议的地址格式不同：
 
 	struct sockaddr   {
-		16 位地址类型; 
+		16 位地址类型;
 		14 字节地址数据;
 	}
 
@@ -60,7 +61,7 @@ sockaddr_in 定义在`netinet/in.h`:
 	struct sockaddr_in {
 		__uint8_t	sin_len;
 		sa_family_t	sin_family;	//8bit AF_INET(ipv4), AF_INET6(ipv6), AF_UNIX
-		in_port_t	sin_port;	//16bit htons(80) 
+		in_port_t	sin_port;	//16bit htons(80)
 		struct	in_addr sin_addr;//32bit sin_addr.s_addr=htonl(INADDR_ANY=0)
 		char		sin_zero[8];
 	};
@@ -101,19 +102,19 @@ sockaddr_in 定义在`netinet/in.h`:
 
 	#include <arpa/inet.h>
 	//It returns binary ip. Use of this function is problematic because -1 a valid address(255.255.255.255). Avoid its use is in favor of inet_aton(), inet_pton(3) or getaddrinfo(3), which provide a cleared way to indicate error return.
-	in_addr_t 
+	in_addr_t
 		inet_addr(const char *strptr);
 
 	/*Convert an addr (struct * in_addr) between network format and presentation format! (With malloc)*/
-	int 
+	int
 		inet_aton(const char *strptr, struct in_addr *addrptr);
 	char *
 		inet_ntoa(struct in_addr inaddr);//network to address
 
 	/*Convert an addr (struct * in_addr) between network format and presentation format! (Without malloc, with IPV6 support)*/
-	int 
+	int
 		inet_pton(int af, const char *strptr, void *addrptr);
-	const char * 
+	const char *
 		inet_ntop(int af, const void * restrict src, char * restrict dst, socklen_t size);
 
 	af:
@@ -186,17 +187,17 @@ Example2: (p:点分ip, h: binary ip n:in_addr_t in_addr sockaddr_in):
 	#include <netinet/in.h>
 	#include <arpa/inet.h>
 	#include <ctype.h>
-	
+
 	#define MAXLINE 80
 	#define SERV_PORT 8000
-	
+
 	void perr_exit(const char *s){
 		perror(s);
 		exit(1);
 	}
 	void Bind(fd, const struct sockaddr *sa, socklen_t salen){
 		if(bind(fd, sa, salen)<0){
-			perr_exit("Bind error");	
+			perr_exit("Bind error");
 		}
 	}
 	int main(void) {
@@ -206,29 +207,29 @@ Example2: (p:点分ip, h: binary ip n:in_addr_t in_addr sockaddr_in):
 		char buf[MAXLINE];
 		char str[INET_ADDRSTRLEN];
 		int i, n;
-	
+
 		listenfd = socket(AF_INET, SOCK_STREAM, 0);
-	
+
 		bzero(&servaddr, sizeof(servaddr));
 		servaddr.sin_family = AF_INET;
 		servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
 		servaddr.sin_port = htons(SERV_PORT);
-	    
+
 		Bind(listenfd, (struct sockaddr *)&servaddr, sizeof(servaddr));
-	
+
 		listen(listenfd, 20);
-	
+
 		printf("Accepting connections ...\n");
 		while (1) {
 			cliaddr_len = sizeof(cliaddr);
-			connfd = accept(listenfd, 
+			connfd = accept(listenfd,
 					(struct sockaddr *)&cliaddr, &cliaddr_len);
-		  
+
 			n = read(connfd, buf, MAXLINE);
 			printf("received from %s at PORT %d\n",
 			       inet_ntop(AF_INET, &cliaddr.sin_addr, str, sizeof(str)),
 			       ntohs(cliaddr.sin_port));
-	    
+
 			for (i = 0; i < n; i++)
 				buf[i] = toupper(buf[i]);
 			write(connfd, buf, n);
@@ -244,10 +245,10 @@ Example2: (p:点分ip, h: binary ip n:in_addr_t in_addr sockaddr_in):
 	int socket(int family, int type, int protocol);
 	params:
 		family: 和网络协议相关
-			AF_INET AF_INET6 AF_UNIX 
+			AF_INET AF_INET6 AF_UNIX
 		type: 和传输协议相关
-			SOCK_STREAM(面向数据流, eg. UDP) 
-			SOCK_DGRAM(面向数据报, eg. TCP) 
+			SOCK_STREAM(面向数据流, eg. TCP)
+			SOCK_DGRAM(面向数据报, eg. UDP)
 		protocol:
 			介绍从略，指定为0即可。
 
@@ -264,8 +265,8 @@ Example2: (p:点分ip, h: binary ip n:in_addr_t in_addr sockaddr_in):
 		char		sin_zero[8];
 	};
 	bzero(&servaddr, sizeof(servaddr));
-	
-	
+
+
 *bind* 用于监听网络地址和端口，客户端通过网络地址和端口向服务器发起连接。
 bind 会将listenfd 和 sockaddr 绑定在一起, 使得listen_fd 这个网络文件描述符能监听 sockaddr 中所指定的ip/port. sockaddr 是一个通用结构体，所以还需要指定结构体的大小。
 
@@ -286,13 +287,13 @@ bind 会将listenfd 和 sockaddr 绑定在一起, 使得listen_fd 这个网络�
 		cliaddr: 传出客户端地址信息,可以传NULL
 		addrlen: 传入客户端地址结构体的长度，防止缓冲区溢出；传出地址长度，它可能小于调用者提供的cliaddr 本身的长度。
 	return:
-		返回一个数据文件描述符connfd, client 与 server 就通过connd 传输数据. 
-	
+		返回一个数据文件描述符connfd, client 与 server 就通过connd 传输数据.
+
 服务器结构一般是这样的死循环，每一次接受一个connfd, 然后通过它传输数据，最后关闭connfd 连接，而不关闭监听文件描述符listenfd(accept 接手连接后，listenfd 就和连接没有关系了)
 
 	while (1) {
 		cliaddr_len = sizeof(cliaddr);
-		connfd = accept(listenfd, 
+		connfd = accept(listenfd,
 				(struct sockaddr *)&cliaddr, &cliaddr_len);
 		n = read(connfd, buf, MAXLINE);
 		...
@@ -308,37 +309,37 @@ bind 会将listenfd 和 sockaddr 绑定在一起, 使得listen_fd 这个网络�
 	#include <unistd.h>
 	#include <sys/socket.h>
 	#include <netinet/in.h>
-	
+
 	#define MAXLINE 80
 	#define SERV_PORT 8000
-	
+
 	int main(int argc, char *argv[]) {
 		struct sockaddr_in servaddr;
 		char buf[MAXLINE];
 		int sockfd, n;
 		char *str;
-	    
+
 		if (argc != 2) {
 			fputs("usage: ./client message\n", stderr);
 			exit(1);
 		}
 		str = argv[1];
-	    
+
 		sockfd = socket(AF_INET, SOCK_STREAM, 0);
-	
+
 		bzero(&servaddr, sizeof(servaddr));
 		servaddr.sin_family = AF_INET;
 		inet_pton(AF_INET, "127.0.0.1", &servaddr.sin_addr);
 		servaddr.sin_port = htons(SERV_PORT);
-	    
+
 		connect(sockfd, (struct sockaddr *)&servaddr, sizeof(servaddr));
-	
+
 		write(sockfd, str, strlen(str));
-	
+
 		n = read(sockfd, buf, MAXLINE);
 		printf("Response from server:\n");
 		write(STDOUT_FILENO, buf, n);
-	
+
 		close(sockfd);
 		return 0;
 	}
@@ -348,11 +349,11 @@ bind 会将listenfd 和 sockaddr 绑定在一起, 使得listen_fd 这个网络�
 
 	int connect(int sockfd, const struct sockaddr *servaddr, socklen_t addrlen);
 	return:
-		-1 
+		-1
 			errno = EINTR interrupted by signal
 			errno = ECONNABORTED
 		0 success
-	
+
 开启服务端：
 
 	./server
@@ -378,7 +379,7 @@ bind 会将listenfd 和 sockaddr 绑定在一起, 使得listen_fd 这个网络�
 
 	$ netstat -apn|grep 8000
 	tcp        0      0 0.0.0.0:8000            0.0.0.0:*               LISTEN     8343/server(listenfd)
-	tcp        0      0 127.0.0.1:44406         127.0.0.1:8000          ESTABLISHED8344/client         
+	tcp        0      0 127.0.0.1:44406         127.0.0.1:8000          ESTABLISHED8344/client
 	tcp        0      0 127.0.0.1:8000          127.0.0.1:44406         ESTABLISHED8343/server(connfd)
 
 在client 中的`write`后加一个`sleep(10)`, 再查看网络时，你会发现server 主动断开连接了(FIN_WAIT2), 还客户端还没有关闭(CLOSE_WAIT)：
@@ -391,7 +392,7 @@ bind 会将listenfd 和 sockaddr 绑定在一起, 使得listen_fd 这个网络�
 ## 错误处理与读写控制
 
 ### retry 重试
-系统调用accept/read/write(阻塞的情况下) 被中断后应该重试(此系统调用被中断后会被丢弃，不会回到原来的地方继续执行).	
+系统调用accept/read/write(阻塞的情况下) 被中断后应该重试(此系统调用被中断后会被丢弃，不会回到原来的地方继续执行).
 Note: connect 也会被阻塞, 但是被中断后不能立刻重试, 否则不断的连接会加重服务器的负担
 
 - EINTR : The *system call* was interrupted by a signal that was caught before a valid connection arrived.
@@ -464,7 +465,7 @@ Read 重试：
 			else
 				return -1;
 		}
-		return n;	
+		return n;
 	}
 
 Write 重试：
@@ -483,7 +484,7 @@ Write 重试：
 
 TCP 是面向流的，read 和 write 返回的值有可能小于要读写的值。这是因为读写缓冲区的大小是有限的。
 
-比如: 
+比如:
 对于read 调用，接收缓冲区大小20 bytes, 而请求读100个字节时，它只能返回20字节。此时就需要再次读
 对于write 调用，发送缓冲区大小20 bytes, 而请求写100个字节时，它只能一次写20字节。如果socket 设置的是O_NONBLOCK 非阻塞，它也会直接返回20字节
 
@@ -533,7 +534,7 @@ TCP 是面向流的，read 和 write 返回的值有可能小于要读写的值�
 Close:
 
 	void Close(int fd){
-		if(close(fd) == -1) perr_exit("Close error");	
+		if(close(fd) == -1) perr_exit("Close error");
 	}
 
 可变长协议中，TFTP的字段用'\0'分隔，HTTP按'\n'分隔，可封装一个专门的readline ：
@@ -562,7 +563,7 @@ Close:
 		int n;
 		for(n=1; n<maxlen; n++){
 			switch(Readc(fd, ptr)){
-				case 1: 
+				case 1:
 					if(*ptr=='\n'){
 						break 2;
 					}
@@ -584,26 +585,26 @@ Close:
 		char buf[MAXLINE];
 		int sockfd, n;
 		char str[100];
-	    
+
 		sockfd = socket(AF_INET, SOCK_STREAM, 0);
-	
+
 		bzero(&servaddr, sizeof(servaddr));
 		servaddr.sin_family = AF_INET;
 		inet_pton(AF_INET, "127.0.0.1", &servaddr.sin_addr);
 		servaddr.sin_port = htons(SERV_PORT);
-	    
+
 		connect(sockfd, (struct sockaddr *)&servaddr, sizeof(servaddr));
 
 		while(fgets(str, sizeof(str), stdio)){
 			write(sockfd, str, strlen(str));
 			n = read(sockfd, buf, MAXLINE);
 			if(n ==0){
-				printf("The other side has been closed\n");	
+				printf("The other side has been closed\n");
 			}
 			printf("Response from server:\n");
 			write(STDOUT_FILENO, buf, n);
 		}
-	
+
 		close(sockfd);
 		return 0;
 	}
@@ -633,7 +634,7 @@ server(FIN_WAIT_2)收到ACK + 数据后，返回client一个RST 信号。client 
 
 	while (1) {
 		cliaddr_len = sizeof(cliaddr);
-		connfd = accept(listenfd, 
+		connfd = accept(listenfd,
 						(struct sockaddr *)&cliaddr, &cliaddr_len);
 
 		while((n = read(connfd, buf, MAXLINE)) > 0){
@@ -657,7 +658,7 @@ server(FIN_WAIT_2)收到ACK + 数据后，返回client一个RST 信号。client 
 
 	while (1) {
 		cliaddr_len = sizeof(cliaddr);
-		connfd = accept(listenfd, 
+		connfd = accept(listenfd,
 						(struct sockaddr *)&cliaddr, &cliaddr_len);
 		pid = fork();
 		if(pid == -1){
@@ -724,9 +725,9 @@ For more details, 参考 UNP 第7章 以及`man setsockopt`
      setsockopt(int socket, int level, int option_name, const void *option_value, socklen_t option_len);
 
 	 level
-		 To manipulate options at the socket level, level is specified as SOL_SOCKET. 
+		 To manipulate options at the socket level, level is specified as SOL_SOCKET.
 		 To manipulate options at any other level the protocol number of the appropriate protocol controlling the option is supplied. see /etc/protocols
-	 option_name 
+	 option_name
 	 	SO_DEBUG enables debugging in the underlying protocol modules.
 
 ## 完整的server.c
@@ -740,7 +741,7 @@ For more details, 参考 UNP 第7章 以及`man setsockopt`
 	#include <netinet/in.h>
 	#include <arpa/inet.h>
 	#include <ctype.h>
-	
+
 	#define MAXLINE 80
 	#define SERV_PORT 8000
 
@@ -750,7 +751,7 @@ For more details, 参考 UNP 第7章 以及`man setsockopt`
 	}
 	void Bind(int fd, const struct sockaddr *sa, int salen){
 		if(bind(fd, sa, salen)<0){
-			perr_exit("Bind error");	
+			perr_exit("Bind error");
 		}
 	}
 	int main(void) {
@@ -767,7 +768,7 @@ For more details, 参考 UNP 第7章 以及`man setsockopt`
 		servaddr.sin_family = AF_INET;
 		servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
 		servaddr.sin_port = htons(SERV_PORT);
-		
+
 		int saopt = 1;
 		setsockopt(listenfd, SOL_SOCKET, SO_REUSEADDR, &saopt, sizeof(saopt));
 		Bind(listenfd, (struct sockaddr *)&servaddr, sizeof(servaddr));
@@ -777,7 +778,7 @@ For more details, 参考 UNP 第7章 以及`man setsockopt`
 		printf("Accepting connections ...\n");
 		while (1) {
 			cliaddr_len = sizeof(cliaddr);
-			connfd = accept(listenfd, 
+			connfd = accept(listenfd,
 							(struct sockaddr *)&cliaddr, &cliaddr_len);
 			pid = fork();
 			if(pid == -1){
@@ -810,7 +811,7 @@ select 是网络程序中很常见的系统调用，它可以同时监听多个�
 
 select 会返回ready 状态的文件描述符数量, 即在`readfds`, `writefds`, `errorfds` 中处于ready 状态的文件描述符数量。
 
-有点恶心的是，fd_set 是hash 数据结构，检测时文件描述符的*遍历* 是通过第一个参数nfds, 也就是不在 `0 ~ nfds-1` 范围内的文件描述符不被检测！ 
+有点恶心的是，fd_set 是hash 数据结构，检测时文件描述符的*遍历* 是通过第一个参数nfds, 也就是不在 `0 ~ nfds-1` 范围内的文件描述符不被检测！
 
 select 是*阻塞函数*，仅当发生错误，或者至少检测到有一个文件描述符是ready 状态才返回
 
@@ -823,10 +824,10 @@ i.e., readfds 包含`2,3`，nfds 为4，如果检测到 `0~3` 中只有文件描
 
 1. 将 listenfd, connfd(若有) 放到fd_set：`readfds` 中
 2. 然后用select 监听`readfds` 中的fd 是否处于ready for read.(这个函数是阻塞式的)
-3. 若有fd ready, 用`FD_ISSET(listenfd, &reset)` 判断是否有`new connection`, 
+3. 若有fd ready, 用`FD_ISSET(listenfd, &reset)` 判断是否有`new connection`,
 4. 用`FD_ISSET(connfd, &reset)` 判断是否*收到新的data*, 是否关闭请求
 
-Example: 
+Example:
 
 其中的socklib.h 从这里下载 [socklib.h](https://raw.githubusercontent.com/hilojack/c-lib/master/socklib.h)
 
@@ -838,7 +839,7 @@ Example:
 	#include <netinet/in.h>
 	#include <arpa/inet.h>
 	#include "socklib.h"
-	
+
 	#define MAXLINE 80
 	#define SERV_PORT 8000
 
@@ -866,7 +867,7 @@ Example:
 		Listen(listenfd, 20);
 
 		maxfd = listenfd;		/* initialize */
-		maxi = -1;			/* index into client[] array */ 
+		maxi = -1;			/* index into client[] array */
 		for (i = 0; i < FD_SETSIZE; i++)
 			client[i] = -1;	/* -1 indicates available entry */
 		FD_ZERO(&allset);
@@ -973,7 +974,7 @@ UNIX Domain Socket 与网络socket 一样，通过socket(AF_UNIX, SOCK_STREAM/SO
 	#include <stddef.h>
 	#include <sys/socket.h>
 	#include <sys/un.h>
-	
+
 	int main(void) {
 		int fd, size;
 		struct sockaddr_un un;
@@ -1014,9 +1015,9 @@ result:
 	#include <string.h>
 	#include <unistd.h>
 	#include "socklib.h"
-	
+
 	#define QLEN 10
-	
+
 	/*
 	 * Create a server endpoint of a connection.
 	 * Returns fd if all OK, <0 on error.
@@ -1031,7 +1032,7 @@ result:
 		un.sun_family = AF_UNIX;
 		strcpy(un.sun_path, name);
 		unlink(name);
-		
+
 		//create stream socket
 		fd = socket(AF_UNIX, SOCK_STREAM, 0);
 
@@ -1042,7 +1043,7 @@ result:
 			goto errout;
 		}
 
-		// tell kernel we're a server 
+		// tell kernel we're a server
 		if(listen(fd, QLEN)<0){
 			rval = -3;
 			goto errout;
@@ -1058,8 +1059,8 @@ result:
 	}
 
 	/**
-	 * 这是一个accept 模块，accept 得到的客户端地址也是一个socket 文件: 
-	 * 		如果不是, 就返回一个小于0的错误值; 
+	 * 这是一个accept 模块，accept 得到的客户端地址也是一个socket 文件:
+	 * 		如果不是, 就返回一个小于0的错误值;
 	 * 		如果是socket 文件，此文件就没有用了，直接unlink.
 	 * 通过uidptr 返回客户端程序的uid id
 	 */
@@ -1131,10 +1132,10 @@ result:
 	#include <sys/un.h>
 	#include <errno.h>
 	#include "socklib.h"
-	
+
 	#define CLI_PATH    "/var/tmp/"      /* +5 for pid = 14 chars */
 	#define MAXLINE 80
-	
+
 	/*
 	 * Create a client endpoint and connect to a server.
 	 * Returns fd if all OK, <0 on error.
