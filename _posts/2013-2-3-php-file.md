@@ -33,6 +33,25 @@ description:
     11 blksize blocksize of filesystem IO * - 文件系统 IO 的块大小
     12 blocks number of blocks allocated - 所占据块的数目
 
+## stat
+
+	function alt_stat($file) {
+
+		clearstatcache();
+		$ss=@stat($file);
+
+		$ts=array(
+		  0140000=>'ssocket',
+		  0120000=>'llink',
+		  0100000=>'-file',
+		  0060000=>'bblock',
+		  0040000=>'ddir',
+		  0020000=>'cchar',
+		  0010000=>'pfifo'
+		);
+
+		$t=decoct($ss['mode'] & 0170000); // File Encoding Bit
+
 # Dir, 文件目录
 
 ## Path

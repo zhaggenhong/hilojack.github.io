@@ -76,9 +76,41 @@ lsattr
 	-R ：連同子目錄的資料也一併列出來！ 
 
 # suid,sgid,sbit
-suid/sgid 用于转换用户/组身份. 但是用户原来的rwx权限不会改变. 以前不能r(read) 照样不能read
-适用: suid只适用binary file 
-作用: 用户具备并且创建/改写/执行文件时，*uid身份*被替换成了*file 所属的用户*
+suid/sgid 用于执行命令时转换用户/组身份. 但是用户原来的rwx权限不会改变. 以前不能r(read) 照样不能read
+适用: suid只适用binary file(只适合binary file)
+作用: 用户具备并且创建/改写/执行文件时，*uid身份*被替换成了*file 所属的用户*(创建文件的uid, 也会会改变)
+
+	hilo > test l a.out b.txt
+	-rwxr-xr-x  1 hilojack  staff   137B Apr  3 14:54 a.out
+	-rw-r-----  1 hilojack  staff     4B Apr  3 14:54 b.txt
+
+	hilo > test ./a.out
+	abc
+
+	hilo > test sudo -u daemon ./a.out
+		failed to open stream: Permission denied in a.out
+
+必须设定suid:
+
+	hilo > chmod u+s ./a.out
+
+a.c:
+
+	#include <string.h>
+	#include <stdio.h>
+	FILE *fp;
+	char str[100];
+	size_t n=100,ni=50;
+	int main(void) {
+		fp = fopen("b.txt", "r");
+		fread(str, n,ni,fp);
+		printf("%s", str);
+
+		fp = fopen("/tmp/c.txt", "w");
+		fwrite(str, n,3,fp);
+		return 0;
+	}
+
 
 适用: sgid 适用binanry file + directory
 作用: 当用户对文件有写权限时，用户的*组身份*被替换为directory 或者 file 本身*所属的组*
@@ -93,3 +125,8 @@ sbit: sticky bit
 	sudo chmod g+s,o+t dir
 	其中 SUID 為 u+s ，而 SGID 為 g+s ，SBIT 則是 o+t 囉！
 
+# chmod
+Clone ownership and permissions from another file?
+
+	chown --reference=otherfile thisfile
+	chmod --reference=otherfile thisfile
