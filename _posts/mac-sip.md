@@ -17,7 +17,6 @@ SIP 技术主要是用来限制 root 用户的权限，以提升系统的健壮�
 	Runtime Protection 
 	Kernel Extensions 
 
-
 具体哪些目录受到保护，可以查看文件
 
 	/System/Library/Sandbox/rootless.conf
