@@ -41,7 +41,6 @@ setuptools 与 disutils
 # setup
 
 	$ python setup.py sdist
-	$ python setup.py sdist
 
 ## find_packages
 For simple projects, it’s usually easy enough to manually add packages to the packages argument of setup(). However, for very large projects (Twisted, PEAK, Zope, Chandler, etc.), it can be a big burden to keep the package list updated. That’s what setuptools.find_packages() is for.
@@ -51,7 +50,8 @@ For simple projects, it’s usually easy enough to manually add packages to the 
 
 # upload
 
-	p3 setup.py upload
+	p3 setup.py sdist upload;		# to upload your source
+	p3 setup.py bdist_egg upload;	# or egg distributions respectively.
 
 register and upload:
 
