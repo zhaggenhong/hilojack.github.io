@@ -2,7 +2,7 @@
 layout: page
 title:	algorithm crypt
 category: blog
-description: 
+description:
 ---
 # Preface
 
@@ -13,7 +13,7 @@ description:
 
 其中典型的块加密有：
 
-1. DES: 早期的DES 作为美国政府核定的标准加密算法. 
+1. DES: 早期的DES 作为美国政府核定的标准加密算法.
 2. AES: 标准高级加密标准（AES）被美国国家标准与技术研究院（NIST）采纳，即将逐渐取代DES目前的位置。
 3. blowfish: 加密算法在加密速度上就超越了DES加密算法, 而且它没有注册专利，不需要授权。
 
@@ -40,7 +40,7 @@ description:
 	1.不利于加密并行计算；
 	2.误差传递；
 	3.需要初始化向量IV
-	
+
 - CFB (Chipher Feed Back): 密码反馈，类似CBC, 也需要IV, 解密可并行化，支持更小的密码块,
 优点：
 	1.隐藏了明文模式;
@@ -66,6 +66,7 @@ description:
 3次DES
 
 ### 3des example
+见[php-lib/mcrypt.php](php-lib/mcrypt.php)
 
 	/**
 	 * if blocksize mod 8 = 0, it is pkcs5
@@ -110,16 +111,16 @@ description:
 
 ### DES
 MCRYPT_TRIPLEDES => MCRYPT_DES
- 
+
 ## PKCS
 [pks5,pks7]: http://zhiwei.li/text/2009/05/%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E7%9A%84pkcs5%E5%92%8Cpkcs7%E5%A1%AB%E5%85%85/
 https://chrismckee.co.uk/handling-tripledes-ecb-pkcs5padding-php/
 
 http://crypto.stackexchange.com/questions/9043/what-is-the-difference-between-pkcs5-padding-and-pkcs7-padding
 
-The difference between the PKCS#5 and PKCS#7 padding mechanisms is the block size; 
+The difference between the PKCS#5 and PKCS#7 padding mechanisms is the block size;
 
-1. PKCS#5 padding is defined for 8-byte block sizes, 
+1. PKCS#5 padding is defined for 8-byte block sizes,
 2. PKCS#7 padding would work for any block size from 1 to 255 bytes.
 
 This is the definition of PKCS#5 padding (6.2) as defined in the RFC:
@@ -160,7 +161,7 @@ Blowfish 主要包括关键的几个S盒和一个复杂的核心变换函数。
 			$this->iv = substr(md5('rand string'), 0, 8);
 
 			//$chiper
-			$this->cipher = mcrypt_module_open($this->algorithm, '', $this->mode, '');		
+			$this->cipher = mcrypt_module_open($this->algorithm, '', $this->mode, '');
 		}
 		function encrypt($text, $key){
 			//初始化加密chiper
@@ -168,7 +169,7 @@ Blowfish 主要包括关键的几个S盒和一个复杂的核心变换函数。
 				return false;
 			}
 			$text = mcrypt_generic($this->cipher, $text);
-			mcrypt_generic_deinit($this->cipher);	
+			mcrypt_generic_deinit($this->cipher);
 			return $text;
 		}
 		public function decrypt($cipher_text, $key) {
@@ -176,7 +177,7 @@ Blowfish 主要包括关键的几个S盒和一个复杂的核心变换函数。
 				return false;
 			}
 			$text = mdecrypt_generic($this->cipher, $cipher_text);
-			mcrypt_generic_deinit($this->cipher);	
+			mcrypt_generic_deinit($this->cipher);
 			return $text;
 		}
 		function key($key){
@@ -192,27 +193,27 @@ Blowfish 主要包括关键的几个S盒和一个复杂的核心变换函数。
 ## AES加密
 
 	class AESMcrypt {
-		
+
 		public $iv = null;
 		public $key = null;
 		public $bit = 128;
 		private $cipher;
-		
+
 		public function __construct($bit, $key, $iv, $mode) {
 			if(empty($bit) || empty($key) || empty($iv) || empty($mode))
 			return NULL;
-			
+
 			$this->bit = $bit;
 			$this->key = $key;
 			$this->iv = $iv;
 			$this->mode = $mode;
-			
+
 			switch($this->bit) {
 				case 192:$this->cipher = MCRYPT_RIJNDAEL_192; break;
 				case 256:$this->cipher = MCRYPT_RIJNDAEL_256; break;
 				default: $this->cipher = MCRYPT_RIJNDAEL_128;
 			}
-			
+
 			switch($this->mode) {
 				case 'ecb':$this->mode = MCRYPT_MODE_ECB; break;
 				case 'cfb':$this->mode = MCRYPT_MODE_CFB; break;
@@ -221,18 +222,18 @@ Blowfish 主要包括关键的几个S盒和一个复杂的核心变换函数。
 				default: $this->mode = MCRYPT_MODE_CBC;
 			}
 		}
-		
+
 		public function encrypt($data) {
 			$data = base64_encode(mcrypt_encrypt( $this->cipher, $this->key, $data, $this->mode, $this->iv));
 			return $data;
 		}
-		
+
 		public function decrypt($data) {
 			$data = mcrypt_decrypt( $this->cipher, $this->key, base64_decode($data), $this->mode, $this->iv);
 			$data = rtrim(rtrim($data), "\x00..\x1F");
 			return $data;
 		}
-		
+
 	}
 
 	$aes = new AESMcrypt($bit = 128, $key = 'abcdef1234567890', $iv = '0987654321fedcba', $mode = 'cbc');
@@ -279,18 +280,18 @@ http://www.51know.info/system_base/openssl.html
 
 	class openssl{
 		public function setPrivKey($key_file) {
-			$this->_privKey = openssl_get_privatekey(file_get_contents($key_file, true)); 
+			$this->_privKey = openssl_get_privatekey(file_get_contents($key_file, true));
 		}
-		
+
 		public function setPubKey($key_file) {
 			$this->_pubKey = openssl_get_publickey(file_get_contents($key_file, true));
 		}
-		
+
 		public function sign($data, $sign_alg) {
 			openssl_sign($data, $sign, $this->_privKey, $sign_alg = OPENSSL_ALGO_SHA1);
 			return $sign;
 		}
-		
+
 		public function verify($data, $sign, $sign_alg) {
 			return openssl_verify($data, $sign, $this->_pubKey, $sign_alg);
 		}
@@ -328,11 +329,11 @@ RSA是基于数论中大素数的乘积难分解理论上的非对称加密法,�
 	  123456
 
 #### PHP RSA
-Refer: 
+Refer:
 https://rietta.com/blog/2013/06/13/openssl-encrypt-data-with-rsa-key-with/
 
 	function encryptData($dataToEncrypt) {
-      // Will hold the encrypted data  
+      // Will hold the encrypted data
       $sealed ="";
       $ekeys="";
       $pubKey[] =   openssl_pkey_get_public( file_get_contents( "public.pem" ) );
@@ -341,7 +342,7 @@ https://rietta.com/blog/2013/06/13/openssl-encrypt-data-with-rsa-key-with/
       /* Encrypt the Data using OpenSSL seal, which applies an RC4 cipher across the data and encrypts the session key with the array of envelope keys */
 
       return array( ‘encdata' => base64_encode($sealed) , ‘enckey' => base64_encode( serialize($ekeys)) );
-    } // end encryptData 
+    } // end encryptData
 
 ### DSA签名与验证
 和RSA加密解密过程相反，在DSA数字签名和认证中，发送者使用自己的私钥对文件或消息进行签名，接受者收到消息后使用发送者的公钥来验证签名的真实性
@@ -372,7 +373,7 @@ DSA只是一种算法，和RSA不同之处在于它不能用作加密和解密�
 
 注意: 由于信息经过加密或者签名后，都变成不可读模式,为了方便终端查看和传输使用(url提交数据,需要作urlencode操作)，可以使用base64进行编码
 
-	openssl enc -base64 -A ：将加密后的信息使用base64编码 
+	openssl enc -base64 -A ：将加密后的信息使用base64编码
 	openssl enc -d -base64 -A ： 将信息使用base64反编码
 
 java中此私钥需要转换下格式才能使用:
@@ -380,7 +381,7 @@ java中此私钥需要转换下格式才能使用:
 	  [root@hunterfu ~]# openssl pkcs8 -topk8 -nocrypt -in private.key -outform PEM -out java_private.key
 
 # Reference
-- [blowfish] 
+- [blowfish]
 - [初始化向量iv]
 - [block chiper]
 - [详解ecb,cbc]

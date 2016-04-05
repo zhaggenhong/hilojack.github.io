@@ -99,8 +99,7 @@ proxy_pass need `resolver dns;`
 > socket() failed (24: Too many open files) while connecting to upstream
 
 ### File not Found
-FastCGI sent in stderr: "Primary script unknown" while read
-ing response header from upstream
+FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream
 
 	sudo find /code -type d -exec sudo chmod 777 {} \;
 	sudo find /code -type f -exec sudo chmod 664 {} \;
