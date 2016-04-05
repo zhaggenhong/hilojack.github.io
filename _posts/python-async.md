@@ -19,9 +19,10 @@ description:
 		event = loop.get_event()
 		process_event(event)
 
-消息模型其实早在应用在桌面应用程序中了。一个GUI程序的主线程就负责不停地读取消息并处理消息。所有的键盘、鼠标等消息都被发送到GUI程序的消息队列中，然后由GUI程序的主线程处理。
-
 消息模型是如何解决同步IO必须等待IO操作这一问题的呢？当遇到IO操作时，代码只负责发出IO请求，不等待IO结果，然后直接结束本轮消息处理，进入下一轮消息处理过程。当IO操作完成后，将收到一条“IO完成”的消息，处理该消息时就可以直接获取IO操作结果。
+
+# TODO
+https://docs.python.org/3/library/asyncio-task.html#asyncio.iscoroutinefunction
 
 # 协程
 假设由协程执行，在执行A的过程中，可以随时中断，去执行B，B也可能在执行过程中中断再去执行A.
@@ -32,10 +33,38 @@ description:
 
 因为协程是一个线程执行，那怎么利用多核CPU呢？最简单的方法是多进程+协程，既充分利用多核，又充分发挥协程的高效率，可获得极高的性能。
 
-Python对协程的支持是通过generator实现的。
+## Python对协程的支持有3种实现
 
-1. 在generator中，我们不但可以通过for循环来迭代，还可以不断调用next()函数获取由yield语句返回的下一个值。
-2. 但是Python的yield不但可以返回一个值，它还可以接收调用者发出的参数。
+1. generator: 我们不但可以通过for循环来迭代，还可以不断调用next()函数获取由yield语句返回的下一个值; send()
+2. generator-based:  @asyncio.coroutine + yield from
+3. async def+ await
+
+## coroutine vs generator
+The word “coroutine”, like the word “generator”, is used for two different (though related) concepts:
+
+1. A coroutine function (`async def` or `@asyncio.coroutine`). (`iscoroutinefunction()` returns True).
+2. A coroutine object represents a computation or an I/O operation (usually a combination) that will complete eventually.
+	A coroutine object (`iscoroutine()` returns True).
+
+Things a coroutine can do:
+
+1. `result = await future` or `result = yield from future` – suspends the coroutine until the future is done, then returns the future’s result, or raises an exception, which will be propagated.
+(If the future is cancelled, it will raise a `CancelledError exception`.)
+Note that tasks are futures, and everything said about futures also applies to tasks.
+
+2. `result = await coroutine` or `result = yield from coroutine` – wait for another coroutine to produce a result (or raise an exception, which will be propagated). The coroutine expression must be a call to another coroutine.
+3. `return expression` – produce a result to the coroutine that is waiting for this one using await or yield from.
+4. `raise exception` – raise a
+
+*Run coroutine*: 
+Calling a coroutine does not start its code running – the coroutine object returned by the call doesn’t do anything until:
+
+1. call `await coroutine or yield from coroutine` from another coroutine (assuming the other coroutine is already running!), 
+2. or `schedule` its execution using the `ensure_future()` function or the `BaseEventLoop.create_task()` method.
+
+Coroutines (and tasks) can only run when the event loop is running.
+
+
 
 ## 语法
 
@@ -97,9 +126,7 @@ Python对协程的支持是通过generator实现的。
 
 整个流程无锁，由一个线程执行，produce和consumer协作完成任务，所以称为“协程”，而非线程的抢占式多任务。
 
-最后套用Donald Knuth的一句话总结协程的特点：
-
-“子程序就是协程的一种特例。”
+> Donald Knuth的一句话总结协程的特点： “子程序就是协程的一种特例。”
 
 # asyncio
 asyncio是Python 3.4版本引入的标准库，直接内置了对异步IO的支持。
@@ -294,7 +321,7 @@ hello()会首先打印出Hello world!，然后，yield from语法可以让我们
 	Run until stop() is called.
 	If stop() is called before run_forever() is called, this polls the I/O selector once with a timeout of zero, runs all callbacks scheduled in response to I/O events (and those that were already scheduled), and then exits.
 
-	If stop() is called while run_forever() is running, this will run the current batch of callbacks and then exit. 
+	If stop() is called while run_forever() is running, this will run the current batch of callbacks and then exit.
 	Note that callbacks scheduled by callbacks will not run in that case; they will run the next time run_forever() is called.
 
 ## yield send
