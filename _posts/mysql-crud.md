@@ -186,7 +186,7 @@ Not exists 保证
 
 	INSERT INTO table (a,b,c) VALUES (1,2,3)  ON DUPLICATE KEY UPDATE c=c+1;
 	INSERT INTO table (a) VALUES (1),(1),(2),(3)  ON DUPLICATE KEY UPDATE id=id;
-	INSERT INTO table (a) VALUES (1),(1),(2),(3)  ON DUPLICATE KEY UPDATE id=last_insert_id(id);
+	INSERT INTO table (a) VALUES (1),(1),(2),(3)  ON DUPLICATE KEY UPDATE id=last_insert_id(id);//last_insert_id(3)
 
 `VALUES(column)` 会返回insert 中的值:
 
