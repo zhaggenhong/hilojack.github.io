@@ -186,7 +186,7 @@ Not exists 保证
 
 	INSERT INTO table (a,b,c) VALUES (1,2,3)  ON DUPLICATE KEY UPDATE c=c+1;
 	INSERT INTO table (a) VALUES (1),(1),(2),(3)  ON DUPLICATE KEY UPDATE id=id;
-	INSERT INTO table (a) VALUES (1),(1),(2),(3)  ON DUPLICATE KEY UPDATE id=last_insert_id(id);//last_insert_id(3)
+	INSERT INTO table (a) VALUES (1),(1),(2),(3)  ON DUPLICATE KEY UPDATE id=last_insert_id(id);//update: last_insert_id(3) ;insert:insert_id no change
 
 `VALUES(column)` 会返回insert 中的值:
 
@@ -203,7 +203,6 @@ ON DUPLICATE KEY 不支持where
 	IF(condition, exp1, exp2)
 	INSERT INTO table (a,b,c) VALUES (1,2,3)  ON DUPLICATE KEY UPDATE c=IF(c<5, c+1, c)
 	select IF(false, 1, 0)
-
 
 ### replace when DUPLICATE key
 REPLACE 可以将`DELETE和INSERT`合二为一，形成一个原子操作(它也是基于唯一键的)

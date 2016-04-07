@@ -341,6 +341,39 @@ Example
 	bye
 	END
 
+## sftp
+sftp
+
+	(
+	  echo "
+	  ascii
+	  cd pub
+	  lcd dir_name
+	  put filename
+	  close
+	  quit
+		"
+	) | sftp -oPort=21 "userid"@"servername"
+
+lftp
+
+	lftp -u ${USER},${PASSWORD} sftp://${IP}:${PORT}<<EOF
+	lcd ${LOCALDIR}
+	mget ${DIR}/${FILENAME}
+	bye
+	EOF
+
+	lftp -e 'mirror -R /local/log/path/ /remote/path/' -u user,password sftp.foo.com
+
+Connection
+Connect to FTPS with specific port, username and password.
+
+	lftp -p PORT -u USERNAME,PASSWORD ftps://FTP.ADDRESS
+	lftp -p PORT -u USERNAME,PASSWORD sftp://FTP.ADDRESS
+		> open -p PORT -u USERNAME,PASSWORD ftps://FTP.ADDRESS
+
+> Note that it won’t actually connect until you use other commands such as `ls`.
+
 ## config
 /etc/vsftpd/vsftpd.conf
 
