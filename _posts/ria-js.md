@@ -161,6 +161,12 @@ global -> caller -> callback(anonymous)
 	Object.prototype.toString.call(1)
 	"[object Number]"
 
+	String(value)
+	value + ""
+	undefined + ""
+	'0'+1
+		'01'
+
 ## Compare
 [js Boolean比较问题研究](http://www.joglex.com/?p=189)
 

@@ -42,29 +42,230 @@ https://docs.python.org/3/library/asyncio-task.html#asyncio.iscoroutinefunction
 ## coroutine vs generator
 The word “coroutine”, like the word “generator”, is used for two different (though related) concepts:
 
-1. A coroutine function (`async def` or `@asyncio.coroutine`). (`iscoroutinefunction()` returns True).
-2. A coroutine object represents a computation or an I/O operation (usually a combination) that will complete eventually.
+1. A `coroutine function`
+	(`async def` or `@asyncio.coroutine`). (`iscoroutinefunction()` returns True).
+2. A `coroutine object`
+	represents a computation or an I/O operation (usually a combination) that will complete eventually.
 	A coroutine object (`iscoroutine()` returns True).
 
-Things a coroutine can do:
+### Things a coroutine can do:
 
-1. `result = await future` or `result = yield from future` – suspends the coroutine until the future is done, then returns the future’s result, or raises an exception, which will be propagated.
+1. `result = await future` or `result = yield from future` – suspends the coroutine until the `future` is done, then returns the future’s result, or raises an exception, which will be propagated.
 (If the future is cancelled, it will raise a `CancelledError exception`.)
 Note that tasks are futures, and everything said about futures also applies to tasks.
 
 2. `result = await coroutine` or `result = yield from coroutine` – wait for another coroutine to produce a result (or raise an exception, which will be propagated). The coroutine expression must be a call to another coroutine.
 3. `return expression` – produce a result to the coroutine that is waiting for this one using await or yield from.
-4. `raise exception` – raise a
+4. `raise exception` – raise an exception in the coroutine that is waiting for this one using await or yield from.
 
-*Run coroutine*: 
+### *Run coroutine*:
 Calling a coroutine does not start its code running – the coroutine object returned by the call doesn’t do anything until:
 
-1. call `await coroutine or yield from coroutine` from another coroutine (assuming the other coroutine is already running!), 
+1. call `await coroutine or yield from coroutine` from another coroutine (assuming the other coroutine is already running!),
 2. or `schedule` its execution using the `ensure_future()` function or the `BaseEventLoop.create_task()` method.
 
 Coroutines (and tasks) can only run when the event loop is running.
 
+# @asyncio.coroutine
+Decorator to mark `generator-based coroutines`.
+This enables the generator use `yield from` to call `async def coroutines`, and also enables the generator to be called by `async def coroutines`, for instance using an `await` expression.
 
+There is no need to decorate async def coroutines themselves.
+
+> If the generator is not `yielded from` before it is `destroyed`, an error message is logged. See `Detect coroutines never scheduled`.
+
+## call_soon for callback
+Example of coroutine displaying "Hello World":
+
+	import asyncio
+
+	async def hello_world():
+	    print("Hello World!")
+
+	loop = asyncio.get_event_loop()
+	# Blocking call which returns when the hello_world() coroutine is done
+	loop.run_until_complete(hello_world())
+	loop.close()
+
+See also The Hello World with `call_soon()` example uses the `BaseEventLoop.call_soon()` method to schedule a callback.
+
+Example using the `BaseEventLoop.call_soon()` method to schedule a callback. The callback displays "Hello World" and then stops the event loop:
+
+	import asyncio
+
+	def hello_world(loop):
+	    print('Hello World')
+	    loop.stop()
+
+	loop = asyncio.get_event_loop()
+
+	# Schedule a call to hello_world()
+	loop.call_soon(hello_world, loop)
+
+	# Blocking call interrupted by loop.stop(), otherwise it will not break(forever)
+	loop.run_forever()
+	loop.close()
+
+### BaseEventLoop.call_soon(callback, *args)
+
+	BaseEventLoop.call_soon(callback, *args)
+
+Arrange for a callback to be called as soon as possible.
+
+1. The callback is called after `call_soon()` returns, when `control returns to the event loop(run_until_complete or run_forever)`.
+
+2. This operates as a `FIFO queue`, callbacks are called in the order in which they are registered. Each callback will be called `exactly once`.
+
+3. Any `positional arguments` after the callback will be passed to the callback when it is called.
+
+4. An instance of `asyncio.Handle` is returned, which can be used to cancel the callback.
+
+## call_later for reschedule
+Example of coroutine displaying the current date every second during 5 seconds using the sleep() function:
+
+	import asyncio
+	import datetime
+
+	async def display_date(loop):
+	    end_time = loop.time() + 5.0
+	    while True:
+	        print(datetime.datetime.now())
+	        if (loop.time() + 1.0) >= end_time:
+	            break
+	        await asyncio.sleep(1)
+
+	loop = asyncio.get_event_loop()
+	# Blocking call which returns when the display_date() coroutine is done
+	loop.run_until_complete(display_date(loop))
+	loop.close()
+
+The same coroutine implemented using a generator:
+
+	@asyncio.coroutine
+	def display_date(loop):
+		end_time = loop.time() + 5.0
+		while True:
+			print(datetime.datetime.now())
+			if (loop.time() + 1.0) >= end_time:
+				break
+			yield from asyncio.sleep(1)
+
+### BaseEventLoop.call_later(delay, callback, *args)
+Arrange for the callback to be called after the given delay seconds (either an int or float).
+
+	BaseEventLoop.call_later(delay, callback, *args)
+	await asyncio.sleep(delay)
+
+The callback uses the BaseEventLoop.call_later() method to reschedule itself during 5 seconds, and then stops the event loop:
+
+	import asyncio
+	import datetime
+
+	def display_date(end_time, loop):
+	    print(datetime.datetime.now())
+	    if (loop.time() + 1.0) < end_time:
+	        loop.call_later(1, display_date, end_time, loop)
+	    else:
+	        loop.stop()
+
+	loop = asyncio.get_event_loop()
+
+	# Schedule the first call to display_date()
+	end_time = loop.time() + 5.0
+	loop.call_soon(display_date, end_time, loop)
+
+	# Blocking call interrupted by loop.stop()
+	loop.run_forever()
+	loop.close()
+
+## Chain coroutines
+Example chaining coroutines:
+
+	import asyncio
+
+	async def compute(x, y):
+		print("Compute %s + %s ..." % (x, y))
+		await asyncio.sleep(1.0)
+		return x + y
+
+	async def print_sum(x, y):
+		result = await compute(x, y)
+		print("%s + %s = %s" % (x, y, result))
+
+	loop = asyncio.get_event_loop()
+	loop.run_until_complete(print_sum(1, 2))
+	loop.close()
+
+`compute()` is chained to `print_sum()`: print_sum() coroutine waits until `compute()` is completed before returning its result.
+
+
+	![python-async-1.png](/img/python-async-1.png)
+
+The “Task” is created by the BaseEventLoop.run_until_complete() method when it gets a coroutine object instead of a task.
+
+The diagram does not describe exactly how things work internally.
+For example, the sleep coroutine creates an `internal future` which uses `BaseEventLoop.call_later()` to wake up the task in 1 second.
+
+# Future
+
+## Future with run_until_complete()
+Example combining a Future and a coroutine function:
+
+	import asyncio
+
+	@asyncio.coroutine
+	def slow_operation(future):
+	    yield from asyncio.sleep(1)
+	    future.set_result('Future is done!')
+
+	loop = asyncio.get_event_loop()
+	future = asyncio.Future()
+	asyncio.ensure_future(slow_operation(future))
+	loop.run_until_complete(future)
+	print(future.result())
+	loop.close()
+
+The coroutine function is responsible for the computation (which takes 1 second) and it stores the result into the future.
+The `run_until_complete()` method waits for the completion of the future.
+
+Note The `loop.run_until_complete()` method uses internally the `Future.add_done_callback()` method to be `notified` when the future is done.
+
+### Future.add_done_callback
+Add a callback to be run when the future becomes done.
+
+	add_done_callback(fn)
+
+The callback is called with a single argument - `the future object`.
+If the future is already done when this is called, the callback is scheduled with `call_soon()`.
+
+## Future with run_forever()
+The previous example can be written differently using the `Future.add_done_callback()` method to describe explicitly the control flow:
+
+	import asyncio
+
+	@asyncio.coroutine
+	def slow_operation(future):
+	    yield from asyncio.sleep(1)
+	    future.set_result('Future is done!')
+
+	def got_result(future):
+	    print(future.result())
+	    loop.stop()
+
+	loop = asyncio.get_event_loop()
+	future = asyncio.Future()
+	asyncio.ensure_future(slow_operation(future))
+	future.add_done_callback(got_result)
+	try:
+	    loop.run_forever()
+	finally:
+	    loop.close()
+
+In this example, the future is used to link `slow_operation()` to `got_result()`:
+	when `slow_operation()` is done, `got_result()` is called with the result.
+
+
+# yield
 
 ## 语法
 
@@ -109,12 +310,7 @@ Coroutines (and tasks) can only run when the event loop is running.
 	[PRODUCER] Producing 3...
 	[CONSUMER] Consuming 3...
 	[PRODUCER] Consumer return: 200 OK
-	[PRODUCER] Producing 4...
-	[CONSUMER] Consuming 4...
-	[PRODUCER] Consumer return: 200 OK
-	[PRODUCER] Producing 5...
-	[CONSUMER] Consuming 5...
-	[PRODUCER] Consumer return: 200 OK
+	....
 
 注意到consumer函数是一个generator，把一个consumer传入produce后：
 

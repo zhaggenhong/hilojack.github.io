@@ -166,11 +166,15 @@ Example:
 Example:
 
 	[ 'a' = 'a' ] && echo yes
-	[ 'a' \< 'b' ] && echo yes #zsh不支持转义
+	[ 'a' \< 'b' ] && echo yes #zsh不支持这种转义
+	[ 'a' = 'a' && 'b' = 'b' ] && echo yes ;#这里的&& 是非法关键字(不要使用)
 
 - [[ expr ]]
 
-较[ expr ]  和 text 更通用, 而且不用转义这些特殊符号: < > &&,||
+	- [[ expr1 && expr2 ]]
+	- [[ expr1 || expr2 ]]
+
+较[ expr ]  和 test 更通用, 而且不用转义这些特殊符号: < > &&,||
 
 	[[ 'a' < 'b' ]] && echo yes
 	[[ 'a' < 'b' && 'a' < 'c' ]] && echo yes
