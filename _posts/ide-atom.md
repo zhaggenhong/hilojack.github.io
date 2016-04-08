@@ -9,10 +9,17 @@ description:
 # amp(Atom Package Management)
 
 ## amp config
+Show customized settings:
 
-	apm config set http_proxy  "http://127.0.0.1:8080"
-	apm config set https_proxy  "http://127.0.0.1:8080"
-	cat ~/.atom/.apmrc
+	apm config list
+
+Show all default settings:
+
+	npm config ls -l
+
+Edit configuration file directly:
+
+	apm config edit
 
 ## amp version
 
@@ -41,4 +48,18 @@ description:
 	gyp ERR! install error
 	gyp ERR! stack Error: 404 response downloading https://atom.io/download/atom-shell/v0.34.5/node-v0.34.5.tar.gz
 
-参考: https://github.com/atom/apm/issues/174
+参考:
+https://github.com/atom/apm/issues/174
+https://github.com/atom/apm/issues/322
+
+	$cat ~/.atom/.apmrc
+	apm config set http_proxy  "http://127.0.0.1:8080"
+	apm config set https_proxy  "http://127.0.0.1:8080"
+	apm config set strict-ssl=false
+
+	apm config set ftp-proxy ftp://proxy:8080
+	apm config set proxy http://proxy:8080
+
+或者
+
+	export ATOM_NODE_URL=http://gh-contractor-zcbenz.s3.amazonaws.com/atom-shell/dist
