@@ -197,9 +197,18 @@ array_flip 跟array_merge 一样，后面的key 会覆盖前面的
 	array_slice($arr, $start, $length, $preserve_key = false)
 	array_splice
 
-## 交差并集
+## array_remove
 
-### 并
+	array_diff($array, [$element]);
+	or
+	if(($key = array_search($del_val, $arr)) !== false) {
+		unset($arr[$key]);
+	}
+
+
+## array intersection Difference Union 交差并集
+
+### array union 并
 
 	var_dump(['a'=>1]+['a'=>2]);
 	array(1) {
@@ -1003,7 +1012,7 @@ Get user php is running as:
 
 ## 转义
 
-	str escapeshellarg($arg); //将args转义为普通字符串: 比如`abc`, 转义成`'abc'`
+	str escapeshellarg($arg); //将args转义为有效参数: 比如`abc`, 转义成`'abc'`
 	str escapeshellcmd($cmd); //转义cmd中的特殊字符：| ; & > \x0a ....
 
 ## 执行

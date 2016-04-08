@@ -97,6 +97,19 @@ VARCHAR 不会存储尾部空白\0，而从5.0.3 开始出于兼容性考虑，�
 	select 'My''S';like vim
 		My'S
 
+#### str to hex
+hex() and unhex
+
+	mysql> SELECT X'616263', HEX('abc'), UNHEX(HEX('abc'));
+			-> 'abc', 616263, 'abc'
+	mysql> SELECT HEX(255), CONV(HEX(255),16,10);
+			-> 'FF', 255
+
+concat:
+
+	select concat(0x31,2);
+	| 12             |
+
 #### length
 
 	select length('国'); //1

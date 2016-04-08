@@ -237,11 +237,11 @@ php stream reads are blocking operations by default. You can change that behavio
 	获取内容
 	file_get_contents() —file_put_contents()
 	返回行数组
-	file ( string $filename [, int $use_include_path [, resource $context ]] )
+	file( string $filename [, int $use_include_path [, resource $context ]] )
 	输出一个文件
-	readfile ( string $filename [, bool $use_include_path [, resource $context ]] )
+	readfile( string $filename [, bool $use_include_path [, resource $context ]] )
 	文件截取
-	ftruncate ( resource $handle , int $size )，当$size=0,文件就变为空
+	ftruncate( resource $handle , int $size )，当$size=0,文件就变为空
 	文件删除
 	unlink();
 	文件复制

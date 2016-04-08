@@ -163,16 +163,15 @@ $sql 可以为多条:
 
 	$sqls = "$sql1; $sql2; ";
 
-	// works not with the following set to 0. You can comment this line as 1 is default
+	// works with the following set to 1. You can comment this line as 1 is default
 	$pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, true);
-	$pdo->prepare ($sqls)
+	$pdo->prepare($sqls)
 
 也可以不支持multi sqls
 
 	// works regardless of statements emulation
 	$pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 	$pdo->exec($sqls);//not work
-
 
 
 ### nextRowset

@@ -342,6 +342,11 @@ Example
 	END
 
 ## sftp
+
+	sftp [user@]host[:file ...]
+		download file
+	scp -r user@host:file
+
 sftp
 
 	(
