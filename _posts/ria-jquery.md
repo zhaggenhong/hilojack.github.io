@@ -489,6 +489,11 @@ sub_selector 可以是动态insert 的node
 
 	$('p').trigger('click');
 
+### scroll event
+滚动时
+
+	$(window).scroll(function(e) {console.log(e)})
+
 ### ready event
 read 只能用于文档, (func 不能为空, 它不能触发ready)
 

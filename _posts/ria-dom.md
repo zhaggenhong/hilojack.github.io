@@ -65,6 +65,7 @@ description:
 #### 偏移
 
 ##### 滚动偏移
+滚动前的偏移
 所有元素默认0:
 
 	ele.scrollLeft, ele.scrollTop
@@ -73,11 +74,15 @@ description:
 		window.scroll(left,top);
 		window.scrollBy(offsetX,offsetY)
 
+jquery:
+
+	$(window).scrollTop()
+
 ##### 相对偏移
-offsetLeft,offsetTop 相对偏移:
+offsetLeft,offsetTop 相对页面左上角的偏移:
 left:
-	static: 如果当前块border的外边，与父层border 的内边的距离
-	relative/absolute: 如果当前块border的外边，与上层postion: not static 内边的距离
+	static: 当前块border的外边，与父层border 的内边的距离
+	relative/absolute: 当前块border的外边，与上层postion: not static 内边的距离
 
 1. offsetLeft = left + margin(left)
 2. clientLeft = the width of left border
@@ -465,6 +470,12 @@ starting with jQuery 1.7, replace bind with on:
 	$('#someInput').on('input', function() {
 		$(this).val() // get the current value of the input field.
 	});
+
+### resize, scroll,load
+
+	$(window).scroll(func)
+	$(window).resize(func)
+	$(window).load(func)
 
 ### change
 
