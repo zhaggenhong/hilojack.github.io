@@ -63,3 +63,5 @@ https://github.com/atom/apm/issues/322
 或者
 
 	export ATOM_NODE_URL=http://gh-contractor-zcbenz.s3.amazonaws.com/atom-shell/dist
+	export ATOM_NODE_URL=https://gh-contractor-zcbenz.s3.amazonaws.com/atom-shell/dist
+	

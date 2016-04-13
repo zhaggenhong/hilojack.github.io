@@ -89,6 +89,13 @@ Example of coroutine displaying "Hello World":
 
 See also The Hello World with `call_soon()` example uses the `BaseEventLoop.call_soon()` method to schedule a callback.
 
+> `async def` 定义的new func 属于特殊的generator:
+	c.send(None) 才执行:
+		且遇到`await` 时停止
+		遇不到`await` 时, assert self.done(), "yield from wasn't used with future"
+	不执行时：
+		RuntimeWarning: coroutine 'compute' was never awaited
+
 Example using the `BaseEventLoop.call_soon()` method to schedule a callback. The callback displays "Hello World" and then stops the event loop:
 
 	import asyncio
@@ -177,6 +184,13 @@ The callback uses the BaseEventLoop.call_later() method to reschedule itself dur
 	# Blocking call interrupted by loop.stop()
 	loop.run_forever()
 	loop.close()
+
+### 小结
+run_until_complete 调用的是: async def func(), 它会等待await 返回结果
+
+call_soon 调用的是func
+call_later(1, func, arg.....) 延迟调用func: 和 `await asyncio.sleep(delay)` `await io`相关
+run_forever 则会执行上面的func, 如果func 自己不`loop.stop`, 则loop 不会停止
 
 ## Chain coroutines
 Example chaining coroutines:

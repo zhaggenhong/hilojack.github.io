@@ -1,8 +1,8 @@
 ---
 layout: page
-title:	
+title:
 category: blog
-description: 
+description:
 ---
 # Preface
 
@@ -15,7 +15,7 @@ description:
 
 ## wiki pgae
 
-	setting -> 
+	setting ->
 	Lightweight issue tracking system for this project
 	Merge Requests
 	Submit changes to be merged upstream.
@@ -38,6 +38,10 @@ A hosted continuous integration service for the open source community
 
 https://travis-ci.org/profile/hilojack
 http://docs.travis-ci.com/
+
+## Hexo
+Hexo 是静态网站生成工具, 类似的还有Hugo, Pugo ....
+Travis-CI 在提交时触发`hexo generate`
 
 ## Bamboo
 

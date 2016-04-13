@@ -19,6 +19,7 @@ description:
 	git log banch1 branch2 #show commits that both in branch1 and branch2
 	git log ^banch1 branch2 #show commits that are not in branch1 but in branch2
 	git log banch1 ^branch2 #show commits that are not in branch2 but in branch1
+	git log banch1 branch2 ^branch3 #show commits that are not in branch3 but in branch1 or branch2
 	git log banch1..branch2 #show commits that are not in branch2 but in branch1
 
 Remember that your clone of the repository will update its state of any remote branches only by doing git fetch. You can't connect directly to the server to check the log there, what you do is download the state of the server with git fetch and then locally see the log of the remote branches.
@@ -58,6 +59,16 @@ which will show you the commits that are in the remote branch, but not in your c
 	--committer
 	--no-merges
 	--all-match
+
+### parent
+
+	$ git show 12a86bc38 # By revision
+	$ git show v1.0.1 # By tag
+	$ git show feature132 # By branch name
+	$ git show 12a86bc38^ # Parent of a commit
+	$ git show 12a86bc38~2 # Grandparent of a commit
+	$ git show feature132@{yesterday} # Time relative
+	$ git show feature132@{2.hours.ago} # Time relative
 
 # info
 
@@ -99,7 +110,8 @@ via blame:
 To show what revision and author last modified each line of a file(single file):
 
 	git blame filename
-	git gui blame filename
+	git blame -C filename; # shows which file names the content came from
+	git gui blame filename;
 
 ### follow all file history
 

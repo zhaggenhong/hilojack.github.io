@@ -276,7 +276,7 @@ global -> caller -> callback(anonymous)
 	.getMonth(); //0~11 getUTCMonth()
 	.getFullYear(); //四位数字	getUTCFullYear()
 	//day
-	.getDay(); //一周中的某天0~6
+	.getDay(); //一周中的某天0~6(0是星期天)
 
 	//time part
 	.getHours()	返回 Date 对象的小时 (0 ~ 23)。 getUTCHours()
@@ -305,10 +305,6 @@ short:
 		var d = this;
 		return d.getFullYear()+'-' + (d.getMonth()+1)+'-' + d.getDate()+' ' + d.getHours()+':' + d.getMinutes()+':' + d.getSeconds()+''
 	}
-	Date.prototype.add= function(seconds){
-		this.setTime(this.getTime() + (seconds * 1000));
-		return this;
-	}
 
 ### compare
 
@@ -333,11 +329,20 @@ short:
 
 	//add time
 	d.setSeconds(d.getSeconds() + 10);
+	Date.prototype.add= function(seconds){
+		this.setTime(this.getTime() + (seconds * 1000));
+		return this;
+	}
 
 	//Time
 	.setTime(millisec)	以毫秒设置 Date 对象。d.setTime(77771564221)
 	new Date(millisec)	以毫秒设置 Date 对象. new Date(77771564221)
+
+str to time
+
 	new Date("October 13, 1975 11:13:00");
+	new Date("2016-01-01 11:13:00");
+	(new Date("2016-1-1")).getDay();
 
 ## String
 
