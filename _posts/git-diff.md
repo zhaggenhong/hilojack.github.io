@@ -8,7 +8,7 @@ description:
 
 # git diff category
 
-1. git diff sha1 main/origin: 
+1. git diff sha1 main/origin:
 	between commit
 2. git diff --staged // same as : git diff --cached : between cached and commit
 2. git diff // between working and staged
@@ -137,10 +137,13 @@ show merged files
 ## merge-base
 
 	//先找共同祖先
-	$git merge-base branch1 master //find the Parent of branch and master
-		bb92d38751bde50b5520a78b82c288fd6edaee9d
-	//基于祖先做diff or git diff master...branch1
-	$git diff bb92
+		$ git merge-base branch1 master //find the Parent of branch and master
+			bb92d38751bde50b5520a78b82c288fd6edaee9d
+	//基于祖先做diff
+		// to HEAD
+		$ git diff branch1..HEAD
+		// to working copy
+		$ git diff bb92
 
 # diff mode
 
@@ -160,7 +163,7 @@ keep
 	git diff-index --diff-filter=ACMR HEAD
 		A add
 		M modified
-		C
+		C Copied
 		R rename
 		D delete
 
@@ -171,4 +174,4 @@ keep
 ## diff-tree
 git-diff-tree - Compares the content and mode of blobs found via two tree objects
 
-	git diff-tree --name-only -r $oldrev..$newrev 
+	git diff-tree --name-only -r $oldrev..$newrev
