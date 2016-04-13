@@ -31,9 +31,46 @@ description:
 
 代理键和自然键: 如果数据表中的所有候选键都不适合做主键(数据太长，意义层面太多), 就会请一个无意义的键做主键（比如自增的id）, 这就是代理键。有意义的主键就是自然键。
 
-## force index
+## Foreign Key
+用户量大，并发度高: 不要用外键，mysql IO消耗大
 
-	select * from FORCE INDEX (indexname1, indexname2) where ...;
+
+	[CONSTRAINT symbol] FOREIGN KEY [id] (从表的字段1)
+
+	REFERENCES tbl_name (主表的字段2)
+
+	[ON DELETE {RESTRICT | CASCADE | SET NULL | NO ACTION}] # 默认RESTRICT
+
+	[ON UPDATE {RESTRICT | CASCADE | SET NULL | NO ACTION} # 默认RESTRICT
+
+Example: 当employee ... todo
+
+	ALTER TABLE employee ADD FOREIGN KEY(dept_id) REFERENCES department(id);
+
+## force index
+> See http://dev.mysql.com/doc/refman/5.7/en/index-hints.html
+
+	tbl_name [[AS] alias] [index_hint_list]
+
+	index_hint_list:
+		index_hint [, index_hint] ...
+
+	index_hint:
+		USE {INDEX|KEY}
+		  [FOR {JOIN|ORDER BY|GROUP BY}] ([index_list])
+	  | IGNORE {INDEX|KEY}
+		  [FOR {JOIN|ORDER BY|GROUP BY}] (index_list)
+	  | FORCE {INDEX|KEY}
+		  [FOR {JOIN|ORDER BY|GROUP BY}] (index_list)
+
+	index_list:
+		index_name [, index_name] ...
+
+Example:
+
+	select * from table FORCE INDEX (indexname1, indexname2) where ...;
+	SELECT * FROM table1 USE INDEX (col1_index,col2_index)..
+	SELECT * FROM table1 IGNORE INDEX (col3_index)
 
 ## INDEX/KEY
 普通索引
@@ -230,7 +267,7 @@ EXAMPLE:
 > http://ourmysql.com/archives/108?f=wb
 
 如果id 是主键，program_id 是主键
-这张表大约容量30G，数据库服务器内存16G，无法一次载入。就是这个造成了问题。 
+这张表大约容量30G，数据库服务器内存16G，无法一次载入。就是这个造成了问题。
 会有以下问题
 
 	select * from program_access_log where program_id between 1 and 4000

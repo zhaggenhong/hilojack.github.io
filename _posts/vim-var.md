@@ -36,6 +36,8 @@ It lists the following types:
 	v:lnum
 		Line number for the 'foldexpr' |fold-expr
 
+## define var
+
 # var data type
 
 ## convert type
@@ -99,6 +101,10 @@ Explain:
 	echo 0xff
 	echo 017	"15
 	echo 019	"19
+
+### caculate
+
+	let a=a+1
 
 ### float:
 >  :help floating-point-precision

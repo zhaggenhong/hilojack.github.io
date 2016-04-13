@@ -217,6 +217,8 @@ example
 ### TIMESTAMP
 TIMESTAMP 比较特殊，`默认`的INSERT 或者UPDATE 会触发时间更新为当前的时间(它其实不是时间戳，而是DATA+TIME 字符串):
 
+> 5.6.5 之前，如果有别列显示的指定CURRENT_TIMESTAMP, 而本列默认是0:
+
 	TIMESTAMP;
 	TIMESTAMP not null;
 

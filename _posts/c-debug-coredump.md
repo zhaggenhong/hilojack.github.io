@@ -9,7 +9,32 @@ description:
 1. 前言: 有的程序可以通过编译, 但在运行时会出现Segment fault(段错误). 这通常都是指针错误引起的. 但这不像编译错误一样会提示到文件->行, 而是没有任何信息, 使得我们的调试变得困难起来.
 2. gdb: 有一种办法是, 我们用gdb的step, 一步一步寻找. 这放在短小的代码中是可行的, 但要让你step一个上万行的代码, 我想你会从此厌恶程序员这个名字, 而把他叫做调试员. 我们还有更好的办法, 这就是core file.
 3. ulimit: 如果想让系统在信号中断造成的错误时产生core文件, 我们需要在shell中按如下设置: #设置core大小为无限 ulimit -c unlimited #设置文件大小为无限 ulimit unlimited 这些需要有root权限, 在ubuntu下每次重新打开中断都需要重新输入上面的第一条命令, 来设置core大小为无限.
-4. 用gdb查看core文件: 
+4. 用gdb查看core文件:
+
+# coredump on mac OSX
+See [signals](https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man2/sigaction.2.html#//apple_ref/doc/man/2/sigaction)
+then we know a signal like SIGQUIT(3), SIGILL(4), SIGTRAP(5) and others could occured OS would create a core image what we need.
+
+	$ cat coredump.c
+	#include <unistd.h>
+	#include <signal.h>
+	int main(int argc, char ** args) {
+	  pid_t pid = getpid();
+	  kill(pid, 3);
+	}
+
+	$ gcc coredump.c -o core-dump-file
+	$ ./core-dump-file
+
+OSX 的coredump 默认在：` /cores/core.pid` , 但是得Enable core-dump-file
+
+	$ ulimit -c
+	> 0
+	$ ulimit -c unlimited
+	$ ulimit -c
+	> unlimited
+
+	$ lldb ./core-dump-file /cores/core.19504
 
 # 什么是Core：
 在使用半导体作为内存的材料前，人类是利用线圈当作内存的材料（发明者为王安），线圈就叫作 core ，用线圈做的内存就叫作 core memory。如今 ，半导体工业澎勃发展，已经没有人用 core memory 了，不过，在许多情况下， 人们还是把记忆体叫作 core

@@ -51,6 +51,7 @@ case insensitive
 删除当前目录下所有的swp文件:
 
 	find . -type f -name "*.swp" -delete
+	find . -type f -name "*.swp" -exec rm {} \;
 	find . type f -name "*.swp" | xargs rm
 
 # Logic Operators
