@@ -69,7 +69,12 @@ cmd:
 	-v verbose
 	-s silent
 
+	--trace <file>
+	--trace-ascii -
+		Enables a full trace dump of all incoming and outgoing data(without hex)
+
 ## format
+
 	-w --write-out <format>
 
 Example

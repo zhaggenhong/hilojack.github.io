@@ -76,9 +76,10 @@ nerdtree 是一个非常强大的文件管理插件
 > :h expand()
 > :h filename-modifiers
 
-	:echom expand('%')					"relative path
-	:echom expand('%:p')				"absolute path
-	:echom expand('~/.vimrc')				"absolute path
+	:echom expand('%')					"relative file path
+	:echom expand('%:p')				"absolute file path
+	:echom expand('%:h')				"relative file directory
+	:echom expand('~/.vimrc')			"absolute path
 	:echom fnamemodify('foo.txt', ':p') "Absolute path
 
 :h filename-modifiers:
