@@ -23,6 +23,11 @@ description:
 
 # TODO
 https://docs.python.org/3/library/asyncio-task.html#asyncio.iscoroutinefunction
+http://stackoverflow.com/questions/19302530/python-generator-send-function-purpose
+http://stackoverflow.com/questions/19892204/send-method-using-generator-still-trying-to-understand-the-send-method-and-quir
+
+# yield
+it require for the `first send()` to be `None`
 
 # 协程
 假设由协程执行，在执行A的过程中，可以随时中断，去执行B，B也可能在执行过程中中断再去执行A.
@@ -277,6 +282,29 @@ The previous example can be written differently using the `Future.add_done_callb
 
 In this example, the future is used to link `slow_operation()` to `got_result()`:
 	when `slow_operation()` is done, `got_result()` is called with the result.
+
+# run_until_complete and run_forever
+
+	loop.run_until_complete(coroutine)
+
+	loop.call_soon(display_date, end_time, loop)
+	loop.call_later(delay, callback, *args)
+	loop.run_forever()
+
+Future 是一个callback for coroutine
+
+	future = asyncio.Future()
+	asyncio.ensure_future(coroutine(future)); 加任务
+	future.add_done_callback(got_result)
+	    loop.run_forever()
+
+Parallel
+
+	tasks = [
+		asyncio.ensure_future(factorial("A", 2)),
+		asyncio.ensure_future(factorial("B", 3)),
+		asyncio.ensure_future(factorial("C", 4))]
+	loop.run_until_complete(asyncio.wait(tasks))
 
 # Tasks
 

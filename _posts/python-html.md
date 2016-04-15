@@ -15,9 +15,9 @@ http://www.crummy.com/software/BeautifulSoup/bs4/doc/index.zh.html#find
 
 ## findNode(findTag)
 
-### by tag 
-如果想要得到所有的<p>标签,或是通过名字得到比一个tag更多的内容的时候,就需要用到 Searching the tree 中描述的方法,比如: find_all()
-
+### by tag
+如果想要得到所有的<p>标签,或是得到其它tag, 就需要用到 Searching the tree 中描述的方法,比如: find_all()
+(findAll是别名)
 
 ```
 from bs4 import BeautifulSoup
