@@ -23,11 +23,90 @@ description:
 
 # TODO
 https://docs.python.org/3/library/asyncio-task.html#asyncio.iscoroutinefunction
-http://stackoverflow.com/questions/19302530/python-generator-send-function-purpose
-http://stackoverflow.com/questions/19892204/send-method-using-generator-still-trying-to-understand-the-send-method-and-quir
 
 # yield
 it require for the `first send()` to be `None`
+> You can't send() a value the first time because the generator did not execute until the point where you have the yield statement, so there is nothing to do with the value.
+
+
+# send-await
+send 会向yield 传值，并在下一个yield 停止
+send 遇到`await coroutine()` 会step in. 注意`await generator()` 是非法的
+
+	@types.coroutine
+	def switch():
+		print('switch')
+		a=(yield 1)
+		print("return %d", a);
+		a=(yield 2)
+		print("return %d", a);
+
+	async def coro1():
+		print("C1: Start")
+		await switch()
+		print("C1: Stop")
+
+	async def coro2():
+		print("C2: Start")
+		print("C2: a")
+		print("C2: b")
+		print("C2: c")
+		print("C2: Stop")
+
+	c1 = coro1()
+	c2 = coro2()
+	def run(coros):
+		coros = list(coros)
+
+		while coros:
+			print('start')
+			# Duplicate list for iteration so we can remove from original list.
+			for coro in list(coros):
+				try:
+					print(coro.send(None))
+					#c1 = coro
+				except StopIteration:
+					coros.remove(coro)
+	run([c1,c2])
+
+
+# run_until_complete
+
+BaseEventLoop.run_until_complete(future)
+
+	Run until the Future is done.
+
+	If the argument is a coroutine object, it is wrapped by ensure_future().
+
+	Return the Future’s result, or raise its exception.
+
+Example
+
+	import asyncio
+	from aiohttp import web
+
+	async def index(request):
+		await asyncio.sleep(0.5)
+		return web.Response(body=b'<h1>Index</h1>')
+
+	async def hello(request):
+		await asyncio.sleep(0.5)
+		text = '<h1>hello, %s!</h1>' % request.match_info['name']
+		return web.Response(body=text.encode('utf-8'))
+
+	async def init(loop):
+		app = web.Application(loop=loop)
+		app.router.add_route('GET', '/', index)
+		app.router.add_route('GET', '/hello/{name}', hello)
+		srv = await asyncio.sleep(5)
+		print('Server started at http://127.0.0.1:8000...')
+		return srv
+
+	loop = asyncio.get_event_loop()
+	i = init(loop)
+	loop.run_until_complete(i)
+	loop.run_forever()
+	print('abc');
 
 # 协程
 假设由协程执行，在执行A的过程中，可以随时中断，去执行B，B也可能在执行过程中中断再去执行A.

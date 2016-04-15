@@ -8,16 +8,18 @@ description:
 # selector
 
 	$(selector)
-		$('div span')
+		$('div span');//span 可能是儿子，孙子，孙孙子....
 		$('#mydiv')
 	$(selector, this)
 		var optionSelected = $("option:selected", this); //you are finding all selector elements inside this's context.
 	    var valueSelected = this.value;
 
-	//分别匹配多个元素
+	//分别匹配多个元素(or)
 	$(sel1,sel2,sel3)
-	//匹配多个条件
+
+	//匹配多个条件(and)
 	$('p.a.b')
+    $('input:checked[name="id[]"]')
 
 	$('#id')[0];//原生的dom, 非jquery 对象
 	$('#id').eq(0);//jquery 对象
@@ -43,6 +45,7 @@ description:
 	子、
 		$('div').children(); //所有div之下的所有子节点
 		$('parent > child');
+		$('parent child'); //孙子
 		 $("div").children("p.1"); //筛选出所有类名为.1的p标签节点
 	孙、曾孙...
 		$("div").find("span"); //所有孙子中的span节点
@@ -253,6 +256,7 @@ newNode.insertBefore(oldNode)
 oldNode.before(node1,node2,...)
 
 	$("img").after("Some text after");
+		<img>some text after
 	$("img").after(node1, node2, ...);
 	$("img").before("Some text before");
 
@@ -291,6 +295,8 @@ The main difference is that `appendChild` is a DOM method and `append` is a jQue
 	$(node).attr('action')
 	$(node).prop('action')
 	$(node).html()
+	$(node)[0].outerHTML
+	
 	$(node).text();
 
 - prop 包括true/false 属性：checked,selected, disabled, etc..

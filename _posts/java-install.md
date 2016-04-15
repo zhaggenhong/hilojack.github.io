@@ -9,3 +9,10 @@ export PATH=$PATH:$JRE_HOME/bin
 
 # which javac
 /System/Library/Frameworks/JavaVM.framework/Versions/A/Commands/javac
+
+# test
+
+	# https://raw.githubusercontent.com/stevenholder/PHP-Java-AES-Encrypt/master/security.java
+	$ javac -classpath 'commons-codec-1.7.jar' Security.java
+	$ unzip -x org-apache-commons-codec.jar
+	$ java Security [arg]

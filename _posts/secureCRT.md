@@ -21,3 +21,18 @@ Session->Terminal->Anti-idle:
 
 	send-string 1800
 	send-protocol 180
+
+# check
+Bash:
+
+	shopt | grep checkwinsize
+
+If you don't get
+
+	checkwinsize    on
+
+then activate it with
+
+	shopt -s checkwinsize
+	# deactive
+	shopt -u checkwinsize

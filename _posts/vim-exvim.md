@@ -24,6 +24,12 @@ http://feihu.me/blog/2014/intro-to-vim/#vim
 	folder_filter_mode = exclude -- { include, exclude }
 	folder_filter += img,doc
 
+# project window
+
+	nnoremap <unique> <silent> <F3> :EXProjectToggle<cr>
+	:call EXProjectToNERDTree()
+	n  <C-Tab>     *@:call nerdtree#ui_glue#invokeKeyMap("<C-Tab>")<CR>
+	n  <C-Tab>     * :EXbalt<CR> 
 
 # vim-airline
 

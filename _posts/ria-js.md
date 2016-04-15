@@ -659,6 +659,15 @@ Example:
 
 # Object
 
+## keys
+list forEach
+
+	Object.keys({a:1, b:2})
+		["a", "b"]
+	Object.keys(obj).forEach(function(key){
+		console.log(key, obj[key])
+	})
+
 ## has key value
 
 	if('key' in myObj){ }

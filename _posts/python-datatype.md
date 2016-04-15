@@ -357,6 +357,13 @@ The difference between list and tuple:
 	list1 = [1, 2, 3]
 	str1 = ''.join(str(e) for e in list1)
 
+## list list
+
+	>>> list([1,2,3])
+	[1, 2, 3]
+	>>> list({'a':1,'b':2,'c':3})
+	['b', 'c', 'a']
+
 ## loop list
 
 	for idx, val in enumerate(ints):
