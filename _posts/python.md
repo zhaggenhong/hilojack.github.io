@@ -97,7 +97,9 @@ import `ex47.game`, would find two file:
 	 /usr/local/lib/python3.5/site-packages/pip/_vendor/requests/cookies.py
 
 ### PYTHONPATH
-相当于sys.path.append()
+> PYTHONPATH Augment the default search path for module files. The format is the same as the shell’s PATH
+
+相当于: sys.path.append()
 
 	export PYTHONPATH=.
 

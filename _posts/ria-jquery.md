@@ -296,22 +296,27 @@ The main difference is that `appendChild` is a DOM method and `append` is a jQue
 	$(node).prop('action')
 	$(node).html()
 	$(node)[0].outerHTML
-	
 	$(node).text();
 
-- prop 包括true/false 属性：checked,selected, disabled, etc..
+- prop 包括true/false 属性：checked(radio+checkbox),selected(select), disabled, etc..
 - attr 不包括true/false 属性
+
 
 ### checked
 
-	$("#x").prop("checked", true);			//$('#x')[0].checked
-	$("#x").prop("checked")
-	$("input[type="radio"]").val(["1"]); //select val = 1
-	$("input[type="checkbox"]").val(["1", 2]); //select val = 1,2
+	$("#x").prop("checked", true);			//radio_checkbox.checked
+	$("input[type="radio"]").val(["1"]); 	//val = 1
+	$("input[type="checkbox"]").val(["1", 2]); //val = 1,2
 
 get checked val
 
 	$('input[name=radioName]:checked', '#myForm').val()
+	$('input[name="checkBox[]"]:checked', '#myForm').val(); # return first val
+
+### selected
+
+	$("#x").prop("selected", true);			//select.selected
+	$('select[name=selectName]:selected', '#myForm').val()
 
 ## Table
 
