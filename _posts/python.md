@@ -82,6 +82,11 @@ import `ex47.game`, would find two file:
 ## path
 此PATH 与 SHELL PATH 是独立的
 
+### module path
+
+	import a_module
+	print a_module.__file__
+
 ### sys.path
 
 	>>> import sys

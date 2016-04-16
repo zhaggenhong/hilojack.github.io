@@ -24,14 +24,67 @@ description:
 # TODO
 https://docs.python.org/3/library/asyncio-task.html#asyncio.iscoroutinefunction
 
+## BaseEventLoop
+https://docs.python.org/3/library/asyncio-eventloop.html#asyncio-hello-world-callback
+
 # yield
 it require for the `first send()` to be `None`
 > You can't send() a value the first time because the generator did not execute until the point where you have the yield statement, so there is nothing to do with the value.
 
+## 语法
 
-# send-await
-send 会向yield 传值，并在下一个yield 停止
-send 遇到`await coroutine()` 会step in. 注意`await generator()` 是非法的
+	r = c.send(n)
+	c.close()
+
+## 例子：
+传统的生产者-消费者模型是一个线程写消息，一个线程取消息，通过锁机制控制队列和等待，但一不小心就可能死锁。
+
+如果改用协程，生产者生产消息后，直接通过yield跳转到消费者开始执行，待消费者执行完毕后，切换回生产者继续生产，效率极高：
+
+	def consumer():
+		r = ''
+		while True:
+			n = yield r
+			if not n:
+				return
+			print('[CONSUMER] Consuming %s...' % n)
+			r = '200 OK'
+
+	def produce(c):
+		c.send(None)
+		n = 0
+		while n < 5:
+			n = n + 1
+			print('[PRODUCER] Producing %s...' % n)
+			r = c.send(n)
+			print('[PRODUCER] Consumer return: %s' % r)
+		c.close()
+
+	c = consumer()
+	produce(c)
+
+执行结果：
+
+	[PRODUCER] Producing 1...
+	[CONSUMER] Consuming 1...
+	[PRODUCER] Consumer return: 200 OK
+	[PRODUCER] Producing 2...
+	[CONSUMER] Consuming 2...
+	[PRODUCER] Consumer return: 200 OK
+	[PRODUCER] Producing 3...
+	[CONSUMER] Consuming 3...
+	[PRODUCER] Consumer return: 200 OK
+	....
+
+注意到consumer函数是一个generator.
+
+整个流程无锁，由一个线程执行，produce和consumer协作完成任务，所以称为“协程”，而非线程的抢占式多任务。
+
+> Donald Knuth的一句话总结协程的特点： “子程序就是协程的一种特例。”
+
+## send-await
+send 会向`yield` 传值，遇到下一个yield 停止
+send 遇到`await coroutine()`不会停止，而是`step into coroutine`. 注意`await generator()`语法是非法的
 
 	@types.coroutine
 	def switch():
@@ -69,9 +122,7 @@ send 遇到`await coroutine()` 会step in. 注意`await generator()` 是非法�
 					coros.remove(coro)
 	run([c1,c2])
 
-
 # run_until_complete
-
 BaseEventLoop.run_until_complete(future)
 
 	Run until the Future is done.
@@ -391,15 +442,18 @@ Parallel
 Example executing 3 tasks (A, B, C) in parallel:
 
 	import asyncio
-
-	@asyncio.coroutine
-	def factorial(name, number):
+	async def factorial1(name, number):
 		f = 1
 		for i in range(2, number+1):
 			print("Task %s: Compute factorial(%s)..." % (name, i))
-			yield from asyncio.sleep(1)
+			await asyncio.sleep(1)
 			f *= i
 		print("Task %s: factorial(%s) = %s" % (name, number, f))
+
+	async def factorial(name, number):
+		print('start task:%s' % name)
+		await factorial1(name, number)
+		print('finished task:%s' % name)
 
 	loop = asyncio.get_event_loop()
 	tasks = [
@@ -411,77 +465,30 @@ Example executing 3 tasks (A, B, C) in parallel:
 
 Output:
 
+	➜ > test p3 a.py
+	start task:A
 	Task A: Compute factorial(2)...
+	start task:B
 	Task B: Compute factorial(2)...
+	start task:C
 	Task C: Compute factorial(2)...
 	Task A: factorial(2) = 2
+	finished task:A
 	Task B: Compute factorial(3)...
 	Task C: Compute factorial(3)...
 	Task B: factorial(3) = 6
+	finished task:B
 	Task C: Compute factorial(4)...
 	Task C: factorial(4) = 24
+	finished task:C
 
-# BaseEventLoop
-https://docs.python.org/3/library/asyncio-eventloop.html#asyncio-hello-world-callback
+asyncio.wait 会自动用`asyncio.ensure_future` wrap `coroutine`, 所以可以简写成：
 
-# yield
-
-## 语法
-
-	r = c.send(n)
-	c.close()
-
-## 例子：
-传统的生产者-消费者模型是一个线程写消息，一个线程取消息，通过锁机制控制队列和等待，但一不小心就可能死锁。
-
-如果改用协程，生产者生产消息后，直接通过yield跳转到消费者开始执行，待消费者执行完毕后，切换回生产者继续生产，效率极高：
-
-	def consumer():
-		r = ''
-		while True:
-			n = yield r
-			if not n:
-				return
-			print('[CONSUMER] Consuming %s...' % n)
-			r = '200 OK'
-
-	def produce(c):
-		c.send(None)
-		n = 0
-		while n < 5:
-			n = n + 1
-			print('[PRODUCER] Producing %s...' % n)
-			r = c.send(n)
-			print('[PRODUCER] Consumer return: %s' % r)
-		c.close()
-
-	c = consumer()
-	produce(c)
-
-执行结果：
-
-	[PRODUCER] Producing 1...
-	[CONSUMER] Consuming 1...
-	[PRODUCER] Consumer return: 200 OK
-	[PRODUCER] Producing 2...
-	[CONSUMER] Consuming 2...
-	[PRODUCER] Consumer return: 200 OK
-	[PRODUCER] Producing 3...
-	[CONSUMER] Consuming 3...
-	[PRODUCER] Consumer return: 200 OK
-	....
-
-注意到consumer函数是一个generator，把一个consumer传入produce后：
-
-1. 首先调用c.send(None)启动生成器(php 则不需要)；
-1. 然后，一旦生产了东西，通过c.send(n)切换到consumer执行；
-1. consumer通过yield拿到消息，处理，又通过yield把结果传回；
-1. produce拿到consumer处理的结果，继续生产下一条消息；
-1. produce决定不生产了，通过c.close()关闭consumer，整个过程结束。
-
-整个流程无锁，由一个线程执行，produce和consumer协作完成任务，所以称为“协程”，而非线程的抢占式多任务。
-
-> Donald Knuth的一句话总结协程的特点： “子程序就是协程的一种特例。”
+	tasks = [
+		factorial("A", 2),
+		factorial("B", 3),
+		factorial("C", 4)]
+	loop.run_until_complete(asyncio.wait(tasks))
 
 # asyncio
 asyncio是Python 3.4版本引入的标准库，直接内置了对异步IO的支持。
@@ -669,59 +676,28 @@ hello()会首先打印出Hello world!，然后，yield from语法可以让我们
 
 	vim /usr/local/Cellar/python3/3.5.0/Frameworks/Python.framework/Versions/3.5/lib/python3.5/asyncio/base_events.py +291
 
-- run_forever 是死循环：循环遍历执行每个loop, 否则只遍历一次就结束了
+# Other
 
-	BaseEventLoop.run_forever()
+## Set signal handlers for SIGINT and SIGTERM
+Register handlers for signals SIGINT and SIGTERM using the `BaseEventLoop.add_signal_handler()` method:
 
-	Run until stop() is called.
-	If stop() is called before run_forever() is called, this polls the I/O selector once with a timeout of zero, runs all callbacks scheduled in response to I/O events (and those that were already scheduled), and then exits.
+	import asyncio
+	import functools
+	import os
+	import signal
 
-	If stop() is called while run_forever() is running, this will run the current batch of callbacks and then exit.
-	Note that callbacks scheduled by callbacks will not run in that case; they will run the next time run_forever() is called.
+	def ask_exit(signame):
+		print("got signal %s: exit" % signame)
+		loop.stop()
 
-## yield send
+	loop = asyncio.get_event_loop()
+	for signame in ('SIGINT', 'SIGTERM'):
+		loop.add_signal_handler(getattr(signal, signame),
+								functools.partial(ask_exit, signame))
 
-	import types
-	@types.coroutine
-	def switch():
-		print('switch')
-		yield
-
-	async def coro1():
-		print("C1: Start")
-		await switch()
-		print("C1: Stop")
-
-	async def coro2():
-		print("C2: Start")
-		print("C2: a")
-		print("C2: b")
-		print("C2: c")
-		print("C2: Stop")
-
-	c1 = coro1()
-	c2 = coro2()
-	def run(coros):
-		coros = list(coros)
-
-		while coros:
-			# Duplicate list for iteration so we can remove from original list.
-			for coro in list(coros):
-				try:
-					coro.send(None)
-					c1 = coro
-				except StopIteration:
-					coros.remove(coro)
-	run([c1,c2])
-
-out:
-
-	C1: Start
-	switch
-	C2: Start
-	C2: a
-	C2: b
-	C2: c
-	C2: Stop
-	start
-	C1: Stop
+	print("Event loop running forever, press Ctrl+C to interrupt.")
+	print("pid %s: send SIGINT or SIGTERM to exit." % os.getpid())
+	try:
+		loop.run_forever()
+	finally:
+		loop.close()

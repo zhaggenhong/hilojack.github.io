@@ -66,6 +66,12 @@ example:
 	os.path.isfile("bob.txt") # Does bob.txt exist?  Is it a file, or a directory?
 	os.path.isdir("bob")
 
+## path
+
+	import os
+	path = os.path.dirname(amodule.__file__)
+	path = os.path.abspath(amodule.__file__)
+
 ## mkdir/rename/delete/
 
 	os.mkdir(dir,mode=511)
