@@ -51,7 +51,7 @@ http://packagist.cn/
 	script
 		批定install/update 时需要执行的脚本
 
-## 为项目添加依赖
+## 为项目安装依赖
 进入项目的根目录后, 可以直接编辑composer 的依赖文件`composer.json`, 也可通过命令行`composer init` 引导你配置依赖
 
 直接在命令行添加包规则到`composer.json`, 并安装包 `vendors/monolog/monolog:`
@@ -59,6 +59,12 @@ http://packagist.cn/
 	composer require <usernam>/<pkg_name>:"version_wildcard"
 	composer require monolog/monolog:"1.0.*"
 
+	# Platform packages
+	# show local avaliable platform packages
+	composer show --platform
+	composer search ext-
+	# 只检查 不安装
+	composer install ext-gd
 
 关于version: `~1.2` 相当于 `>=1.2,<2.0` `1.*` 相当于`>=1.0, <2.0`. 示例中的monolog 位于[](https://packagist.org/packages/monolog/monolog)
 
@@ -72,9 +78,10 @@ http://packagist.cn/
 
 	composer update
 
-可以通过global 做系统级的安装，请将 PATH 设置到 ~/.composer/vendor/bin/
+可以通过global 做系统级的安装，请将 PATH 设置到 `~/.composer/vendor/bin/`
 
 	composer global require "phpunit/phpunit=4.5.*"
+		~/.composer/vendor/bin
 
 # 自动加载
 PHP官方社区创建了PSR-0标准。Composer里面自带PSR-0自动加载机制，在项目里面加入下面一行代码：
@@ -91,6 +98,10 @@ PHP官方社区创建了PSR-0标准。Composer里面自带PSR-0自动加载机�
 	autoload_psr4.php
 	autoload_classmap.php
 	autoload_files.php(load at begin)
+
+## 添加PSR4
+
+	$loader->addPsr4('Mail\\', LIB . 'Mail/Mail/');
 
 ## autoload_namespaces
 psr0

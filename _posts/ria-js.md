@@ -14,6 +14,7 @@ javascript 一站式 http://www.liaoxuefeng.com/wiki/001434446689867b27157e896e7
 
 # "use strict";
 use strict参考：阮一峰 http://www.ruanyifeng.com/blog/2013/01/javascript_strict_mode.html
+
 必须写在执行语句或者函数体内的第一行
 
 1. 变量必须有var 声明
@@ -50,24 +51,6 @@ use strict参考：阮一峰 http://www.ruanyifeng.com/blog/2013/01/javascript_s
 　　　　p: 1,
 　　　　p: 2
 　　}; // 语法错误
-
-# var scope
-匿名函数中的变量名scope 为定义时所在的变量
-
-	a=1;
-	function func(fun){
-		var a=2;
-		fun();
-	}
-	fun=function(){console.log(a);}
-	func(fun);//1
-
-普通函数中的var
-
-	function a(v){b(v);}
-	function b(){console.log(v);}
-	v='global';
-	a('var_a');//global
 
 # this scope
 
@@ -170,14 +153,18 @@ global -> caller -> callback(anonymous)
 ## Compare
 [js Boolean比较问题研究](http://www.joglex.com/?p=189)
 
+to number:
+
 	[]==[];//false 因为它们指向不同的对象. 这跟php是不一样的.
 	[]==0; //true Number({})的值为NaN，而Number([])的值为0 Number(null)为0 Number(undefined) = NaN
 	{}==0; //false
 
+to Boolean:
+
 	null==undefined; //true
 	0==''==false;//true
 
-	![];//false 对象取反都为false
+	![];//false, 对象取反都为false *******
 	!null;!undefined;!'';!0; //true
 
 
@@ -643,9 +630,11 @@ Example:
 	a.name=1;//函数静态变量
 
 ## 闭包
+
 	变量的作用域链.
 
 ## arguments
+
 	function a(name){
 		arguments[0]='v11';
 		console.log(arguments, name);

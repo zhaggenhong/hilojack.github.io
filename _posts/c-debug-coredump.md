@@ -2,7 +2,7 @@
 layout: page
 title:	coredump
 category: blog
-description: 
+description:
 ---
 # Preface
 
@@ -46,10 +46,10 @@ OSX 的coredump 默认在：` /cores/core.pid` , 但是得Enable core-dump-file
 Core Dump时，会生成诸如 `core.进程号` 的文件。
 
 ## 为何有时程序Down了，却没生成 Core文件。
-Linux下，有一些设置，标明了resources available to the shell and to processes。 可以使用#ulimit -a  来看这些设置。 
+Linux下，有一些设置，标明了resources available to the shell and to processes。 可以使用#ulimit -a  来看这些设置。
 从这里可以看出，如果 -c 是显示：`core file size  (blocks, -c)`  如果这个值为0，则无法生成core文件。所以可以使用：
 
-	ulimit -c 1024   
+	ulimit -c 1024
 	# 或者
 	ulimit -c unlimited
 
@@ -81,11 +81,11 @@ Linux下，有一些设置，标明了resources available to the shell and to pr
 	%e - insert coredumping executable name into filename  添加命令名
 
 ### Core文件输出在何处：
-`proc/sys/kernel/core_pattern` 可以控制core文件保存位置和文件名格式。
+`/proc/sys/kernel/core_pattern` 可以控制core文件保存位置和文件名格式。
 可通过以下命令修改此文件：
 
-	echo "/corefile/core-%e-%p-%t" >core_pattern，可以将core文件统一生成到/corefile目录下，产生的文件名为core-命令名-pid-时间戳
-	echo "core" >core_pattern  # 生成 core.pid，存放到当前目录
+	echo "/corefile/core-%e-%p-%t" > core_pattern，可以将core文件统一生成到/corefile目录下，产生的文件名为core-命令名-pid-时间戳
+	echo "core" > core_pattern  # 生成 core.pid，存放到当前目录
 
 如果是当前目录：
 
@@ -112,9 +112,9 @@ Linux下，有一些设置，标明了resources available to the shell and to pr
 
 # 用gdb查看core文件:
 
-下面我们可以在发生运行时信号引起的错误时发生core dump了. 发生core dump之后, 用gdb进行查看core文件的内容, 以定位文件中引发core dump的行. 
+下面我们可以在发生运行时信号引起的错误时发生core dump了. 发生core dump之后, 用gdb进行查看core文件的内容, 以定位文件中引发core dump的行.
 
-	gdb <exec file> <core file> 
+	gdb <exec file> <core file>
 	gdb ./test test.core
 	"在进入gdb后, 用bt命令查看backtrace以检查发生程序运行到哪里, 来定位core dump的文件->行.
 
@@ -148,7 +148,7 @@ allown fpm coredump(默认的好像):
 	service php-fpm restart
 
 ## use core
-php 在编译时应该开启debug 
+php 在编译时应该开启debug
 
 先通过php-cli 或者 fpm 产生coredump:
 

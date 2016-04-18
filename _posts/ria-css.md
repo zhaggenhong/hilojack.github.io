@@ -8,13 +8,16 @@ description:
 css/html5/js 兼容表
 http://caniuse.com/
 
+# todo
+css 权威指南
+
 # priority
 
 	style > id > hover(鼠标悬停) > class
 
 ## 层次
 
-	div ul {} #
+	div ul {} # ul 可以是孙子 孙孙子
 	div > ul {} #ul 是div 的children
 	tr,td{} #并列
 

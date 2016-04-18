@@ -217,6 +217,8 @@ lower or upper case
 	echo 10 . 'b'		"10b
 	echo 10'b'			"10 b
 	echo 10.1 . 'b'		"101b
+	let str='a'
+	let str .= 'b'
 
 ### expr-quote
 > *expr-quote*

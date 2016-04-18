@@ -1017,7 +1017,7 @@ Get user php is running as:
 
 ## 执行
 
-	passthru($cmd); //直接打印输出
+	passthru($cmd, [$errno]); //直接打印输出
 	$output = shell_exec($cmd); // 相当于反引号 $output = `$cmd`
 	$output = system($cmd[, $errno]); //也会直接打印输出
 	$lastline = exec($cmd[, $output, [, $errno]])
@@ -1114,8 +1114,14 @@ In php running:
 
 - 管理单个项目的依赖时使用Composer
 - 管理整个系统的PHP依赖时使用PEAR
+- peal 安装扩展
 
 ## pear
+
+- PEAR installs packages globally
+- PEAR 打包规则严格 不自由
+
+### install pear
 
 	curl http://pear.php.net/go-pear | php
 
@@ -1124,6 +1130,41 @@ pear(Php Extension and Aplication Repository) 好像没有composer 流行
 	pear list
 	pear help
 	pear instal package
+
+### Handling PEAR dependencies with Composer
+> http://www.phptherightway.com/
+
+If you are already using Composer and you would like to install some PEAR code too, you can use Composer to handle your PEAR dependencies. 
+
+This example will install code from pear2.php.net:
+
+	{
+		"repositories": [
+			{
+				"type": "pear",
+				"url": "http://pear2.php.net"
+			}
+		],
+		"require": {
+			"pear-pear2/PEAR2_Text_Markdown": "*",
+			"pear-pear2/PEAR2_HTTP_Request": "*"
+		}
+	}
+
+The first section `"repositories"` will be used to let Composer know it should “initialize” (or “discover” in PEAR terminology) the pear repo. Then the require section will prefix the package name like this:
+
+	pear-channel/Package
+
+The “pear” prefix is hardcoded to avoid any conflicts, as a pear channel could be the same as another packages vendor name for example, then the channel short name (or full URL) can be used to reference which channel the package is in.
+
+When this code is installed it will be available in your vendor directory and automatically available through the Composer autoloader:
+
+	vendor/pear-pear2.php.net/PEAR2_HTTP_Request/pear2/HTTP/Request.php
+
+To use this PEAR package simply reference it like so:
+
+	<?php
+	$request = new pear2\HTTP\Request();
 
 # Interface
 

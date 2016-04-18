@@ -159,6 +159,7 @@ Now you can use `<localleader>` in mappings and it will work just like <leader> 
 在一个映射后不能直接加注释,因为 " 字符也被当作是映射的一部分。你可以用 |" 绕 过这一限制。这实际上是开始一个新的空命令。例如:
 
 	:map <Space> W| " Use spacebar to move forward a word"
+	:noremap <F10> :let current_dir=expand("%:h")\|exec 'NERDTree' current_dir <CR> 
 
 # map key issue - map 按键相关 
 

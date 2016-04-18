@@ -1,8 +1,8 @@
 ---
 layout: page
-title:	
+title:
 category: blog
-description: 
+description:
 ---
 # Preface
 
@@ -24,12 +24,68 @@ http://feihu.me/blog/2014/intro-to-vim/#vim
 	folder_filter_mode = exclude -- { include, exclude }
 	folder_filter += img,doc
 
-# project window
+## project window
 
 	nnoremap <unique> <silent> <F3> :EXProjectToggle<cr>
 	:call EXProjectToNERDTree()
 	n  <C-Tab>     *@:call nerdtree#ui_glue#invokeKeyMap("<C-Tab>")<CR>
-	n  <C-Tab>     * :EXbalt<CR> 
+	n  <C-Tab>     * :EXbalt<CR>
+
+# ctags
+
+	:Update
+		ctags -o ./.exvim.lp/_tags --fields=+iaS --extra=+q -L ./.exvim.lp/files
+
+tag jump
+
+	<c-]> :ts tag-name
+	<leader>] :TS tag-name
+
+## Symbols
+
+	Commands	Usage
+	<leader>ss	List all symbols in the symbol window.
+	<leader>sq	Open symbol window and show the last listed symbols.
+	<leader>sg	Use current word under the cursor as search tag, list all tags match it in the symbol window.
+	:SL <your-tag>	Use <your-tag> as search tag, list all tags match it in the symbol window.
+
+### filter
+filter
+
+	/ ?
+
+remove:
+
+	Commands	Usage
+	<leader>r	Remove the symbols listed in symbol window not contains the Vim's search pattern.
+	<leader>d	Remove the symbols listed in symbol window contains the Vim's search pattern.
+
+# Search
+Search Text
+ex-gsearch has two main ways for search text in your project.
+
+	<leader>gg: It will search the current words under the cursor as text.
+	:GS <word>: It will search the <word> you input as text in command line.
+	:GS \<word\>: It will search the <word> you input in command line.
+
+search results
+
+	\gs :EXGSearchToggle
+	gd	search word
+	u or <c-r>
+
+filter
+
+	Commands	Usage
+	<leader>r	Remove the search results in whiches content part not contains the Vim's search pattern.
+	<leader>d	Remove the search results in whiches content part contains the Vim's search pattern.
+	<leader>fr	Remove the search results in whiches file part not contains the Vim's search pattern.
+	<leader>fd	Remove the search results in whiches file part contains the Vim's search pattern.
+
+# taglist(function list)
+ex-taglist.vim
+
+	<F4> call Tlist_Window_Toggle()
 
 # vim-airline
 
