@@ -50,6 +50,14 @@ thrift 与protobuf 相比，不仅包括二进制数据格式部分，还包括�
 	cat punish.thrift
 		namespace php A.B.C
 
+	autoload: Thrift
+		spl_autoload_register(function($class){
+            if(strpos($class, 'Thrift') === 0){
+                $file = str_replace('\\', '/', $class);
+                require dirname(__DIR__)."/{$file}.php";
+            }
+        });
+
 2. copy 组件
 
 	cp -r ./gen-php/Services/HelloWorld /yourdir/workerman/applications/ThriftRpc/Services/
