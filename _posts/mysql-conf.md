@@ -199,15 +199,21 @@ tab autocomplete
 	auto-rehash
 
 ### log
+log-slow-queries:
 
+	[mysqld] only
 	# 记录非索引查询(expire long_query_time)
-	log_slow_queries=1
-	log_queries_not_using_indexes=1
+	log-slow-queries = /tmp/mysql-slow.log
+	log_queries_not_using_indexes=0
+
+for mysql (>=5.6):
 
 	# log slow queries (>long_query_time ) 可以用mysqldumpslow分析此日志
+	[mysqld] only
 	slow_query_log=1
-	slow_query_log_file=path
-	long_query_time=10
+	slow_query_log_file=/tmp/mysql-slow.log
+	long_query_time=2
+	log_queries_not_using_indexes = 1
 
 ### port
 
@@ -474,7 +480,7 @@ The file `output.txt` is stored on server's datadir(On mac OSX: /usr/local/var/m
 
 ## FLUSH
 
- 	//重新加载权限表
+	//重新加载权限表
 	FLUSH PRIVILEGES; alias to 'reload';
 	//刷新连接的主机列表
 	FLUSH HOSTS;

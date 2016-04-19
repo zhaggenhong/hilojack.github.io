@@ -13,14 +13,15 @@ description:
 	易用性低：不方便在里面写php(用户组件); 因为smarty 一等，php 是二等公民、js是三等公民、html/css 是四等公民（这种复杂的关系导致编译系统巨大）我不能方便写
 	不支持继承
 
-除了smarty，可以考虑
+除了smarty，可以考虑[php-tpl](/p/php-tpl)
 
 - yaf-simple-view 扩展性和性能都很强，原生的php 语法
 - handlebarsjs(还不支持if else)
 	http://handlebarsjs.com
-PHP 实现： 通用模板
+	相应的PHP 实现： 通用模板
 	https://github.com/zordius/lightncandy
 - blade
+- 自制tpl render
 
 三者比较：
 http://vschart.com/compare/blade-template-engine/vs/smarty-template-engine/vs/handlebars-js

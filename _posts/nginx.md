@@ -901,6 +901,15 @@ http://nginx.org/en/docs/http/server_names.html
 	listen       80;
 	listen 443 default_server ssl;#加ssl 时会自动开启ssl, 不能再加 ssl on;
 
+#### server_name root
+
+
+	server_name lp lr;
+	root   /Users/hilojack/www/$host/;
+
+	server_name   ~^(www\.)?(?<domain>.+)$;
+	root  /sites/$domain;
+
 ### upstream
 定义一组服务器， UNIX/TCP 可以 混合使用
 
