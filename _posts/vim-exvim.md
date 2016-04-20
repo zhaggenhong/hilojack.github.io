@@ -31,6 +31,8 @@ http://feihu.me/blog/2014/intro-to-vim/#vim
 	n  <C-Tab>     *@:call nerdtree#ui_glue#invokeKeyMap("<C-Tab>")<CR>
 	n  <C-Tab>     * :EXbalt<CR>
 
+	\fc		定位到当前文件名
+
 # ctags
 
 	:Update

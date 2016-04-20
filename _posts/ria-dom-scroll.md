@@ -17,7 +17,7 @@ description:
 		  scrollTop.push(top);
 		});
 
-		//scroll
+		//scroll (scroll postion vs dom postion)
 		$(window).scroll(function() {
 		  setTimeout(function() {
 			var nowTop = $(window).scrollTop();

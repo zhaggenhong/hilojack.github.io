@@ -24,6 +24,11 @@ https://github.com/AnewG/Modern-php?files=1
 	settype(&$var, $type);
 	gettype($var);
 
+	php > echo ctype_digit('1234'); 1
+	php > echo ctype_digit(1234); 1
+	php > echo ctype_digit('1234.5'); false
+	echo is_numeric('1234.3');//true
+
 
 # filter
 

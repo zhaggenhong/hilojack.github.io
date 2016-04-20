@@ -76,7 +76,26 @@ description:
 
 jquery:
 
-	$(window).scrollTop()
+	$(window).scrollTop([top])
+
+example:
+
+	<style>
+		.slide {
+			width: 46px;
+			height: 230px;
+			overflow-y: auto;
+			border-right: 1px solid black;
+		}
+	</style>
+	<div id="x" class="slide">
+		<div style="height:1000px">
+		<br>1<br> <br>2<br> <br>3<br> <br>4<br> <br>5<br> <br>6<br> <br>8<br>
+		</div>
+	</div>
+	<script>
+	document.getElementById('x').scrollTop=100
+	</script>
 
 ##### 相对偏移
 offsetLeft,offsetTop 相对页面左上角的偏移:
