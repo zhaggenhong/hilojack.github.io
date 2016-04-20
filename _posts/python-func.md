@@ -69,6 +69,11 @@ reduce把一个函数作用在一个序列[x1, x2, x3, ...]上，这个函数必
 filter 返回的也是惰性Iterator
 
 	list(filter(lambda x:x%2==0, [1,2,3]));
+	>>> list(filter(lambda x:x%2==0, range(10)))
+	>>> list(filter(lambda x:x%2==0, range(0,10)))
+	[0, 2, 4, 6, 8]
+
+0, 2, 4, 6, 8]
 
 ## 用filter求素数
 
