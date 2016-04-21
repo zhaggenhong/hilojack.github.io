@@ -111,7 +111,7 @@ http://stackoverflow.com/questions/21092095/is-elements-order-the-same-after-arr
 ### walk
 
 	//用于改变原数组 或者 通过闭包函数返回新的数组或者结果集
-	bool array_walk ( array &$array , callable $callback [, mixed $userdata = NULL ] );//$callback(&$item, $key, &$userdata = null). 始终返回true. 但是外部的$userdata 始终是按值传递进去的。
+	bool array_walk ( array &$array , callable $callback [, mixed $userdata = NULL ] );//$callback(&$item, $key, $userdata = null). 始终返回true. 但是外部的$userdata 始终是按值传递进去的:&$userdata 是没有用的
 	//用于生成新数组
 	$b = array_map($func, $a, $b, ...);//返回一个数组：array($func($a_item,$b_item,...)); //$func 按引用传值 无效
 	array_map('sum', $a, $b);

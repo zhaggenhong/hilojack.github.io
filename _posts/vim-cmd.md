@@ -100,6 +100,8 @@ It will parse such args:
 ## multi command
 
 	:cmd1|cmd2|cmd3
+	:!shell cmd only
+		:!ls | wc -l
 
 ## silent
 To disalbe command's output.

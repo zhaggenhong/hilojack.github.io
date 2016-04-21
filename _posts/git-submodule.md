@@ -23,7 +23,6 @@ description:
 
 > 可通过在本地执行 `git config submodule.c-lib.url <URL>` 来覆盖这个选项的值
 
-
 	$ git diff --cached ;# 简化信息
 	$ git diff --cached --submodule; # 显示submodule 的sha
 	diff --git a/.gitmodules b/.gitmodules
@@ -77,7 +76,6 @@ description:
 提交之后，你也可以运行 git log -p 查看这个信息。
 
 	$ git log -p --submodule
-
 
 # Reference
 - [scm submodule]
