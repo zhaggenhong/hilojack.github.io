@@ -1,8 +1,8 @@
 ---
 layout: page
-title:	
+title:
 category: blog
-description: 
+description:
 ---
 # Preface
 
@@ -15,7 +15,7 @@ Character classes
 
 	\s	whitespace character: <Space> and <Tab>
 	\_s a whitespace (space or tab) or newline character
-		
+
 	\S	non-whitespace character; opposite of \s
 	\d	digit:				[0-9]
 	\D	non-digit:			[^0-9]
@@ -153,7 +153,7 @@ Example:
 		Example: >
 			/\( \zsFab\)\{3}
 		<	Finds the third occurrence of "Fab".
-	
+
 	\ze	Matches at any position, and sets the end of the match there: The
 		previous char is the last char of the whole match. |/zero-width|
 
@@ -205,8 +205,8 @@ Here two example are equal
 	#高亮搜索关键字
 	:set hls or :set hlsearch
 	:nohlsearch "限本次搜索不高亮
-    #真正的撤消搜索
-    :ninoremap <F3> :let @/ = "" 
+    #真正的撤消搜索 clearmatch
+    :noremap <F3> :let @/ = ""
 	#还未完全键入字串时就能找到目标
 	:set is(:set incsearch)
 
@@ -275,13 +275,13 @@ tx/Tx　搜索一个字符(相当于Fx/fx，可以用`;`,`,`实现正向反向�
 
 	:grep {search} {infiles}
 	:lgrep {search} {infiles}
-		When 'grepprg' is "internal" this works like |:vimgrep|.  
+		When 'grepprg' is "internal" this works like |:vimgrep|.
 		Note that the pattern needs to be enclosed in separator characters then.
 		set grepprg?
 
 多文件替换：
 
-	"将要扫描的文件加入argument list 
+	"将要扫描的文件加入argument list
 	:args **/*.txt **/*.cpp
 	"在参数列表中的文件中执行替换 并保存上
 	:argdo %s/hate/love/gc | update

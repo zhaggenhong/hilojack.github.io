@@ -540,6 +540,50 @@ onpopstate(when or popstate):
 
 Refer to : http://segmentfault.com/blog/jslite/1190000002465197
 
+## callback pass arguments
+callback 会遇到variable scope 污染问题
+
+    var someVar=1;
+    document.addEventListener('click',function(event){
+       console.log(somaVar);
+    });
+    someVar=2
+
+如果想让someVar 作为形参传进去, 就封装一个函数将局部变量传进去：
+You could pass `somevar` by value(not by reference) through *excute a special wrap function*:
+
+    var someVar=1;
+    func = function(v){
+        console.log(v);
+    }
+    document.addEventListener('click',function(someVar){
+       return function(){func(someVar)}
+    }(someVar));
+    someVar=2
+
+简单的封装一下：
+Or you could write a `common wrap` function such as `wrapEventCallback`
+
+    function WrapEventCallback(callback){
+        var args = Array.prototype.slice.call(arguments, 1);
+        return function(e){
+            callback.apply(this, args)
+        }
+    }
+    var someVar=1;
+    func = function(v){
+        console.log(v);
+    }
+    document.addEventListener('click',wrapEventCallback(func,someVar))
+    someVar=2
+
+Jquery
+
+    $("some selector").click({param1: "Hello", param2: "World"}, func);
+    function func(e){
+       e.data.param1
+    }
+
 ## listener
 
 ### add listener

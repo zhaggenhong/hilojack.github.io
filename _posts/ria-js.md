@@ -53,9 +53,11 @@ use strict参考：阮一峰 http://www.ruanyifeng.com/blog/2013/01/javascript_s
 　　}; // 语法错误
 
 # this scope
+定义函数时的的this: 指向window
+执行函数时的this: 函数所在object
 
 ## 被传递的函数
-其里面的this 均表示window
+其里面的this 均表示window.(jquery event call 改变了这个this)
 
 无论它是匿名:
 
@@ -80,10 +82,25 @@ use strict参考：阮一峰 http://www.ruanyifeng.com/blog/2013/01/javascript_s
 	}
 	str.func(str.objFunc)
 
+## 被调用的函数
+this 是指向定义处的this
+
 ## call/apply
 用call/apply改变方法的this指向它所传的对象, 详见继承
 
 	func.call(obj)
+
+    function foo() { console.log(arguments); }
+
+    // 1. directly
+    foo(1, 2, 3);
+
+    // 2. trough Function.call()
+    foo.call(this, 1, 2, 3);
+
+    // 3. trough Function.apply()
+    var args = [1, 2, 3];
+    foo.apply(this, args);
 
 # var scope
 匿名函数中的scope 是定义所在的scope:
@@ -143,6 +160,13 @@ global -> caller -> callback(anonymous)
 
 	Object.prototype.toString.call(1)
 	"[object Number]"
+	"[object Arguments]"
+
+    var args = [];
+    Array.prototype.push.apply( args, arguments );
+    [].shift.call(arguments)
+
+to string:
 
 	String(value)
 	value + ""
@@ -185,6 +209,12 @@ to Boolean:
 
 	.slice(start, howmany); //支持负数
 	.splice(start, howmany[, newValue]);//删除
+        a=[1,2,3,4,5]
+            [1, 2, 3, 4, 5]
+        a.splice(2,2,'abc')
+            [3, 4]
+        a;
+            [1, 2, "abc", 5]
 	.sort([funcSort]);
 
 	转换:
@@ -634,12 +664,36 @@ Example:
 	变量的作用域链.
 
 ## arguments
+如果arguments[0] 存在, name 严格指向arguments[0]:
+否则name 不变
 
 	function a(name){
-		arguments[0]='v11';
+		arguments[0]='v11';//same as: name='v11'
 		console.log(arguments, name);
 	}
 	a('v1','v2'); //output: ['v11', 'v2'], 'v11'
+
+如果想让 arguments 支持数组函数:
+
+    function f(a){
+        [].shift.call(arguments)
+        console.log(arguments, a);
+    }
+    f(1); //[],1
+    f(1,2); //[2],2
+    f(1,2,3); //[2,3],2
+    f(1,2,3,4); //[2,3,4],2
+
+push.apply
+
+    var args = [];
+    Array.prototype.push.apply( args, arguments );
+
+slice:
+
+    //注意arguments 中的object/array 还是近引用传值, string 不是
+    var params = Array.prototype.slice.call(arguments);
+    params.shift();
 
 ## function 对象
 

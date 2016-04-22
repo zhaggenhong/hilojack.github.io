@@ -38,7 +38,6 @@ which will show you the commits that are in the remote branch, but not in your c
 
 	git log filename
 
-
 ## limit
 
 	#last 2 comit log
