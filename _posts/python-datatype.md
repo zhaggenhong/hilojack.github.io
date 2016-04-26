@@ -408,6 +408,7 @@ exclude end
 	list[start:end:step]
 	list[0:3]
 	list[:-1]
+	list[::-1] # reverse
 	list[::5]
 	print list[0:10:2]
 

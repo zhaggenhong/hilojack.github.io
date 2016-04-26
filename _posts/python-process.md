@@ -129,8 +129,15 @@ Note: raw_input 将不会正常工作，We better use :
 
 ## exec shell
 
+### subprocess.check_output
+
+    import subprocess
+    res = subprocess.check_output("ls -l", shell=True) # 以shell 角析
+    print(res.decode()) # 默认返回值为 bytes 类型
+        -rw-r--r-- ...
+
 ### subprocess.Popen
-Popen 是最基础的类, 它是非阻塞的(除非有`.stdout.read()`)
+Popen 是最基础的类, 它是非阻塞的(除非执行`.stdout.read()`)
 
 	subprocess.Popen('sleep 61') #wrong
 	subprocess.Popen(['sleep', '61']).pid; #ok
@@ -160,6 +167,7 @@ read output
 	p = subprocess.Popen(['nslookup'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 	output, err = p.communicate(b'set q=mx\npython.org\nexit\n')
 	print(output.decode('utf-8'))
+	print(output.decode())
 	print('Exit code:', p.returncode)
 
 上面的代码相当于在命令行执行命令nslookup，然后手动输入：

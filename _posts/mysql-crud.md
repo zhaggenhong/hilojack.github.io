@@ -29,9 +29,13 @@ Insert update delete select
 	select last_insert_id('1234');
 	select last_insert_id();//1234
 
-> 手动指定id时，last_insert_id() 不改变
-> insert+DUPLICATE update 中（update） 时，last_insert_id() 不改变
-> 只有当下次insert 发生 并且使用 自增id 时, last_insert_id() 才发生改变
+
+#### last_insert_id 规则
+lastInsertId :
+
+1. 手动`insert into t(id)` 时，last_insert_id() 不改变()
+2. 当通过`auto_increment` 自增并成功插入数据后，改变
+3. update 时不改变，除非执行：`last_insert_id(id) `
 
 ### subquery 子查询
 subquery 是嵌入另一条语句的select 语句. 他是数据集合
@@ -185,8 +189,11 @@ Not exists 保证
 插入行后会导致在`一个UNIQUE索引或PRIMARY KEY`中出现重复值，则执行后面的UPDATE
 
 	INSERT INTO table (a,b,c) VALUES (1,2,3)  ON DUPLICATE KEY UPDATE c=c+1;
-	INSERT INTO table (a) VALUES (1),(1),(2),(3)  ON DUPLICATE KEY UPDATE id=id;
-	INSERT INTO table (a) VALUES (1),(1),(2),(3)  ON DUPLICATE KEY UPDATE id=last_insert_id(id);//update: last_insert_id(3) ;insert:insert_id no change
+	INSERT INTO table (a) VALUES (1) ON DUPLICATE KEY UPDATE id=id;//仅当insert: last_insert_id 改变
+	INSERT INTO table (a) VALUES (1) ON DUPLICATE KEY UPDATE id=last_insert_id(id);//insert + update: last_insert_id 改变
+
+	INSERT INTO table (a) VALUES (1),(1),(2),(3)  ON DUPLICATE KEY UPDATE id=id;//仅当insert: last_id 变;
+	INSERT INTO table (a) VALUES (1),(1),(2),(3)  ON DUPLICATE KEY UPDATE id=last_insert_id(id);insert + update: 改变
 
 `VALUES(column)` 会返回insert 中的值:
 

@@ -72,6 +72,7 @@ check for default log path assigned by compile:
 ## error
 
 ### 403
+
 	403 open file Failed
 		One permission requirement that is often overlooked is a user needs x permissions in every parent directory of a file to access that file
 

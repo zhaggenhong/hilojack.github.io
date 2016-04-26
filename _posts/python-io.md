@@ -286,6 +286,11 @@ readlines:
 	for line in urlopen(url).readlines():
 		print line.strip()
 
+# pipe
+
+    for l in sys.stdin.readlines():
+        sys.stdout.write(l[::-1])
+
 # argv
 
 	from sys import argv # import module "sys" and objects: argv
