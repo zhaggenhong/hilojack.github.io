@@ -79,6 +79,7 @@ check for default log path assigned by compile:
 ### 500 Internal server error
 1. Check `rewrite last` to ensure there is no `cycle rewrite` as I mentioned above.
 2. Check permission of Direcotry or File.
+3. php error
 
 ### 502 Bad Gateway
 php-cgi进程数不够用、php执行时间长、或者是php-cgi进程死掉，都会出现502错误

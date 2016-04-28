@@ -148,6 +148,16 @@ To show what revision and author last modified each line of a file(single file):
 ## merge info
 
 	--graph //merge tree log info
+    -m
+        see from sha1
+
+example
+
+    commit f514219(from be6fe4d)
+    Merge: be6fe4d 89ac1b8
+
+    commit f514219(from 89ac1b8)
+    Merge: be6fe4d 89ac1b8
 
 ## log context
 
