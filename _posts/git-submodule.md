@@ -23,6 +23,8 @@ description:
 
 > 可通过在本地执行 `git config submodule.c-lib.url <URL>` 来覆盖这个选项的值
 
+## git diff
+
 	$ git diff --cached ;# 简化信息
 	$ git diff --cached --submodule; # 显示submodule 的sha
 	diff --git a/.gitmodules b/.gitmodules
@@ -53,9 +55,11 @@ description:
 克隆项目时，默认会包含该子模块目录，但其中还没有任何文件, 需要init 并拉取
 
 	$ git submodule init
+        Submodule '<sub_path>' registered for path '<sub_path>'
 	$ git submodule update
+         clone into '<sub_path>'
 
-更简单的方式是：
+更简单的方式在克隆时：
 
 	git clone --recursive url
 

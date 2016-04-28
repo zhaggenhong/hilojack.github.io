@@ -51,6 +51,17 @@ http://packagist.cn/
 	script
 		批定install/update 时需要执行的脚本
 
+## composer install
+
+    composer update --no-dev
+    composer install --no-dev
+
+## https
+
+    "config":{
+        "secure-http" : false
+    },
+
 ## 为项目安装依赖
 进入项目的根目录后, 可以直接编辑composer 的依赖文件`composer.json`, 也可通过命令行`composer init` 引导你配置依赖
 
