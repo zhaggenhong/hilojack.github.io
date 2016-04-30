@@ -98,6 +98,7 @@ Then run command with proxychains. Examples:
 
 	proxychains4 curl https://www.twitter.com/
 	proxychains4 git push origin master
+    proxychains4 curl 'http://1212.ip138.com/ic.asp'
 
 Or just proxify bash:
 
@@ -106,7 +107,10 @@ Or just proxify bash:
 	git push origin master
 
 ### Privoxy
-Privoxy 能将http代理转发至 socks5/socks4 代理
+Privoxy 能
+
+1. 将http代理转发至 socks5/socks4 代理: 能支持http 代理的命令就可以用了
+2. 支持类似PAC 的自动代理
 
 	forward-socks5	/	127.0.0.1:1080	.    # socks v5
 	forward-socks5t	/	127.0.0.1:1080	.    # socks v5, reduce the latency for the newly connection.
