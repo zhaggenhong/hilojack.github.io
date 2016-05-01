@@ -92,3 +92,31 @@ php的反射可以实现对自身代码的控制，这使得php具备一定的�
 # ReflectionFunction
 
 	echo ReflectionFunction::export('func',true);
+
+## invokeArgs
+There is a difference in performance when `using call_user_func_array` vs. calling the `function` directly, but it's not that big (`around 15x slower`). Unless you're using it thousands of times, you won't notice it.
+
+To answer your question, you can build one yourself:
+
+    function call($fn, array $args = array()){
+
+      $numArgs = count($args);
+
+      if($numArgs < 1)
+        return $fn();
+
+      if($numArgs === 1)  
+        return $fn($args[0]);
+
+      if($numArgs === 2)  
+        return $fn($args[0], $args[1]);
+
+      // ...
+
+      return call_user_func_array($fn, $args);
+    }
+
+There's also `ReflectionFunction::invokeArgs` (and `ReflectionMethod::invokeArgs`):
+
+    $reflector = new ReflectionFunction($fn);
+    return $reflector->invokeArgs($args);

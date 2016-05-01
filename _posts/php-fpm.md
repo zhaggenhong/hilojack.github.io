@@ -1,8 +1,8 @@
 ---
 layout: page
-title: php-fpm	
+title: php-fpm
 category: blog
-description: 
+description:
 ---
 # Preface
 FPM 是PHP内置的FastCGI Process Manager(FPM), 在命令行下，可以通过`php-fpm` 启动，它使用的
@@ -14,7 +14,7 @@ FPM 是PHP内置的FastCGI Process Manager(FPM), 在命令行下，可以通过`
 2. FastCGI 进程收到请求时，FastCGI 通过TCP/socket 方式将请求转发给其中一个 worker process.
 3. worker process 处理完成后，将结果和错误返回给web server
 
-> Apache 常用mod_php5 作为php 进程管理，但它使用的是prefork MPM方式，非常消耗资源. 
+> Apache 常用mod_php5 作为php 进程管理，但它使用的是prefork MPM方式，非常消耗资源.
 可以选择与nginx 类似的FPM系统：worker MPM(对应mod_fastcgi 模块) 或event MPM（对应 mod_fcgid 模块）.内存消耗更少，速度更快，但配置麻烦
 
 # INI
@@ -37,7 +37,7 @@ php 本身的配置文件是php.ini `php-fpm | grep php.ini`：
 	--with-config-file-scan-dir=/usr/local/etc/php/5.6/conf.d
 	--sysconfdir=/usr/local/etc/php/5.6
 
-	'--with-mysql-sock=/tmp/mysql.sock' 
+	'--with-mysql-sock=/tmp/mysql.sock'
 
 	Installing PHP CLI binary:        /usr/local/bin/php|php-cgi
 	Installing PHP CLI man page:      /usr/local/php/man/man1/
@@ -48,7 +48,7 @@ php 本身的配置文件是php.ini `php-fpm | grep php.ini`：
 
 	phpini=`php -d 'display_errors=stderr' -r 'echo php_ini_loaded_file();'`
 
-php-fpm 进程管理器的配置文件是php-fpm.conf ,如果编译时指定了配置文件路径则可以通过以下命令查询, 否则默认的路径是/etc/php-fpm.conf):
+php-fpm 进程管理器的配置文件是`php-fpm.conf` ,如果编译时指定了配置文件路径则可以通过以下命令查询, 否则默认的路径是/etc/php-fpm.conf):
 
 	php-fpm -t
 	php-fpm -y /etc/php-fpm.conf
@@ -85,7 +85,7 @@ php-fpm.conf 采用ini 格式，用`[global]` 节放blobal directives, 其它包
 		listen = /var/run/fpm.sock
 
 ## pool
-Refer to: http://php.net/manual/en/install.fpm.configuration.php 
+Refer to: http://php.net/manual/en/install.fpm.configuration.php
 
 放pool directives, 不同的pool 使用不同的sock
 
@@ -128,7 +128,7 @@ listen 的作用域是 pool
 
 	; Set permissions for unix socket, if one is used. In Linux, read/write
 	; permissions must be set in order to allow connections from a web server. Many
-	; BSD-derived systems allow connections regardless of permissions. 
+	; BSD-derived systems allow connections regardless of permissions.
 	; Default Values: user and group are set as the running user
 	;                 mode is set to 0666
 	;listen.owner = nobody
@@ -149,7 +149,7 @@ listen 的作用域是 pool
 	pm.max_children = 2000
 	;令当dynamic 时以下才生效
 	pm.start_servers = 50
-	pm.min_spare_servers = 40 
+	pm.min_spare_servers = 40
 	pm.max_spare_servers = 90 < pm.max_children
 
 
@@ -158,7 +158,7 @@ listen 的作用域是 pool
 ### status
 
 	pm.status_path=/pm_status
-	
+
 Then visit: `hilojack.com/pm_status`
 
 ## ini(php setting)
@@ -235,6 +235,14 @@ If this number(`10`) of child processes exit with Segmentation, page fault, and 
 	; Redirect worker stdout and stderr into main error log.  Default stderr will be redirected to /dev/null according to FastCGI specs.
 	catch_workers_output = yes
 
+Example
+
+    $ tail -f /var/log/nginx/fpm.error.log
+    [22-Apr-2016 01:09:01] NOTICE: exiting, bye-bye!
+    [27-Apr-2016 00:29:52] NOTICE: fpm is running, pid 9078
+    [27-Apr-2016 00:29:52] NOTICE: ready to handle connections
+    [28-Apr-2016 01:30:24] WARNING: [pool www] child 9079 said into stderr: "NOTICE: PHP message: PHP Warning:  require(/Users/hilojack/www/lp/vendor/autoload.php): failed to open stream: No such file or directory in /Users/hilojack/www/lp/_lp/lp.init.php on line 15"
+
 ### worker log(pool log)
 
 	[www-pool]
@@ -256,7 +264,7 @@ If this number(`10`) of child processes exit with Segmentation, page fault, and 
 	error_log = /var/log/php.error.log
 	; or in php-fpm.conf
 	;php_admin_value[error_log] = /var/log/php.error.log
-	
+
 	log_error=1
 	display_errors=1
 	display_startup_errors=1
@@ -270,7 +278,7 @@ If this number(`10`) of child processes exit with Segmentation, page fault, and 
 
 ## 502
 php-fpm invalid response from an upstream server
-	
+
 这有可能是执行php 的某些扩展方法导致的，可以通过在请求中带XDEBUG_TRACE 追踪
 
 	/var/log/nginx-error.log
@@ -334,7 +342,7 @@ My first guess would be to `disable request_slowlog_timeout`. Since it's not wor
 ## path
 
 	;open_basedir = /dir #限制php的访问路径
-	extension_dir = 
+	extension_dir =
 	zend_extension = /Absolute_path ; 必须是绝对路径
 		Absolute path to dynamically loadable Zend extension (for example APD,xdebug) to load when PHP starts up.
 
@@ -364,7 +372,7 @@ open_basedir can affect more than just filesystem functions; for example if MySQ
 ## time
 
 	;ignore_user_abort = off | on #忽略浏览器中断造成的中止
-	max_excution_time = 30 
+	max_excution_time = 30
 	memory_limit = 128M
 
 ## extension

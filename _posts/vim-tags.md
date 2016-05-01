@@ -27,3 +27,9 @@ description:
 	  let resp = system(cmd)
 	endfunction
 	autocmd BufWritePost *.cpp,*.h,*.c call UpdateTags()
+
+# symbols
+https://github.com/atom/symbols-view/issues/9
+
+    cd {your project directory}
+    ctags -R .
