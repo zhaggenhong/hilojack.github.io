@@ -6,6 +6,19 @@ description:
 ---
 # Preface
 
+# install
+0. composer require mikecao/flight
+1. Create your index.php file.
+
+    #require 'flight/Flight.php';
+    #If you're using Composer, run the autoloader instead.
+    require 'vendor/autoload.php';
+
+    Flight::route('/', function(){
+        echo 'hello world!';
+    });
+    Flight::start();
+
 # Routing
 
 ## Route Action
@@ -598,7 +611,7 @@ Instead of running Flight as a global static class, you can optionally run it as
 So instead of calling the static method, you would call the instance method with the same name on the Engine object.
 
 # autoload
-> see: flight/core/Loader.php
+> see: \flight\core\Loader::autoload(true, dirname(__DIR__));
 
     A\B\C:
         A/B/C.php
