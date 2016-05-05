@@ -162,7 +162,15 @@ Cache-Control 或者 Expires (会受windows F5 与 Mac Cmd+R 强制刷新的影�
 或者通过Expires 指定绝对过期时间：
 
 	header('Expires:Thu, 02 Apr 2016 05:14:08 GMT');
-
+    expires 30d;//nginx
+        ms: milliseconds
+        s: seconds
+        m: minutes
+        h: hours
+        d: days
+        w: weeks
+        M: months (30 days)
+        y: years (365 days)
 
 ## Last-Modified 304
  304 + Last-Modified(不会受刷新的影响) 关闭浏览器后缓存也是生效的

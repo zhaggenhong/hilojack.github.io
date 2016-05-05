@@ -125,6 +125,8 @@ default nomagic, need `\\` backslash
 	\{-,m}	0 to m		as few as possible (*)
 	\{-}	0 or more	as few as possible (*)
 
+    \(\) 这个得全部转义 \{\} 可最左转义
+
 ## very magic
 like perl and php:
 

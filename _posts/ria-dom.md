@@ -728,3 +728,9 @@ html5 的dataset 对象
 
 　　element.dataset.key = string_only;
 
+jquery:
+
+    $(element).data('key', 'value');
+    element.dataset.key // undefined
+
+    $(element).attr('data-key', 'value');
