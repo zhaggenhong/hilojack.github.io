@@ -198,3 +198,7 @@ phpini: `php -i |grep max_execution_time`
 
 1. 可能因为phpcgi进程不够用而造成502，需要修改/usr/local/php/etc/php-fpm.conf 将其中的max_children值适当增加。
 2. 也有可能是max_requests值不够用。需要说明的是这连个配置项占用内存很大，请根据服务器配置进行设置。否则可能起到反效果。
+
+# check shm error!
+
+1.  php-fpm parse error php-fpm 版本号不一致

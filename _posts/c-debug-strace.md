@@ -26,7 +26,7 @@ trace php-fpm
 	pgrep php-fpm -d ' -p '
 		-d delim
 			Specify a delimiter to be printed between each process ID.
-	strace `pgrep -d ' -p ' php-fpm ` -s 1024 -f
+	/usr/bin/strace -p `pgrep -d ' -p ' php-fpm ` -s 1024 -f
 
 Example：
 
