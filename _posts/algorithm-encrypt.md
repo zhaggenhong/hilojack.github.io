@@ -191,6 +191,7 @@ Blowfish 主要包括关键的几个S盒和一个复杂的核心变换函数。
 	}
 
 ## AES加密
+See java-lib
 
 	class AESMcrypt {
 

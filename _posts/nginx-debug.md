@@ -9,6 +9,8 @@ description:
 
 # Debug
 
+## strace worker
+
 ## status
 
 	location /nginx_status {
@@ -78,13 +80,21 @@ check for default log path assigned by compile:
 
 ### 500 Internal server error
 1. Check `rewrite last` to ensure there is no `cycle rewrite` as I mentioned above.
+
 2. Check permission of Direcotry or File.
+
 3. php error
+
+    nginx.error.log:
+        check shm error!  (很可能是1. php-fpm parse error; 2. fpm 版本问题)
+    fpm.error.log:
+        WARNING: [pool www] child 14021 said into stderr: "base.php(22) : Parse error - syntax error, unexpected '['"c
+        WARNING: [pool www] child 15423, script '/index.php' (request: "GET /userlist") executing too slow (6.664535 sec), logging
 
 ### 502 Bad Gateway
 php-cgi进程数不够用、php执行时间长、或者是php-cgi进程死掉，都会出现502错误
 
-先查日志：
+先查nginx日志：
 
 	error_log "/usr/nginx/error.log"
 
@@ -199,6 +209,3 @@ phpini: `php -i |grep max_execution_time`
 1. 可能因为phpcgi进程不够用而造成502，需要修改/usr/local/php/etc/php-fpm.conf 将其中的max_children值适当增加。
 2. 也有可能是max_requests值不够用。需要说明的是这连个配置项占用内存很大，请根据服务器配置进行设置。否则可能起到反效果。
 
-# check shm error!
-
-1.  php-fpm parse error php-fpm 版本号不一致
