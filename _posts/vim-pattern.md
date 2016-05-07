@@ -104,6 +104,17 @@ word boundary:
 
 	<Up><Down><Left><Right>
 
+### in replace
+一般情况下`\r\n`分别代表回车与换行，但是在`:%s/pattern/replace` 中的replace
+replace 比较特别：
+
+    \n 代表ascii 0(^@)
+        (相当于按<c-v><c-@>, 或者 CTRL-V 000)
+    \r 代表\n
+    ^M  在replace中居然表示\n
+        不表示<c-v><c-m>, <c-v>013
+
+
 ## multi
 default nomagic, need `\\` backslash
 
@@ -131,6 +142,7 @@ default nomagic, need `\\` backslash
 like perl and php:
 
 	+*?(){} is very magic
+	<> is very magic
 	:execute 'normal! gg/\vfor .+ in .+:' . "\<cr>"
 
 ## zeor-width assert

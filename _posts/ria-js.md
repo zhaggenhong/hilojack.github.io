@@ -10,7 +10,8 @@ description:
 # todo
 https://leanpub.com/exploring-es6/read
 https://es6.ruanyifeng.com/
-javascript 一站式 http://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000
+javascript 一站式
+http://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000
 
 # "use strict";
 use strict参考：阮一峰 http://www.ruanyifeng.com/blog/2013/01/javascript_strict_mode.html
@@ -191,91 +192,6 @@ to Boolean:
 	![];//false, 对象取反都为false *******
 	!null;!undefined;!'';!0; //true
 
-
-## Array
-
-	new Array(1,2,3);
-	arr = [1,2,'d'];
-	brr[0]=11;
-	arr;//[11,2,'d']; //因为数组赋值使用的是对象引用
-
-	.length
-	.concat(arr2)
-	.join([separator]); //implode
-	.pop() ;//返回item
-	.push(item1, itme2, ...);//return length
-	.reverse()
-	.shift();//左移(移出) .unshift(item1,item2);//右移(移入)
-
-	.slice(start, howmany); //支持负数
-	.splice(start, howmany[, newValue]);//删除
-        a=[1,2,3,4,5]
-            [1, 2, 3, 4, 5]
-        a.splice(2,2,'abc')
-            [3, 4]
-        a;
-            [1, 2, "abc", 5]
-	.sort([funcSort]);
-
-	转换:
-
-		arr.toString();arr.valueOf();
-		arr.join(',');//
-
-	栈方法:
-
-		arr.push('new item');
-		arr.pop();
-
-	队列:
-
-		arr.push('new');
-		arr.shift();//LIFO 后进先出
-
-	重排方法(改变arr本身):
-
-		arr.reverse();//倒序
-		arr.sort();//从小到大
-		arr.sort(function(a,b){return a-b;});//自定义排序
-
-	操作方法:
-
-		[0,1].concat(2,[3,4]);//返回数组[0,1,2,3,4];
-		arr.slice(start,[end]);//范围不含end本身,end可为负数,
-		arr.splice(start,[length]);//返回删除范围
-		arr.splice(start,length,val1,val2,....);//返回删除范围,并插入数据
-
-	位置方法:
-
-		['aa','bb','cc'].indexOf('aa');//0 找不到就返回-1
-		['aa','bb','cc','aa'].lastIndexOf('aa');//3 找不到就返回-1
-
-	迭代方法:
-
-		.every(func);//每一项运行给定函数都返回true,结果才返回true. //func= function(item,index,array){}; array是对数组本身的引用
-		.some(func);//只要其中一项运行指定函数时返回true,结果就返回true.
-		.filter(func);//返回运行为true item组成的数组
-		.map(func);//返回函数运行结果组成的数组
-		.forEach(func);//只运行不返回
-
-	归并方法:
-
-		.reduce(func);//从第一项开始
-		.reduceRight(func);//从最后一项开始
-		arr.reduce(function(pre,cur,index,array){return pre+cur;})
-		[1,2,3].reduce(function(pre,cur,index,array_self){return pre+cur;})
-			array_self 作为数组是按引用传值的
-			prev = prev+ curr = 1+2 = 3;
-			prev = prev+ curr = 3+3 = 6;
-
-	Array.prototype.inArray = function(needle) {
-        var length = this.length;
-        for(var i = 0; i < length; i++) {
-            if(this[i] == needle) return true;
-        }
-        return false;
-    }
-
 ## Date
 
 	$d = new Date("October 13, 1975 11:13:00");
@@ -368,8 +284,8 @@ str to time
 
 ### function
 
-	.charAt(pos) str[pos]
-	.charCodeAt(pos) //返回ascii十进制表示
+	.charAt(pos) str[pos=0]
+	.charCodeAt(pos) //返回unicode 十进制表示
 	.fromCharCode(97)
 	#搜索
 	.indexOf(sub_string)
@@ -524,7 +440,11 @@ Create RegExp：
 	encodeURI()	把字符串编码为 URI。
 		encodeURI("http://www.google.com/a file with spaces.html"); //转码所有非常规URI字符转码: '|" Ò' 等等
 	encodeURIComponent()	把字符串编码为 URI 组件。(所有URI特殊字符 将被转码)
+        decodeURIComponent
 	escape()	对字符串进行编码。Don't use it, as it has been deprecated since ECMAScript v3.
+        escape('中国'); 
+            "%u4E2D%u56FD"
+        unescape('%20');
 	str.replace(/'/g, "\\'");//addslashes
 
 
@@ -586,6 +506,7 @@ null == undefined 可相等.
 # 运算符
 
 ## 一元
+
 	delete variable
 	delete obj.name
 
@@ -612,6 +533,7 @@ null == undefined 可相等.
 	2147483648
 
 ## 逻辑
+
 	!var
 	var && var
 		逻辑 AND 运算并不一定返回 Boolean 值：
@@ -739,6 +661,7 @@ list forEach
 	typeof undefined; "undefined"
 
 ## Property 属性
+
 .constructor(指向函数)
 	对创建对象的函数的引用（指针）。对于 Object 对象，该指针指向原始的 Object() 函数。
 
@@ -767,9 +690,10 @@ list forEach
 	};
 
 ### Object.defineProperty()
+
 	obj[name] = value;
 	//or
-　　Object.defineProperty(obj, name, { value: value, writable: false });
+    Object.defineProperty(obj, name, { value: value, writable: false });
 
 Example1，在ES5 中Prototype 可以用来将定义魔法属性，可以实现类似 PHP 类的`__get`, `__set`
 
@@ -951,7 +875,8 @@ apply与call方法类似, 除了参数调用形式不一样.
 		};
 	}
 
-还有一个bind 方法，但函数使用bind 时，函数不会执行 var get = request.bind(this, 'GET', arg2, ... ); request 就不会执行。
+还有一个bind 方法，但函数使用bind 时，函数不会执行 `var get = request.bind(this, 'GET', arg2, ... );` request 就不会执行。
+
 它主要用于定制一个新的 requset 的函数，并默认函数的this 及定制参数:
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind
 
