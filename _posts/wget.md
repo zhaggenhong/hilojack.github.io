@@ -2,19 +2,21 @@
 layout: page
 title:	wget
 category: blog
-description: 
+description:
 ---
 # header
-	-U mozilla 
+
+	-U mozilla
 		set User-Agent
-	-e 
+	-e
 		robots=off if you don’t want wget to obey by the robots.txt file
 
 ## cookie
-	-b, --cookie 
+
+	-b, --cookie
 		-b "NAME1=VALUE1; NAME2=VALUE2"
 		-b 'a.cookie'
-		 If  no  '='  symbol  is  used  in the line, it is treated as a filename to use to read previously stored cookie lines from. 
+		 If  no  '='  symbol  is  used  in the line, it is treated as a filename to use to read previously stored cookie lines from.
 
 	-c, --cookie-jar <file name>
 	  Specify to which file you want curl to write all cookies after a completed operation.
@@ -29,14 +31,14 @@ description:
 
 ## output file
 
-	-O file 
-	-O - 
+	-O file
+	-O -
 		specify output file as stdin
 	-o logfile
 		log all messages to logfile
-	-r 
-		Recursive download. 
-	-p 
+	-r
+		Recursive download.(全站, 不需要-p)
+	-p
 		This option causes Wget to download all the files that are necessary to properly display a given HTML page.
 		This includes such things as inlined images, sounds, and ref-erenced stylesheets.
 
@@ -57,13 +59,13 @@ Example: Dump Site
 
 	-D file
 		dump header to file
-	-D- 
+	-D-
 		dump to output
 
-# limit 
+# limit
 
 ### wait time
 	--random-wait to let wget chose a random number of seconds to wait, avoid get into black list.
-	
+
 ### limit rate
 	--limit-rate=20k limits the rate at which it downloads files.

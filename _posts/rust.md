@@ -9,4 +9,4 @@ description:
 
 # todo
 book:
-http://www.kancloud.cn/thinkphp/rust/intro
+http://rustbook.cn/

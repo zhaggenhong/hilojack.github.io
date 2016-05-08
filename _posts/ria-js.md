@@ -151,46 +151,7 @@ global -> caller -> callback(anonymous)
 	}
 
 # Variable
-强制类型转换:
-
-	Boolean(value) - 把给定的值转换成 Boolean 型；
-	Number(value) - 把给定的值转换成数字（可以是整数或浮点数）；
-	String(value) - 把给定的值转换成字符串；
-
-## type
-
-	Object.prototype.toString.call(1)
-	"[object Number]"
-	"[object Arguments]"
-
-    var args = [];
-    Array.prototype.push.apply( args, arguments );
-    [].shift.call(arguments)
-
-to string:
-
-	String(value)
-	value + ""
-	undefined + ""
-	'0'+1
-		'01'
-
-## Compare
-[js Boolean比较问题研究](http://www.joglex.com/?p=189)
-
-to number:
-
-	[]==[];//false 因为它们指向不同的对象. 这跟php是不一样的.
-	[]==0; //true Number({})的值为NaN，而Number([])的值为0 Number(null)为0 Number(undefined) = NaN
-	{}==0; //false
-
-to Boolean:
-
-	null==undefined; //true
-	0==''==false;//true
-
-	![];//false, 对象取反都为false *******
-	!null;!undefined;!'';!0; //true
+[p/js-var](/p/js-var)
 
 ## Date
 
