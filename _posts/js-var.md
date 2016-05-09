@@ -6,6 +6,7 @@ description:
 ---
 # Preface
 基本类型：Undefined、Null、Boolean、Number和String
+复杂类型：由基本类型构成
 
 # Compare
 https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Equality_comparisons_and_sameness
@@ -137,6 +138,42 @@ Object.is 与== 只有两个不同
     new Number(1) == new Number(1)
         false
 
+# type check
+
+## typeof
+用于判断数据类型及function, object
+
+    undefined、null、boolean、number,  string
+    object
+    function
+
+未声明的变量，只能执行typeof 操作
+
+    typeof var;//undefined
+
+null 是空对象，undefind 派生自null:
+
+    typeof null;//object 空对象
+
+## via Object.prototype.toString
+用于判断对像类别
+
+	Object.prototype.toString.call(1)
+	"[object Number]"
+	"[object Arguments]"
+
+    var args = [];
+    Array.prototype.push.apply( args, arguments );
+    [].shift.call(arguments)
+
+to string:
+
+	String(value)
+	value + ""
+	undefined + ""
+	'0'+1
+		'01'
+
 # type convert
 在JavaScript中,一共有两种类型的值:原始值(primitives)和对象值(objects).
 
@@ -171,24 +208,6 @@ JavaScript引擎内部的抽象操作ToPrimitive()有着这样的签名:
 
 如果PreferredType被标志为String,则转换操作的第二步和第三步的顺序会调换.
 如果没有PreferredType这个参数,则PreferredType的值会按照这样的规则来自动设置:Date类型的对象会被设置为String,其它类型的值会被设置为Number.
-
-## type check
-
-	Object.prototype.toString.call(1)
-	"[object Number]"
-	"[object Arguments]"
-
-    var args = [];
-    Array.prototype.push.apply( args, arguments );
-    [].shift.call(arguments)
-
-to string:
-
-	String(value)
-	value + ""
-	undefined + ""
-	'0'+1
-		'01'
 
 ## to Boolean
 - What are "truthy" and "falsy" values?
@@ -367,3 +386,5 @@ NaN其实是后面的表达式+{}计算的结果 (加号以及后面的{}).这�
     '[object Object][object Object]'
     > {} + []
     '[object Object]'
+
+

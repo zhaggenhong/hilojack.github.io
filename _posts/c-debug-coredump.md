@@ -37,10 +37,7 @@ OSX 的coredump 默认在：` /cores/core.pid` , 但是得Enable core-dump-file
 	$ lldb ./core-dump-file /cores/core.19504
 
 # 什么是Core：
-在使用半导体作为内存的材料前，人类是利用线圈当作内存的材料（发明者为王安），线圈就叫作 core ，用线圈做的内存就叫作 core memory。如今 ，半导体工业澎勃发展，已经没有人用 core memory 了，不过，在许多情况下， 人们还是把记忆体叫作 core
 
-## 什么是Core Dump：
-我们在开发（或使用）一个程序时，最怕的就是程序莫明其妙地当掉。虽然系统没事，但我们下次仍可能遇到相同的问题。于是这时操作系统就会把程序当掉 时的内存内容 dump 出来（现在通常是写在一个叫 core 的 file 里面），让 我们或是 debugger 做为参考。这个动作就叫作 core dump。
 
 ## Core Dump时会生成何种文件：
 Core Dump时，会生成诸如 `core.进程号` 的文件。
@@ -155,14 +152,13 @@ php 在编译时应该开启debug
 	$ php test.php
 	Segmentation fault (core dumped)
 
-调试coredump:
+调试 php/fpm coredump:
 
-php-cli coredump:
+    $ gdb [exec file] [core file]
+	$ gdb php core.31656
+	$ gdb php-fpm core-fpm.31663
 
-	$ gdb php -c core.31656
-	$ gdb php-fpm -c core-fpm.31663
-
-fpm coredump:
+fpm coredump example:
 
 	$ sudo gdb /usr/sbin/php5-fpm /tmp/core-php-fpm.31656
 	(gdb) bt
@@ -174,7 +170,7 @@ fpm coredump:
 	#5  0x00000000005a356c in php_request_shutdown ()
 	#6  0x00000000006b1819 in main ()
 
-那么现在让我们看看, Core发生在PHP的什么函数中, 在PHP中, 对于FCALL_* Opcode的handler来说, execute_data代表了当前函数调用的一个State, 这个State中包含了信息:
+我们看看, Core发生在PHP的什么函数中, 在PHP中, 对于FCALL_* Opcode的handler来说, execute_data代表了当前函数调用的一个State, 这个State中包含了信息:
 
 	(gdb)f 1
 	#1  0x00000000006ea263 in zend_do_fcall_common_helper_SPEC (execute_data=0x7fbf400210) at /home/laruence/package/php-5.2.14/Zend/zend_vm_execute.h:234

@@ -182,14 +182,17 @@ Set php setting:
 > Because these settings are passed to php-fpm as fastcgi headers, php-fpm should not be bound to a worldwide accessible address. Otherwise, anyone could alter the PHP configuration options. See also `listen.allowed_clients`.
 
 ## env
-env[TMP1] = /tmp1
-env[HOST] = $HOST
-env[HOSTNAME] = $HOSTNAME
+
+	env[TMP1] = /tmp1
+	env[HOST] = $HOST
+	env[HOSTNAME] = $HOSTNAME
 
 ## conf file
-include=/etc/php-fpm.d/*.conf
+
+	include=/etc/php-fpm.d/*.conf
 
 # User
+
 	user = hilo
 	group = nobody
 
