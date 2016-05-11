@@ -5,17 +5,25 @@ category: blog
 description: 
 ---
 
-# 序
-本篇是我的调试经验整理, 欢迎补充~
+# PHP 调试方法
 
-# 基本调试方法
+---
 
-## var_dump 与 二分法
+## 基本调试方法
+
+----
+
+### var_dump 与 二分法
 相信大家确认问题点最常用的就是 以下函数结合二分法了：
 
 	var_dump($var);
 
-可是这导致的结果是：产品和测试会看到满屏的调试输出. 
+这种做法会导致一些问题：
+
+* <span class="fragment"> 测试时会看到满屏的调试输出.</span>
+* <span class="fragment"> 可能因粗心将调试代码上线 </sapn>
+
+----
 
 所以必须在特定条件下才能输出调试结果，比如仅当有GET 参数`debug` 时才调试输出, 而产品访问的页面因为没有带参数，就没有调试输出
 
@@ -27,6 +35,8 @@ description:
 		isset($_GET['debug']) && var_dump($var);
 	}
 
+----
+
 如果要调试的变量很多，我们如何区分这些变量呢？
 
 	if(test()){
@@ -37,6 +47,8 @@ description:
 	...
 	//output： 是user1 还是user2?
 	Li Lei
+
+----
 
 为了知道是哪一个变量输出的变量名，我们可以带一个变量名:
 
@@ -64,7 +76,7 @@ description:
 
 	debuging($var, __FILE__ . __LINE__);//可以复制多欠
 
-可以不写定位标识吗? 
+可以不写定位标识吗?
 
 用`debug_backtrace` 自动生成不就行了吗:
 
@@ -103,7 +115,7 @@ description:
 	 * debuging($var, $echo, 2); 	//以json格式输出$var
 	 */
 
-debuging 函数安装(如果需要开启xhprof，可以加`-xhprof`，只支持php5.4 及以上): 
+debuging 函数安装(如果需要开启xhprof，可以加`-xhprof`，只支持php5.4 及以上):
 
 	sh <(wget https://raw.githubusercontent.com/hilojack/php-lib/master/app/debuging.sh -O -) -xhprof
 	# 或者
@@ -116,7 +128,7 @@ debuging 函数安装(如果需要开启xhprof，可以加`-xhprof`，只支持p
 	SCRIPT_URL	/
 	xhprof	http://192.168.0.100:8000/index.php?run=55a35851f41ef&source=xhprof_debug
 
-## 反射(Reflection)
+### 反射(Reflection)
 反射（reflection）是php5 新加的特性，借助它可以很方便的进行元编程。
 
 我常用使用反射追踪类和方法
@@ -140,40 +152,40 @@ debuging 函数安装(如果需要开启xhprof，可以加`-xhprof`，只支持p
 	  }
 	}
 
-# php 段错误(segmentfault)
+## php 段错误(segmentfault)
 有时我们会发现，因为php段错误导致 `php-fpm` 必须重启的情况。下面总结了一些排查方法
 
-## dmesg 日志:查看段错误地址 与共享库
+### dmesg 日志:查看段错误地址 与共享库
 
-	php-fpm22053: segfault at 2559 ip 000000398a6145b2 sp 00007fffad1d4b78 error 4 
+	php-fpm22053: segfault at 2559 ip 000000398a6145b2 sp 00007fffad1d4b78 error 4
 	in ld-2.5.so398a600000+1c000
 
-## 用objdump 定位到错误的编码
+### 用objdump 定位到错误的编码
 结合错误的非法地址，与寄存器做汇编定位:
 
 	$ objdump -d /lib64/ld-2.5.so > ld.asm
-	
-## 再用gdb + backtrace 做跟踪
+
+### 再用gdb + backtrace 做跟踪
 这个分析过程可参考
 - [php 段错误]
 
-# 调试工具
+## 调试工具
 
-## tcpdump & wireshark
+### tcpdump & wireshark
 http://www.bo56.com/%E7%BA%BF%E4%B8%8Aphp%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5%E6%80%9D%E8%B7%AF%E4%B8%8E%E5%AE%9E%E8%B7%B5/
 
-### zbacktrace
+#### zbacktrace
 http://www.bo56.com/%E5%BD%93cpu%E9%A3%99%E5%8D%87%E6%97%B6%EF%BC%8C%E6%89%BE%E5%87%BAphp%E4%B8%AD%E5%8F%AF%E8%83%BD%E6%9C%89%E9%97%AE%E9%A2%98%E7%9A%84%E4%BB%A3%E7%A0%81%E8%A1%8C/
 http://www.bo56.com/php%E5%86%85%E6%A0%B8%E6%8E%A2%E7%B4%A2%E4%B9%8Bzend_execute%E7%9A%84%E5%85%B7%E4%BD%93%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B/#op_array
 
 	$sudo gdb -p 14973
-	(gdb) source /home/xinhailong/.gdbinit 
+	(gdb) source /home/xinhailong/.gdbinit
 	(gdb) zbacktrace
-	[0xa453f34] sleep(1) /home/xinhailong/test/php/test.php:4 
-	[0xa453ed0] test1() /home/xinhailong/test/php/test.php:7 
+	[0xa453f34] sleep(1) /home/xinhailong/test/php/test.php:4
+	[0xa453ed0] test1() /home/xinhailong/test/php/test.php:7
 
-## nginx
-1. 查看error_log 
+### nginx
+1. 查看error_log
 2. 查看access_log
 
 需要注意的有:
@@ -182,37 +194,37 @@ http://www.bo56.com/php%E5%86%85%E6%A0%B8%E6%8E%A2%E7%B4%A2%E4%B9%8Bzend_execute
 1. keepalive 导致负载不均匀
 2. 查看upstream_response_time
 
-## strace
+### strace
 用strace 查看系统调用
-	
-## 抓包与代理
 
-### tcpdump & wireshark
+### 抓包与代理
+
+#### tcpdump & wireshark
 用于分析网络状况
-	
+
 	tcpdump host 127.0.0.1 and port 80 and tcp
 
-#### conect 连接慢
+##### conect 连接慢
 可能是TCP 设置的原因
 
 1. server listen 时，设置的backlog 太小，导致连接队列小
 2. 连接队满, 对新请求会丢弃SYN 包
 3. SYN 包初始重传时间为3s
 
-#### cpu/内存不高，负载close_wait很高
+##### cpu/内存不高，负载close_wait很高
 1. 可能是php 因为某种基原因阻塞，没有调用close 这需要通过strace 分析
 2. write broken pipe?(strace)
 3. php的accept 到 close 的时间超时吗？
 4. backlog 过大也不行，这会导致SYN 三次握手后：socket放到连接队列，accept 从队列取socket, 队列过大会导致accept 从队列中取到socket 时，连接因为超时关闭了(close_wait). php 写关闭的连接时，就会报Broken Pipe.
 
-### curl
+#### curl
 常用的做法是:
 
 1. 在chrome dev tool 获取到请求的curl
-2. 执行curl. 注意curl -I ,-d 两个参数是冲突, curl不能两种不同类型的请求(有点汗是不是). 建议使用参数-D- 
+2. 执行curl. 注意curl -I ,-d 两个参数是冲突, curl不能两种不同类型的请求(有点汗是不是). 建议使用参数-D-
 
 
-### fiddler
+#### fiddler
 fiddler 是windows下最好的http 代理工具.
 使用时要注意：
 
@@ -222,12 +234,12 @@ fiddler 是windows下最好的http 代理工具.
 
 ![](/img/php-debug-fiddler.png)
 
-### charles
+#### charles
 charles 可作为linux/mac下fiddler 的替代
 
 ![](/img/php-debug-charles.png)
 
-### firebug(firefox)/dev tool(chrome)
+#### firebug(firefox)/dev tool(chrome)
 现在看起来dev tool比firebug要强大一些, 它带有更丰富的调试功能:
 
 1. code tidy
@@ -236,11 +248,11 @@ charles 可作为linux/mac下fiddler 的替代
 2. resource
 2. .....
 
-# 剖析PHP代码
+## 剖析PHP代码
 
-## APD (效率分析)  
+### APD (效率分析)
 
-### Config
+#### Config
 
 	sudo vim /usr/local/wap/php/lib/php.ini
 	[apd]
@@ -248,7 +260,7 @@ charles 可作为linux/mac下fiddler 的替代
 	apd.dumpdir = "/tmp/apd"
 	apd.statement_tracing = 0
 
-### 分析
+#### 分析
 如果需要效率分析，只需要开启apd_set_pprof_trace();
 
 	apd_set_pprof_trace();
@@ -281,15 +293,15 @@ charles 可作为linux/mac下fiddler 的替代
 	33.3 0.00 3.00  0.00 0.00  0.00 0.00     1  0.0000   3.0002            0 a
 	11.1 0.00 1.00  0.00 0.00  0.00 0.00     1  0.0000   1.0002            0 b
 	0.0 0.00 0.00  0.00 0.00  0.00 0.00     1  0.0006   0.0006            0 apd_set_pprof_trace
-	
 
-## Xhprof
 
-### Install
+### Xhprof
+
+#### Install
 
 	curl -s https://raw.githubusercontent.com/hilojack/php-lib/master/app/xhprof.sh | sh
 
-### 生成xhprof 数据
+#### 生成xhprof 数据
 
 	xhprof_enable(XHPROF_FLAGS_CPU + XHPROF_FLAGS_MEMORY);
 	ob_start(function($buf){
@@ -340,18 +352,18 @@ charles 可作为linux/mac下fiddler 的替代
 	Excl.PeakMemUse         Excl.MemUse的峰值
 	EPeakMemUse%            EMemUse%峰值百分比
 
-## xdebug
+### xdebug
 
-### install xdebug
+#### install xdebug
 
 	wget https://raw.githubusercontent.com/hilojack/php-lib/master/app/xdebug.sh -O- | sh
 
-### collect params & return
+#### collect params & return
 
 	xdebug.collect_params=4
 	;xdebug.collect_return=1
 
-### analyse
+#### analyse
 xdebug 分析php主要有两种方法， 一种是trace(查看调用栈), 一种是profile(用于php的性能分析)
 
 在命令行下运行脚本，并生成trace 或者 profile
@@ -362,25 +374,25 @@ xdebug 分析php主要有两种方法， 一种是trace(查看调用栈), 一种
 	php -d 'error_reporting = E_ALL' script.php// = 两边不能有空格
 	php -d 'error_reporting=E_ALL' -d 'html_errors=0' a.php
 
-#### trace
-xdebug的 trace数据默认放在 `/tmp/trace.*` (可以参阅: http://xdebug.org/docs).	
+##### trace
+xdebug的 trace数据默认放在 `/tmp/trace.*` (可以参阅: http://xdebug.org/docs).
 
 使用时可以通过传递 GET参数：XDEBUG_TRACE 就可以启动调用栈日志了
 
-	1	0.0010	318088	+0			-> str_pad('', 1000000, 'a') 
+	1	0.0010	318088	+0			-> str_pad('', 1000000, 'a')
 	2	0.0776	1318504	+1000416	-> echo $a;
 
-#### profile cpu
+##### profile cpu
 xdebug的profile数据默认放在 `/tmp/cachegrind.out.*`
 
-当设置 `xdebug.profiler_enable_trigger=1` 后，只要在 `GET/POST/COOKIE` 中带 `XDEBUG_PROFILE` 就可以触发`profile日志`的生成	
+当设置 `xdebug.profiler_enable_trigger=1` 后，只要在 `GET/POST/COOKIE` 中带 `XDEBUG_PROFILE` 就可以触发`profile日志`的生成
 
 这个文件本身难以阅读，需要额外的program 对`cacheGrind.out` 作分析。最具代表性就是`KCacheGrind/QcacheGrind`.
 
-#### profile memory
+##### profile memory
 分析内存占用主要有两种，一种是通过`trace memory`, 一种是通过`cachegrind memory`
 
-##### trace memory
+###### trace memory
 基于trace 数据, 前提是要开启 `show_mem_delta`(以byte 为单位) 或者 `trace_format=1` 以记录脚本运行时的内存数据
 
 	xdebug.show_mem_delta=1
@@ -402,11 +414,11 @@ Usage:
 Refer to :
 [trace-memory](http://derickrethans.nl/xdebug-and-tracing-memory-usage.html)
 
-##### cachegrind memory
-> Refer to: 
+###### cachegrind memory
+> Refer to:
 http://stackoverflow.com/questions/880458/php-memory-profiling
 
-As you probably know, Xdebug dropped the memory profiling support since the 2.* version. Please search for the "removed functions" string here: http://www.xdebug.org/updates.php 
+As you probably know, Xdebug dropped the memory profiling support since the 2.* version. Please search for the "removed functions" string here: http://www.xdebug.org/updates.php
 
 > Removed support for Memory profiling as that didn't work properly.
 
@@ -433,25 +445,25 @@ And then in my code:
 
 Finally open the `callgrind.out` file with `KCachegrind`
 
-#### winCacheGrind(for windows)
+##### winCacheGrind(for windows)
 
 ![](/img/php-debug-xdebug-wincachegrind.png)
 
-#### KCacheGrind
+##### KCacheGrind
 KCacheGrind(for Linux),QCacheGrind(for windows/Mac)
 
 mac 下安装：
-	
+
 	brew Install qcachegrind
 
 ![](/img/php-debug-kcachegrind.png)
 
 > Mac 下按`Command+,` 设置一下 Directory setting for source, 这样可以在优化时可查看到源码
 
-#### webgrind
+##### webgrind
 git co https://github.com/jokkedk/webgrind
 
-### Remote Xdebug
+#### Remote Xdebug
 > 如果想每次运行自动触发中断，请点击Run &gt; Break Point at first line in PHP scripts
 > https://confluence.jetbrains.com/display/PhpStorm/Zero-configuration+Web+Application+Debugging+with+Xdebug+and+PhpStorm#Zero-configurationWebApplicationDebuggingwithXdebugandPhpStorm-2.PreparePhpStorm
 > https://www.jetbrains.com/phpstorm/marklets/
@@ -488,7 +500,7 @@ git co https://github.com/jokkedk/webgrind
 
 ![](/img/php-debug-phpstorm-php-server.png)
 
-3.配置phpstorm run configuration, 选择`Run|Edit Configuration`， 或者点击： 
+3.配置phpstorm run configuration, 选择`Run|Edit Configuration`， 或者点击：
 ![](/img/php-debug-phpstorm-run.edit-configuration.1.png)
 
 点击`+`创建一个`Php Web Application`:
@@ -519,11 +531,11 @@ Refer to: [](http://xdebug.org/docs/remote)
 	export XDEBUG_CONFIG="idekey=session_name remote_host=localhost profiler_enable=1"
 	php a.php
 
-#### HTTP Debug Sessions
+##### HTTP Debug Sessions
 
 Xdebug contains functionality to keep track of a debug session when started through a browser: cookies. This works like this:
 
-1. When the URL variable `XDEBUG_SESSION_START=name` is appended to an URL Xdebug emits a cookie with the name "XDEBUG_SESSION" and as value the value of the XDEBUG_SESSION_START URL parameter. The expiry of the cookie is one hour. 
+1. When the URL variable `XDEBUG_SESSION_START=name` is appended to an URL Xdebug emits a cookie with the name "XDEBUG_SESSION" and as value the value of the XDEBUG_SESSION_START URL parameter. The expiry of the cookie is one hour.
 The DBGp protocol also passes this same value to the init packet when connecting to the debugclient in the `"idekey"` attribute.
 
 2. When there is a GET (or POST) variable XDEBUG_SESSION_START or the XDEBUG_SESSION cookie is set, Xdebug will try to connect to a debugclient.
@@ -537,7 +549,7 @@ It will store Cookie with key `XDEBUG_SESSION`
 
 > 注意，如果本机使用的代理访问server 或者不是同一网段，这种调试方法就行不通了
 
-##### Manually Sessions
+###### Manually Sessions
 In `Run Debug Configurations` - add `PHP Remote Debug` :
 
 	servers: my server v6
@@ -547,11 +559,11 @@ Then access:
 
 	url?XDEBUG_SESSION_START=hilojack
 
-## phpdbg
+### phpdbg
 php 5.6 开始自带的调试工具
 http://phpdbg.com/docs/getting-started
 
-## coredump
+### coredump
 Refer to : [](/p/c-debug-coredump)
 
 	sudo gdb /usr/sbin/php5-fpm /tmp/core-php5-fpm.630832
@@ -564,20 +576,20 @@ Refer to : [](/p/c-debug-coredump)
 	#5  0x00000000005a356c in php_request_shutdown ()
 	#6  0x00000000006b1819 in main ()
 
-## strace
-- `pstack <pid>`, `gdb -p <pid>` 命令: 
+### strace
+- `pstack <pid>`, `gdb -p <pid>` 命令:
 - `strace -p <pid>`
 用于获取php 进程调用栈(即php 虚拟机执行信息)
 
-## phptrace 
+### phptrace
 
 phpstrace 包括：
 
-- `phptrace -p <pid> -s`: 
+- `phptrace -p <pid> -s`:
 
 	用于打印`PHP的调用栈`. pid 是`fpm worker,php cli` 的pid, `-s` 是stack 信息(c 语言级别)
 
-- `phptrace -p <pid>` + `phptrace 扩展`: 
+- `phptrace -p <pid>` + `phptrace 扩展`:
 
 	用于获取`php 函数调用栈`(php 函数级别)
 
@@ -591,8 +603,8 @@ Reference:
 1. https://github.com/Qihoo360/phptrace/wiki
 1. https://github.com/Qihoo360/phptrace/wiki/phptrace-%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86
 
-## vld(opcode查看器)
-	
+### vld(opcode查看器)
+
 	$ php -dvld.active=1 -r 'echo $a="a"."b";'
 	Finding entry points
 	Branch analysis from position: 0
@@ -608,7 +620,7 @@ Reference:
 			 2      ECHO                                                     $1
 			 3    > RETURN                                                   null
 
-# 线上线下不一致
+## 线上线下不一致
 线上线下不一致的主要原因：
 
 1. 代码不一致
@@ -617,11 +629,11 @@ Reference:
 4. 针对测试机ip 的逻辑
 5. 测试机环境变量
 
-# Auto Test
+## Auto Test
 
-## TDD 测试驱动开发
+### TDD 测试驱动开发
 
-### 单元测试
+#### 单元测试
 PHPUnit 是php 应该的单元测试框架的业界标准
 它包含很多断言:
 
@@ -656,14 +668,14 @@ Excute test:
 
 Refer to: https://phpunit.de/manual/current/zh_cn/writing-tests-for-phpunit.html
 
-### API test
+#### API test
 Refer: http://open.qiniudn.com/qiniutest.pdf
 https://github.com/qiniu/httptest.v1
 
-### 集成测试
+#### 集成测试
 集成与测试(I&T), 将单元测试模块做集成， 位于单元测试与功能测试之前。很多单元测试工具包括集成测试。
 
-### 功能测试
+#### 功能测试
 也称验收测试，用工具创建测试用例并, 再用模拟数据在真实的机器上做整体测试(验证系统正确性)
 
 功能测试工具
@@ -673,18 +685,18 @@ https://github.com/qiniu/httptest.v1
 	Codeception is a full-stack testing framework that includes acceptance testing tools
 	Storyplayer is a full-stack testing framework that includes support for creating and destroying test environments on demand
 
-## BDD 行为驱动开发
+### BDD 行为驱动开发
 BDD 有两种方式：SpecBDD, StoryBDD.
 
 - SpecBDD 关注代码技术行为。
 开发者编写规格说明 描述实际代码（函数、方法）的行为。PHPSpec 框架提供了SpecBDD 编程支持，它是从Ruby 的RSpec project 演化来的。
 
-- StoryBDD 关注业务、特性、交互。 
+- StoryBDD 关注业务、特性、交互。
 开发者编写人类可读的故事描述应用的行为，这些故事就是应用的测试用例。Behat 是用于php StoryBDD编程的框架，这是从Ruby 的Cucumber 框架演化来的。
 
-# 参考
+## 参考
 - [php-debug-manual]
-- [web 调试] 
+- [web 调试]
 - [php 段错误]
 
 [web 调试]: http://mp.weixin.qq.com/s?__biz=MjM5NzUwNDA5MA==&mid=200596752&idx=1&sn=37ecae802f32f45ddc0240548943bcbe&scene=1&from=groupmessage&isappinstalled=0&key=611cf628f06a092695c8bd077b1188f20a3b8e63afa8b823a1e08d887f2ac985164ef0454457d421d95a7f82a6d8cc31&ascene=1&uin=NzEzNzkxMDIw&pass_ticket=YJ42ege%2FjTKc3wKPLWo%2Bv1bxQKdgwS4QYmtiib2uGYya%2FxkD1vJTs7pJftTkWf%2B1
@@ -693,5 +705,3 @@ BDD 有两种方式：SpecBDD, StoryBDD.
 
 [lamp-optimize-php???]: http://lamp.baidu.com/slides/how-to-optimize-php-program/#slide-start
 
-# Todo
-[lamp]: http://lamp.baidu.com/?from=timeline&isappinstalled=0

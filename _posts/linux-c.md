@@ -2,7 +2,7 @@
 layout: page
 title:	linux c 简介
 category: blog
-description: 
+description:
 ---
 # Preface
 
@@ -13,6 +13,7 @@ http://blog.xiayf.cn/slides/tlpi-1/index.html#/2
 # Variable
 
 ## Int
+
 	signed int i;
 	unsigned int i;
 	srand(time(NULL));//初始化seed
@@ -20,8 +21,10 @@ http://blog.xiayf.cn/slides/tlpi-1/index.html#/2
 
 常量
 
+	123;//signed
+	-1;//signed
 	123u;//u/U unsigned
-	123l; //long 
+	123l; //long
 	123ll; //long long
 	123ul; //unsigned long
 
@@ -29,13 +32,13 @@ http://blog.xiayf.cn/slides/tlpi-1/index.html#/2
 
 	1.0 // 默认double
 	1.0f //float
-	1.0l //long double 
+	1.0l //long double
 
 ### Usual Arithmetic Conversion
 当使用'+-*/%>!=' 时，转换顺序为：
 
 	long double %lf > double %f > float %f > long long %lld > long %ld >int %d > short %d > char %c
-	//There is no format for a float, because if you attempt to pass a float to printf, it'll be promoted to double before printf receives it. 
+	//There is no format for a float, because if you attempt to pass a float to printf, it'll be promoted to double before printf receives it.
 
 传递参数时，实参也要转为形参的类型。
 
@@ -50,31 +53,31 @@ http://blog.xiayf.cn/slides/tlpi-1/index.html#/2
 
 你可能会奇怪，base number 隐含了1.xxxx * 2^ (exponential+127)，那如何表示0呢？0 不能写成1.xxxx的形式哟。其实，当一个数的绝对值小于 1.0^(-126)时，base number 不会隐含整数部分1. 这类数实际会被存储为 1.xxxx * 2^(-127 + 127). 23位中，最高位是整数部分1 或者0，剩余22 位是小数，指数恒为-127(实际存储为0)
 
-0 的二进制科学计数法为: 0.00000000 * 2^(-127 + 127). 
+0 的二进制科学计数法为: 0.00000000 * 2^(-127 + 127).
 
 	sign(0) + exponential(0000 0000) + base (000 0000 0000 0000 0000 0000)
 
-1.0*2^(-127) 的二进制科学计数法为: 1.0000000 * 2^(-127 + 127). 
+1.0*2^(-127) 的二进制科学计数法为: 1.0000000 * 2^(-127 + 127).
 
 	sign(0) + exponential(0000 0000) + base (100 0000 0000 0000 0000 0000)
 
 ### 精度
 对于 float 32 位而言：
 
-	23 位base number，所能表示的精度为小数后6位( 1/2^23 = 1.19209e-7) 
+	23 位base number，所能表示的精度为小数后6位( 1/2^23 = 1.19209e-7)
 	8位的 exponential 指数能表示 2^-127 ~ 2^128 即 10^-38 ~ 10^38
 
 对于 double 64 位而言：
 
-	52 位base number，所能表示的精度为小数后15位( 2^-52 = 2.2204e-16) 
+	52 位base number，所能表示的精度为小数后15位( 2^-52 = 2.2204e-16)
 	11位的 exponential 指数能表示 2^-2043 ~ 2^2048 即 10^-308 ~ 10^308
 
 对于 扩展精度 而言：
 
-	64 位base number，所能表示的精度为小数后19位( 2^-64 = 5.4210e-20) 
+	64 位base number，所能表示的精度为小数后19位( 2^-64 = 5.4210e-20)
 	15位的 exponential 指数能表示 2^-2043 ~ 2^2048 即 10^-4932 ~ 10^4932
 
-## char 
+## char
 char 变量在x86 平台的gcc 中被定义为有符号的， 这也是c 标准的Rationale (根本依据)之一: 优先考虑效率。
 
 	char  c;
@@ -158,14 +161,14 @@ offsetof 是用于求偏移的，这个宏定义于`stddef.h`：
 ### String Array
 	char str[10] = "Hello";
 	char str[] = "Hello";//包含'\0' 有6个字符
-	char str[2] = "Hello";//只有两个字符'He'，不包含'\0' 
+	char str[2] = "Hello";//只有两个字符'He'，不包含'\0'
 	char days[8][10] = { "Monday", "Tuesday", "Wednesday", "Thursday", "Saturday", "Sunday" };
 
 ### 传值
 	arr1 = arr2 ;//不能像结构体那样相互传值
 	//也就不能用数组类型作为函数的参数或返回值。
 	int foo(int arr[5]){//对于数组类型有一条特殊规则: 数组名做右值使用时,自动转换成指向数组首元素的指针
-	
+
 	}
 
 ## String
@@ -194,7 +197,7 @@ mac: dtruss
 
 # format
 indent 用于格式化c 代码
-	
+
 	indent -kr -i4 file
 
 -kr选项表示K&R风格,-i8表示缩进8个空格的长度
@@ -210,7 +213,7 @@ indent 用于格式化c 代码
 	& ampersand
 	! Exclamation Mark
 	Remainder 余数 Quotient 商
-	Parity 奇偶性 even/odd Number 
+	Parity 奇偶性 even/odd Number
 	Encapsulate 封装
 	Initializer 初始值
 	Scientific Notation 科学计数法

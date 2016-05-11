@@ -43,4 +43,8 @@ compile:
 		└── A
 			└── hello
 				└── hello.go
-	
+
+# run
+也可以直接run (compile and excute)
+
+	$ go run a.go

@@ -1119,7 +1119,21 @@ In php running:
 
 - 管理单个项目的依赖时使用Composer
 - 管理整个系统的PHP依赖时使用PEAR
-- peal 安装扩展
+- pecl 安装扩展: $ pecl install extname
+
+## pecl
+pecl(PHP Extension Library) 是一个扩展库，也是一个扩展安装命令
+
+pecl 只能用于扩展的安装
+
+	$ yum install php-devel
+	$ pacman -S php-pear
+
+用法：
+
+	$ pecl install extname
+	相当于：
+	$ cd extname && phpize && ./configure && make && make install
 
 ## pear
 
@@ -1139,7 +1153,7 @@ pear(Php Extension and Aplication Repository) 好像没有composer 流行
 ### Handling PEAR dependencies with Composer
 > http://www.phptherightway.com/
 
-If you are already using Composer and you would like to install some PEAR code too, you can use Composer to handle your PEAR dependencies. 
+If you are already using Composer and you would like to install some PEAR code too, you can use Composer to handle your PEAR dependencies.
 
 This example will install code from pear2.php.net:
 

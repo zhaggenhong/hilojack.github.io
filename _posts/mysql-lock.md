@@ -2,7 +2,7 @@
 layout: page
 title:	mysql lock
 category: blog
-description: 
+description:
 ---
 # Preface
 
@@ -76,7 +76,7 @@ MESI 协议是以缓存行(缓存的基本数据单位，在Intel的CPU上一般
 
 ## Pessimistic Lock, 悲观锁(Mutual Exclusive Lock, 互斥锁)
 被查询到的数据(id=1)，都将不能再进行修改、删除、SELECT …… LOCK IN SHARE MODE(所有id?)操作
-如果被查询的数据处于(lock: share or exclusive) 中，加锁不成功. 
+如果被查询的数据处于(lock: share or exclusive) 中，加锁不成功.
 
 	SELECT …… where id=1 FOR UPDATE（排它锁）
 
@@ -89,7 +89,7 @@ http://chenzhou123520.iteye.com/blog/1860954
 ## Optimistic Lock(CAS, Compare and Swap)
 CAS指令在Intel CPU上称为`CMPXCHG`指令，它的作用是:
 	将指定内存地址的内容与所给的某个值相比，如果相等，则将其内容替换为指令中提供的新值，如果不相等，则更新失败，循环执行
-	
+
 这一比较并交换的操作是原子的，不可以被中断，而其保证原子性的原理就是上一节提到的“总线锁定和缓存一致性”。
 
 初一看，CAS也包含了读取、比较 (这也是种操作)和写入这三个操作，和之前的i++并没有太大区别，是的，的确在操作上没有区别，但CAS是通过硬件命令保证了原子性，而i++没有，且硬件级别的原子性比i++这样高级语言的软件级别的运行速度要快地多。虽然CAS也包含了多个操作，但其的运算是固定的(就是个比较)，这样的锁定性能开销很小。
@@ -109,27 +109,28 @@ http://www.cnblogs.com/releaseyou/archive/2009/04/16/1436930.html
 根据隔离级别的不同，DBMS为并行访问提供不同的互斥保证。在SQL Server数据库中，提供四种隔离级别：未提交读、提交读、可重复读、可串行读。这四种隔离级别可以不同程度地保证并发的数据完整性：
 
 	隔离级别	脏读	不可重复读取	幻像
-	未提交读	是	是	是
-	提交读		否	是	是
-	可重复读	否	否	是
-	可串行读	否	否	否
+	未提交读	是		是		是
+	提交读		否		是		是
+	可重复读	否		否		是
+	可串行读	否		否		否
 
 可以看出，“可串行读”提供了最高级别的隔离，这时并发事务的执行结果将与串行执行的完全一致。最高级别的隔离也就意味着最低程度的并发，效率比较低的。
 
+## 设定隔离级别
 
 	SET [SESSION|GLOBAL] TRANSACTION ISOLATION LEVEL
-	READ UNCOMMITTED | READ COMMITTED | REPEATABLE READ | SERIALIZABLE
+		READ UNCOMMITTED | READ COMMITTED | REPEATABLE READ | SERIALIZABLE
 
 事务隔离模式
-	
-1、不带SESSION、GLOBAL的SET命令
-只对下一个事务有效
 
-2、SET SESSION
-为当前会话设置隔离模式
+	1、不带SESSION、GLOBAL的SET命令
+	只对下一个事务有效
 
-3、SET GLOBAL
-为以后新建的所有MYSQL连接设置隔离模式（当前连接不包括在内）
+	2、SET SESSION
+	为当前会话设置隔离模式
+
+	3、SET GLOBAL
+	为以后新建的所有MYSQL连接设置隔离模式（当前连接不包括在内）
 
 隔离模式
 
@@ -150,3 +151,11 @@ http://www.cnblogs.com/releaseyou/archive/2009/04/16/1436930.html
 和REPEATABLE READ类似，给所有的SELECT都加上了 共享锁
 
 	SERIALIZABLE
+
+# 查询全局和会话事务隔离级别：
+
+	SELECT @@global.tx_isolation;
+	SELECT @@session.tx_isolation;
+	SELECT @@tx_isolation;
+
+# 事务与锁

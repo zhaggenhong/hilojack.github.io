@@ -9,10 +9,12 @@ description:
 # Bit Operator位运算
 
 ## 位移
+
 	<< 左移有符号与无符号没有区别
 	>> 右移(对有符号数来说，符号位不变)
 
 ## 与或非
+
 	& | ~
 
 ## Mask 掩码
@@ -32,6 +34,7 @@ description:
 	i | 0xff00
 
 ## xor 异或
+
 	1. a^a == 0 比movl $0, %eax 快
 	2. a^b^b == a 可用于交换：a = a^b; b = a^b; a = a^b;
 	3. a^1 == ~a , a^0 == a
