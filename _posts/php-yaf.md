@@ -6,6 +6,13 @@ description:
 ---
 # Preface
 
+# hello world
+
+	git clone git@github.com:laruence/yaf.git
+	cd yaf/tools/cg/
+	php yaf_cg Sample
+	mv output/Sample ~/www/yaf_php
+
 # config
 
 ## php.ini

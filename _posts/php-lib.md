@@ -13,7 +13,6 @@ https://github.com/AnewG/Modern-php?files=1
 # Configration
 可以用parse_ini_file()函数解析INI配置文件
 
-
 # Data Type
 
 	ctype_alnum
@@ -965,6 +964,13 @@ Refer to [DateInterval](http://jp2.php.net/manual/zh/dateinterval.construct.php)
 
 	DateTime::createFromFormat('Y年m月d日','2015年8月9日').getTimestamp()
 
+## checkdate
+
+	function validateDate($date, $format = 'Y-m-d H:i:s') {
+		$d = DateTime::createFromFormat($format, $date);
+		return $d && $d->format($format) == $date;
+	}
+
 # user
 
 	get_current_user() Gets PHP script owner's name
@@ -979,6 +985,7 @@ Get user php is running as:
 	echo exec('whoami');
 
 # Disk
+
 	filesize
 	float disk_free_space(str $dir); //返回目录所在分区剩余大小
 	float disk_total_space(str $dir); //返回目录所在分区大小
