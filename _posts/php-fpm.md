@@ -395,6 +395,7 @@ open_basedir can affect more than just filesystem functions; for example if MySQ
 
 	service php-fpm start
 	service php-fpm restart
+		kill -USR2 `cat /usr/local/php/var/run/php-fpm.pid`
 
 通用
 

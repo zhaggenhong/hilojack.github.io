@@ -6,6 +6,14 @@ description:
 ---
 # Preface
 
+Thrift 与http 相比，有几个优点, 而不是速度的。
+
+1. thrift生成的客户端和服务器代码完全包括要传递的数据结构.所以你不必编写客户端server 代码: 包括参数和返回都会自动验证并进行解析。
+2. thrift比http更紧凑(没有head头),而且很容易被扩展为支持加密，压缩.非阻塞IO ,etc 。
+3. thrift可以将其设置为使用http和JSon很容易。 (如果客户端需要通过防火墙或者不稳定的网络环境)
+4. thrift支持持久连接， 避免了连续的TCP(http1.1/http2.0 也支持，不过受客户端限制)
+
+
 
 # thrift
 thrift 与protobuf 相比，不仅包括二进制数据格式部分，还包括网络部分: RPC、RMI、COM 等远程对象调用或远程方法调用。

@@ -5,8 +5,12 @@ category: blog
 description: 
 ---
 # Preface
-# PHP 的生命周期
-	SAPI: Server Application Programming Interface. PHP和外部环境的代理器
+
+# PHP 内核
+http://www.php-internals.com/book/
+
+# PHP 扩展开发
+http://www.walu.cc/phpbook/index.md
 
 # phptherightway 
 php 之道[phptherightway]

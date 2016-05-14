@@ -340,7 +340,7 @@ via shell
 		$file->next();
 	}
 
-`$i ` 从0 开始, 且最后`$line` 为空字符:
+`$i ` 从0 开始, 且最后`$line` 为空字符: `explode("\n", $str)` 但包括"\n":
 
 	foreach($file as $i=>$line){
 		echo "$i:$line\n";

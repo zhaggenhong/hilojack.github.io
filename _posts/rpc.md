@@ -18,6 +18,9 @@ rpc 问题其实是不同语言之间的数据通信问题:
 
 - protobuf(pb), binary
 - thrift
+
+数据格式
+
 - xml XMPP就基于xml, 流量大
 - msgpack, binary
 - json, plain text
