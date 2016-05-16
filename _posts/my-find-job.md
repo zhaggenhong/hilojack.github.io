@@ -1,4 +1,4 @@
-# 首先扔接活网站： 
+# 接活网站： 
 1. http://odesk.com
 2. http://freelancer.com
 3. http://elance.com

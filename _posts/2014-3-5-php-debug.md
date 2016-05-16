@@ -195,7 +195,7 @@ http://www.bo56.com/php%E5%86%85%E6%A0%B8%E6%8E%A2%E7%B4%A2%E4%B9%8Bzend_execute
 2. 查看upstream_response_time
 
 ### strace
-用strace 查看系统调用
+用strace 跟踪进程执行时的系统调用和所接收的信号
 
 ### 抓包与代理
 
@@ -576,10 +576,17 @@ Refer to : [](/p/c-debug-coredump)
 	#5  0x00000000005a356c in php_request_shutdown ()
 	#6  0x00000000006b1819 in main ()
 
-### strace
-- `pstack <pid>`, `gdb -p <pid>` 命令:
+### strace, pstack
+- `pstack <pid>`, `gdb -p <pid>` 命令: 跟踪进程调用栈
+```
+	$ pstack 6989
+	#0  0x0000003dcbce9710 in __accept_nocancel () from /lib64/libc.so.6
+	#1  0x00000000008bcd56 in fcgi_accept_request ()
+	#2  0x00000000008c4cca in main ()
+```
+
 - `strace -p <pid>`
-用于获取php 进程调用栈(即php 虚拟机执行信息)
+用strace 跟踪进程执行时的系统调用和所接收的信号 (即php 虚拟机fpm 执行信息)
 
 ### phptrace
 

@@ -1,8 +1,8 @@
 ---
 layout: page
-title:	
+title:
 category: blog
-description: 
+description:
 ---
 
 # 全屏
@@ -45,7 +45,7 @@ NAT模式下的虚拟系统的TCP/IP配置信息是由VMnet8(NAT)虚拟网络的
 	Interface: en0 Wifi(ApiPort)
 	Adapter Type: Intel PRO/1000 MT desktop(82540EM)
 	Promisuous Mode: Allow All
-	MAC Address: 0800273A224C
+	MAC Address: 0800273***
 
 ## renew ip
 1. release ip
@@ -72,4 +72,3 @@ Refer to: [](/p/linux-net)
 
 	# Find IP: substitute vname-mac-addr with your vm's mac address in ':' notation
 	arp -a | grep vmname-mac-addr
-

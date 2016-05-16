@@ -61,10 +61,24 @@ ps工具标识进程的5种状态码:
 	ps -o rss,vsz
 	ps -L "list all field
 
+#### specify cmdlist
+
+	-C cmdlist      Select by command name.
+									This selects the processes whose executable name is given in cmdlist.
+
+Example
+
+	$ ps ef -o command,vsize,rss,size -C php-fpm
+	COMMAND                        VSZ   RSS  SIZE
+	php-fpm: master process (/u 459152  9912  3304
+	 \_ php-fpm: pool www       459152  7732  3304
+	 \_ php-fpm: pool www       459152  7732  3304
+
 ### command
 print command name (not path)
 
 	ps -c
+	//或者
 	ps c
 
 ### info note
@@ -124,7 +138,7 @@ top 中的MEM：
 	$ pstree -p 3027
 	-+= 00001 root /sbin/launchd
 	\-+= 03001 root /usr/sbin/httpd -D FOREGROUND
-	\--- 03027 _www /usr/sbin/httpd -D FOREGROUND
+	\--- 03027 www /usr/sbin/httpd -D FOREGROUND
 
 # proc
 proc(`man 5 proc`) 可以获取更详细的进程信息
@@ -138,11 +152,10 @@ proc(`man 5 proc`) 可以获取更详细的进程信息
 - 包括虚拟内存大小（VmSize），物理内存大小（VmRSS），数据段大小（VmData），栈的大小 （VmStk），代码段的大小（VmExe），共享库的代码段大小（VmLib）等等。
 - VmData，VmStk，VmExe和VmLib之和并不等于VmSize。这是因为共享库函数的数据段没有计算进去（VmData仅包含程序的数据段，不包括共享库函数的数据段， 也不包括通过mmap映射的区域。VmLib仅包括共享库的代码段，不包括共享库的数据 段）
 
-	cat /proc/<pid>/status 
+	cat /proc/<pid>/status
 
 ## smaps
 通过`/proc/<pid>/smaps`可以查看进程整个虚拟地址空间的映射情况，它的输出从低地址到高地址按顺序输出每一个映射区域的相关信息，如下所示：
 
 	$ cat /proc/<pid>/smaps
 	注意：rwxp中，p表示私有映射（采用Copy-On-Write技术）。 Size字段就是该区域的大小。
-
