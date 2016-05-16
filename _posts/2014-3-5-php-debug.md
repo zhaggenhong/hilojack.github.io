@@ -2,7 +2,7 @@
 layout: page
 title: 关于php的调试方法
 category: blog
-description: 
+description:
 ---
 
 # PHP 调试方法
@@ -588,6 +588,12 @@ Refer to : [](/p/c-debug-coredump)
 - `strace -p <pid>`
 用strace 跟踪进程执行时的系统调用和所接收的信号 (即php 虚拟机fpm 执行信息)
 
+Example：
+
+	$ strace -p pid -f
+	poll([{fd=5, events=POLLIN|POLLPRI|POLLRDNORM|POLLRDBAND}], 1, 1000) = 0 (Timeout)
+	$ lsof -d 5 | grep <pid>
+
 ### phptrace
 
 phpstrace 包括：
@@ -710,5 +716,4 @@ BDD 有两种方式：SpecBDD, StoryBDD.
 [php 段错误]: http://mp.weixin.qq.com/s?__biz=MjM5NzUwNDA5MA==&mid=200518392&idx=1&sn=e42cd958ba83bd29aa3493952d8e16ac&scene=1&from=groupmessage&isappinstalled=0&key=93b84e19602f2859dbffbd8c680090454b9160d7b6b69ba3c21d1e549c2949040fe8dd6294efa45fb2a13172371f812c&ascene=1&uin=NzEzNzkxMDIw&pass_ticket=YJ42ege%2FjTKc3wKPLWo%2Bv1bxQKdgwS4QYmtiib2uGYya%2FxkD1vJTs7pJftTkWf%2B1
 [php-debug-manual]: /doc/php-debug.pdf
 
-[lamp-optimize-php???]: http://lamp.baidu.com/slides/how-to-optimize-php-program/#slide-start
-
+[lamp-optimize-php]: http://lamp.baidu.com/slides/how-to-optimize-php-program/#slide-start

@@ -296,16 +296,17 @@ FilterIterator 提供了fiter. 只extends IteratorIterator (construct 会接受I
 ## DirectoryIterator
 DirectoryIterator 针对目录的迭代类
 
-	foreach (new DirectoryIterator('../moodle') as $fileInfo) {
+	foreach (new DirectoryIterator('../moodle') as $i => $fileInfo) {
 		if($fileInfo->isFile())
 		echo $fileInfo->getFilename() . "\n";
 	}
 
-via RecursiveIteratorIterator(Recursive)
+via RecursiveIteratorIterator(Recursive):
 
+	$files = new RecursiveDirectoryIterator('.');//不是递归的
 	$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator('.'), RecursiveIteratorIterator::SELF_FIRST);
-	foreach($files as $pathname => $file){
-		if($file->isFile()){echo $pathname."\n";}
+	foreach($files as $pathname => $fileInfo){
+		if($fileInfo->isFile()){echo $pathname."\n";}
 	}
 
 via RecursiveIteratorIterator(filter key(filename) with Regex):

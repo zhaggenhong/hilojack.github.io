@@ -16,7 +16,6 @@ mysql安装
 	./configure --prefix=/usr/local/mysql
 	make && make install
 
-
 ## Via yum
 
 	yum install mysql-server mysql php-mysql
@@ -363,7 +362,7 @@ Example:
 	mysqlimport [options] --fields-terminated-by=\t dbname file1.txt [... fileN.txt]
 
 Example:
-First, create the directory for the output files and dump the database:
+1. First, create the directory for the output files and dump the database:
 
 	shell> mkdir DUMPDIR
 	shell> mysqldump --tab=DUMPDIR db_name # it will create *.sql(create tables), and *.txt(tab separator data for each table ) in DUMPDIR
@@ -517,3 +516,4 @@ Or restart mysql server and that's it
 ## describe
 
 	describe db.table;
+	desc db.table;

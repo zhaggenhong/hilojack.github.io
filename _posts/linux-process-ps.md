@@ -60,6 +60,9 @@ ps工具标识进程的5种状态码:
 
 	ps -o rss,vsz
 	ps -L "list all field
+	ps -p 2624 -o lstart; #进程创建时间
+
+
 
 #### specify cmdlist
 

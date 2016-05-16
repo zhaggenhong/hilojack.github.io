@@ -23,7 +23,7 @@ Proto显示连接使用的协议,RefCnt表示连接到本套接口上的进程�
 	-o, --timers
        Include information related to networking timers
 	-v
-	   Tell the user what is going on by being verbose. 
+	   Tell the user what is going on by being verbose.
 
 ### linux only
 
@@ -108,5 +108,3 @@ Task: Find Out Current Working Directory Of a Process
 	lrwxrwxrwx 1 vivek vivek 0 2010-10-29 12:04 /proc/3813/cwd -> /home/vivek
 	$ pwdx 3813
 	lrwxrwxrwx 1 vivek vivek 0 2010-10-29 12:04 /proc/3813/cwd -> /home/vivek
-
-

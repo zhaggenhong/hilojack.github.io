@@ -20,6 +20,7 @@ http://wiki.jikexueyuan.com/list/ios/
 # code
 还有《Don't make me think》、《Rework》、《清醒思考的艺术》、《黑客与画家》、以及《Unix高级环境编程》、《Unix网络编程》、《TCP/lP详解》
 
+程序员必读书单
 http://lucida.me/blog/developer-reading-list/
 
 编码:隐匿在计算机软硬件背后的语言
@@ -48,7 +49,7 @@ http://study.163.com/curricula/cs.htm
 ## 国际音标 Phonetic Symbol 语音标识
 http://www.hydcd.com/baike/yingyuyinbiao.htm
 
-## spoken eng in 6 month
+## Spoken English in 6 month
 http://www.hjenglish.com/new/p596036/
 
 ## hujiang

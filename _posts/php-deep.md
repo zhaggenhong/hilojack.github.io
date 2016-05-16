@@ -2,7 +2,7 @@
 layout: page
 title:	edit
 category: blog
-description: 
+description:
 ---
 # Preface
 
@@ -12,8 +12,12 @@ http://www.php-internals.com/book/
 # PHP 扩展开发
 http://www.walu.cc/phpbook/index.md
 
-# phptherightway 
+# phptherightway
 php 之道[phptherightway]
 
 [phptherightway]:
 http://www.phptherightway.com/
+
+# php7
+php 之父在phpconf 上的slide
+http://talks.php.net/china16#/

@@ -30,6 +30,13 @@ Find original owning process of a Linux socket
 	-U -a -ufoo
 		selects -U(socket) that belong to processes owned by user‘‘foo’’.
 
+## via fd
+
+	$ strace -p pid -f
+	poll([{fd=5, events=POLLIN|POLLPRI|POLLRDNORM|POLLRDBAND}], 1, 1000) = 0 (Timeout)
+	$ lsof -d 5 | grep <pid>
+	php        2624      www    5u  IPv4        3876970637      0t0        TCP *:45473->host-31.alipay.com:https (ESTABLISHED)
+
 
 ## via port and protocol
 
