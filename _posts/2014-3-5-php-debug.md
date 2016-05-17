@@ -207,11 +207,11 @@ http://www.bo56.com/php%E5%86%85%E6%A0%B8%E6%8E%A2%E7%B4%A2%E4%B9%8Bzend_execute
 
 1. server listen 时，设置的backlog 太小，导致连接队列小
 2. 连接队满, 对新请求会丢弃SYN 包
-3. SYN 包初始重传时间为3s
+3. SYN 包初始重传时间为合适的时间(如3s)
 
 ##### cpu/内存不高，负载close_wait很高
 1. 可能是php 因为某种基原因阻塞，没有调用close 这需要通过strace 分析
-2. write broken pipe?(strace)
+2. write broken pipe?(用 strace)
 3. php的accept 到 close 的时间超时吗？
 4. backlog 过大也不行，这会导致SYN 三次握手后：socket放到连接队列，accept 从队列取socket, 队列过大会导致accept 从队列中取到socket 时，连接因为超时关闭了(close_wait). php 写关闭的连接时，就会报Broken Pipe.
 
@@ -417,8 +417,6 @@ Refer to :
 http://stackoverflow.com/questions/880458/php-memory-profiling
 
 As you probably know, Xdebug dropped the memory profiling support since the 2.* version. Please search for the "removed functions" string here: http://www.xdebug.org/updates.php
-
-> Removed support for Memory profiling as that didn't work properly.
 
 So I've tried another tool and it worked well for me.
 
