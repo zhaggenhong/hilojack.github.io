@@ -117,9 +117,8 @@ description:
 
 debuging 函数安装(如果需要开启xhprof，可以加`-xhprof`，只支持php5.4 及以上):
 
+	# php-fpm + xhprof server 必须读取同一套php.ini
 	sh <(wget https://raw.githubusercontent.com/hilojack/php-lib/master/app/debuging.sh -O -) -xhprof
-	# 或者
-	sh <(wget https://raw.githubusercontent.com/hilojack/php-lib/master/app/phpext.sh -O -) debuging -xhprof
 
 安装xhprof 后，当用GET 传参数`DEBUG` 时就会打出如下的信息, 支持*性能瓶颈图*：
 
@@ -175,14 +174,16 @@ debuging 函数安装(如果需要开启xhprof，可以加`-xhprof`，只支持p
 http://www.bo56.com/%E7%BA%BF%E4%B8%8Aphp%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5%E6%80%9D%E8%B7%AF%E4%B8%8E%E5%AE%9E%E8%B7%B5/
 
 #### zbacktrace
+> 更简单的重现PHP Core的调用栈 http://www.laruence.com/2011/12/06/2381.html
+
 http://www.bo56.com/%E5%BD%93cpu%E9%A3%99%E5%8D%87%E6%97%B6%EF%BC%8C%E6%89%BE%E5%87%BAphp%E4%B8%AD%E5%8F%AF%E8%83%BD%E6%9C%89%E9%97%AE%E9%A2%98%E7%9A%84%E4%BB%A3%E7%A0%81%E8%A1%8C/
 http://www.bo56.com/php%E5%86%85%E6%A0%B8%E6%8E%A2%E7%B4%A2%E4%B9%8Bzend_execute%E7%9A%84%E5%85%B7%E4%BD%93%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B/#op_array
 
 	$sudo gdb -p 14973
 	(gdb) source /home/xinhailong/.gdbinit
 	(gdb) zbacktrace
-	[0xa453f34] sleep(1) /home/xinhailong/test/php/test.php:4
-	[0xa453ed0] test1() /home/xinhailong/test/php/test.php:7
+	[0xa453f34] sleep(1) /home/hilojack/test/php/test.php:4
+	[0xa453ed0] test1() /home/hilojack/test/php/test.php:7
 
 ### nginx
 1. 查看error_log
@@ -193,9 +194,6 @@ http://www.bo56.com/php%E5%86%85%E6%A0%B8%E6%8E%A2%E7%B4%A2%E4%B9%8Bzend_execute
 1. 统计QPS 对比负载是否均衡
 1. keepalive 导致负载不均匀
 2. 查看upstream_response_time
-
-### strace
-用strace 跟踪进程执行时的系统调用和所接收的信号
 
 ### 抓包与代理
 
@@ -636,6 +634,7 @@ Reference:
 ## 线上线下不一致
 线上线下不一致的主要原因：
 
+0. 代码部署未成功或不完整
 1. 代码不一致
 2. 数据库不一致
 3. dns 不一致

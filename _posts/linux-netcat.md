@@ -42,7 +42,8 @@ server: netcat 命令在1567端口启动了一个tcp 服务器，所有的标准
 
 Client:
 
-  $ nc 172.31.100.7 1567
+  $ nc 127.0.0.1 1567
+  $ curl 127.0.0.1:1567/a.txt
 
 不管你在机器B上键入什么都会出现在机器A上。
 
@@ -120,18 +121,18 @@ Client
 
 假设你的netcat支持 -c -e 参数(默认 netcat)
 
-  Server
-  $nc -l 1567 -e /bin/bash -i
-  Client
-  $nc 172.31.100.7 1567
+  # Server
+  nc -l 1567 -e /bin/bash -i
+  # Client
+  nc 172.31.100.7 1567
 
 这里我们已经创建了一个netcat服务器并且表示当它连接成功时执行/bin/bash
 
 假如netcat 不支持-c 或者 -e 参数（openbsd netcat）,我们仍然能够创建远程shell
 
-  Server
-  $mkfifo /tmp/tmp_fifo
-  $cat /tmp/tmp_fifo | /bin/sh -i 2>&1 | nc -l 1567 > /tmp/tmp_fifo
+  #Server
+  mkfifo /tmp/tmp_fifo
+  cat /tmp/tmp_fifo | /bin/sh -i 2>&1 | nc -l 1567 > /tmp/tmp_fifo
 
 这里我们创建了一个fifo文件，然后使用管道命令把这个fifo文件内容定向到shell 2>&1中。是用来重定向标准错误输出和标准输出，然后管道到netcat 运行的端口1567上。至此，我们已经把netcat的输出重定向到fifo文件中。
 
@@ -147,7 +148,7 @@ Client
 在客户端仅仅简单连接到服务器
 
   Client
-  $nc -n 172.31.100.7 1567
+  $nc -n 127.0.0.1 1567
 
 你会得到一个shell提示符在客户端
 
@@ -180,9 +181,9 @@ Client
 假设你的机器有多个地址，希望明确指定使用哪个地址用于外部数据通讯。我们可以在netcat中使用-s选项指定ip地址。
 
   服务器端
-  $nc -u -l 1567 < file.txt
+  $ nc -u -l 1567 < file.txt
   客户端
-  $nc -u 172.31.100.7 1567 -s 172.31.100.5 > file.txt
+  $ nc -u 172.31.100.7 1567 -s 172.31.100.5 > file.txt
 
 该命令将绑定地址172.31.100.5。
 
